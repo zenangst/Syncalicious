@@ -32,10 +32,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD7D960A225281E600C93211 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BD9313882251703600D116E4 /* Assets.xcassets */,
+				BD93138A2251703700D116E4 /* MainMenu.xib */,
+				BD93138D2251703700D116E4 /* Info.plist */,
+				BD93138E2251703700D116E4 /* Syncalicious.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		BD93137A2251703400D116E4 = {
 			isa = PBXGroup;
 			children = (
-				BD9313852251703400D116E4 /* Syncalicious */,
+				BD7D960A225281E600C93211 /* Resources */,
+				BD9313852251703400D116E4 /* Sources */,
 				BD9313842251703400D116E4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,16 +60,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BD9313852251703400D116E4 /* Syncalicious */ = {
+		BD9313852251703400D116E4 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				BD9313862251703400D116E4 /* AppDelegate.swift */,
-				BD9313882251703600D116E4 /* Assets.xcassets */,
-				BD93138A2251703700D116E4 /* MainMenu.xib */,
-				BD93138D2251703700D116E4 /* Info.plist */,
-				BD93138E2251703700D116E4 /* Syncalicious.entitlements */,
 			);
-			path = Syncalicious;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,7 +283,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E23HUP39A3;
-				INFOPLIST_FILE = Syncalicious/Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -293,7 +301,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E23HUP39A3;
-				INFOPLIST_FILE = Syncalicious/Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

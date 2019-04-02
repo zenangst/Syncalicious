@@ -9,7 +9,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
   // MARK: - NSApplicationDelegate
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
+    #if DEBUG
     loadInjection()
+    #endif
     loadApplication()
   }
 
@@ -17,26 +19,45 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
 
   private func loadInjection() {
     Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection.bundle")?.load()
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(injected(_:)),
+      name: NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION"),
+      object: nil
+    )
+  }
+
+  @objc func injected(_ notification: Notification) {
+    loadApplication()
   }
 
   private func loadApplication() {
     do {
-      let window = createWindow()
-      window.makeKeyAndOrderFront(nil)
+      let previousFrame = self.window?.frame
+      self.window?.close()
+      self.window = nil
+
+      let window = createWindow(with: ViewController())
       let dependencyContainer = try createDependencyContainer()
       let locations = try dependencyContainer.applicationController.applicationDirectories()
       dependencyContainer.applicationController.loadApplications(at: locations)
       self.mainMenuController?.dependencyContainer = dependencyContainer
       self.window = window
       self.dependencyContainer = dependencyContainer
+
+      window.makeKeyAndOrderFront(nil)
+      if let previousFrame = previousFrame {
+        window.setFrame(previousFrame, display: true)
+      }
     } catch let error {
       let alert = NSAlert(error: error)
       alert.runModal()
     }
   }
 
-  private func createWindow() -> NSWindow {
-    let window = NSWindow()
+  private func createWindow(with viewController: NSViewController) -> NSWindow {
+    let window = MainWindow.init(contentViewController: viewController)
+    window.loadWindow()
     window.setFrameAutosaveName(Bundle.main.bundleIdentifier!)
     return window
   }

@@ -7,10 +7,16 @@ protocol ApplicationControllerDelegate: class {
 class ApplicationController {
   weak var delegate: ApplicationControllerDelegate?
 
-  private lazy var preferencesController = PreferencesController()
-  private lazy var infoPlistController = InfoPropertyListController()
+  private let preferencesController: PreferencesController
+  private let infoPlistController: InfoPropertyListController
   private lazy var queue: DispatchQueue = { return DispatchQueue(label: String(describing: self),
                                                                  qos: .userInitiated) }()
+
+  init(infoPlistController: InfoPropertyListController,
+       preferencesController: PreferencesController) {
+    self.infoPlistController = infoPlistController
+    self.preferencesController = preferencesController
+  }
 
   // MARK: - Public methods
 
@@ -34,17 +40,15 @@ class ApplicationController {
   // MARK: - Private methods
 
   private func runAsync(_ locations: [URL]) {
-    do {
-      var applications = [Application]()
-      for location in locations {
-        let urls = recursiveApplicationParse(at: location)
-        applications.append(contentsOf: loadApplications(urls))
-      }
-      DispatchQueue.main.async { [weak self] in
-        guard let strongSelf = self else { return }
-        strongSelf.delegate?.applicationController(strongSelf, didLoadApplications: applications)
-      }
-    } catch {}
+    var applications = [Application]()
+    for location in locations {
+      let urls = recursiveApplicationParse(at: location)
+      applications.append(contentsOf: loadApplications(urls))
+    }
+    DispatchQueue.main.async { [weak self] in
+      guard let strongSelf = self else { return }
+      strongSelf.delegate?.applicationController(strongSelf, didLoadApplications: applications)
+    }
   }
 
   private func recursiveApplicationParse(at url: URL) -> [URL] {

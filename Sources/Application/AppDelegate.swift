@@ -1,8 +1,9 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, ApplicationControllerDelegate {
   var window: NSWindow?
+  let applicationController = ApplicationController()
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     loadInjection()
@@ -18,6 +19,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     window.setFrameAutosaveName(Bundle.main.bundleIdentifier!)
     window.makeKeyAndOrderFront(nil)
     self.window = window
+    applicationController.delegate = self
+    applicationController.load()
+  }
+
+  func applicationController(_ controller: ApplicationController,
+                             didLoadApplications applications: [Application]) {
+    Swift.print("Loaded \(applications.count) applications.")
   }
 }
 

@@ -13,6 +13,10 @@
 		BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D961422528B8700C93211 /* InfoPropertyListController.swift */; };
 		BD7D9617225290C800C93211 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D9616225290C800C93211 /* PreferencesController.swift */; };
 		BD7D96192252912100C93211 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D96182252912100C93211 /* Preferences.swift */; };
+		BD7D961C22532B6900C93211 /* BackupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D961B22532B6900C93211 /* BackupController.swift */; };
+		BD7D961F22532BA100C93211 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */; };
+		BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D962022533CE100C93211 /* DependencyContainer.swift */; };
+		BD7D962322533FF300C93211 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D962222533FF300C93211 /* MainMenuController.swift */; };
 		BD9313872251703400D116E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9313862251703400D116E4 /* AppDelegate.swift */; };
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
@@ -25,6 +29,10 @@
 		BD7D961422528B8700C93211 /* InfoPropertyListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPropertyListController.swift; sourceTree = "<group>"; };
 		BD7D9616225290C800C93211 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		BD7D96182252912100C93211 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		BD7D961B22532B6900C93211 /* BackupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupController.swift; sourceTree = "<group>"; };
+		BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
+		BD7D962022533CE100C93211 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
+		BD7D962222533FF300C93211 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		BD9313832251703400D116E4 /* Syncalicious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Syncalicious.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9313862251703400D116E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD9313882251703600D116E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,6 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				BD9313862251703400D116E4 /* AppDelegate.swift */,
+				BD7D962022533CE100C93211 /* DependencyContainer.swift */,
+				BD7D962222533FF300C93211 /* MainMenuController.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -83,6 +93,22 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		BD7D961A22532B5900C93211 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				BD7D961B22532B6900C93211 /* BackupController.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		BD7D961D22532B8F00C93211 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		BD93137A2251703400D116E4 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +131,8 @@
 			children = (
 				BD7D960F225288B700C93211 /* Application */,
 				BD7D9611225288C100C93211 /* Controllers */,
+				BD7D961D22532B8F00C93211 /* Extensions */,
+				BD7D961A22532B5900C93211 /* Features */,
 				BD7D9610225288BD00C93211 /* Models */,
 			);
 			path = Sources;
@@ -186,10 +214,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD7D96192252912100C93211 /* Preferences.swift in Sources */,
+				BD7D961F22532BA100C93211 /* UserDefaults+Extensions.swift in Sources */,
 				BD7D9617225290C800C93211 /* PreferencesController.swift in Sources */,
 				BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */,
+				BD7D961C22532B6900C93211 /* BackupController.swift in Sources */,
 				BD7D960E2252888000C93211 /* Application.swift in Sources */,
+				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
+				BD7D962322533FF300C93211 /* MainMenuController.swift in Sources */,
 				BD7D961322528ADB00C93211 /* InfoPropertyList.swift in Sources */,
 				BD9313872251703400D116E4 /* AppDelegate.swift in Sources */,
 			);

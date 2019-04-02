@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BD4A692F2253BA6400F588AD /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A692E2253BA6400F588AD /* Machine.swift */; };
 		BD4A69312253BADE00F588AD /* MachineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69302253BADE00F588AD /* MachineController.swift */; };
+		BD4A69332253D8F800F588AD /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = BD4A69322253D8F800F588AD /* .travis.yml */; };
+		BD4A69352253D9C900F588AD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = BD4A69342253D9C900F588AD /* .gitignore */; };
 		BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960B2252849100C93211 /* ApplicationController.swift */; };
 		BD7D960E2252888000C93211 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960D2252888000C93211 /* Application.swift */; };
 		BD7D961322528ADB00C93211 /* InfoPropertyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D961222528ADB00C93211 /* InfoPropertyList.swift */; };
@@ -27,6 +29,8 @@
 /* Begin PBXFileReference section */
 		BD4A692E2253BA6400F588AD /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		BD4A69302253BADE00F588AD /* MachineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MachineController.swift; path = Sources/Controllers/MachineController.swift; sourceTree = SOURCE_ROOT; };
+		BD4A69322253D8F800F588AD /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		BD4A69342253D9C900F588AD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BD7D960B2252849100C93211 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		BD7D960D2252888000C93211 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		BD7D961222528ADB00C93211 /* InfoPropertyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPropertyList.swift; sourceTree = "<group>"; };
@@ -118,9 +122,11 @@
 		BD93137A2251703400D116E4 = {
 			isa = PBXGroup;
 			children = (
+				BD4A69342253D9C900F588AD /* .gitignore */,
+				BD4A69322253D8F800F588AD /* .travis.yml */,
+				BD9313842251703400D116E4 /* Products */,
 				BD7D960A225281E600C93211 /* Resources */,
 				BD9313852251703400D116E4 /* Sources */,
-				BD9313842251703400D116E4 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -207,6 +213,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD4A69352253D9C900F588AD /* .gitignore in Resources */,
+				BD4A69332253D8F800F588AD /* .travis.yml in Resources */,
 				BD9313892251703600D116E4 /* Assets.xcassets in Resources */,
 				BD93138C2251703700D116E4 /* MainMenu.xib in Resources */,
 			);

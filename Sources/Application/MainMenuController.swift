@@ -16,16 +16,28 @@ class MainMenuController: NSObject {
       alert.runModal()
       return
     }
-    dependencyContainer?.backupController.backup(to: backupDestination)
+    do {
+      try dependencyContainer?.backupController.initializeBackup(to: backupDestination)
+    } catch let error {
+      let alert = createAlert(error: error)
+      alert.runModal()
+    }
   }
 
   // MARK: - Private methods
 
-  private func createAlert(with text: String) -> NSAlert {
-    let alert = NSAlert()
+  private func createAlert(with text: String = "", error: Error? = nil) -> NSAlert {
+    let alert: NSAlert
+    if let error = error {
+      alert = NSAlert(error: error)
+    } else {
+      alert = NSAlert()
+      alert.messageText = text
+    }
+
     alert.alertStyle = .warning
     alert.addButton(withTitle: "Ok")
-    alert.messageText = text
+
     return alert
   }
 }

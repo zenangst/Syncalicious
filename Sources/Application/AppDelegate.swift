@@ -1,7 +1,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, ApplicationControllerDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
   var window: NSWindow?
   var dependencyContainer: DependencyContainer?
   @IBOutlet var mainMenuController: MainMenuController?
@@ -20,21 +20,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, ApplicationControllerDelegat
   }
 
   private func loadApplication() {
-    let window = createWindow()
-    window.makeKeyAndOrderFront(nil)
-    let dependencyContainer = createDependencyContainer()
-    dependencyContainer.applicationController.delegate = self
-
-    UserDefaults.standard.backupDestination = nil
-
     do {
+      let window = createWindow()
+      window.makeKeyAndOrderFront(nil)
+      let dependencyContainer = try createDependencyContainer()
       let locations = try dependencyContainer.applicationController.applicationDirectories()
       dependencyContainer.applicationController.loadApplications(at: locations)
-    } catch {}
-
-    self.mainMenuController?.dependencyContainer = dependencyContainer
-    self.window = window
-    self.dependencyContainer = dependencyContainer
+      self.mainMenuController?.dependencyContainer = dependencyContainer
+      self.window = window
+      self.dependencyContainer = dependencyContainer
+    } catch let error {
+      let alert = NSAlert(error: error)
+      alert.runModal()
+    }
   }
 
   private func createWindow() -> NSWindow {
@@ -43,21 +41,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, ApplicationControllerDelegat
     return window
   }
 
-  private func createDependencyContainer() -> DependencyContainer {
+  private func createDependencyContainer() throws -> DependencyContainer {
+    let machineController = try MachineController(host: Host.current())
     let infoPlistController = InfoPropertyListController()
     let preferencesController = PreferencesController()
     let applicationController = ApplicationController(infoPlistController: infoPlistController,
                                                       preferencesController: preferencesController)
-    return DependencyContainer(applicationController: applicationController,
-                               infoPlistController: infoPlistController,
-                               preferencesController: preferencesController)
-  }
+    let backupController = BackupController(machineController: machineController)
+    let dependencyContainer = DependencyContainer(applicationController: applicationController,
+                                                  backupController: backupController,
+                                                  infoPlistController: infoPlistController,
+                                                  machineController: machineController,
+                                                  preferencesController: preferencesController)
 
-  // MARK: - ApplicationControllerDelegate
+    applicationController.delegate = backupController
 
-  func applicationController(_ controller: ApplicationController,
-                             didLoadApplications applications: [Application]) {
-    debugPrint("Loaded \(applications.count) applications.")
+    return dependencyContainer
   }
 }
 

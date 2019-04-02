@@ -20,7 +20,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, ApplicationControllerDelegat
     window.makeKeyAndOrderFront(nil)
     self.window = window
     applicationController.delegate = self
-    applicationController.load()
+
+    do {
+      let locations = try applicationController.applicationDirectories()
+      applicationController.loadApplications(at: locations)
+    } catch {}
   }
 
   func applicationController(_ controller: ApplicationController,

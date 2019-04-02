@@ -6,7 +6,6 @@ protocol ApplicationControllerDelegate: class {
 
 class ApplicationController {
   weak var delegate: ApplicationControllerDelegate?
-  @objc func injected() { load() }
 
   private lazy var preferencesController = PreferencesController()
   private lazy var infoPlistController = InfoPropertyListController()
@@ -15,28 +14,11 @@ class ApplicationController {
 
   // MARK: - Public methods
 
-  func load() {
-    queue.async(execute: runAsync)
+  func loadApplications(at locations: [URL]) {
+    queue.async(execute: { [weak self] in self?.runAsync(locations) })
   }
 
-  // MARK: - Private methods
-
-  private func runAsync() {
-    do {
-      let locations = try applicationDirectories()
-      var applications = [Application]()
-      for location in locations {
-        let urls = recursiveApplicationParse(at: location)
-        applications.append(contentsOf: loadApplications(urls))
-      }
-      DispatchQueue.main.async { [weak self] in
-        guard let strongSelf = self else { return }
-        strongSelf.delegate?.applicationController(strongSelf, didLoadApplications: applications)
-      }
-    } catch {}
-  }
-
-  private func applicationDirectories() throws -> [URL] {
+  func applicationDirectories() throws -> [URL] {
     let userDirectory = try FileManager.default.url(for: .applicationDirectory,
                                                     in: .userDomainMask,
                                                     appropriateFor: nil,
@@ -47,6 +29,22 @@ class ApplicationController {
                                                            create: false)
 
     return [userDirectory, applicationDirectory]
+  }
+
+  // MARK: - Private methods
+
+  private func runAsync(_ locations: [URL]) {
+    do {
+      var applications = [Application]()
+      for location in locations {
+        let urls = recursiveApplicationParse(at: location)
+        applications.append(contentsOf: loadApplications(urls))
+      }
+      DispatchQueue.main.async { [weak self] in
+        guard let strongSelf = self else { return }
+        strongSelf.delegate?.applicationController(strongSelf, didLoadApplications: applications)
+      }
+    } catch {}
   }
 
   private func recursiveApplicationParse(at url: URL) -> [URL] {

@@ -6,7 +6,12 @@ enum BackupError: Error {
   case unableToCreateBackupFolder(Error)
 }
 
+protocol BackupControllerDelegate: class {
+  func backupController(_ controller: BackupController, didSelectDestination destination: URL)
+}
+
 class BackupController: ApplicationControllerDelegate {
+  weak var delegate: BackupControllerDelegate?
   var applications = [Application]()
   let machineController: MachineController
   var openPanel: NSOpenPanel?
@@ -34,7 +39,6 @@ class BackupController: ApplicationControllerDelegate {
 
     try createFolderIfNeeded(at: destination)
     runBackup(for: applications, to: destination)
-
     debugPrint("Backing up to destination: \(destination.path)")
   }
 
@@ -45,8 +49,9 @@ class BackupController: ApplicationControllerDelegate {
       let destination = openPanel?.urls.first else {
         throw BackupError.missingUrl
     }
-    defer { openPanel = nil }
-    UserDefaults.standard.backupDestination = destination
+
+    delegate?.backupController(self, didSelectDestination: destination)
+    openPanel = nil
   }
 
   private func createFolderIfNeeded(at url: URL) throws {

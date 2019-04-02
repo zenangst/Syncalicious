@@ -1,7 +1,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
   var window: NSWindow?
   var dependencyContainer: DependencyContainer?
   @IBOutlet var mainMenuController: MainMenuController?
@@ -54,9 +54,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                   machineController: machineController,
                                                   preferencesController: preferencesController)
 
+    backupController.delegate = self
     applicationController.delegate = backupController
 
     return dependencyContainer
+  }
+
+  // MARK: - BackupControllerDelegate
+
+  func backupController(_ controller: BackupController, didSelectDestination destination: URL) {
+    UserDefaults.standard.backupDestination = destination
   }
 }
 

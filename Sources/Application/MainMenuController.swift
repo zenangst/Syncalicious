@@ -11,7 +11,8 @@ class MainMenuController: NSObject {
 
   @IBAction func performBackup(_ sender: Any?) {
     guard let backupDestination = UserDefaults.standard.backupDestination else {
-      let message = NSLocalizedString("You need to pick a backup destination before you can make a backup.", comment: "")
+      let message = NSLocalizedString("You need to pick a backup destination before you can make a backup.",
+                                      comment: "")
       let alert = createAlert(with: message)
       alert.runModal()
       return

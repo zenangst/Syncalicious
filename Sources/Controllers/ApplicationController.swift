@@ -9,10 +9,10 @@ class ApplicationController {
 
   private let preferencesController: PreferencesController
   private let infoPlistController: InfoPropertyListController
-  private lazy var queue: DispatchQueue = { return DispatchQueue(label: String(describing: self),
-                                                                 qos: .userInitiated) }()
+  var queue: DispatchQueue?
 
-  init(infoPlistController: InfoPropertyListController,
+  init(queue: DispatchQueue? = nil,
+       infoPlistController: InfoPropertyListController,
        preferencesController: PreferencesController) {
     self.infoPlistController = infoPlistController
     self.preferencesController = preferencesController
@@ -21,7 +21,7 @@ class ApplicationController {
   // MARK: - Public methods
 
   func loadApplications(at locations: [URL]) {
-    queue.async(execute: { [weak self] in self?.runAsync(locations) })
+    dispatchIfNeeded(on: queue, handler: { [weak self] in self?.runAsync(locations) })
   }
 
   func applicationDirectories() throws -> [URL] {
@@ -39,13 +39,30 @@ class ApplicationController {
 
   // MARK: - Private methods
 
+  private func dispatchIfNeeded(on queue: DispatchQueue?, handler: @escaping () -> Void) {
+    if let queue = queue {
+      queue.async(execute: handler)
+    } else {
+      handler()
+    }
+  }
+
+  private func dispatchToMainIfNeeded(_ handler: @escaping () -> Void) {
+    if queue != nil {
+      DispatchQueue.main.async(execute: handler)
+    } else {
+      handler()
+    }
+  }
+
   private func runAsync(_ locations: [URL]) {
     var applications = [Application]()
     for location in locations {
       let urls = recursiveApplicationParse(at: location)
       applications.append(contentsOf: loadApplications(urls))
     }
-    DispatchQueue.main.async { [weak self] in
+
+    dispatchToMainIfNeeded { [weak self] in
       guard let strongSelf = self else { return }
       strongSelf.delegate?.applicationController(strongSelf, didLoadApplications: applications)
     }

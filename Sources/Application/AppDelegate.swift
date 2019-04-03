@@ -63,10 +63,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
   }
 
   private func createDependencyContainer() throws -> DependencyContainer {
+    let libraryDirectory = try FileManager.default.url(for: .libraryDirectory,
+                                                       in: .userDomainMask,
+                                                       appropriateFor: nil,
+                                                       create: false)
     let machineController = try MachineController(host: Host.current())
     let infoPlistController = InfoPropertyListController()
-    let preferencesController = PreferencesController()
-    let applicationController = ApplicationController(infoPlistController: infoPlistController,
+    let preferencesController = PreferencesController(libraryDirectory: libraryDirectory)
+    let queue = DispatchQueue(label: String(describing: ApplicationController.self),
+                              qos: .userInitiated)
+    let applicationController = ApplicationController(queue: queue,
+                                                      infoPlistController: infoPlistController,
                                                       preferencesController: preferencesController)
     let backupController = BackupController(machineController: machineController)
     let dependencyContainer = DependencyContainer(applicationController: applicationController,

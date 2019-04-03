@@ -28,7 +28,18 @@
 		BD9313872251703400D116E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9313862251703400D116E4 /* AppDelegate.swift */; };
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
+		BDCBB2AB22551372007C9404 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBB2AA22551372007C9404 /* Tests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BDCBB2AD22551372007C9404 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD93137B2251703400D116E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD9313822251703400D116E4;
+			remoteInfo = Syncalicious;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		BD4A692E2253BA6400F588AD /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
@@ -55,10 +66,20 @@
 		BD93138B2251703700D116E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BD93138D2251703700D116E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD93138E2251703700D116E4 /* Syncalicious.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syncalicious.entitlements; sourceTree = "<group>"; };
+		BDCBB2A822551372007C9404 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDCBB2AA22551372007C9404 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		BDCBB2AC22551372007C9404 /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BD9313802251703400D116E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDCBB2A522551372007C9404 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -89,8 +110,9 @@
 			isa = PBXGroup;
 			children = (
 				BD9313882251703600D116E4 /* Assets.xcassets */,
-				BD93138A2251703700D116E4 /* MainMenu.xib */,
+				BDCBB2AC22551372007C9404 /* Info-Tests.plist */,
 				BD93138D2251703700D116E4 /* Info.plist */,
+				BD93138A2251703700D116E4 /* MainMenu.xib */,
 				BD93138E2251703700D116E4 /* Syncalicious.entitlements */,
 			);
 			path = Resources;
@@ -150,6 +172,7 @@
 			children = (
 				BD4A69342253D9C900F588AD /* .gitignore */,
 				BD4A69322253D8F800F588AD /* .travis.yml */,
+				BDCBB2A922551372007C9404 /* Tests */,
 				BD9313842251703400D116E4 /* Products */,
 				BD7D960A225281E600C93211 /* Resources */,
 				BD9313852251703400D116E4 /* Sources */,
@@ -160,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				BD9313832251703400D116E4 /* Syncalicious.app */,
+				BDCBB2A822551372007C9404 /* Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -176,6 +200,14 @@
 				BD4A69382253DCF100F588AD /* Views */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		BDCBB2A922551372007C9404 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				BDCBB2AA22551372007C9404 /* Tests.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +230,24 @@
 			productReference = BD9313832251703400D116E4 /* Syncalicious.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BDCBB2A722551372007C9404 /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDCBB2B122551372007C9404 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				BDCBB2A422551372007C9404 /* Sources */,
+				BDCBB2A522551372007C9404 /* Frameworks */,
+				BDCBB2A622551372007C9404 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BDCBB2AE22551372007C9404 /* PBXTargetDependency */,
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = BDCBB2A822551372007C9404 /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -216,6 +266,10 @@
 							};
 						};
 					};
+					BDCBB2A722551372007C9404 = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = BD9313822251703400D116E4;
+					};
 				};
 			};
 			buildConfigurationList = BD93137E2251703400D116E4 /* Build configuration list for PBXProject "Syncalicious" */;
@@ -232,6 +286,7 @@
 			projectRoot = "";
 			targets = (
 				BD9313822251703400D116E4 /* Syncalicious */,
+				BDCBB2A722551372007C9404 /* Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -245,6 +300,13 @@
 				BD4A69332253D8F800F588AD /* .travis.yml in Resources */,
 				BD9313892251703600D116E4 /* Assets.xcassets in Resources */,
 				BD93138C2251703700D116E4 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDCBB2A622551372007C9404 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,7 +337,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BDCBB2A422551372007C9404 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDCBB2AB22551372007C9404 /* Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BDCBB2AE22551372007C9404 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD9313822251703400D116E4 /* Syncalicious */;
+			targetProxy = BDCBB2AD22551372007C9404 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		BD93138A2251703700D116E4 /* MainMenu.xib */ = {
@@ -440,6 +518,46 @@
 			};
 			name = Release;
 		};
+		BDCBB2AF22551372007C9404 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Resources/Info-Tests.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zenangst.Syncalicious.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Syncalicious.app/Contents/MacOS/Syncalicious";
+			};
+			name = Debug;
+		};
+		BDCBB2B022551372007C9404 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Resources/Info-Tests.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zenangst.Syncalicious.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Syncalicious.app/Contents/MacOS/Syncalicious";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -457,6 +575,15 @@
 			buildConfigurations = (
 				BD9313922251703700D116E4 /* Debug */,
 				BD9313932251703700D116E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDCBB2B122551372007C9404 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDCBB2AF22551372007C9404 /* Debug */,
+				BDCBB2B022551372007C9404 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

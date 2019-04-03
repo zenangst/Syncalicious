@@ -9,6 +9,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
   // MARK: - NSApplicationDelegate
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
+    guard NSClassFromString("XCTestCase") == nil else { return }
     #if DEBUG
     loadInjection()
     #endif

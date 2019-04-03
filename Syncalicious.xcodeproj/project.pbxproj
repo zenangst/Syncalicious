@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		BD4A692F2253BA6400F588AD /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A692E2253BA6400F588AD /* Machine.swift */; };
 		BD4A69312253BADE00F588AD /* MachineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69302253BADE00F588AD /* MachineController.swift */; };
-		BD4A69332253D8F800F588AD /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = BD4A69322253D8F800F588AD /* .travis.yml */; };
-		BD4A69352253D9C900F588AD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = BD4A69342253D9C900F588AD /* .gitignore */; };
 		BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69392253DCF100F588AD /* MainWindow.swift */; };
 		BD4A693C2253DD9600F588AD /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A693B2253DD9600F588AD /* Toolbar.swift */; };
 		BD4A693F2253DDEA00F588AD /* TitleToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A693E2253DDEA00F588AD /* TitleToolbarItem.swift */; };
@@ -69,6 +67,7 @@
 		BDCBB2A822551372007C9404 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCBB2AA22551372007C9404 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		BDCBB2AC22551372007C9404 /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
+		BDCBB2B622551725007C9404 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +169,7 @@
 		BD93137A2251703400D116E4 = {
 			isa = PBXGroup;
 			children = (
+				BDCBB2B622551725007C9404 /* .swiftlint.yml */,
 				BD4A69342253D9C900F588AD /* .gitignore */,
 				BD4A69322253D8F800F588AD /* .travis.yml */,
 				BDCBB2A922551372007C9404 /* Tests */,
@@ -220,6 +220,7 @@
 				BD93137F2251703400D116E4 /* Sources */,
 				BD9313802251703400D116E4 /* Frameworks */,
 				BD9313812251703400D116E4 /* Resources */,
+				BDCBB2B5225516F1007C9404 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -296,8 +297,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD4A69352253D9C900F588AD /* .gitignore in Resources */,
-				BD4A69332253D8F800F588AD /* .travis.yml in Resources */,
 				BD9313892251703600D116E4 /* Assets.xcassets in Resources */,
 				BD93138C2251703700D116E4 /* MainMenu.xib in Resources */,
 			);
@@ -311,6 +310,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BDCBB2B5225516F1007C9404 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BD93137F2251703400D116E4 /* Sources */ = {

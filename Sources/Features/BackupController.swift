@@ -76,10 +76,10 @@ class BackupController: ApplicationControllerDelegate {
     for application in applications where application.preferences.path.isFileURL {
       var from = application.preferences.path
       from.resolveSymlinksInPath()
-      let to = machineController.machineBackupDestination(for: url)
+      let destination = machineController.machineBackupDestination(for: url)
         .appendingPathComponent(from.lastPathComponent)
       do {
-        try fileManager.copyItem(at: from, to: to)
+        try fileManager.copyItem(at: from, to: destination)
       } catch let error {
         debugPrint(error)
       }

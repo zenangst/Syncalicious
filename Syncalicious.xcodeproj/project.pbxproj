@@ -27,6 +27,7 @@
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
 		BDCBB2AB22551372007C9404 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBB2AA22551372007C9404 /* Tests.swift */; };
+		BDCBB2C022551C5B007C9404 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDCBB2C222551C5B007C9404 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		BDCBB2AA22551372007C9404 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		BDCBB2AC22551372007C9404 /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 		BDCBB2B622551725007C9404 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		BDCBB2C122551C5B007C9404 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				BD93138D2251703700D116E4 /* Info.plist */,
 				BD93138A2251703700D116E4 /* MainMenu.xib */,
 				BD93138E2251703700D116E4 /* Syncalicious.entitlements */,
+				BDCBB2C222551C5B007C9404 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD9313892251703600D116E4 /* Assets.xcassets in Resources */,
+				BDCBB2C022551C5B007C9404 /* Localizable.strings in Resources */,
 				BD93138C2251703700D116E4 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +386,14 @@
 				BD93138B2251703700D116E4 /* Base */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		BDCBB2C222551C5B007C9404 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BDCBB2C122551C5B007C9404 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

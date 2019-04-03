@@ -37,7 +37,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
       let previousFrame = self.window?.frame
       self.window?.close()
       self.window = nil
-
       let window = createWindow(with: ViewController())
       let dependencyContainer = try createDependencyContainer()
       let locations = try dependencyContainer.applicationController.applicationDirectories()

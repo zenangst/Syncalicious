@@ -24,7 +24,9 @@ class Toolbar: NSToolbar, NSToolbarDelegate {
     ]
   }
 
-  func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
+  func toolbar(_ toolbar: NSToolbar,
+               itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier,
+               willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
     switch itemIdentifier {
     case TitleToolbarItem.itemIdentifier:
       let item = TitleToolbarItem(itemIdentifier: TitleToolbarItem.itemIdentifier)

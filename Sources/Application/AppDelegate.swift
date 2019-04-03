@@ -88,4 +88,3 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
     UserDefaults.standard.backupDestination = destination
   }
 }
-

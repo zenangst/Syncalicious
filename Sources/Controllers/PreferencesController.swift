@@ -13,14 +13,16 @@ class PreferencesController {
 
     let suffix = "Preferences/\(infoPlist.bundleIdentifier).plist"
     let applicationPreference = libraryDirectory.appendingPathComponent(suffix)
-    let containerPreferenceUrl = libraryDirectory.appendingPathComponent("Containers/\(infoPlist.bundleIdentifier)/Data/Library/\(suffix)")
+    let containerPreferenceUrl = libraryDirectory
+      .appendingPathComponent("Containers/\(infoPlist.bundleIdentifier)/Data/Library/\(suffix)")
 
     var defaultsDomainContainerUrl: URL?
     var defaultsDomainLibraryUrl: URL?
 
     if let defaultsDomain = infoPlist.defaultsDomain {
       let suffix = "Preferences/\(defaultsDomain).plist"
-      defaultsDomainContainerUrl = libraryDirectory.appendingPathComponent("Containers/\(infoPlist.bundleIdentifier)/Data/Library/\(suffix)")
+      defaultsDomainContainerUrl = libraryDirectory
+        .appendingPathComponent("Containers/\(infoPlist.bundleIdentifier)/Data/Library/\(suffix)")
       defaultsDomainLibraryUrl = libraryDirectory.appendingPathComponent(suffix)
     }
 

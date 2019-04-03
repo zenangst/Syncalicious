@@ -74,10 +74,10 @@ class BackupController: ApplicationControllerDelegate {
   private func runBackup(for applications: [Application], to url: URL) {
     let fileManager = FileManager.default
     for application in applications where application.preferences.path.isFileURL {
-      let from = application.preferences.path
-      let fileName = from.lastPathComponent
-      let to = machineController.machineBackupDestination(for: url).appendingPathComponent(fileName)
-
+      var from = application.preferences.path
+      from.resolveSymlinksInPath()
+      let to = machineController.machineBackupDestination(for: url)
+        .appendingPathComponent(from.lastPathComponent)
       do {
         try fileManager.copyItem(at: from, to: to)
       } catch let error {

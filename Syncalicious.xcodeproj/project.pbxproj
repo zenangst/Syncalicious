@@ -23,10 +23,11 @@
 		BD7D961F22532BA100C93211 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */; };
 		BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D962022533CE100C93211 /* DependencyContainer.swift */; };
 		BD7D962322533FF300C93211 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D962222533FF300C93211 /* MainMenuController.swift */; };
+		BD8EDD722255322A00110E56 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8EDD712255322A00110E56 /* TestController.swift */; };
 		BD9313872251703400D116E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9313862251703400D116E4 /* AppDelegate.swift */; };
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
-		BDCBB2AB22551372007C9404 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBB2AA22551372007C9404 /* Tests.swift */; };
+		BDCBB2AB22551372007C9404 /* ApplicationControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */; };
 		BDCBB2C022551C5B007C9404 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDCBB2C222551C5B007C9404 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		BD7D962022533CE100C93211 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		BD7D962222533FF300C93211 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
+		BD8EDD712255322A00110E56 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		BD9313832251703400D116E4 /* Syncalicious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Syncalicious.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9313862251703400D116E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD9313882251703600D116E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -66,7 +68,7 @@
 		BD93138D2251703700D116E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD93138E2251703700D116E4 /* Syncalicious.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syncalicious.entitlements; sourceTree = "<group>"; };
 		BDCBB2A822551372007C9404 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BDCBB2AA22551372007C9404 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationControllerTests.swift; sourceTree = "<group>"; };
 		BDCBB2AC22551372007C9404 /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 		BDCBB2B622551725007C9404 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		BDCBB2C122551C5B007C9404 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -208,7 +210,8 @@
 		BDCBB2A922551372007C9404 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				BDCBB2AA22551372007C9404 /* Tests.swift */,
+				BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */,
+				BD8EDD712255322A00110E56 /* TestController.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -365,7 +368,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDCBB2AB22551372007C9404 /* Tests.swift in Sources */,
+				BDCBB2AB22551372007C9404 /* ApplicationControllerTests.swift in Sources */,
+				BD8EDD722255322A00110E56 /* TestController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,12 +5,14 @@ enum PreferencesControllerError: Error {
 }
 
 class PreferencesController {
-  func load(_ infoPlist: InfoPropertyList) throws -> Preferences {
-    let libraryDirectory = try FileManager.default.url(for: .libraryDirectory,
-                                                       in: .userDomainMask,
-                                                       appropriateFor: nil,
-                                                       create: false)
 
+  let libraryDirectory: URL
+
+  init(libraryDirectory: URL) {
+    self.libraryDirectory = libraryDirectory
+  }
+
+  func load(_ infoPlist: InfoPropertyList) throws -> Preferences {
     let suffix = "Preferences/\(infoPlist.bundleIdentifier).plist"
     let applicationPreference = libraryDirectory.appendingPathComponent(suffix)
     let containerPreferenceUrl = libraryDirectory

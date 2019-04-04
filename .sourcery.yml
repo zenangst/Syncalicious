@@ -1,0 +1,7 @@
+sources:
+  - Sources
+  - Sourcery/Protocols
+templates:
+  - Sourcery/Templates
+output:
+  Generated

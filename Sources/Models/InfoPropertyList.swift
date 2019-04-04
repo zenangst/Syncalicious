@@ -1,15 +1,16 @@
 import Foundation
 
 enum InfoPropertyListKey: String {
+  case bundleIdentifier = "CFBundleIdentifier"
   case bundleName = "CFBundleName"
+  case defaultsDomain = "SUDefaultsDomain"
   case executableName = "CFBundleExecutable"
   case iconFile = "CFBundleIconFile"
-  case bundleIdentifier = "CFBundleIdentifier"
-  case defaultsDomain = "SUDefaultsDomain"
 }
 
 struct InfoPropertyList {
   let bundleIdentifier: String
+  let bundleName: String
   let defaultsDomain: String?
   let path: String
 }

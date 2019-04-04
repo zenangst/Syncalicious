@@ -21,9 +21,11 @@ class InfoPropertyListController {
       throw InfoPropertyListError.unableToResolveBundleIdentifier
     }
 
+    let bundleName = contents.value(forPropertyListKey: .bundleName) ?? bundleIdentifier
     let defaultsDomain = contents.value(forPropertyListKey: .defaultsDomain)
 
     return InfoPropertyList(bundleIdentifier: bundleIdentifier,
+                            bundleName: bundleName,
                             defaultsDomain: defaultsDomain,
                             path: path)
   }

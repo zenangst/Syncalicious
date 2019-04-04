@@ -113,8 +113,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     dependencyContainer?.backupController.applications = applications
 
     let models = applications.compactMap({
-      ApplicationItemModel(title: $0.propertyList.bundleIdentifier,
-                           subtitle: $0.preferences.path.path,
+      ApplicationItemModel(title: $0.propertyList.bundleName,
+                           subtitle: $0.propertyList.bundleIdentifier,
                            bundleIdentifier: $0.propertyList.bundleIdentifier,
                            path: $0.path)
     })

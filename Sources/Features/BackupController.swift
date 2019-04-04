@@ -10,7 +10,7 @@ protocol BackupControllerDelegate: class {
   func backupController(_ controller: BackupController, didSelectDestination destination: URL)
 }
 
-class BackupController: ApplicationControllerDelegate {
+class BackupController {
   weak var delegate: BackupControllerDelegate?
   var applications = [Application]()
   let machineController: MachineController
@@ -84,13 +84,5 @@ class BackupController: ApplicationControllerDelegate {
         debugPrint(error)
       }
     }
-  }
-
-  // MARK: - ApplicationControllerDelegate
-
-  func applicationController(_ controller: ApplicationController,
-                             didLoadApplications applications: [Application]) {
-    self.applications = applications
-    debugPrint("Loaded \(applications.count) applications.")
   }
 }

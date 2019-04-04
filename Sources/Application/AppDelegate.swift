@@ -1,9 +1,10 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, ApplicationControllerDelegate {
   var window: NSWindow?
   var dependencyContainer: DependencyContainer?
+  var mainViewController: ApplicationItemViewController?
   @IBOutlet var mainMenuController: MainMenuController?
 
   // MARK: - NSApplicationDelegate
@@ -37,13 +38,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
       let previousFrame = self.window?.frame
       self.window?.close()
       self.window = nil
-      let window = createWindow(with: ViewController())
+
+      let layout = NSCollectionViewFlowLayout()
+      layout.itemSize = .init(width: 250, height: 80)
+
       let dependencyContainer = try createDependencyContainer()
       let locations = try dependencyContainer.applicationController.applicationDirectories()
-      dependencyContainer.applicationController.loadApplications(at: locations)
+      let viewController = ApplicationItemViewController(layout: layout, iconStore: dependencyContainer)
+
+      let window = createWindow(with: viewController)
+
+      self.mainViewController = viewController
       self.mainMenuController?.dependencyContainer = dependencyContainer
       self.window = window
       self.dependencyContainer = dependencyContainer
+
+      dependencyContainer.applicationController.loadApplications(at: locations)
 
       window.makeKeyAndOrderFront(nil)
       if let previousFrame = previousFrame {
@@ -76,14 +86,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
                                                       infoPlistController: infoPlistController,
                                                       preferencesController: preferencesController)
     let backupController = BackupController(machineController: machineController)
+    let iconController = IconController()
     let dependencyContainer = DependencyContainer(applicationController: applicationController,
                                                   backupController: backupController,
+                                                  iconController: iconController,
                                                   infoPlistController: infoPlistController,
                                                   machineController: machineController,
                                                   preferencesController: preferencesController)
 
     backupController.delegate = self
-    applicationController.delegate = backupController
+    applicationController.delegate = self
 
     return dependencyContainer
   }
@@ -92,5 +104,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate {
 
   func backupController(_ controller: BackupController, didSelectDestination destination: URL) {
     UserDefaults.standard.backupDestination = destination
+  }
+
+  // MARK: - ApplicationControllerDelegate
+
+  func applicationController(_ controller: ApplicationController,
+                             didLoadApplications applications: [Application]) {
+    dependencyContainer?.backupController.applications = applications
+
+    let models = applications.compactMap({
+      ApplicationItemModel(title: $0.propertyList.bundleIdentifier,
+                           subtitle: $0.preferences.path.path,
+                           bundleIdentifier: $0.propertyList.bundleIdentifier,
+                           path: $0.path)
+    })
+
+    mainViewController?.reload(with: models)
+
+    debugPrint("Loaded \(applications.count) applications.")
   }
 }

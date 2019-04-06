@@ -55,6 +55,7 @@
 		BD084B732258DA7800E91A7F /* SyncControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncControllerTests.swift; sourceTree = "<group>"; };
 		BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplicationDelegate.swift; sourceTree = "<group>"; };
 		BD084B782258E0B600E91A7F /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
+		BD084B7A2258F15500E91A7F /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
 		BD4A692E2253BA6400F588AD /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		BD4A69302253BADE00F588AD /* MachineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MachineController.swift; path = Sources/Controllers/MachineController.swift; sourceTree = SOURCE_ROOT; };
 		BD4A69322253D8F800F588AD /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
@@ -248,6 +249,7 @@
 		BD93137A2251703400D116E4 = {
 			isa = PBXGroup;
 			children = (
+				BD084B7A2258F15500E91A7F /* codecov.yml */,
 				BD8EDD7B22553A8200110E56 /* .sourcery.yml */,
 				BD4A69342253D9C900F588AD /* .gitignore */,
 				BDCBB2B622551725007C9404 /* .swiftlint.yml */,

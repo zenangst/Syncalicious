@@ -1,15 +1,18 @@
-import XCTest
+import Foundation
 @testable import Syncalicious
 
-class TestController {
-  var environmentUrl: URL!
+enum TestControllerError: Error {
+  case unableToFindEnvironmentPath
+}
 
-  init() {
+class TestController {
+  var environmentUrl: URL
+
+  required init() throws {
     guard let environmentPath = ProcessInfo.processInfo.environment["EnvironmentPath"] else {
-      XCTFail("Couldn't find EnvironmentPath")
-      return
+      throw TestControllerError.unableToFindEnvironmentPath
     }
-    environmentUrl = URL(string: environmentPath)!
+    self.environmentUrl = URL(string: "file://" + environmentPath)!
   }
 
   func createApplicationController() -> ApplicationController {

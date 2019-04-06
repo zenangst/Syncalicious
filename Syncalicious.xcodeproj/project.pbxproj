@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD084B722258D92D00E91A7F /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B712258D92D00E91A7F /* SyncController.swift */; };
+		BD084B742258DA7800E91A7F /* SyncControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B732258DA7800E91A7F /* SyncControllerTests.swift */; };
+		BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */; };
+		BD084B792258E0B600E91A7F /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B782258E0B600E91A7F /* TestHost.swift */; };
 		BD4A692F2253BA6400F588AD /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A692E2253BA6400F588AD /* Machine.swift */; };
 		BD4A69312253BADE00F588AD /* MachineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69302253BADE00F588AD /* MachineController.swift */; };
 		BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69392253DCF100F588AD /* MainWindow.swift */; };
@@ -47,6 +51,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD084B712258D92D00E91A7F /* SyncController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
+		BD084B732258DA7800E91A7F /* SyncControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncControllerTests.swift; sourceTree = "<group>"; };
+		BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplicationDelegate.swift; sourceTree = "<group>"; };
+		BD084B782258E0B600E91A7F /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
 		BD4A692E2253BA6400F588AD /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		BD4A69302253BADE00F588AD /* MachineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MachineController.swift; path = Sources/Controllers/MachineController.swift; sourceTree = SOURCE_ROOT; };
 		BD4A69322253D8F800F588AD /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
@@ -104,6 +112,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD084B752258E06E00E91A7F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BD8EDD712255322A00110E56 /* TestController.swift */,
+				BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */,
+				BD084B782258E0B600E91A7F /* TestHost.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		BD4A69382253DCF100F588AD /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +191,7 @@
 			children = (
 				BD7D961B22532B6900C93211 /* BackupController.swift */,
 				BD8EDD812255CE3400110E56 /* IconController.swift */,
+				BD084B712258D92D00E91A7F /* SyncController.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -269,8 +288,9 @@
 		BDCBB2A922551372007C9404 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BD084B752258E06E00E91A7F /* Helpers */,
 				BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */,
-				BD8EDD712255322A00110E56 /* TestController.swift */,
+				BD084B732258DA7800E91A7F /* SyncControllerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -412,6 +432,7 @@
 				BD4A692F2253BA6400F588AD /* Machine.swift in Sources */,
 				BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */,
 				BD8EDD822255CE3400110E56 /* IconController.swift in Sources */,
+				BD084B722258D92D00E91A7F /* SyncController.swift in Sources */,
 				BD4A69312253BADE00F588AD /* MachineController.swift in Sources */,
 				BD4A6941225406A300F588AD /* ViewController.swift in Sources */,
 				BD8EDD7E22553ADD00110E56 /* ApplicationView.swift in Sources */,
@@ -433,7 +454,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDCBB2AB22551372007C9404 /* ApplicationControllerTests.swift in Sources */,
+				BD084B792258E0B600E91A7F /* TestHost.swift in Sources */,
+				BD084B742258DA7800E91A7F /* SyncControllerTests.swift in Sources */,
 				BD8EDD722255322A00110E56 /* TestController.swift in Sources */,
+				BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

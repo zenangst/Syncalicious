@@ -1,0 +1,6 @@
+ignore:
+  - "Applications/Xcode.app/.*"
+  - "Resources"
+  - "Sourcery"
+  - "TestEnvironment"
+  - "Tests"

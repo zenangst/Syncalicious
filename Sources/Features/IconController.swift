@@ -66,7 +66,7 @@ class IconController {
 
     if !FileManager.default.fileExists(atPath: url.path) {
       try FileManager.default.createDirectory(at: url,
-                                              withIntermediateDirectories: false,
+                                              withIntermediateDirectories: true,
                                               attributes: nil)
     }
 

@@ -55,7 +55,9 @@ class ApplicationItem: NSCollectionViewItem, CollectionViewItemComponent {
       stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
       stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
       stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-      stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
+      stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
+      iconView.widthAnchor.constraint(equalToConstant: 48),
+      iconView.heightAnchor.constraint(equalToConstant: 48)
     ]
     NSLayoutConstraint.activate(layoutConstraints)
   }

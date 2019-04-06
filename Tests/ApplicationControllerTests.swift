@@ -1,15 +1,8 @@
 import XCTest
 @testable import Syncalicious
 
-class TestApplicationDelegate: ApplicationControllerDelegate {
-  var applications = [Application]()
-  func applicationController(_ controller: ApplicationController, didLoadApplications applications: [Application]) {
-    self.applications = applications
-  }
-}
-
 class ApplicationControllerTests: XCTestCase {
-  let testController = TestController()
+  let testController = try! TestController()
 
   func testApplicationParsing() {
     let delegate = TestApplicationDelegate()

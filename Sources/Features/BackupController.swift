@@ -64,7 +64,9 @@ class BackupController {
     }
 
     do {
-      try fileManager.createDirectory(at: backupLocation, withIntermediateDirectories: true, attributes: nil)
+      try fileManager.createDirectory(at: backupLocation,
+                                      withIntermediateDirectories: true,
+                                      attributes: nil)
       debugPrint("Created directory at: \(backupLocation.path)")
     } catch let error {
       throw BackupError.unableToCreateBackupFolder(error)

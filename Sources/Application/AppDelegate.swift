@@ -112,11 +112,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                              didLoadApplications applications: [Application]) {
     dependencyContainer?.backupController.applications = applications
 
-    let models = applications.compactMap({
-      ApplicationItemModel(title: $0.propertyList.bundleName,
-                           subtitle: $0.propertyList.bundleIdentifier,
-                           bundleIdentifier: $0.propertyList.bundleIdentifier,
-                           path: $0.path)
+    let models = applications
+      .sorted(by: { $0.propertyList.bundleName < $1.propertyList.bundleName })
+      .compactMap({
+        ApplicationItemModel(data: [
+          "title": $0.propertyList.bundleName,
+          "subtitle": $0.propertyList.bundleIdentifier,
+          "bundleIdentifier": $0.propertyList.bundleIdentifier,
+          "path": $0.path,
+          "enabled": true
+          ])
     })
 
     mainViewController?.reload(with: models)

@@ -4,16 +4,23 @@ import XCTest
 class SyncControllerTests: XCTestCase {
   let testController = try! TestController()
 
+  override func tearDown() {
+    super.tearDown()
+
+    do {
+      try FileManager.default.removeItem(at: testController.syncUrl)
+    } catch {
+      XCTFail("Failed to do cleanup.")
+    }
+  }
+
   func testSyncingMachines() {
-    let environmentUrl = testController.environmentUrl
-    let syncUrl = environmentUrl.appendingPathComponent("Sync")
+    let syncUrl = testController.syncUrl
     let applicationController = testController.createApplicationController()
     let delegate = TestApplicationDelegate()
 
     applicationController.delegate = delegate
-    applicationController.loadApplications(at: [
-      testController.environmentUrl.appendingPathComponent("Applications")
-      ])
+    applicationController.loadApplications(at: [testController.applicationUrl])
 
     let syncController = SyncController(applicationController: applicationController, destination: syncUrl)
     let machineHostA = TestHost(machineName: "MachineA")

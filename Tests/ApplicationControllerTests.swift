@@ -8,9 +8,7 @@ class ApplicationControllerTests: XCTestCase {
     let delegate = TestApplicationDelegate()
     let applicationController = testController.createApplicationController()
     applicationController.delegate = delegate
-    applicationController.loadApplications(at: [
-      testController.environmentUrl.appendingPathComponent("Applications")
-    ])
+    applicationController.loadApplications(at: [testController.applicationUrl])
 
     if delegate.applications.count != 4 {
       XCTAssertEqual(delegate.applications.count, 4)

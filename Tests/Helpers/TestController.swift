@@ -8,6 +8,10 @@ enum TestControllerError: Error {
 class TestController {
   var environmentUrl: URL
 
+  var applicationUrl: URL { return environmentUrl.appendingPathComponent("Applications") }
+  var backupUrl: URL { return environmentUrl.appendingPathComponent("Backup") }
+  var syncUrl: URL { return environmentUrl.appendingPathComponent("Sync") }
+
   required init() throws {
     guard let environmentPath = ProcessInfo.processInfo.environment["EnvironmentPath"] else {
       throw TestControllerError.unableToFindEnvironmentPath

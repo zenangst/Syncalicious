@@ -36,6 +36,7 @@
 		BD9313872251703400D116E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9313862251703400D116E4 /* AppDelegate.swift */; };
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
+		BDB919642259F7020096294D /* BackupControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB919632259F7020096294D /* BackupControllerTests.swift */; };
 		BDCBB2AB22551372007C9404 /* ApplicationControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */; };
 		BDCBB2C022551C5B007C9404 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDCBB2C222551C5B007C9404 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -88,6 +89,7 @@
 		BD93138B2251703700D116E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BD93138D2251703700D116E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD93138E2251703700D116E4 /* Syncalicious.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syncalicious.entitlements; sourceTree = "<group>"; };
+		BDB919632259F7020096294D /* BackupControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupControllerTests.swift; sourceTree = "<group>"; };
 		BDCBB2A822551372007C9404 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationControllerTests.swift; sourceTree = "<group>"; };
 		BDCBB2AC22551372007C9404 /* Info-Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
@@ -116,8 +118,8 @@
 		BD084B752258E06E00E91A7F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				BD8EDD712255322A00110E56 /* TestController.swift */,
 				BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */,
+				BD8EDD712255322A00110E56 /* TestController.swift */,
 				BD084B782258E0B600E91A7F /* TestHost.swift */,
 			);
 			path = Helpers;
@@ -290,8 +292,9 @@
 		BDCBB2A922551372007C9404 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				BD084B752258E06E00E91A7F /* Helpers */,
 				BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */,
+				BDB919632259F7020096294D /* BackupControllerTests.swift */,
+				BD084B752258E06E00E91A7F /* Helpers */,
 				BD084B732258DA7800E91A7F /* SyncControllerTests.swift */,
 			);
 			path = Tests;
@@ -458,6 +461,7 @@
 				BDCBB2AB22551372007C9404 /* ApplicationControllerTests.swift in Sources */,
 				BD084B792258E0B600E91A7F /* TestHost.swift in Sources */,
 				BD084B742258DA7800E91A7F /* SyncControllerTests.swift in Sources */,
+				BDB919642259F7020096294D /* BackupControllerTests.swift in Sources */,
 				BD8EDD722255322A00110E56 /* TestController.swift in Sources */,
 				BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */,
 			);

@@ -90,10 +90,14 @@ class ApplicationController {
 
   private func loadApplications(_ urls: [URL]) -> [Application] {
     var applications = [Application]()
+    var bundleIdentifiers = [String]()
     for path in urls {
       do {
         let application = try loadApplication(at: path)
-        applications.append(application)
+        if !bundleIdentifiers.contains(application.propertyList.bundleIdentifier) {
+          applications.append(application)
+          bundleIdentifiers.append(application.propertyList.bundleIdentifier)
+        }
       } catch {}
     }
     return applications

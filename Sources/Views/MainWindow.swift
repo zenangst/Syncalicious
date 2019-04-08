@@ -8,5 +8,10 @@ class MainWindow: NSWindow {
     titleVisibility = .hidden
     toolbar = Toolbar(identifier: String.init(describing: self))
     minSize = windowSize
+
+    if frame.size.width < windowSize.width || frame.size.width > maxSize.width {
+      setFrame(NSRect.init(origin: .zero, size: windowSize),
+               display: false)
+    }
   }
 }

@@ -7,6 +7,8 @@ import Cocoa
 class ApplicationItem: PrototypeItem, PrototypeItemComponent {
   let baseView = NSView()
 
+  override var isSelected: Bool { didSet { updateState() } }
+
   private var layoutConstraints = [NSLayoutConstraint]()
 
   override func loadView() {
@@ -22,9 +24,9 @@ class ApplicationItem: PrototypeItem, PrototypeItemComponent {
     addView(iconView, with: "iconView")
     addView(titleLabel, with: "titleLabel")
     addView(subtitleLabel, with: "subtitleLabel")
-    addView(checkbox, with: "checkbox")
+//    addView(checkbox, with: "checkbox")
 
-    let verticalStackView = NSStackView(views: [titleLabel, subtitleLabel, checkbox])
+    let verticalStackView = NSStackView(views: [titleLabel, subtitleLabel])
     verticalStackView.alignment = .left
     verticalStackView.orientation = .vertical
     verticalStackView.spacing = 0
@@ -61,5 +63,13 @@ class ApplicationItem: PrototypeItem, PrototypeItemComponent {
       iconView.heightAnchor.constraint(equalToConstant: 32)
     ]
     NSLayoutConstraint.activate(layoutConstraints)
+  }
+
+  private func updateState() {
+    if isSelected {
+      view.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.33).cgColor
+    } else {
+      view.layer?.backgroundColor = NSColor.clear.cgColor
+    }
   }
 }

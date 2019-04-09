@@ -6,6 +6,7 @@ import Cocoa
 class ApplicationItemViewController: NSViewController, Component {
   private let layout: NSCollectionViewFlowLayout
   private let dataSource: ApplicationItemDataSource
+  lazy var scrollView = NSScrollView()
   let collectionView: NSCollectionView
 
   init(title: String? = nil,
@@ -31,9 +32,11 @@ class ApplicationItemViewController: NSViewController, Component {
   // MARK: - View lifecycle
 
   override func loadView() {
-    let scrollView = NSScrollView()
     self.view = scrollView
     scrollView.documentView = collectionView
+    collectionView.isSelectable = true
+    collectionView.allowsMultipleSelection = false
+    collectionView.allowsEmptySelection = false
   }
 
   override func viewDidLoad() {

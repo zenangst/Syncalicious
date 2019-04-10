@@ -8,11 +8,17 @@ class ViewControllerFactory {
   }
 
   func createApplicationListViewController(with layout: NSCollectionViewFlowLayout) -> ApplicationItemViewController {
-    let listViewController = ApplicationItemViewController(layout: layout, iconStore: dependencyContainer)
-    listViewController.view.wantsLayer = true
-    listViewController.view.layer?.backgroundColor = NSColor.white.cgColor
-    listViewController.title = Bundle.main.infoDictionary?["CFBundleName"] as? String
+    let viewController = ApplicationItemViewController(layout: layout, iconStore: dependencyContainer)
+    viewController.view.wantsLayer = true
+    viewController.view.layer?.backgroundColor = NSColor.white.cgColor
+    viewController.title = Bundle.main.infoDictionary?["CFBundleName"] as? String
 
-    return listViewController
+    return viewController
+  }
+
+  func createApplicationDetailViewController() -> ApplicationContainerViewController {
+    let detailViewController = ApplicationInfoViewController()
+    let containerViewController = ApplicationContainerViewController(detailViewController: detailViewController)
+    return containerViewController
   }
 }

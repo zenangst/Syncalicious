@@ -31,24 +31,16 @@ class WindowFactory {
     sidebarItem.maximumThickness = sidebarItem.minimumThickness
     sidebarItem.canCollapse = true
 
-    let detailViewController = ViewController()
+    let detailViewController = viewControllerFactory.createApplicationDetailViewController()
     detailViewController.view.wantsLayer = true
     detailViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
     detailViewController.title = "Customize"
+    detailViewController.listViewController = listViewController
+    listViewController.collectionView.delegate = detailViewController
 
     let detailControllerItem = NSSplitViewItem(viewController: detailViewController)
     detailControllerItem.minimumThickness = 320
     detailControllerItem.canCollapse = false
-
-    let inspectorController = ViewController()
-    inspectorController.view.wantsLayer = true
-    inspectorController.view.layer?.backgroundColor = NSColor.white.cgColor
-
-    let inspectorControllerItem = NSSplitViewItem(viewController: inspectorController)
-    inspectorControllerItem.holdingPriority = .init(rawValue: 260)
-    inspectorControllerItem.minimumThickness = 260
-    inspectorControllerItem.maximumThickness = 260
-    inspectorControllerItem.canCollapse = true
 
     let windowController = WindowController(window: window,
                                             with: [sidebarItem, detailControllerItem])

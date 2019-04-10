@@ -103,11 +103,11 @@ class ApplicationController {
     return applications
   }
 
-  private func loadApplication(at path: URL) throws -> Application {
-    let infoPath = path.appendingPathComponent("Contents/Info.plist")
+  private func loadApplication(at url: URL) throws -> Application {
+    let infoPath = url.appendingPathComponent("Contents/Info.plist")
     let propertyList = try infoPlistController.load(at: infoPath)
     let preferences = try preferencesController.load(propertyList)
-    let application = Application(path: path,
+    let application = Application(url: url,
                                   propertyList: propertyList,
                                   preferences: preferences)
     return application

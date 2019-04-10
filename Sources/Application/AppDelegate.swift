@@ -109,8 +109,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
         "title": item.propertyList.bundleName,
         "subtitle": subtitle,
         "bundleIdentifier": item.propertyList.bundleIdentifier,
-        "path": item.path,
-        "enabled": true
+        "path": item.url,
+        "enabled": true,
+        "model": item
         ])
     }
     let models = applications
@@ -119,7 +120,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
     if let mainViewController = mainViewController {
       mainViewController.reload(with: models)
-      mainViewController.collectionView.selectItems(at: [IndexPath.init(item: 0, section: 0)], scrollPosition: .top)
+
+      let collectionView = mainViewController.collectionView
+      collectionView.selectItems(at: [IndexPath.init(item: 18, section: 0)], scrollPosition: .centeredHorizontally)
+      collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: [IndexPath.init(item: 18, section: 0)])
     }
 
     debugPrint("Loaded \(applications.count) applications.")

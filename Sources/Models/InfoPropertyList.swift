@@ -1,6 +1,6 @@
 import Foundation
 
-enum InfoPropertyListKey: String {
+enum InfoPropertyListKey: String, Hashable {
   case buildVersion = "CFBundleVersion"
   case bundleIdentifier = "CFBundleIdentifier"
   case bundleName = "CFBundleName"
@@ -10,7 +10,7 @@ enum InfoPropertyListKey: String {
   case versionString = "CFBundleShortVersionString"
 }
 
-struct InfoPropertyList {
+struct InfoPropertyList: Hashable {
   let buildVersion: String
   let bundleIdentifier: String
   let bundleName: String

@@ -1,7 +1,7 @@
 import Foundation
 
-struct Application {
-  let path: URL
+struct Application: Hashable {
+  let url: URL
   let propertyList: InfoPropertyList
   let preferences: Preferences
 }

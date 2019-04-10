@@ -1,5 +1,5 @@
 import Foundation
 
-struct Preferences {
+struct Preferences: Hashable {
   let path: URL
 }

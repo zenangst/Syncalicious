@@ -1,0 +1,16 @@
+PODS:
+  - Family (0.14.3)
+
+DEPENDENCIES:
+  - Family
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Family
+
+SPEC CHECKSUMS:
+  Family: e895808117f577305a6b5cabd4fc7463ad262e1f
+
+PODFILE CHECKSUM: 577eb548a5a12c3ca5c8d9a8a4ae97a7f630192b
+
+COCOAPODS: 1.6.0

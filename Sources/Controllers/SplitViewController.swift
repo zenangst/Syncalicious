@@ -42,21 +42,34 @@ class SplitViewController: NSSplitViewController {
       verticalDividerLight.belongsToView = view
       self.view.addSubview(verticalDividerLight)
 
-      let label = Label()
-      label.textColor = NSColor.windowFrameTextColor
-      label.stringValue = viewController.title ?? ""
-      label.alignment = .center
-      label.belongsToView = view
-      self.view.addSubview(label)
+      if let containedViewController = viewController as? SplitViewContainedController {
+        containedViewController.titlebarView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(containedViewController.titlebarView)
+        layoutConstraints.append(contentsOf: [
+          containedViewController.titlebarView.topAnchor.constraint(equalTo: toolbarBackground.topAnchor),
+          containedViewController.titlebarView.leadingAnchor.constraint(equalTo: toolbarBackground.leadingAnchor),
+          containedViewController.titlebarView.trailingAnchor.constraint(equalTo: toolbarBackground.trailingAnchor),
+          containedViewController.titlebarView.bottomAnchor.constraint(equalTo: toolbarBackground.bottomAnchor)
+          ])
+      } else {
+        let label = SmallLabel()
+        label.textColor = NSColor.windowFrameTextColor
+        label.stringValue = viewController.title ?? ""
+        label.alignment = .center
+        label.belongsToView = view
+        self.view.addSubview(label)
+
+        layoutConstraints.append(contentsOf: [
+          label.centerYAnchor.constraint(equalTo: toolbarBackground.centerYAnchor),
+          label.centerXAnchor.constraint(equalTo: toolbarBackground.centerXAnchor)
+          ])
+      }
 
       layoutConstraints.append(contentsOf: [
         toolbarBackground.topAnchor.constraint(equalTo: self.view.topAnchor),
         toolbarBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         toolbarBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         toolbarBackground.heightAnchor.constraint(equalToConstant: 38),
-
-        label.centerYAnchor.constraint(equalTo: toolbarBackground.centerYAnchor),
-        label.centerXAnchor.constraint(equalTo: toolbarBackground.centerXAnchor),
 
         contentBackgroundView.topAnchor.constraint(equalTo: self.view.topAnchor),
         contentBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

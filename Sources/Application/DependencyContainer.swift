@@ -1,6 +1,11 @@
 import Cocoa
 
 class DependencyContainer: IconStore {
+  lazy var layoutFactory = CollectionViewLayoutFactory()
+  lazy var viewControllerFactory = ViewControllerFactory(dependencyContainer: self)
+  lazy var windowFactory = WindowFactory(dependencyContainer: self,
+                                         layoutFactory: layoutFactory,
+                                         viewControllerFactory: viewControllerFactory)
   let applicationController: ApplicationController
   let backupController: BackupController
   let iconController: IconController

@@ -48,6 +48,9 @@
 		BDDAA337225D37D100D87664 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA336225D37D100D87664 /* BackgroundView.swift */; };
 		BDDAA339225D37DE00D87664 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA338225D37DE00D87664 /* DividerView.swift */; };
 		BDDAA33B225D383400D87664 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33A225D383400D87664 /* Label.swift */; };
+		BDDAA33E225DB56B00D87664 /* WindowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33D225DB56B00D87664 /* WindowFactory.swift */; };
+		BDDAA340225DB57500D87664 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */; };
+		BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +117,9 @@
 		BDDAA336225D37D100D87664 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		BDDAA338225D37DE00D87664 /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		BDDAA33A225D383400D87664 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		BDDAA33D225DB56B00D87664 /* WindowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowFactory.swift; sourceTree = "<group>"; };
+		BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
+		BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +308,7 @@
 				BD7D960F225288B700C93211 /* Application */,
 				BD7D9611225288C100C93211 /* Controllers */,
 				BD7D961D22532B8F00C93211 /* Extensions */,
+				BDDAA33C225DB55A00D87664 /* Factories */,
 				BD7D961A22532B5900C93211 /* Features */,
 				BD7D9610225288BD00C93211 /* Models */,
 				BD8EDD872255CF6A00110E56 /* Protocols */,
@@ -319,6 +326,16 @@
 				BD084B732258DA7800E91A7F /* SyncControllerTests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		BDDAA33C225DB55A00D87664 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */,
+				BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */,
+				BDDAA33D225DB56B00D87664 /* WindowFactory.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,6 +473,7 @@
 				BD7D961C22532B6900C93211 /* BackupController.swift in Sources */,
 				BDDAA333225D37BD00D87664 /* LayeredView.swift in Sources */,
 				BD4A692F2253BA6400F588AD /* Machine.swift in Sources */,
+				BDDAA340225DB57500D87664 /* ViewControllerFactory.swift in Sources */,
 				BD895C03225A681D00DEC9FE /* PrototypeView.swift in Sources */,
 				BD895C08225A698600DEC9FE /* PrototypeItemComponent.generated.swift in Sources */,
 				BDDAA337225D37D100D87664 /* BackgroundView.swift in Sources */,
@@ -474,8 +492,10 @@
 				BDDAA339225D37DE00D87664 /* DividerView.swift in Sources */,
 				BD895C01225A67C200DEC9FE /* PrototypeItem.swift in Sources */,
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
+				BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */,
 				BD8EDD892255CF7500110E56 /* Component.swift in Sources */,
 				BD8EDD7A22553A5A00110E56 /* CollectionViewItemComponent.swift in Sources */,
+				BDDAA33E225DB56B00D87664 /* WindowFactory.swift in Sources */,
 				BD7D962322533FF300C93211 /* MainMenuController.swift in Sources */,
 				BD8EDD862255CF4800110E56 /* CollectionViewItemComponent.generated.swift in Sources */,
 				BD7D961322528ADB00C93211 /* InfoPropertyList.swift in Sources */,

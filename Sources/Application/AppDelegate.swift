@@ -41,8 +41,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
       let dependencyContainer = try createDependencyContainer()
       let locations = try dependencyContainer.applicationController.applicationDirectories()
-      let windowController = createWindowController(dependencyContainer: dependencyContainer)
-
+      let (windowController, listController) = dependencyContainer.windowFactory.createMainWindowControllers()
+      self.mainViewController = listController
       self.mainMenuController?.dependencyContainer = dependencyContainer
       self.window = windowController.window
       self.dependencyContainer = dependencyContainer
@@ -57,55 +57,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
       let alert = NSAlert(error: error)
       alert.runModal()
     }
-  }
-
-  private func createWindowController(dependencyContainer: DependencyContainer) -> NSWindowController {
-    let layout = NSCollectionViewFlowLayout()
-    layout.sectionInset = .init(top: 10, left: 10, bottom: 10, right: 10)
-    layout.minimumLineSpacing = 0
-    layout.itemSize = .init(width: 250, height: 48)
-    let listController = ApplicationItemViewController(layout: layout, iconStore: dependencyContainer)
-    listController.view.wantsLayer = true
-    listController.view.layer?.backgroundColor = NSColor.white.cgColor
-    listController.title = Bundle.main.infoDictionary?["CFBundleName"] as? String
-
-    self.mainViewController = listController
-
-    let window = MainWindow.init()
-    window.loadWindow()
-    window.setFrameAutosaveName(Bundle.main.bundleIdentifier!)
-
-    Swift.print(layout.itemSize.width + layout.sectionInset.left + layout.sectionInset.right)
-
-    let sidebarItem = NSSplitViewItem(contentListWithViewController: listController)
-    sidebarItem.holdingPriority = .init(rawValue: 260)
-    sidebarItem.minimumThickness = layout.itemSize.width + layout.sectionInset.left + layout.sectionInset.right
-    sidebarItem.maximumThickness = sidebarItem.minimumThickness
-    sidebarItem.canCollapse = true
-
-    let detailViewController = ViewController()
-    detailViewController.view.wantsLayer = true
-    detailViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-    detailViewController.title = "Customize"
-
-    let detailControllerItem = NSSplitViewItem(viewController: detailViewController)
-    detailControllerItem.minimumThickness = 320
-    detailControllerItem.canCollapse = false
-
-    let inspectorController = ViewController()
-    inspectorController.view.wantsLayer = true
-    inspectorController.view.layer?.backgroundColor = NSColor.white.cgColor
-
-    let inspectorControllerItem = NSSplitViewItem(viewController: inspectorController)
-    inspectorControllerItem.holdingPriority = .init(rawValue: 260)
-    inspectorControllerItem.minimumThickness = 260
-    inspectorControllerItem.maximumThickness = 260
-    inspectorControllerItem.canCollapse = true
-
-    let windowController = WindowController(window: window,
-                                            with: [sidebarItem, detailControllerItem])
-
-    return windowController
   }
 
   private func createDependencyContainer() throws -> DependencyContainer {

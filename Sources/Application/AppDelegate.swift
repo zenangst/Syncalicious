@@ -99,17 +99,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                              didLoadApplications applications: [Application]) {
     dependencyContainer?.backupController.applications = applications
 
+    let closure: (Application) -> ApplicationItemModel = { item in
+      var subtitle = "\(item.propertyList.versionString)"
+      if !item.propertyList.buildVersion.isEmpty && item.propertyList.versionString != item.propertyList.buildVersion {
+        subtitle.append(" (\(item.propertyList.buildVersion))")
+      }
+
+      return ApplicationItemModel(data: [
+        "title": item.propertyList.bundleName,
+        "subtitle": subtitle,
+        "bundleIdentifier": item.propertyList.bundleIdentifier,
+        "path": item.path,
+        "enabled": true
+        ])
+    }
     let models = applications
       .sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
-      .compactMap({
-        ApplicationItemModel(data: [
-          "title": $0.propertyList.bundleName,
-          "subtitle": $0.propertyList.bundleIdentifier,
-          "bundleIdentifier": $0.propertyList.bundleIdentifier,
-          "path": $0.path,
-          "enabled": true
-          ])
-    })
+      .compactMap(closure)
 
     if let mainViewController = mainViewController {
       mainViewController.reload(with: models)

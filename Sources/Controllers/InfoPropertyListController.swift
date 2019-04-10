@@ -21,13 +21,17 @@ class InfoPropertyListController {
       throw InfoPropertyListError.unableToResolveBundleIdentifier
     }
 
+    let buildVersion = contents.value(forPropertyListKey: .buildVersion) ?? bundleIdentifier
     let bundleName = contents.value(forPropertyListKey: .bundleName) ?? bundleIdentifier
     let defaultsDomain = contents.value(forPropertyListKey: .defaultsDomain)
+    let versionString = contents.value(forPropertyListKey: .versionString) ?? ""
 
-    return InfoPropertyList(bundleIdentifier: bundleIdentifier,
+    return InfoPropertyList(buildVersion: buildVersion,
+                            bundleIdentifier: bundleIdentifier,
                             bundleName: bundleName,
                             defaultsDomain: defaultsDomain,
-                            path: path)
+                            path: path,
+                            versionString: versionString)
   }
 }
 

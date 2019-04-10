@@ -149,7 +149,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     dependencyContainer?.backupController.applications = applications
 
     let models = applications
-      .sorted(by: { $0.propertyList.bundleName < $1.propertyList.bundleName })
+      .sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
       .compactMap({
         ApplicationItemModel(data: [
           "title": $0.propertyList.bundleName,

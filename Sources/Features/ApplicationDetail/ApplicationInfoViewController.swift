@@ -2,8 +2,17 @@ import Cocoa
 
 class ApplicationInfoViewController: ViewController {
   private var layoutConstraints = [NSLayoutConstraint]()
-
+  let backupController: BackupController
   lazy var stackView = NSStackView()
+
+  init(backupController: BackupController) {
+    self.backupController = backupController
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   func render(_ application: Application) {
     view.subviews.forEach { $0.removeFromSuperview() }
@@ -26,7 +35,6 @@ class ApplicationInfoViewController: ViewController {
     stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.orientation = .vertical
     stackView.alignment = .leading
-    stackView.distribution = .fillProportionally
     stackView.addArrangedSubview(horizontalStackView)
 
     stackView.addArrangedSubview(createVerticalStackView(with: [
@@ -37,6 +45,15 @@ class ApplicationInfoViewController: ViewController {
 
     stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Location:"),
                                                                         Label(text: application.url.path)]))
+
+    if let backupDestination = UserDefaults.standard.backupDestination {
+      stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Backup exists:"),
+                                                                  Label(text: "\(backupController.doesBackupExists(for: application, at: backupDestination))")]))
+    }
+
+    stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Is synced:"),
+                                                                Label(text: "No")]))
+
     view.addSubview(stackView)
     layoutConstraints = [
       stackView.topAnchor.constraint(equalTo: view.topAnchor),

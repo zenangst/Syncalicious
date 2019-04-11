@@ -33,9 +33,14 @@ class SyncController {
     var from = application.preferences.path
     from.resolveSymlinksInPath()
 
-    let toDestination = destination
+    let folder = destination
       .appendingPathComponent(machine.name)
-      .appendingPathComponent(from.lastPathComponent)
+
+    try fileManager.createDirectory(at: folder,
+                                    withIntermediateDirectories: true,
+                                    attributes: nil)
+
+    let toDestination = folder.appendingPathComponent(from.lastPathComponent)
 
     try fileManager.copyItem(at: from, to: toDestination)
   }

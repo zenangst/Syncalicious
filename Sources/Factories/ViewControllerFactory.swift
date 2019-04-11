@@ -17,8 +17,13 @@ class ViewControllerFactory {
   }
 
   func createApplicationDetailViewController() -> ApplicationContainerViewController {
-    let detailViewController = ApplicationInfoViewController()
-    let containerViewController = ApplicationContainerViewController(detailViewController: detailViewController)
+    let sync = UserDefaults.standard.backupDestination!
+    let syncController = SyncController(applicationController: dependencyContainer.applicationController, destination: sync.appendingPathComponent("Sync"))
+    let applicationInfoViewController = ApplicationInfoViewController(backupController: dependencyContainer.backupController)
+    let containerViewController = ApplicationContainerViewController(applicationInfoViewController: applicationInfoViewController,
+                                                                     backupController: dependencyContainer.backupController,
+                                                                     machineController: dependencyContainer.machineController,
+                                                                     syncController: syncController)
     return containerViewController
   }
 }

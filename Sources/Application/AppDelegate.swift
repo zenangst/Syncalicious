@@ -122,8 +122,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
       mainViewController.reload(with: models)
 
       let collectionView = mainViewController.collectionView
-      collectionView.selectItems(at: [IndexPath.init(item: 18, section: 0)], scrollPosition: .centeredHorizontally)
-      collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: [IndexPath.init(item: 18, section: 0)])
+      collectionView.selectItems(at: [IndexPath.init(item: 19, section: 0)], scrollPosition: .centeredHorizontally)
+      collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: [IndexPath.init(item: 19, section: 0)])
     }
 
     debugPrint("Loaded \(applications.count) applications.")

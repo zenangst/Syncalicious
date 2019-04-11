@@ -9,8 +9,9 @@ class DependencyContainer: IconStore {
   let applicationController: ApplicationController
   let backupController: BackupController
   let iconController: IconController
+  let machineController: MachineController
+
   private let infoPlistController: InfoPropertyListController
-  private let machineController: MachineController
   private let preferencesController: PreferencesController
 
   init(applicationController: ApplicationController,

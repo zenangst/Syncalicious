@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		315E2FCDA36B3A59799011D2 /* libPods-Syncalicious.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8791082ED91FA1B97EC440 /* libPods-Syncalicious.a */; };
 		A47DC085643951080DBAE4EF /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */; };
-		BD084B722258D92D00E91A7F /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B712258D92D00E91A7F /* SyncController.swift */; };
 		BD084B742258DA7800E91A7F /* SyncControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B732258DA7800E91A7F /* SyncControllerTests.swift */; };
 		BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */; };
 		BD084B792258E0B600E91A7F /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B782258E0B600E91A7F /* TestHost.swift */; };
@@ -19,6 +18,9 @@
 		BD4A69312253BADE00F588AD /* MachineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69302253BADE00F588AD /* MachineController.swift */; };
 		BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69392253DCF100F588AD /* MainWindow.swift */; };
 		BD4A6941225406A300F588AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A6940225406A300F588AD /* ViewController.swift */; };
+		BD62D2E22262362C007B047B /* ApplicationMonitorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E12262362C007B047B /* ApplicationMonitorController.swift */; };
+		BD62D2E4226393B4007B047B /* ShellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E3226393B4007B047B /* ShellController.swift */; };
+		BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */; };
 		BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960B2252849100C93211 /* ApplicationController.swift */; };
 		BD7D960E2252888000C93211 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960D2252888000C93211 /* Application.swift */; };
 		BD7D961322528ADB00C93211 /* InfoPropertyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D961222528ADB00C93211 /* InfoPropertyList.swift */; };
@@ -73,7 +75,6 @@
 		0D524E3138AC0B59B67FF0DD /* Pods-Syncalicious.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.debug.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.debug.xcconfig"; sourceTree = "<group>"; };
 		8D3875EE15B4C6FB1AFB28CF /* Pods-Syncalicious.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.release.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.release.xcconfig"; sourceTree = "<group>"; };
 		9E8791082ED91FA1B97EC440 /* libPods-Syncalicious.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncalicious.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD084B712258D92D00E91A7F /* SyncController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
 		BD084B732258DA7800E91A7F /* SyncControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncControllerTests.swift; sourceTree = "<group>"; };
 		BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplicationDelegate.swift; sourceTree = "<group>"; };
 		BD084B782258E0B600E91A7F /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
@@ -86,6 +87,9 @@
 		BD4A69342253D9C900F588AD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BD4A69392253DCF100F588AD /* MainWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		BD4A6940225406A300F588AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BD62D2E12262362C007B047B /* ApplicationMonitorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMonitorController.swift; sourceTree = "<group>"; };
+		BD62D2E3226393B4007B047B /* ShellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellController.swift; sourceTree = "<group>"; };
+		BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
 		BD7D960B2252849100C93211 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		BD7D960D2252888000C93211 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		BD7D961222528ADB00C93211 /* InfoPropertyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPropertyList.swift; sourceTree = "<group>"; };
@@ -240,9 +244,11 @@
 			isa = PBXGroup;
 			children = (
 				BD7D960B2252849100C93211 /* ApplicationController.swift */,
+				BD62D2E12262362C007B047B /* ApplicationMonitorController.swift */,
 				BD7D961422528B8700C93211 /* InfoPropertyListController.swift */,
 				BD4A69302253BADE00F588AD /* MachineController.swift */,
 				BD7D9616225290C800C93211 /* PreferencesController.swift */,
+				BD62D2E3226393B4007B047B /* ShellController.swift */,
 				BD3CC24F225B147F006D7877 /* SplitViewController.swift */,
 				BD4A6940225406A300F588AD /* ViewController.swift */,
 				BD3CC24D225B1463006D7877 /* WindowController.swift */,
@@ -264,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
+				BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -383,7 +390,6 @@
 			children = (
 				BD7D961B22532B6900C93211 /* BackupController.swift */,
 				BD8EDD812255CE3400110E56 /* IconController.swift */,
-				BD084B712258D92D00E91A7F /* SyncController.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -600,16 +606,18 @@
 				BD3CC250225B147F006D7877 /* SplitViewController.swift in Sources */,
 				BDDAA33B225D383400D87664 /* Label.swift in Sources */,
 				BDDAD908225E671F007D694F /* ApplicationActionsViewController.swift in Sources */,
-				BD084B722258D92D00E91A7F /* SyncController.swift in Sources */,
 				BD4A69312253BADE00F588AD /* MachineController.swift in Sources */,
 				BD4A6941225406A300F588AD /* ViewController.swift in Sources */,
 				BD8EDD7E22553ADD00110E56 /* ApplicationView.swift in Sources */,
+				BD62D2E4226393B4007B047B /* ShellController.swift in Sources */,
 				BD7D960E2252888000C93211 /* Application.swift in Sources */,
 				BDDAA335225D37C700D87664 /* DecorationView.swift in Sources */,
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,
+				BD62D2E22262362C007B047B /* ApplicationMonitorController.swift in Sources */,
 				BD3CC24E225B1463006D7877 /* WindowController.swift in Sources */,
 				BDDAA339225D37DE00D87664 /* DividerView.swift in Sources */,
+				BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */,
 				BD895C01225A67C200DEC9FE /* PrototypeItem.swift in Sources */,
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
 				BDDAA347225DC89F00D87664 /* ApplicationInfoViewController.swift in Sources */,

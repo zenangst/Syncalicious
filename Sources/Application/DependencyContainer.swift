@@ -1,5 +1,9 @@
 import Cocoa
 
+enum DependencyContainerError: Error {
+  case noBackupDestination
+}
+
 class DependencyContainer: IconStore {
   lazy var layoutFactory = CollectionViewLayoutFactory()
   lazy var viewControllerFactory = ViewControllerFactory(dependencyContainer: self)
@@ -10,11 +14,13 @@ class DependencyContainer: IconStore {
   let backupController: BackupController
   let iconController: IconController
   let machineController: MachineController
+  let syncController: SyncController
 
   private let infoPlistController: InfoPropertyListController
   private let preferencesController: PreferencesController
 
   init(applicationController: ApplicationController,
+       syncController: SyncController,
        backupController: BackupController,
        iconController: IconController,
        infoPlistController: InfoPropertyListController,
@@ -25,6 +31,7 @@ class DependencyContainer: IconStore {
     self.preferencesController = preferencesController
     self.backupController = backupController
     self.applicationController = applicationController
+    self.syncController = syncController
     self.iconController = iconController
   }
 

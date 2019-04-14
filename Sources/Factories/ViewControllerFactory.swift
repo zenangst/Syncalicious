@@ -16,14 +16,15 @@ class ViewControllerFactory {
     return viewController
   }
 
+  // swiftlint:disable line_length
   func createApplicationDetailViewController() -> ApplicationContainerViewController {
-    let sync = UserDefaults.standard.backupDestination!
-    let syncController = SyncController(applicationController: dependencyContainer.applicationController, destination: sync.appendingPathComponent("Sync"))
-    let applicationInfoViewController = ApplicationInfoViewController(backupController: dependencyContainer.backupController)
+    let applicationInfoViewController = ApplicationInfoViewController(backupController: dependencyContainer.backupController,
+                                                                      machine: dependencyContainer.machineController.machine,
+                                                                      syncController: dependencyContainer.syncController)
     let containerViewController = ApplicationContainerViewController(applicationInfoViewController: applicationInfoViewController,
                                                                      backupController: dependencyContainer.backupController,
                                                                      machineController: dependencyContainer.machineController,
-                                                                     syncController: syncController)
+                                                                     syncController: dependencyContainer.syncController)
     return containerViewController
   }
 }

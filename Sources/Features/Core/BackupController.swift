@@ -47,18 +47,23 @@ class BackupController {
     var from = application.preferences.path
     from.resolveSymlinksInPath()
     let destination = machineController.machineBackupDestination(for: url)
+      .appendingPathComponent(application.preferences.kind.rawValue)
       .appendingPathComponent(from.lastPathComponent)
 
     return fileManager.fileExists(atPath: destination.path)
   }
 
   func runBackup(for applications: [Application], to url: URL) throws {
-    try createFolderIfNeeded(at: url)
+    try createFolderIfNeeded(at: machineController.machineBackupDestination(for: url))
     for application in applications where application.preferences.path.isFileURL {
       var from = application.preferences.path
       from.resolveSymlinksInPath()
-      let destination = machineController.machineBackupDestination(for: url)
-        .appendingPathComponent(from.lastPathComponent)
+      let backupFolder = machineController.machineBackupDestination(for: url)
+        .appendingPathComponent(application.preferences.kind.rawValue)
+      let destination = backupFolder.appendingPathComponent(from.lastPathComponent)
+
+      try createFolderIfNeeded(at: backupFolder)
+
       do {
         try fileManager.copyItem(at: from, to: destination)
       } catch let error {
@@ -80,19 +85,18 @@ class BackupController {
   }
 
   private func createFolderIfNeeded(at url: URL) throws {
-    let backupLocation = machineController.machineBackupDestination(for: url)
     let fileManager = FileManager.default
     var isDirectory = ObjCBool(true)
 
-    guard !fileManager.fileExists(atPath: backupLocation.path, isDirectory: &isDirectory) else {
+    guard !fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory) else {
       return
     }
 
     do {
-      try fileManager.createDirectory(at: backupLocation,
+      try fileManager.createDirectory(at: url,
                                       withIntermediateDirectories: true,
                                       attributes: nil)
-      debugPrint("Created directory at: \(backupLocation.path)")
+      debugPrint("Created directory at: \(url.path)")
     } catch let error {
       throw BackupError.unableToCreateBackupFolder(error)
     }

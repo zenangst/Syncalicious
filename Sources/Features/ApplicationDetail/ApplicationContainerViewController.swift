@@ -61,7 +61,13 @@ class ApplicationContainerViewController: FamilyViewController,
     backupButton.translatesAutoresizingMaskIntoConstraints = false
     titlebarView.addSubview(backupButton)
 
-    let syncButton = NSButton(title: "Sync", target: self, action: #selector(sync))
+    let syncButton: NSButton
+    if syncController.applicationIsSynced(application, on: machineController.machine) {
+      syncButton = NSButton(title: "Unsync", target: self, action: #selector(unsync))
+    } else {
+      syncButton = NSButton(title: "Sync", target: self, action: #selector(sync))
+    }
+
     syncButton.translatesAutoresizingMaskIntoConstraints = false
     titlebarView.addSubview(syncButton)
 
@@ -89,9 +95,14 @@ class ApplicationContainerViewController: FamilyViewController,
 
   @objc func sync() {
     guard let application = application else { return }
-    guard let backupDestination = UserDefaults.standard.backupDestination else { return }
-    //try? syncController.enableSync(for: application, on: machineController.machine)
+    try? syncController.enableSync(for: application, on: machineController.machine)
+    render(application)
+  }
+
+  @objc func unsync() {
+    guard let application = application else { return }
     try? syncController.disableSync(for: application, on: machineController.machine)
+    render(application)
   }
 
   // MARK: - NSCollectionViewDelegate

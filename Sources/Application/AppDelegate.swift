@@ -60,6 +60,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
   }
 
   private func createDependencyContainer() throws -> DependencyContainer {
+    guard let backupDestination = UserDefaults.standard.backupDestination else {
+      throw DependencyContainerError.noBackupDestination
+    }
+
     let libraryDirectory = try FileManager.default.url(for: .libraryDirectory,
                                                        in: .userDomainMask,
                                                        appropriateFor: nil,
@@ -74,7 +78,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                                                       preferencesController: preferencesController)
     let backupController = BackupController(machineController: machineController)
     let iconController = IconController()
+    let syncController = SyncController(destination: backupDestination.appendingPathComponent("Sync"),
+                                        machine: machineController.machine)
     let dependencyContainer = DependencyContainer(applicationController: applicationController,
+                                                  syncController: syncController,
                                                   backupController: backupController,
                                                   iconController: iconController,
                                                   infoPlistController: infoPlistController,
@@ -97,6 +104,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
   func applicationController(_ controller: ApplicationController,
                              didLoadApplications applications: [Application]) {
+    dependencyContainer?.syncController.applications = applications
     dependencyContainer?.backupController.applications = applications
 
     let closure: (Application) -> ApplicationItemModel = { item in

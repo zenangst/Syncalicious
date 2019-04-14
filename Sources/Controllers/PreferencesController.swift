@@ -30,14 +30,18 @@ class PreferencesController {
 
     if let defaultsDomainUrl = defaultsDomainContainerUrl,
       FileManager.default.fileExists(atPath: defaultsDomainUrl.path) {
-      return Preferences(path: defaultsDomainUrl)
+      return Preferences(fileName: defaultsDomainUrl.lastPathComponent,
+                         kind: .container, path: defaultsDomainUrl)
+    } else if FileManager.default.fileExists(atPath: containerPreferenceUrl.path) {
+      return Preferences(fileName: containerPreferenceUrl.lastPathComponent,
+                         kind: .container, path: containerPreferenceUrl)
     } else if let defaultsDomainUrl = defaultsDomainLibraryUrl,
       FileManager.default.fileExists(atPath: defaultsDomainUrl.path) {
-      return Preferences(path: defaultsDomainUrl)
-    } else if FileManager.default.fileExists(atPath: containerPreferenceUrl.path) {
-      return Preferences(path: containerPreferenceUrl)
+      return Preferences(fileName: defaultsDomainUrl.lastPathComponent,
+                         kind: .library, path: defaultsDomainUrl)
     } else if FileManager.default.fileExists(atPath: applicationPreference.path) {
-      return Preferences(path: applicationPreference)
+      return Preferences(fileName: applicationPreference.lastPathComponent,
+                         kind: .library, path: applicationPreference)
     }
 
     throw PreferencesControllerError.unableToFindPreferenceFile

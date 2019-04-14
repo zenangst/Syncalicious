@@ -3,10 +3,14 @@ import Cocoa
 class ApplicationInfoViewController: ViewController {
   private var layoutConstraints = [NSLayoutConstraint]()
   let backupController: BackupController
+  let syncController: SyncController
+  let machine: Machine
   lazy var stackView = NSStackView()
 
-  init(backupController: BackupController) {
+  init(backupController: BackupController, machine: Machine, syncController: SyncController) {
     self.backupController = backupController
+    self.machine = machine
+    self.syncController = syncController
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -15,6 +19,8 @@ class ApplicationInfoViewController: ViewController {
   }
 
   func render(_ application: Application) {
+    let applicationIsSynced = syncController.applicationIsSynced(application, on: machine)
+
     view.subviews.forEach { $0.removeFromSuperview() }
     stackView.subviews.forEach { $0.removeFromSuperview() }
     NSLayoutConstraint.deactivate(layoutConstraints)
@@ -47,12 +53,12 @@ class ApplicationInfoViewController: ViewController {
                                                                         Label(text: application.url.path)]))
 
     if let backupDestination = UserDefaults.standard.backupDestination {
-      stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Backup exists:"),
-                                                                  Label(text: "\(backupController.doesBackupExists(for: application, at: backupDestination))")]))
+      let backupText = backupController.doesBackupExists(for: application, at: backupDestination) ? "Yes" : "No"
+      stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Backup exists:"), Label(text: backupText)]))
     }
 
-    stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Is synced:"),
-                                                                Label(text: "No")]))
+    let syncText = applicationIsSynced ? "Yes" : "No"
+    stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Is synced:"), Label(text: syncText)]))
 
     view.addSubview(stackView)
     layoutConstraints = [

@@ -8,7 +8,9 @@ class SyncController: NSObject {
   let workspace: NSWorkspace
 
   var applications = [Application]()
+  var applicationHasBeenActive = Set<Application>()
   var pendingApplications = Set<Application>()
+  var plistHashDictionary = [Application: NSDictionary]()
   var observation: NSKeyValueObservation?
 
   init(destination: URL,
@@ -37,6 +39,7 @@ class SyncController: NSObject {
 
   func enableSync(for application: Application, on machine: Machine) throws {
     try createMachineFolders(for: application, on: machine)
+    pendingApplications.insert(application)
   }
 
   func disableSync(for application: Application, on machine: Machine) throws {
@@ -44,8 +47,8 @@ class SyncController: NSObject {
       .appendingPathComponent(machine.name)
       .appendingPathComponent("Backup")
       .appendingPathComponent(application.preferences.fileName)
-
     try fileManager.removeItem(at: backup)
+    pendingApplications.remove(application)
   }
 
   private  func frontmostApplicationDidChange() {
@@ -56,7 +59,6 @@ class SyncController: NSObject {
     }
 
     let backup = destination
-      .appendingPathComponent("Sync")
       .appendingPathComponent(machine.name)
       .appendingPathComponent("Backup")
       .appendingPathComponent(application.preferences.fileName)
@@ -64,55 +66,81 @@ class SyncController: NSObject {
     var isDirectory = ObjCBool(false)
     let isSynced = FileManager.default.fileExists(atPath: backup.path, isDirectory: &isDirectory)
 
-    if isSynced { pendingApplications.insert(application) }
+    if isSynced {
+      if let dictionary = NSDictionary.init(contentsOf: application.preferences.path) {
+        plistHashDictionary[application] = dictionary
+      }
+      pendingApplications.insert(application)
+    }
     checkPendingApplications()
   }
 
   private func checkPendingApplications() {
-    let runningApplications = NSWorkspace.shared.runningApplications
-    let bundleIdentifiers = runningApplications.compactMap({ $0.bundleIdentifier })
-    for application in pendingApplications where !bundleIdentifiers.contains(application.propertyList.bundleIdentifier) {
-      try? checkSync(for: application)
+    for application in pendingApplications {
+      if application.propertyList.bundleIdentifier == workspace.frontmostApplication?.bundleIdentifier {
+        applicationHasBeenActive.insert(application)
+      } else {
+        try? checkSync(for: application)
+      }
     }
 
     try? checkPendingFolder()
   }
 
   private func checkSync(for application: Application) throws {
-    let backup = destination.appendingPathComponent("Sync")
-    let folders = try fileManager.contentsOfDirectory(at: backup,
+    let folders = try fileManager.contentsOfDirectory(at: destination,
                                                        includingPropertiesForKeys: [.isDirectoryKey],
                                                        options: [.skipsHiddenFiles])
       .filter({ !$0.absoluteString.contains( machine.name.lowercased() ) })
 
     for folder in folders {
+      let backupPath = folder.appendingPathComponent("Backup")
+        .appendingPathComponent(application.preferences.fileName)
+      var isDictionary = ObjCBool(false)
+      let shouldAddToPending = fileManager.fileExists(atPath: backupPath.path, isDirectory: &isDictionary)
+
+      guard shouldAddToPending else { continue }
+
       let pendingPath = folder.appendingPathComponent("Pending")
       try fileManager.createFolderAtUrlIfNeeded(pendingPath)
       let filePath = pendingPath.appendingPathComponent(application.preferences.fileName)
-      try copyItemIfNeeded(from: application.preferences.path, to: filePath)
+      try copyApplicationIfNeeded(application, to: filePath, machineFolder: folder.lastPathComponent)
     }
   }
 
   // swiftlint:disable identifier_name
-  private func copyItemIfNeeded(from: URL, to: URL) throws {
-    if let lhs = NSDictionary.init(contentsOf: from),
+  private func copyApplicationIfNeeded(_ application: Application, to: URL, machineFolder: String) throws {
+    guard applicationHasBeenActive.contains(application) else { return }
+
+    let initialDictionary = plistHashDictionary[application]
+
+    if let lhs = NSDictionary.init(contentsOf: application.preferences.path),
       let rhs = NSDictionary.init(contentsOf: to) {
-      if lhs !== rhs {
-        try fileManager.removeItem(at: to)
-        try fileManager.copyItem(at: from, to: to)
+      let listsAreEqual = lhs.isEqual(to: rhs)
+
+      if !listsAreEqual {
+        try? fileManager.removeItem(at: to)
+        try? fileManager.copyItem(at: application.preferences.path, to: to)
+        debugPrint("🍫 Added \(application.propertyList.bundleName) to \(machineFolder) (pending).")
       }
-    } else {
-      try fileManager.copyItem(at: from, to: to)
+    } else if let dictionary = NSDictionary.init(contentsOf: application.preferences.path),
+      let initialDictionary = initialDictionary, initialDictionary !== dictionary {
+      pendingApplications.remove(application)
+      plistHashDictionary[application] = nil
+      try? fileManager.copyItem(at: application.preferences.path, to: to)
+      debugPrint("🍫 Added \(application.propertyList.bundleName) to \(machineFolder) (pending).")
     }
+
+    applicationHasBeenActive.remove(application)
   }
 
   private func checkPendingFolder() throws {
     let runningApplications = workspace.runningApplications
     let bundleIdentifiers = runningApplications.compactMap({ $0.bundleIdentifier })
     let pending = destination
-      .appendingPathComponent("Sync")
       .appendingPathComponent(machine.name)
       .appendingPathComponent("Pending")
+
     let files = try fileManager.contentsOfDirectory(at: pending,
                                                     includingPropertiesForKeys: [.isRegularFileKey],
                                                     options: [.skipsHiddenFiles])
@@ -126,9 +154,12 @@ class SyncController: NSObject {
 
       let command = """
       defaults import \(application.preferences.path.path) "\(file.path)"
+      defaults read \(application.propertyList.bundleIdentifier)
       """
       shellController.execute(command: command)
       try? fileManager.removeItem(at: file)
+
+      debugPrint("🍫 Synced \(application.propertyList.bundleName)")
     }
   }
 
@@ -137,7 +168,7 @@ class SyncController: NSObject {
     try createPendingFolder(for: application, on: machine)
   }
 
-  private func createPendingFolder(for application: Application, on machine: Machine) throws  {
+  private func createPendingFolder(for application: Application, on machine: Machine) throws {
     let folder = destination
       .appendingPathComponent(machine.name)
       .appendingPathComponent("Pending")

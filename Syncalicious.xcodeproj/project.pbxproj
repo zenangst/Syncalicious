@@ -18,7 +18,7 @@
 		BD4A69312253BADE00F588AD /* MachineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69302253BADE00F588AD /* MachineController.swift */; };
 		BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69392253DCF100F588AD /* MainWindow.swift */; };
 		BD4A6941225406A300F588AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A6940225406A300F588AD /* ViewController.swift */; };
-		BD62D2E22262362C007B047B /* ApplicationMonitorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E12262362C007B047B /* ApplicationMonitorController.swift */; };
+		BD62D2E22262362C007B047B /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E12262362C007B047B /* SyncController.swift */; };
 		BD62D2E4226393B4007B047B /* ShellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E3226393B4007B047B /* ShellController.swift */; };
 		BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */; };
 		BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960B2252849100C93211 /* ApplicationController.swift */; };
@@ -87,7 +87,7 @@
 		BD4A69342253D9C900F588AD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BD4A69392253DCF100F588AD /* MainWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		BD4A6940225406A300F588AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BD62D2E12262362C007B047B /* ApplicationMonitorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMonitorController.swift; sourceTree = "<group>"; };
+		BD62D2E12262362C007B047B /* SyncController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
 		BD62D2E3226393B4007B047B /* ShellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellController.swift; sourceTree = "<group>"; };
 		BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
 		BD7D960B2252849100C93211 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
@@ -244,12 +244,12 @@
 			isa = PBXGroup;
 			children = (
 				BD7D960B2252849100C93211 /* ApplicationController.swift */,
-				BD62D2E12262362C007B047B /* ApplicationMonitorController.swift */,
 				BD7D961422528B8700C93211 /* InfoPropertyListController.swift */,
 				BD4A69302253BADE00F588AD /* MachineController.swift */,
 				BD7D9616225290C800C93211 /* PreferencesController.swift */,
 				BD62D2E3226393B4007B047B /* ShellController.swift */,
 				BD3CC24F225B147F006D7877 /* SplitViewController.swift */,
+				BD62D2E12262362C007B047B /* SyncController.swift */,
 				BD4A6940225406A300F588AD /* ViewController.swift */,
 				BD3CC24D225B1463006D7877 /* WindowController.swift */,
 			);
@@ -614,7 +614,7 @@
 				BDDAA335225D37C700D87664 /* DecorationView.swift in Sources */,
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,
-				BD62D2E22262362C007B047B /* ApplicationMonitorController.swift in Sources */,
+				BD62D2E22262362C007B047B /* SyncController.swift in Sources */,
 				BD3CC24E225B1463006D7877 /* WindowController.swift in Sources */,
 				BDDAA339225D37DE00D87664 /* DividerView.swift in Sources */,
 				BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */,

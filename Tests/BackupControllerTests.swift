@@ -35,12 +35,17 @@ class BackupControllerTests: XCTestCase {
     var isDirectory = ObjCBool(true)
     XCTAssertTrue(fileManager.fileExists(atPath: backupDirectory.path, isDirectory: &isDirectory))
 
-    let contents = try fileManager.contentsOfDirectory(atPath: backupDirectory.path).sorted(by: { $0 < $1 })
+    let sandboxedPath = backupDirectory.appendingPathComponent("Container").appendingPathComponent("Preferences")
+    let regularPath = backupDirectory.appendingPathComponent("Library").appendingPathComponent("Preferences")
 
-    XCTAssertEqual(contents, [
+    let sandboxedApps = try fileManager.contentsOfDirectory(atPath: sandboxedPath.path).sorted(by: { $0 < $1 })
+    let regularApps = try fileManager.contentsOfDirectory(atPath: regularPath.path).sorted(by: { $0 < $1 })
+    let results = sandboxedApps + regularApps
+
+    XCTAssertEqual(results, [
       "6C4433RDLX.group.com.zenangst.Syncalicious.ContainerTestAppSUDefaultsDomain.plist",
-      "6C4433RDLX.group.com.zenangst.Syncalicious.TestAppWithSUDefaultsDomain.plist",
       "com.zenangst.Syncalicious.ContainerTestApp.plist",
+      "6C4433RDLX.group.com.zenangst.Syncalicious.TestAppWithSUDefaultsDomain.plist",
       "com.zenangst.Syncalicious.TestApp.plist"])
 
   }

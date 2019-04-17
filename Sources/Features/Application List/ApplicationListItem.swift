@@ -1,29 +1,33 @@
 import Cocoa
+
 // swiftlint:disable line_length function_body_length
-// sourcery: $RawBinding = "iconStore.loadIcon(at: model.url("path"), for: model.string("bundleIdentifier")) { image in item.image("iconView").image = image }"
-// sourcery: item.label("titleLabel").stringValue = model.string("title")
-// sourcery: item.label("subtitleLabel").stringValue = model.string("subtitle")
-// sourcery: item.button("checkbox").state = = model.bool("enabled") ? .on : .off
-class ApplicationListItem: PrototypeItem, PrototypeItemComponent {
+// sourcery: let path = "URL"
+// sourcery: let bundleIdentifier = "String"
+// sourcery: let application = "Application"
+class ApplicationListItem: NSCollectionViewItem, CollectionViewItemComponent {
   let baseView = NSView()
 
   override var isSelected: Bool { didSet { updateState() } }
 
   private var layoutConstraints = [NSLayoutConstraint]()
 
-  override func loadView() {
-    super.loadView()
-    self.view.wantsLayer = true
-    let iconView = NSImageView()
-    let titleLabel = NSTextField()
-    let subtitleLabel = NSTextField()
-    let checkbox = NSButton()
-    checkbox.cell?.title = "Sync enabled"
-    checkbox.setButtonType(.switch)
+  // sourcery: $RawBinding = "iconStore.loadIcon(at: model.path, for: model.bundleIdentifier) { image in view.iconView.image = image }"
+  lazy var iconView = NSImageView()
+  // sourcery: let title: String = "titleLabel.stringValue = model.title"
+  lazy var titleLabel = NSTextField()
+  // sourcery: let subtitle: String = "subtitleLabel.stringValue = model.subtitle"
+  lazy var subtitleLabel = NSTextField()
+  // sourcery: let synced: Bool = "syncView.isHidden = !model.synced"
+  lazy var syncView = NSImageView()
 
-    addView(iconView, with: "iconView")
-    addView(titleLabel, with: "titleLabel")
-    addView(subtitleLabel, with: "subtitleLabel")
+  override func loadView() {
+    view = NSView()
+    view.wantsLayer = true
+    view.addSubview(iconView)
+    view.addSubview(titleLabel)
+    view.addSubview(subtitleLabel)
+    view.addSubview(syncView)
+    syncView.image = NSImage(named: "Synced")
 //    addView(checkbox, with: "checkbox")
 
     let verticalStackView = NSStackView(views: [titleLabel, subtitleLabel])
@@ -32,7 +36,7 @@ class ApplicationListItem: PrototypeItem, PrototypeItemComponent {
     verticalStackView.spacing = 0
     verticalStackView.setCustomSpacing(8, after: subtitleLabel)
 
-    let stackView = NSStackView(views: [iconView, verticalStackView])
+    let stackView = NSStackView(views: [iconView, verticalStackView, syncView])
     stackView.distribution = .fillProportionally
     stackView.orientation = .horizontal
     stackView.alignment = .top
@@ -60,9 +64,15 @@ class ApplicationListItem: PrototypeItem, PrototypeItemComponent {
       stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
       stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding),
       iconView.widthAnchor.constraint(equalToConstant: 32),
-      iconView.heightAnchor.constraint(equalToConstant: 32)
+      iconView.heightAnchor.constraint(equalToConstant: 32),
+      syncView.widthAnchor.constraint(equalToConstant: 32)
     ]
     NSLayoutConstraint.activate(layoutConstraints)
+  }
+
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    updateState()
   }
 
   private func updateState() {

@@ -17,6 +17,7 @@ class Label: NSTextField, DecorationView {
     isSelectable = false
     isEditable = false
     drawsBackground = false
+    backgroundColor = .clear
   }
 
   required init?(coder: NSCoder) {

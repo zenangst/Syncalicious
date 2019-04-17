@@ -1,8 +1,10 @@
 import Cocoa
-import Family
 
-class ApplicationDetailContainerViewController: FamilyViewController,
-  SplitViewContainedController, NSCollectionViewDelegate {
+class ApplicationDetailFeatureViewController: NSViewController,
+  ApplicationDetailInfoViewControllerDelegate,
+  SplitViewContainedController,
+  NSCollectionViewDelegate {
+
   weak var listViewController: ApplicationListItemViewController?
 
   lazy var titleLabel = SmallBoldLabel()
@@ -10,18 +12,24 @@ class ApplicationDetailContainerViewController: FamilyViewController,
 
   private var layoutConstraints = [NSLayoutConstraint]()
 
+  let containerViewController: ApplicationDetailContainerViewController
   let applicationInfoViewController: ApplicationDetailInfoViewController
+  let applicationController: ApplicationController
   let backupController: BackupController
   let syncController: SyncController
   let machineController: MachineController
   var application: Application?
 
   init(applicationInfoViewController: ApplicationDetailInfoViewController,
+       applicationController: ApplicationController,
        backupController: BackupController,
+       containerViewController: ApplicationDetailContainerViewController,
        machineController: MachineController,
        syncController: SyncController) {
+    self.applicationController = applicationController
     self.applicationInfoViewController = applicationInfoViewController
     self.backupController = backupController
+    self.containerViewController = containerViewController
     self.machineController = machineController
     self.syncController = syncController
     super.init(nibName: nil, bundle: nil)
@@ -31,76 +39,70 @@ class ApplicationDetailContainerViewController: FamilyViewController,
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - View lifecycle
+  override func loadView() {
+    view = containerViewController.view
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
     view.wantsLayer = true
     view.layer?.backgroundColor = NSColor.white.cgColor
-    addChild(applicationInfoViewController,
-             customInsets: .init(top: 15, left: 15, bottom: 15, right: 15))
+    containerViewController.addChild(applicationInfoViewController,
+                                     customInsets: .init(top: 15, left: 30, bottom: 15, right: 30))
   }
 
-  // MARK: - Private methods
-
   private func render(_ application: Application) {
-    applicationInfoViewController.render(application)
+    applicationInfoViewController.render(application,
+                                         syncController: syncController,
+                                         machineController: machineController)
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = []
 
     titlebarView.subviews.forEach { $0.removeFromSuperview() }
-    titleLabel.stringValue = application.propertyList.bundleName
     titleLabel.alignment = .center
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titlebarView.wantsLayer = true
     titlebarView.addSubview(titleLabel)
 
-    let backupButton = NSButton(title: "Backup", target: self, action: #selector(performBackup))
-    backupButton.translatesAutoresizingMaskIntoConstraints = false
-    titlebarView.addSubview(backupButton)
-
-    let syncButton: NSButton
-    if syncController.applicationIsSynced(application, on: machineController.machine) {
-      syncButton = NSButton(title: "Unsync", target: self, action: #selector(unsync))
-    } else {
-      syncButton = NSButton(title: "Sync", target: self, action: #selector(sync))
-    }
-
-    syncButton.translatesAutoresizingMaskIntoConstraints = false
-    titlebarView.addSubview(syncButton)
-
     layoutConstraints.append(contentsOf: [
       titleLabel.leadingAnchor.constraint(equalTo: titlebarView.leadingAnchor, constant: 10),
       titleLabel.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -10),
-      titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor),
-      syncButton.trailingAnchor.constraint(equalTo: backupButton.leadingAnchor, constant: -5),
-      syncButton.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor),
-      backupButton.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor),
-      backupButton.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor)
+      titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
       ])
+
+    applicationInfoViewController.delegate = self
 
     NSLayoutConstraint.activate(layoutConstraints)
   }
 
-  // MARK: - Actions
+  private func refreshApplicationList() {
+    guard let locations = try? applicationController.applicationDirectories() else { return }
+    applicationController.loadApplications(at: locations)
+  }
 
-  @objc func performBackup() {
+  // MARK: - ApplicationDetailInfoViewControllerDelegate
+
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController, didTapBackup backupButton: NSButton) {
     guard let application = application else { return }
     guard let backupDestination = UserDefaults.standard.backupDestination else { return }
     try? backupController.runBackup(for: [application], to: backupDestination)
     render(application)
+    refreshApplicationList()
   }
 
-  @objc func sync() {
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController, didTapSync syncButton: NSButton) {
     guard let application = application else { return }
     try? syncController.enableSync(for: application, on: machineController.machine)
     render(application)
+    refreshApplicationList()
   }
 
-  @objc func unsync() {
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController, didTapUnsync unsyncButton: NSButton) {
     guard let application = application else { return }
     try? syncController.disableSync(for: application, on: machineController.machine)
     render(application)
+    refreshApplicationList()
+
   }
 
   // MARK: - NSCollectionViewDelegate
@@ -108,7 +110,7 @@ class ApplicationDetailContainerViewController: FamilyViewController,
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     guard let indexPath = indexPaths.first else { return }
     guard let listViewController = listViewController else { return }
-    guard let application = listViewController.model(at: indexPath).data["model"] as? Application else { return }
+    guard let application = listViewController.model(at: indexPath).application as? Application else { return }
 
     self.application = application
     render(application)

@@ -1,11 +1,25 @@
 import Cocoa
 
-class ApplicationListFeatureViewController: NSViewController, ApplicationListSearchViewControllerDelegate {
-  let containerViewController: ApplicationListContainerViewController
-  var applications = [Application]()
+class ApplicationListFeatureViewController: NSViewController,
+  SplitViewContainedController,
+  ApplicationListSearchViewControllerDelegate,
+  ApplicationListSortViewControllerDelegate {
 
-  init(containerViewController: ApplicationListContainerViewController) {
+  let syncController: SyncController
+  let machineController: MachineController
+  let containerViewController: ApplicationListContainerViewController
+  lazy var titlebarView = NSView()
+  lazy var titleLabel = SmallLabel()
+  var applications = [Application]()
+  var sort: ApplicationListSortViewController.SortKind = .name
+  private var layoutConstraints = [NSLayoutConstraint]()
+
+  init(containerViewController: ApplicationListContainerViewController,
+       machineController: MachineController,
+       syncController: SyncController) {
     self.containerViewController = containerViewController
+    self.machineController = machineController
+    self.syncController = syncController
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -20,20 +34,56 @@ class ApplicationListFeatureViewController: NSViewController, ApplicationListSea
   override func viewDidLoad() {
     super.viewDidLoad()
     title = Bundle.main.infoDictionary?["CFBundleName"] as? String
+
+    NSLayoutConstraint.deactivate(layoutConstraints)
+    layoutConstraints = []
+
+    titlebarView.subviews.forEach { $0.removeFromSuperview() }
+    titleLabel.alignment = .center
+    titleLabel.stringValue = title!
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    titlebarView.wantsLayer = true
+    titlebarView.addSubview(titleLabel)
+
+    layoutConstraints.append(contentsOf: [
+      titleLabel.leadingAnchor.constraint(equalTo: titlebarView.leadingAnchor, constant: 10),
+      titleLabel.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -10),
+      titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
+      ])
+
+    NSLayoutConstraint.activate(layoutConstraints)
+
     containerViewController.listViewController.collectionView.backgroundColors = [NSColor.clear]
     containerViewController.searchViewController.delegate = self
+    containerViewController.sortViewController.delegate = self
   }
 
   func render(applications: [Application]) {
-    let models = applications
-      .sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
+    var models = applications
+
+    switch sort {
+    case .name:
+      models = models.sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
+    case .synced:
+      models = models
+        .sorted(by: { $0.propertyList.bundleName.lowercased() > $1.propertyList.bundleName.lowercased() })
+        .sorted(by: { lhs, rhs in syncController.applicationIsSynced(lhs, on: machineController.machine)
+      })
+    }
+
     self.applications = models
+
+    let collectionView = containerViewController.listViewController.collectionView
+    var indexPaths = collectionView.selectionIndexPaths
 
     containerViewController.listViewController.reload(with: models.compactMap(createViewModel))
 
-    let collectionView = containerViewController.listViewController.collectionView
-    collectionView.selectItems(at: [IndexPath.init(item: 0, section: 0)], scrollPosition: .centeredHorizontally)
-    collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: [IndexPath.init(item: 0, section: 0)])
+    if indexPaths.isEmpty {
+      indexPaths = [IndexPath.init(item: 0, section: 0)]
+    }
+
+    collectionView.selectItems(at: indexPaths, scrollPosition: .centeredHorizontally)
+    collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: indexPaths)
   }
 
   // MARK: - Private methods
@@ -45,14 +95,25 @@ class ApplicationListFeatureViewController: NSViewController, ApplicationListSea
       subtitle.append(" (\(application.propertyList.buildVersion))")
     }
 
-    return ApplicationListItemModel(data: [
-      "title": application.propertyList.bundleName,
-      "subtitle": subtitle,
-      "bundleIdentifier": application.propertyList.bundleIdentifier,
-      "path": application.url,
-      "enabled": true,
-      "model": application
-      ])
+    let isSynched = syncController.applicationIsSynced(application, on: machineController.machine)
+
+    return ApplicationListItemModel(title: application.propertyList.bundleName,
+                                    subtitle: subtitle,
+                                    synced: isSynched,
+                                    application: application,
+                                    bundleIdentifier: application.propertyList.bundleIdentifier,
+                                    path: application.url)
+  }
+
+  // MARK: - ApplicationListSortViewControllerDelegate
+
+  func applicationListSortViewController(_ controller: ApplicationListSortViewController,
+
+                                         didChangeSort sort: ApplicationListSortViewController.SortKind) {
+    self.sort = sort
+    let collectionView = containerViewController.listViewController.collectionView
+    collectionView.deselectItems(at: collectionView.selectionIndexPaths)
+    render(applications: applications)
   }
 
   // MARK: - ApplicationSearchViewControllerDelegate

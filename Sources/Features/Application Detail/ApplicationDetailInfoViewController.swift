@@ -1,6 +1,16 @@
 import Cocoa
 
+protocol ApplicationDetailInfoViewControllerDelegate: class {
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
+                                           didTapBackup backupButton: NSButton)
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
+                                           didTapSync syncButton: NSButton)
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
+                                           didTapUnsync unsyncButton: NSButton)
+}
+
 class ApplicationDetailInfoViewController: ViewController {
+  weak var delegate: ApplicationDetailInfoViewControllerDelegate?
   private var layoutConstraints = [NSLayoutConstraint]()
   let backupController: BackupController
   let iconController: IconController
@@ -23,7 +33,9 @@ class ApplicationDetailInfoViewController: ViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func render(_ application: Application) {
+  func render(_ application: Application,
+              syncController: SyncController,
+              machineController: MachineController) {
     let applicationIsSynced = syncController.applicationIsSynced(application, on: machine)
 
     view.subviews.forEach { $0.removeFromSuperview() }
@@ -44,7 +56,20 @@ class ApplicationDetailInfoViewController: ViewController {
     horizontalStackView.orientation = .horizontal
     horizontalStackView.alignment = .top
     horizontalStackView.spacing = 20
-    horizontalStackView.addArrangedSubview(iconView)
+
+    let backupButton = NSButton(title: "Backup", target: self, action: #selector(performBackup))
+    let syncButton: NSButton
+    if syncController.applicationIsSynced(application, on: machineController.machine) {
+      syncButton = NSButton(title: "Unsync", target: self, action: #selector(unsync(_:)))
+    } else {
+      syncButton = NSButton(title: "Sync", target: self, action: #selector(sync(_:)))
+    }
+
+    let leftStackView = createStackView(.vertical, views: [
+      iconView, backupButton, syncButton])
+    leftStackView.alignment = .centerX
+    leftStackView.setCustomSpacing(20, after: iconView)
+    horizontalStackView.addArrangedSubview(leftStackView)
 
     stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.alignment = .top
@@ -52,26 +77,31 @@ class ApplicationDetailInfoViewController: ViewController {
     stackView.orientation = .vertical
     stackView.addArrangedSubview(nameLabel)
 
-    stackView.addArrangedSubview(createVerticalStackView(with: [
+    stackView.addArrangedSubview(createStackView(.horizontal, views: [
       BoldLabel(text: "Version:"),
       Label(text: application.propertyList.versionString)]))
-    stackView.addArrangedSubview(createVerticalStackView(with: [
+    stackView.addArrangedSubview(createStackView(.horizontal, views: [
       BoldLabel(text: "Bundle identifier:"),
       Label(text: application.propertyList.bundleIdentifier)]))
-
-    stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Location:"),
-                                                                        Label(text: application.url.path)]))
+    stackView.addArrangedSubview(createStackView(.horizontal, views: [
+      BoldLabel(text: "Location:"),
+      Label(text: application.url.path)]))
 
     if let backupDestination = UserDefaults.standard.backupDestination {
       let backupText = backupController.doesBackupExists(for: application, at: backupDestination) ? "Yes" : "No"
-      stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Backup exists:"), Label(text: backupText)]))
+      stackView.addArrangedSubview(createStackView(.horizontal, views: [
+        BoldLabel(text: "Backup exists:"),
+        Label(text: backupText)]))
     }
 
     let syncText = applicationIsSynced ? "Yes" : "No"
-    stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Is synced:"), Label(text: syncText)]))
+    stackView.addArrangedSubview(createStackView(.horizontal, views: [
+      BoldLabel(text: "Is synced:"),
+      Label(text: syncText)]))
 
     horizontalStackView.addArrangedSubview(stackView)
     view.addSubview(horizontalStackView)
+
     layoutConstraints = [
       horizontalStackView.topAnchor.constraint(equalTo: view.topAnchor),
       horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -80,16 +110,32 @@ class ApplicationDetailInfoViewController: ViewController {
     ]
     NSLayoutConstraint.activate(layoutConstraints)
 
-    view.frame.size.height = 180
+    view.frame.size.height = 280
   }
 
-  func createVerticalStackView(with views: [NSView]) -> NSStackView {
+  // MARK: - Private methods
+
+  private func createStackView(_ orientation: NSUserInterfaceLayoutOrientation, views: [NSView]) -> NSStackView {
     let stackView = NSStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
-    stackView.orientation = .horizontal
-    stackView.alignment = .firstBaseline
+    stackView.alignment = .leading
+    stackView.orientation = orientation
     stackView.spacing = 5
     views.forEach { stackView.addArrangedSubview($0) }
     return stackView
+  }
+
+  // MARK: - Actions
+
+  @objc func performBackup(_ sender: NSButton) {
+    delegate?.applicationDetailInfoViewController(self, didTapBackup: sender)
+  }
+
+  @objc func sync(_ sender: NSButton) {
+    delegate?.applicationDetailInfoViewController(self, didTapSync: sender)
+  }
+
+  @objc func unsync(_ sender: NSButton) {
+    delegate?.applicationDetailInfoViewController(self, didTapUnsync: sender)
   }
 }

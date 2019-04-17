@@ -3,6 +3,7 @@ platform :macos, '10.14'
 
 # Frameworks
 pod 'Blueprints'
+pod 'Differific'
 pod 'Family'
 
 target 'Syncalicious'

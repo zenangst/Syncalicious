@@ -75,7 +75,6 @@ class ApplicationDetailInfoViewController: ViewController {
     stackView.alignment = .top
     stackView.distribution = .gravityAreas
     stackView.orientation = .vertical
-    stackView.addArrangedSubview(nameLabel)
 
     stackView.addArrangedSubview(createStackView(.horizontal, views: [
       BoldLabel(text: "Version:"),

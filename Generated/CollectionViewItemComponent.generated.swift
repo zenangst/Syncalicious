@@ -36,7 +36,7 @@ class ApplicationListItemViewController: NSViewController, Component {
     self.view = scrollView
     scrollView.documentView = collectionView
     collectionView.isSelectable = true
-    collectionView.allowsMultipleSelection = false
+    collectionView.allowsMultipleSelection = true
     collectionView.allowsEmptySelection = false
   }
 

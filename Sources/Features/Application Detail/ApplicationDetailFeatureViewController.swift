@@ -51,7 +51,12 @@ class ApplicationDetailFeatureViewController: NSViewController,
                                      customInsets: .init(top: 15, left: 30, bottom: 15, right: 30))
   }
 
+  private func render(_ applications: [Application]) {
+    applicationInfoViewController.view.isHidden = true
+  }
+
   private func render(_ application: Application) {
+    applicationInfoViewController.view.isHidden = false
     applicationInfoViewController.render(application,
                                          syncController: syncController,
                                          machineController: machineController)
@@ -59,6 +64,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
     layoutConstraints = []
 
     titlebarView.subviews.forEach { $0.removeFromSuperview() }
+    titleLabel.stringValue = application.propertyList.bundleName
     titleLabel.alignment = .center
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titlebarView.wantsLayer = true
@@ -78,6 +84,19 @@ class ApplicationDetailFeatureViewController: NSViewController,
   private func refreshApplicationList() {
     guard let locations = try? applicationController.applicationDirectories() else { return }
     applicationController.loadApplications(at: locations)
+  }
+
+  private func handleSelections(in collectionView: NSCollectionView) {
+    if collectionView.selectionIndexPaths.count > 1 {
+      render([])
+    } else {
+      guard let indexPath = collectionView.selectionIndexPaths.first else { return }
+      guard let listViewController = listViewController else { return }
+      guard let application = listViewController.model(at: indexPath).application as? Application else { return }
+
+      self.application = application
+      render(application)
+    }
   }
 
   // MARK: - ApplicationDetailInfoViewControllerDelegate
@@ -107,12 +126,11 @@ class ApplicationDetailFeatureViewController: NSViewController,
 
   // MARK: - NSCollectionViewDelegate
 
-  func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-    guard let indexPath = indexPaths.first else { return }
-    guard let listViewController = listViewController else { return }
-    guard let application = listViewController.model(at: indexPath).application as? Application else { return }
+  func collectionView(_ collectionView: NSCollectionView, didDeselectItemsAt indexPaths: Set<IndexPath>) {
+    handleSelections(in: collectionView)
+  }
 
-    self.application = application
-    render(application)
+  func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    handleSelections(in: collectionView)
   }
 }

@@ -21,7 +21,14 @@ class ApplicationListSortViewController: ViewController {
                                             target: self,
                                             action: #selector(didChangeSort(_:)))
     segmentControl.translatesAutoresizingMaskIntoConstraints = false
-    segmentControl.setSelected(true, forSegment: 0)
+
+    if let sortKind = UserDefaults.standard.listSort,
+      let index = ApplicationListSortViewController.SortKind.allCases.firstIndex(of: sortKind) {
+      segmentControl.setSelected(true, forSegment: index)
+    } else {
+      segmentControl.setSelected(true, forSegment: 0)
+    }
+
     view.addSubview(segmentControl)
 
     NSLayoutConstraint.deactivate(layoutConstraints)
@@ -39,6 +46,7 @@ class ApplicationListSortViewController: ViewController {
   @objc func didChangeSort(_ segmentControl: NSSegmentedControl) {
     guard let label = segmentControl.label(forSegment: segmentControl.selectedSegment),
       let kind = SortKind.init(rawValue: label) else { return }
+    UserDefaults.standard.listSort = kind
     delegate?.applicationListSortViewController(self, didChangeSort: kind)
   }
 }

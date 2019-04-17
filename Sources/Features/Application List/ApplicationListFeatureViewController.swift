@@ -11,7 +11,7 @@ class ApplicationListFeatureViewController: NSViewController,
   lazy var titlebarView = NSView()
   lazy var titleLabel = SmallLabel()
   var applications = [Application]()
-  var sort: ApplicationListSortViewController.SortKind = .name
+  var sort: ApplicationListSortViewController.SortKind = UserDefaults.standard.listSort ?? .name
   private var layoutConstraints = [NSLayoutConstraint]()
 
   init(containerViewController: ApplicationListContainerViewController,
@@ -65,10 +65,13 @@ class ApplicationListFeatureViewController: NSViewController,
     case .name:
       models = models.sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
     case .synced:
-      models = models
-        .sorted(by: { $0.propertyList.bundleName.lowercased() > $1.propertyList.bundleName.lowercased() })
-        .sorted(by: { lhs, rhs in syncController.applicationIsSynced(lhs, on: machineController.machine)
-      })
+
+      let synced = models.filter({ syncController.applicationIsSynced($0, on: machineController.machine) })
+        .sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
+      let unsynced = models.filter({ !(syncController.applicationIsSynced($0, on: machineController.machine)) })
+        .sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
+
+      models = (synced + unsynced)
     }
 
     self.applications = models

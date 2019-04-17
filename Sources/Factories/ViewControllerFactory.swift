@@ -7,18 +7,20 @@ class ViewControllerFactory {
     self.dependencyContainer = dependencyContainer
   }
 
-  func createApplicationListViewController(with layout: NSCollectionViewFlowLayout) -> ApplicationItemViewController {
-    let viewController = ApplicationItemViewController(layout: layout, iconStore: dependencyContainer)
-    viewController.view.wantsLayer = true
-    viewController.view.layer?.backgroundColor = NSColor.white.cgColor
-    viewController.title = Bundle.main.infoDictionary?["CFBundleName"] as? String
-
-    return viewController
+  func createApplicationListViewController(with layout: NSCollectionViewFlowLayout) -> ApplicationListFeatureViewController {
+    let listViewController = ApplicationItemViewController(layout: layout, iconStore: dependencyContainer)
+    let searchViewController = ApplicationSearchViewController()
+    let containerViewController = ApplicationListContainerViewController(listViewController: listViewController,
+                                                                         searchViewController: searchViewController)
+    let featureViewController = ApplicationListFeatureViewController(containerViewController: containerViewController)
+    return featureViewController
   }
 
   // swiftlint:disable line_length
   func createApplicationDetailViewController() -> ApplicationContainerViewController {
+    let iconController = dependencyContainer.iconController
     let applicationInfoViewController = ApplicationInfoViewController(backupController: dependencyContainer.backupController,
+                                                                      iconController: iconController,
                                                                       machine: dependencyContainer.machineController.machine,
                                                                       syncController: dependencyContainer.syncController)
     let containerViewController = ApplicationContainerViewController(applicationInfoViewController: applicationInfoViewController,

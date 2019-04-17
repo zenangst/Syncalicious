@@ -4,7 +4,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, ApplicationControllerDelegate {
   var window: NSWindow?
   var dependencyContainer: DependencyContainer?
-  var mainViewController: ApplicationItemViewController?
+  var listFeatureViewController: ApplicationListFeatureViewController?
   @IBOutlet var mainMenuController: MainMenuController?
 
   // MARK: - NSApplicationDelegate
@@ -41,8 +41,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
       let dependencyContainer = try createDependencyContainer()
       let locations = try dependencyContainer.applicationController.applicationDirectories()
-      let (windowController, listController) = dependencyContainer.windowFactory.createMainWindowControllers()
-      self.mainViewController = listController
+      let (windowController, listFeatureViewController) = dependencyContainer.windowFactory.createMainWindowControllers()
+      self.listFeatureViewController = listFeatureViewController
       self.mainMenuController?.dependencyContainer = dependencyContainer
       self.window = windowController.window
       self.dependencyContainer = dependencyContainer
@@ -106,33 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                              didLoadApplications applications: [Application]) {
     dependencyContainer?.syncController.applications = applications
     dependencyContainer?.backupController.applications = applications
-
-    let closure: (Application) -> ApplicationItemModel = { item in
-      var subtitle = "\(item.propertyList.versionString)"
-      if !item.propertyList.buildVersion.isEmpty && item.propertyList.versionString != item.propertyList.buildVersion {
-        subtitle.append(" (\(item.propertyList.buildVersion))")
-      }
-
-      return ApplicationItemModel(data: [
-        "title": item.propertyList.bundleName,
-        "subtitle": subtitle,
-        "bundleIdentifier": item.propertyList.bundleIdentifier,
-        "path": item.url,
-        "enabled": true,
-        "model": item
-        ])
-    }
-    let models = applications
-      .sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
-      .compactMap(closure)
-
-    if let mainViewController = mainViewController {
-      mainViewController.reload(with: models)
-
-      let collectionView = mainViewController.collectionView
-      collectionView.selectItems(at: [IndexPath.init(item: 19, section: 0)], scrollPosition: .centeredHorizontally)
-      collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: [IndexPath.init(item: 19, section: 0)])
-    }
+    listFeatureViewController?.render(applications: applications)
 
     debugPrint("Loaded \(applications.count) applications.")
   }

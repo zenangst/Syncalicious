@@ -1,16 +1,20 @@
 PODS:
-  - Family (0.14.3)
+  - Blueprints (0.10.1)
+  - Family (0.14.4)
 
 DEPENDENCIES:
+  - Blueprints
   - Family
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Blueprints
     - Family
 
 SPEC CHECKSUMS:
-  Family: e895808117f577305a6b5cabd4fc7463ad262e1f
+  Blueprints: a4279e672ff11cf837240602b330299c2dc0cf40
+  Family: a36571a732d1986f3e57fbe824d1e8d2b23ea16f
 
-PODFILE CHECKSUM: 577eb548a5a12c3ca5c8d9a8a4ae97a7f630192b
+PODFILE CHECKSUM: 13ea8a24f8598323c74bd859c02b01817163474c
 
 COCOAPODS: 1.6.0

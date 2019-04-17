@@ -3,12 +3,17 @@ import Cocoa
 class ApplicationInfoViewController: ViewController {
   private var layoutConstraints = [NSLayoutConstraint]()
   let backupController: BackupController
+  let iconController: IconController
   let syncController: SyncController
   let machine: Machine
   lazy var stackView = NSStackView()
 
-  init(backupController: BackupController, machine: Machine, syncController: SyncController) {
+  init(backupController: BackupController,
+       iconController: IconController,
+       machine: Machine,
+       syncController: SyncController) {
     self.backupController = backupController
+    self.iconController = iconController
     self.machine = machine
     self.syncController = syncController
     super.init(nibName: nil, bundle: nil)
@@ -27,25 +32,30 @@ class ApplicationInfoViewController: ViewController {
     layoutConstraints = []
 
     let iconView = NSImageView()
-    let image = NSWorkspace.shared.icon(forFile: application.url.path)
+    let image = iconController.icon(at: application.url, for: application.propertyList.bundleIdentifier)
     iconView.image = image
 
     let nameLabel = Label(text: application.propertyList.bundleName)
     nameLabel.font = NSFont.boldSystemFont(ofSize: 32)
 
     let horizontalStackView = NSStackView()
+    horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+    horizontalStackView.distribution = .gravityAreas
     horizontalStackView.orientation = .horizontal
+    horizontalStackView.alignment = .top
+    horizontalStackView.spacing = 20
     horizontalStackView.addArrangedSubview(iconView)
-    horizontalStackView.addArrangedSubview(nameLabel)
 
     stackView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.alignment = .top
+    stackView.distribution = .gravityAreas
     stackView.orientation = .vertical
-    stackView.alignment = .leading
-    stackView.addArrangedSubview(horizontalStackView)
+    stackView.addArrangedSubview(nameLabel)
 
     stackView.addArrangedSubview(createVerticalStackView(with: [
       BoldLabel(text: "Version:"),
-      Label(text: application.propertyList.versionString),
+      Label(text: application.propertyList.versionString)]))
+    stackView.addArrangedSubview(createVerticalStackView(with: [
       BoldLabel(text: "Bundle identifier:"),
       Label(text: application.propertyList.bundleIdentifier)]))
 
@@ -60,14 +70,17 @@ class ApplicationInfoViewController: ViewController {
     let syncText = applicationIsSynced ? "Yes" : "No"
     stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Is synced:"), Label(text: syncText)]))
 
-    view.addSubview(stackView)
+    horizontalStackView.addArrangedSubview(stackView)
+    view.addSubview(horizontalStackView)
     layoutConstraints = [
-      stackView.topAnchor.constraint(equalTo: view.topAnchor),
-      stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      horizontalStackView.topAnchor.constraint(equalTo: view.topAnchor),
+      horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      horizontalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ]
     NSLayoutConstraint.activate(layoutConstraints)
+
+    view.frame.size.height = 180
   }
 
   func createVerticalStackView(with views: [NSView]) -> NSStackView {

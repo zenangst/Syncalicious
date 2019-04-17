@@ -20,14 +20,14 @@ class WindowFactory {
     return window
   }
 
-  func createMainWindowControllers() -> (NSWindowController, ApplicationItemViewController) {
+  func createMainWindowControllers() -> (NSWindowController, ApplicationListFeatureViewController) {
     let window = createMainWindow()
     let layout = layoutFactory.createApplicationListLayout()
-    let listViewController = viewControllerFactory.createApplicationListViewController(with: layout)
+    let listFeatureViewController = viewControllerFactory.createApplicationListViewController(with: layout)
 
-    let sidebarItem = NSSplitViewItem(contentListWithViewController: listViewController)
+    let sidebarItem = NSSplitViewItem(contentListWithViewController: listFeatureViewController)
     sidebarItem.holdingPriority = .init(rawValue: 260)
-    sidebarItem.minimumThickness = layout.itemSize.width + layout.sectionInset.left + layout.sectionInset.right
+    sidebarItem.minimumThickness = 260
     sidebarItem.maximumThickness = sidebarItem.minimumThickness
     sidebarItem.canCollapse = true
 
@@ -35,8 +35,8 @@ class WindowFactory {
     detailViewController.view.wantsLayer = true
     detailViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
     detailViewController.title = "Customize"
-    detailViewController.listViewController = listViewController
-    listViewController.collectionView.delegate = detailViewController
+    detailViewController.listViewController = listFeatureViewController.containerViewController.listViewController
+    listFeatureViewController.containerViewController.listViewController.collectionView.delegate = detailViewController
 
     let detailControllerItem = NSSplitViewItem(viewController: detailViewController)
     detailControllerItem.minimumThickness = 320
@@ -45,7 +45,7 @@ class WindowFactory {
     let windowController = WindowController(window: window,
                                             with: [sidebarItem, detailControllerItem])
 
-    return (windowController, listViewController)
+    return (windowController, listFeatureViewController)
   }
 
   func createAlert(with text: String = "", error: Error? = nil) -> NSAlert {

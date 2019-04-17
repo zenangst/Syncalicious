@@ -36,11 +36,7 @@ class ApplicationContainerViewController: FamilyViewController,
   override func viewDidLoad() {
     super.viewDidLoad()
     addChild(applicationInfoViewController,
-             customInsets: .init(top: 15, left: 15, bottom: 15, right: 15),
-             height: 140)
-    addChild(ApplicationActionsViewController(),
-             customInsets: .init(top: 15, left: 105, bottom: 15, right: 105),
-             height: 20)
+             customInsets: .init(top: 15, left: 15, bottom: 15, right: 15))
   }
 
   // MARK: - Private methods

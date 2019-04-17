@@ -122,11 +122,11 @@ class ApplicationListFeatureViewController: NSViewController,
   // MARK: - ApplicationSearchViewControllerDelegate
 
   func applicationDetailSearchViewController(_ controller: ApplicationListSearchViewController,
-                                       didStartSearch searchField: NSSearchField) {
+                                             didStartSearch searchField: NSSearchField) {
     let query = searchField.stringValue.lowercased()
     let results = applications.filter({
       $0.propertyList.bundleName.lowercased().contains(query) ||
-      $0.propertyList.bundleIdentifier.lowercased().contains(query)
+        $0.propertyList.bundleIdentifier.lowercased().contains(query)
     })
     let newModels = results.compactMap(createViewModel)
 
@@ -140,12 +140,13 @@ class ApplicationListFeatureViewController: NSViewController,
   }
 
   func applicationDetailSearchViewController(_ controller: ApplicationListSearchViewController,
-                                       didEndSearch searchField: NSSearchField) {
+                                             didEndSearch searchField: NSSearchField) {
     containerViewController.listViewController.reload(with: applications.compactMap(createViewModel))
+    let collectionView = containerViewController.listViewController.collectionView
+    collectionView.deselectItems(at: collectionView.selectionIndexPaths)
 
     guard !applications.isEmpty else { return }
 
-    let collectionView = containerViewController.listViewController.collectionView
     collectionView.selectItems(at: [IndexPath.init(item: 0, section: 0)], scrollPosition: [])
     collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: [IndexPath.init(item: 0, section: 0)])
   }

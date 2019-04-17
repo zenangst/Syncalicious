@@ -109,7 +109,7 @@ class ApplicationDetailInfoViewController: ViewController {
     ]
     NSLayoutConstraint.activate(layoutConstraints)
 
-    view.frame.size.height = 280
+    view.frame.size.height = 200
   }
 
   // MARK: - Private methods

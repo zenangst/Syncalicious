@@ -2,11 +2,11 @@ import Cocoa
 import Family
 
 class ApplicationListContainerViewController: FamilyViewController {
-  let listViewController: ApplicationItemViewController
-  let searchViewController: ApplicationSearchViewController
+  let listViewController: ApplicationListItemViewController
+  let searchViewController: ApplicationListSearchViewController
 
-  init(listViewController: ApplicationItemViewController,
-       searchViewController: ApplicationSearchViewController) {
+  init(listViewController: ApplicationListItemViewController,
+       searchViewController: ApplicationListSearchViewController) {
     self.listViewController = listViewController
     self.searchViewController = searchViewController
     super.init(nibName: nil, bundle: nil)

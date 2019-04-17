@@ -1,16 +1,16 @@
 import Cocoa
 
-protocol ApplicationSearchViewControllerDelegate: class {
-  func applicationSearchViewController(_ controller: ApplicationDetailSearchViewController,
-                                       didStartSearch searchField: NSSearchField)
-  func applicationSearchViewController(_ controller: ApplicationDetailSearchViewController,
-                                       didEndSearch searchField: NSSearchField)
+protocol ApplicationListSearchViewControllerDelegate: class {
+  func applicationDetailSearchViewController(_ controller: ApplicationListSearchViewController,
+                                             didStartSearch searchField: NSSearchField)
+  func applicationDetailSearchViewController(_ controller: ApplicationListSearchViewController,
+                                             didEndSearch searchField: NSSearchField)
 }
 
-class ApplicationDetailSearchViewController: ViewController, NSSearchFieldDelegate {
+class ApplicationListSearchViewController: ViewController, NSSearchFieldDelegate {
   private var layoutConstraints = [NSLayoutConstraint]()
   private lazy var searchField = NSSearchField()
-  weak var delegate: ApplicationSearchViewControllerDelegate?
+  weak var delegate: ApplicationListSearchViewControllerDelegate?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,14 +35,14 @@ class ApplicationDetailSearchViewController: ViewController, NSSearchFieldDelega
 
   func controlTextDidChange(_ obj: Notification) {
     guard !searchField.stringValue.isEmpty else { return }
-    delegate?.applicationSearchViewController(self, didStartSearch: searchField)
+    delegate?.applicationDetailSearchViewController(self, didStartSearch: searchField)
   }
 
   func searchFieldDidStartSearching(_ sender: NSSearchField) {
-    delegate?.applicationSearchViewController(self, didStartSearch: sender)
+    delegate?.applicationDetailSearchViewController(self, didStartSearch: sender)
   }
 
   func searchFieldDidEndSearching(_ sender: NSSearchField) {
-    delegate?.applicationSearchViewController(self, didEndSearch: sender)
+    delegate?.applicationDetailSearchViewController(self, didEndSearch: sender)
   }
 }

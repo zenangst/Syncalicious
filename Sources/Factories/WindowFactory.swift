@@ -32,9 +32,6 @@ class WindowFactory {
     sidebarItem.canCollapse = true
 
     let detailViewController = viewControllerFactory.createApplicationDetailViewController()
-    detailViewController.view.wantsLayer = true
-    detailViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-    detailViewController.title = "Customize"
     detailViewController.listViewController = listFeatureViewController.containerViewController.listViewController
     listFeatureViewController.containerViewController.listViewController.collectionView.delegate = detailViewController
 

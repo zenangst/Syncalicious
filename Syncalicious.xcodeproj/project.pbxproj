@@ -23,7 +23,7 @@
 		BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */; };
 		BD62D2E82266548E007B047B /* IdleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E72266548E007B047B /* IdleController.swift */; };
 		BD62D2EA226727C0007B047B /* ApplicationListContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E9226727C0007B047B /* ApplicationListContainerViewController.swift */; };
-		BD62D2EC22674E0A007B047B /* ApplicationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2EB22674E0A007B047B /* ApplicationSearchViewController.swift */; };
+		BD62D2EC22674E0A007B047B /* ApplicationListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2EB22674E0A007B047B /* ApplicationListSearchViewController.swift */; };
 		BD62D2EE2267547B007B047B /* ApplicationListFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2ED2267547B007B047B /* ApplicationListFeatureViewController.swift */; };
 		BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960B2252849100C93211 /* ApplicationController.swift */; };
 		BD7D960E2252888000C93211 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960D2252888000C93211 /* Application.swift */; };
@@ -41,7 +41,7 @@
 		BD895C08225A698600DEC9FE /* PrototypeItemComponent.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD895C07225A698600DEC9FE /* PrototypeItemComponent.generated.swift */; };
 		BD8EDD722255322A00110E56 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8EDD712255322A00110E56 /* TestController.swift */; };
 		BD8EDD7A22553A5A00110E56 /* CollectionViewItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8EDD7922553A5A00110E56 /* CollectionViewItemComponent.swift */; };
-		BD8EDD7E22553ADD00110E56 /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8EDD7D22553ADD00110E56 /* ApplicationView.swift */; };
+		BD8EDD7E22553ADD00110E56 /* ApplicationListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8EDD7D22553ADD00110E56 /* ApplicationListItem.swift */; };
 		BD8EDD822255CE3400110E56 /* IconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8EDD812255CE3400110E56 /* IconController.swift */; };
 		BD8EDD862255CF4800110E56 /* CollectionViewItemComponent.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8EDD852255CF4800110E56 /* CollectionViewItemComponent.generated.swift */; };
 		BD8EDD892255CF7500110E56 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8EDD882255CF7500110E56 /* Component.swift */; };
@@ -59,10 +59,9 @@
 		BDDAA33E225DB56B00D87664 /* WindowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33D225DB56B00D87664 /* WindowFactory.swift */; };
 		BDDAA340225DB57500D87664 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */; };
 		BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */; };
-		BDDAA347225DC89F00D87664 /* ApplicationInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */; };
+		BDDAA347225DC89F00D87664 /* ApplicationDetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */; };
 		BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */; };
-		BDDAA34F225E52DA00D87664 /* ApplicationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* ApplicationContainerViewController.swift */; };
-		BDDAD908225E671F007D694F /* ApplicationActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAD907225E671F007D694F /* ApplicationActionsViewController.swift */; };
+		BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,7 +95,7 @@
 		BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
 		BD62D2E72266548E007B047B /* IdleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleController.swift; sourceTree = "<group>"; };
 		BD62D2E9226727C0007B047B /* ApplicationListContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListContainerViewController.swift; sourceTree = "<group>"; };
-		BD62D2EB22674E0A007B047B /* ApplicationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSearchViewController.swift; sourceTree = "<group>"; };
+		BD62D2EB22674E0A007B047B /* ApplicationListSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListSearchViewController.swift; sourceTree = "<group>"; };
 		BD62D2ED2267547B007B047B /* ApplicationListFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListFeatureViewController.swift; sourceTree = "<group>"; };
 		BD7D960B2252849100C93211 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		BD7D960D2252888000C93211 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
@@ -117,7 +116,7 @@
 		BD8EDD7722553A3F00110E56 /* CollectionViewItemComponent.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollectionViewItemComponent.stencil; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		BD8EDD7922553A5A00110E56 /* CollectionViewItemComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewItemComponent.swift; sourceTree = "<group>"; };
 		BD8EDD7B22553A8200110E56 /* .sourcery.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .sourcery.yml; sourceTree = "<group>"; };
-		BD8EDD7D22553ADD00110E56 /* ApplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationView.swift; sourceTree = "<group>"; };
+		BD8EDD7D22553ADD00110E56 /* ApplicationListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListItem.swift; sourceTree = "<group>"; };
 		BD8EDD812255CE3400110E56 /* IconController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconController.swift; sourceTree = "<group>"; };
 		BD8EDD852255CF4800110E56 /* CollectionViewItemComponent.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewItemComponent.generated.swift; sourceTree = "<group>"; };
 		BD8EDD882255CF7500110E56 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
@@ -141,10 +140,9 @@
 		BDDAA33D225DB56B00D87664 /* WindowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowFactory.swift; sourceTree = "<group>"; };
 		BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutFactory.swift; sourceTree = "<group>"; };
-		BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationInfoViewController.swift; sourceTree = "<group>"; };
+		BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailInfoViewController.swift; sourceTree = "<group>"; };
 		BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainedController.swift; sourceTree = "<group>"; };
-		BDDAA34E225E52DA00D87664 /* ApplicationContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationContainerViewController.swift; sourceTree = "<group>"; };
-		BDDAD907225E671F007D694F /* ApplicationActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationActionsViewController.swift; sourceTree = "<group>"; };
+		BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailContainerViewController.swift; sourceTree = "<group>"; };
 		D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -408,8 +406,8 @@
 			children = (
 				BD62D2E9226727C0007B047B /* ApplicationListContainerViewController.swift */,
 				BD62D2ED2267547B007B047B /* ApplicationListFeatureViewController.swift */,
-				BD62D2EB22674E0A007B047B /* ApplicationSearchViewController.swift */,
-				BD8EDD7D22553ADD00110E56 /* ApplicationView.swift */,
+				BD62D2EB22674E0A007B047B /* ApplicationListSearchViewController.swift */,
+				BD8EDD7D22553ADD00110E56 /* ApplicationListItem.swift */,
 			);
 			path = "Application List";
 			sourceTree = "<group>";
@@ -417,9 +415,8 @@
 		BDDAA345225DC88F00D87664 /* ApplicationDetail */ = {
 			isa = PBXGroup;
 			children = (
-				BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */,
-				BDDAA34E225E52DA00D87664 /* ApplicationContainerViewController.swift */,
-				BDDAD907225E671F007D694F /* ApplicationActionsViewController.swift */,
+				BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */,
+				BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */,
 			);
 			path = ApplicationDetail;
 			sourceTree = "<group>";
@@ -617,17 +614,16 @@
 				BDDAA337225D37D100D87664 /* BackgroundView.swift in Sources */,
 				BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */,
 				BD8EDD822255CE3400110E56 /* IconController.swift in Sources */,
-				BDDAA34F225E52DA00D87664 /* ApplicationContainerViewController.swift in Sources */,
+				BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */,
 				BD3CC250225B147F006D7877 /* SplitViewController.swift in Sources */,
 				BDDAA33B225D383400D87664 /* Label.swift in Sources */,
-				BDDAD908225E671F007D694F /* ApplicationActionsViewController.swift in Sources */,
 				BD4A69312253BADE00F588AD /* MachineController.swift in Sources */,
 				BD4A6941225406A300F588AD /* ViewController.swift in Sources */,
-				BD8EDD7E22553ADD00110E56 /* ApplicationView.swift in Sources */,
+				BD8EDD7E22553ADD00110E56 /* ApplicationListItem.swift in Sources */,
 				BD62D2E4226393B4007B047B /* ShellController.swift in Sources */,
 				BD7D960E2252888000C93211 /* Application.swift in Sources */,
 				BDDAA335225D37C700D87664 /* DecorationView.swift in Sources */,
-				BD62D2EC22674E0A007B047B /* ApplicationSearchViewController.swift in Sources */,
+				BD62D2EC22674E0A007B047B /* ApplicationListSearchViewController.swift in Sources */,
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,
 				BD62D2E22262362C007B047B /* SyncController.swift in Sources */,
@@ -636,7 +632,7 @@
 				BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */,
 				BD895C01225A67C200DEC9FE /* PrototypeItem.swift in Sources */,
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
-				BDDAA347225DC89F00D87664 /* ApplicationInfoViewController.swift in Sources */,
+				BDDAA347225DC89F00D87664 /* ApplicationDetailInfoViewController.swift in Sources */,
 				BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */,
 				BD8EDD892255CF7500110E56 /* Component.swift in Sources */,
 				BD8EDD7A22553A5A00110E56 /* CollectionViewItemComponent.swift in Sources */,

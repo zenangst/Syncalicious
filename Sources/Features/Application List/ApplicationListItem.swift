@@ -4,7 +4,7 @@ import Cocoa
 // sourcery: item.label("titleLabel").stringValue = model.string("title")
 // sourcery: item.label("subtitleLabel").stringValue = model.string("subtitle")
 // sourcery: item.button("checkbox").state = = model.bool("enabled") ? .on : .off
-class ApplicationItem: PrototypeItem, PrototypeItemComponent {
+class ApplicationListItem: PrototypeItem, PrototypeItemComponent {
   let baseView = NSView()
 
   override var isSelected: Bool { didSet { updateState() } }

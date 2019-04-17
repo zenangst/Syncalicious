@@ -1,22 +1,22 @@
 import Cocoa
 import Family
 
-class ApplicationContainerViewController: FamilyViewController,
+class ApplicationDetailContainerViewController: FamilyViewController,
   SplitViewContainedController, NSCollectionViewDelegate {
-  weak var listViewController: ApplicationItemViewController?
+  weak var listViewController: ApplicationListItemViewController?
 
   lazy var titleLabel = SmallBoldLabel()
   lazy var titlebarView = NSView()
 
   private var layoutConstraints = [NSLayoutConstraint]()
 
-  let applicationInfoViewController: ApplicationInfoViewController
+  let applicationInfoViewController: ApplicationDetailInfoViewController
   let backupController: BackupController
   let syncController: SyncController
   let machineController: MachineController
   var application: Application?
 
-  init(applicationInfoViewController: ApplicationInfoViewController,
+  init(applicationInfoViewController: ApplicationDetailInfoViewController,
        backupController: BackupController,
        machineController: MachineController,
        syncController: SyncController) {
@@ -35,6 +35,8 @@ class ApplicationContainerViewController: FamilyViewController,
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.wantsLayer = true
+    view.layer?.backgroundColor = NSColor.white.cgColor
     addChild(applicationInfoViewController,
              customInsets: .init(top: 15, left: 15, bottom: 15, right: 15))
   }

@@ -3,9 +3,9 @@
 
 import Cocoa
 
-class ApplicationItemViewController: NSViewController, Component {
+class ApplicationListItemViewController: NSViewController, Component {
   private let layout: NSCollectionViewFlowLayout
-  private let dataSource: ApplicationItemDataSource
+  private let dataSource: ApplicationListItemDataSource
   lazy var scrollView = NSScrollView()
   let collectionView: NSCollectionView
 
@@ -14,7 +14,7 @@ class ApplicationItemViewController: NSViewController, Component {
   iconStore: IconStore,
   collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = ApplicationItemDataSource(title: title, iconStore: iconStore)
+    self.dataSource = ApplicationListItemDataSource(title: title, iconStore: iconStore)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -42,8 +42,8 @@ class ApplicationItemViewController: NSViewController, Component {
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = dataSource
-    let itemIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationItem")
-    collectionView.register(ApplicationItem.self, forItemWithIdentifier: itemIdentifier)
+    let itemIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationListItem")
+    collectionView.register(ApplicationListItem.self, forItemWithIdentifier: itemIdentifier)
 
     if title != nil {
       layout.headerReferenceSize.height = 60
@@ -56,23 +56,23 @@ class ApplicationItemViewController: NSViewController, Component {
     return collectionView.indexPath(for: item)
   }
 
-  func model(at indexPath: IndexPath) -> ApplicationItemModel {
+  func model(at indexPath: IndexPath) -> ApplicationListItemModel {
     return dataSource.model(at: indexPath)
   }
 
-  func reload(with models: [ApplicationItemModel], completion: (() -> Void)? = nil) {
+  func reload(with models: [ApplicationListItemModel], completion: (() -> Void)? = nil) {
     dataSource.reload(collectionView, with: models, then: completion)
   }
 }
 
-class ApplicationItemDataSource: NSObject, NSCollectionViewDataSource {
+class ApplicationListItemDataSource: NSObject, NSCollectionViewDataSource {
 
   private var title: String?
-  private var models = [ApplicationItemModel]()
+  private var models = [ApplicationListItemModel]()
   private let iconStore: IconStore
 
   init(title: String? = nil,
-  models: [ApplicationItemModel] = [],
+  models: [ApplicationListItemModel] = [],
   iconStore: IconStore) {
     self.title = title
     self.models = models
@@ -82,12 +82,12 @@ class ApplicationItemDataSource: NSObject, NSCollectionViewDataSource {
 
   // MARK: - Public API
 
-  func model(at indexPath: IndexPath) -> ApplicationItemModel {
+  func model(at indexPath: IndexPath) -> ApplicationListItemModel {
     return models[indexPath.item]
   }
 
   func reload(_ collectionView: NSCollectionView,
-  with models: [ApplicationItemModel],
+  with models: [ApplicationListItemModel],
   then handler: (() -> Void)? = nil) {
     self.models = models
     collectionView.reloadData()
@@ -101,11 +101,11 @@ class ApplicationItemDataSource: NSObject, NSCollectionViewDataSource {
   }
 
   func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let identifier = NSUserInterfaceItemIdentifier.init("ApplicationItem")
+    let identifier = NSUserInterfaceItemIdentifier.init("ApplicationListItem")
     let itemView = collectionView.makeItem(withIdentifier: identifier, for: indexPath)
     let model = self.model(at: indexPath)
 
-    if let item = itemView as? ApplicationItem {
+    if let item = itemView as? ApplicationListItem {
       iconStore.loadIcon(at: model.url("path"), for: model.string("bundleIdentifier")) { image in item.image("iconView").image = image }
       item.button("checkbox").state = model.bool("enabled") ? .on : .off
       item.label("subtitleLabel").stringValue = model.string("subtitle")
@@ -116,7 +116,7 @@ class ApplicationItemDataSource: NSObject, NSCollectionViewDataSource {
   }
 }
 
-struct ApplicationItemModel {
+struct ApplicationListItemModel {
   var data: [String: AnyHashable]
 
   func string(_ key: String) -> String { return (data[key] as? String) ?? "" }

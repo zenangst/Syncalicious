@@ -13,8 +13,9 @@ protocol BackupControllerDelegate: class {
 class BackupController {
   weak var delegate: BackupControllerDelegate?
   var applications = [Application]()
-  let machineController: MachineController
   var openPanel: NSOpenPanel?
+  let machineController: MachineController
+  let fileManager = FileManager.default
 
   init(machineController: MachineController) {
     self.machineController = machineController
@@ -38,8 +39,37 @@ class BackupController {
     }
 
     try createFolderIfNeeded(at: destination)
-    runBackup(for: applications, to: destination)
+    try runBackup(for: applications, to: destination)
     debugPrint("Backing up to destination: \(destination.path)")
+  }
+
+  func doesBackupExists(for application: Application, at url: URL) -> Bool {
+    var from = application.preferences.path
+    from.resolveSymlinksInPath()
+    let destination = machineController.machineBackupDestination(for: url)
+      .appendingPathComponent(application.preferences.kind.rawValue)
+      .appendingPathComponent(from.lastPathComponent)
+
+    return fileManager.fileExists(atPath: destination.path)
+  }
+
+  func runBackup(for applications: [Application], to url: URL) throws {
+    try createFolderIfNeeded(at: machineController.machineBackupDestination(for: url))
+    for application in applications where application.preferences.path.isFileURL {
+      var from = application.preferences.path
+      from.resolveSymlinksInPath()
+      let backupFolder = machineController.machineBackupDestination(for: url)
+        .appendingPathComponent(application.preferences.kind.rawValue)
+      let destination = backupFolder.appendingPathComponent(from.lastPathComponent)
+
+      try createFolderIfNeeded(at: backupFolder)
+
+      do {
+        try fileManager.copyItem(at: from, to: destination)
+      } catch let error {
+        debugPrint(error)
+      }
+    }
   }
 
   // MARK: - Private methods
@@ -55,36 +85,20 @@ class BackupController {
   }
 
   private func createFolderIfNeeded(at url: URL) throws {
-    let backupLocation = machineController.machineBackupDestination(for: url)
     let fileManager = FileManager.default
     var isDirectory = ObjCBool(true)
 
-    guard !fileManager.fileExists(atPath: backupLocation.path, isDirectory: &isDirectory) else {
+    guard !fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory) else {
       return
     }
 
     do {
-      try fileManager.createDirectory(at: backupLocation,
+      try fileManager.createDirectory(at: url,
                                       withIntermediateDirectories: true,
                                       attributes: nil)
-      debugPrint("Created directory at: \(backupLocation.path)")
+      debugPrint("Created directory at: \(url.path)")
     } catch let error {
       throw BackupError.unableToCreateBackupFolder(error)
-    }
-  }
-
-  private func runBackup(for applications: [Application], to url: URL) {
-    let fileManager = FileManager.default
-    for application in applications where application.preferences.path.isFileURL {
-      var from = application.preferences.path
-      from.resolveSymlinksInPath()
-      let destination = machineController.machineBackupDestination(for: url)
-        .appendingPathComponent(from.lastPathComponent)
-      do {
-        try fileManager.copyItem(at: from, to: destination)
-      } catch let error {
-        debugPrint(error)
-      }
     }
   }
 }

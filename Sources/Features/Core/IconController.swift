@@ -11,10 +11,9 @@ class IconController {
     var image: NSImage
     if let cachedImage = loadImageFromDisk(for: bundleIdentifier) {
       image = cachedImage
-      return image
     } else {
       image = NSWorkspace.shared.icon(forFile: url.path)
-      var imageRect: CGRect = .init(origin: .zero, size: CGSize(width: 32, height: 32))
+      var imageRect: CGRect = .init(origin: .zero, size: CGSize(width: 128, height: 128))
       let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
       if let imageRef = imageRef {
         image = NSImage(cgImage: imageRef, size: imageRect.size)
@@ -26,7 +25,7 @@ class IconController {
     return image
   }
 
-  func loadImageFromDisk(for bundleIdentifier: String) -> NSImage? {
+  private func loadImageFromDisk(for bundleIdentifier: String) -> NSImage? {
     if let applicationFile = try? applicationCacheDirectory()
       .appendingPathComponent("\(bundleIdentifier).tiff") {
       if FileManager.default.fileExists(atPath: applicationFile.path) {
@@ -38,7 +37,7 @@ class IconController {
     return nil
   }
 
-  func saveImageToDisk(_ image: NSImage, bundleIdentifier: String) {
+  private func saveImageToDisk(_ image: NSImage, bundleIdentifier: String) {
     do {
       let applicationFile = try applicationCacheDirectory()
         .appendingPathComponent("\(bundleIdentifier).tiff")
@@ -56,7 +55,7 @@ class IconController {
     }
   }
 
-  func applicationCacheDirectory() throws -> URL {
+  private func applicationCacheDirectory() throws -> URL {
     let url = try FileManager.default.url(for: .cachesDirectory,
                                           in: .userDomainMask,
                                           appropriateFor: nil,

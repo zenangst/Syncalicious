@@ -1,4 +1,5 @@
 import Cocoa
+import Differific
 
 {% for type in types.implementing.PrototypeItemComponent %}
 class {{type.name|replace:"View",""}}ViewController: NSViewController, Component {
@@ -87,9 +88,8 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
   func reload(_ collectionView: NSCollectionView,
   with models: [{{type.name}}Model],
   then handler: (() -> Void)? = nil) {
-    self.models = models
-    collectionView.reloadData()
-    handler?()
+    let changes = DiffManager().diff(self.models, models)
+    collectionView.reload(with: changes, updateDataSource: { self.models = models }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource

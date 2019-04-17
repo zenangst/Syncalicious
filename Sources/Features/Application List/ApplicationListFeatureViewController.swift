@@ -85,7 +85,7 @@ class ApplicationListFeatureViewController: NSViewController,
       indexPaths = [IndexPath.init(item: 0, section: 0)]
     }
 
-    collectionView.selectItems(at: indexPaths, scrollPosition: .centeredHorizontally)
+    collectionView.selectItems(at: indexPaths, scrollPosition: [])
     collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: indexPaths)
   }
 

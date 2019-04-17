@@ -18,6 +18,7 @@ class Label: NSTextField, DecorationView {
     isEditable = false
     drawsBackground = false
     backgroundColor = .clear
+    lineBreakMode = .byTruncatingMiddle
   }
 
   required init?(coder: NSCoder) {

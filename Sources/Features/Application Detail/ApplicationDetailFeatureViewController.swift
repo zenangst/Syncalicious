@@ -47,8 +47,14 @@ class ApplicationDetailFeatureViewController: NSViewController,
     super.viewDidLoad()
     view.wantsLayer = true
     view.layer?.backgroundColor = NSColor.white.cgColor
+
+    let customizeViewController = ViewController()
+    customizeViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+
     containerViewController.addChild(applicationInfoViewController,
                                      customInsets: .init(top: 15, left: 30, bottom: 15, right: 30))
+
+    containerViewController.addChild(customizeViewController, height: 280)
   }
 
   private func render(_ applications: [Application]) {

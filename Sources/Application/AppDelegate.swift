@@ -44,6 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
       let (windowController, listFeatureViewController) = dependencyContainer.windowFactory.createMainWindowControllers()
       self.listFeatureViewController = listFeatureViewController
       self.mainMenuController?.dependencyContainer = dependencyContainer
+      self.mainMenuController?.listContainerViewController = listFeatureViewController.containerViewController
       self.window = windowController.window
       self.dependencyContainer = dependencyContainer
 

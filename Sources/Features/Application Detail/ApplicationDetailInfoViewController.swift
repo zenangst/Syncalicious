@@ -17,6 +17,7 @@ class ApplicationDetailInfoViewController: ViewController {
   let syncController: SyncController
   let machine: Machine
   lazy var stackView = NSStackView()
+  lazy var horizontalStackView = NSStackView()
 
   init(backupController: BackupController,
        iconController: IconController,
@@ -40,6 +41,7 @@ class ApplicationDetailInfoViewController: ViewController {
 
     view.subviews.forEach { $0.removeFromSuperview() }
     stackView.subviews.forEach { $0.removeFromSuperview() }
+    horizontalStackView.subviews.forEach { $0.removeFromSuperview() }
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = []
 
@@ -50,7 +52,6 @@ class ApplicationDetailInfoViewController: ViewController {
     let nameLabel = Label(text: application.propertyList.bundleName)
     nameLabel.font = NSFont.boldSystemFont(ofSize: 32)
 
-    let horizontalStackView = NSStackView()
     horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
     horizontalStackView.distribution = .gravityAreas
     horizontalStackView.orientation = .horizontal
@@ -104,12 +105,16 @@ class ApplicationDetailInfoViewController: ViewController {
     layoutConstraints = [
       horizontalStackView.topAnchor.constraint(equalTo: view.topAnchor),
       horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      horizontalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ]
     NSLayoutConstraint.activate(layoutConstraints)
+    horizontalStackView.needsUpdateConstraints = true
+    horizontalStackView.updateConstraints()
+  }
 
-    view.frame.size.height = 200
+  override func viewDidLayout() {
+    super.viewDidLayout()
+    view.frame.size.height = horizontalStackView.frame.size.height
   }
 
   // MARK: - Private methods

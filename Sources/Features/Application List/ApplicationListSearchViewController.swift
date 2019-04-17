@@ -9,7 +9,7 @@ protocol ApplicationListSearchViewControllerDelegate: class {
 
 class ApplicationListSearchViewController: ViewController, NSSearchFieldDelegate {
   private var layoutConstraints = [NSLayoutConstraint]()
-  private lazy var searchField = NSSearchField()
+  private(set) lazy var searchField = NSSearchField()
   weak var delegate: ApplicationListSearchViewControllerDelegate?
 
   override func viewDidLoad() {

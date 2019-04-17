@@ -12,39 +12,39 @@ class ApplicationListSortViewController: ViewController {
 
   weak var delegate: ApplicationListSortViewControllerDelegate?
   private var layoutConstraints = [NSLayoutConstraint]()
+  lazy var segmentedControl = NSSegmentedControl(labels: SortKind.allCases.compactMap({ $0.rawValue }),
+                                               trackingMode: .selectOne,
+                                               target: self,
+                                               action: #selector(didChangeSort(_:)))
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let segmentControl = NSSegmentedControl(labels: SortKind.allCases.compactMap({ $0.rawValue }),
-                                            trackingMode: .selectOne,
-                                            target: self,
-                                            action: #selector(didChangeSort(_:)))
-    segmentControl.translatesAutoresizingMaskIntoConstraints = false
+    segmentedControl.translatesAutoresizingMaskIntoConstraints = false
 
     if let sortKind = UserDefaults.standard.listSort,
       let index = ApplicationListSortViewController.SortKind.allCases.firstIndex(of: sortKind) {
-      segmentControl.setSelected(true, forSegment: index)
+      segmentedControl.setSelected(true, forSegment: index)
     } else {
-      segmentControl.setSelected(true, forSegment: 0)
+      segmentedControl.setSelected(true, forSegment: 0)
     }
 
-    view.addSubview(segmentControl)
+    view.addSubview(segmentedControl)
 
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = [
-      segmentControl.topAnchor.constraint(equalTo: view.topAnchor),
-      segmentControl.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      segmentControl.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      segmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      segmentedControl.topAnchor.constraint(equalTo: view.topAnchor),
+      segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      segmentedControl.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ]
     NSLayoutConstraint.activate(layoutConstraints)
 
     view.frame.size.height = 28
   }
 
-  @objc func didChangeSort(_ segmentControl: NSSegmentedControl) {
-    guard let label = segmentControl.label(forSegment: segmentControl.selectedSegment),
+  @objc func didChangeSort(_ segmentedControl: NSSegmentedControl) {
+    guard let label = segmentedControl.label(forSegment: segmentedControl.selectedSegment),
       let kind = SortKind.init(rawValue: label) else { return }
     UserDefaults.standard.listSort = kind
     delegate?.applicationListSortViewController(self, didChangeSort: kind)

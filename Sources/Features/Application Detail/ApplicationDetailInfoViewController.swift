@@ -108,8 +108,6 @@ class ApplicationDetailInfoViewController: ViewController {
       horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ]
     NSLayoutConstraint.activate(layoutConstraints)
-    horizontalStackView.needsUpdateConstraints = true
-    horizontalStackView.updateConstraints()
   }
 
   override func viewDidLayout() {

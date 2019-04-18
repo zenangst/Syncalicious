@@ -69,7 +69,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                                                        in: .userDomainMask,
                                                        appropriateFor: nil,
                                                        create: false)
-    let machineController = try MachineController(host: Host.current())
+    let shellController = ShellController()
+    let machineController = try MachineController(host: Host.current(),
+                                                  shellController: shellController)
     let infoPlistController = InfoPropertyListController()
     let preferencesController = PreferencesController(libraryDirectory: libraryDirectory)
     let queue = DispatchQueue(label: String(describing: ApplicationController.self),
@@ -80,7 +82,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     let backupController = BackupController(machineController: machineController)
     let iconController = IconController()
     let syncController = SyncController(destination: backupDestination.appendingPathComponent("Sync"),
-                                        machine: machineController.machine)
+                                        machineController: machineController,
+                                        shellController: shellController)
     let dependencyContainer = DependencyContainer(applicationController: applicationController,
                                                   syncController: syncController,
                                                   backupController: backupController,

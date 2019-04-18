@@ -15,13 +15,12 @@ class TargetApplication: NSObject {
   }
 }
 
-class SyncController: NSObject, IdleControllerDelegate {
+class SyncController: NSObject, MachineControllerDelegate {
   let destination: URL
-  let shellController = ShellController()
-  let machine: Machine
+  let shellController: ShellController
+  let machineController: MachineController
   let fileManager: FileManager
   let workspace: NSWorkspace
-  let idleController = IdleController()
 
   var applications = [Application]()
   var applicationHasBeenActive = Set<Application>()
@@ -31,24 +30,26 @@ class SyncController: NSObject, IdleControllerDelegate {
 
   init(destination: URL,
        fileManager: FileManager = .default,
-       machine: Machine,
+       machineController: MachineController,
+       shellController: ShellController,
        workspace: NSWorkspace = .shared) {
     self.destination = destination
     self.fileManager = fileManager
-    self.machine = machine
+    self.machineController = machineController
+    self.shellController = shellController
     self.workspace = workspace
     super.init()
     self.observation = workspace.observe(\.frontmostApplication, options: [.initial, .new]) { [weak self] _, _ in
       self?.frontmostApplicationDidChange()
     }
-    self.idleController.delegate = self
+    self.machineController.delegate = self
   }
 
   // MARK: - Public methods
 
   func applicationIsSynced(_ application: Application, on machine: Machine) -> Bool {
     let backup = destination
-      .appendingPathComponent(machine.name)
+      .appendingPathComponent(machineController.machine.name)
       .appendingPathComponent("Backup")
       .appendingPathComponent(application.preferences.fileName)
 
@@ -63,7 +64,7 @@ class SyncController: NSObject, IdleControllerDelegate {
 
   func disableSync(for application: Application, on machine: Machine) throws {
     let backup = destination
-      .appendingPathComponent(machine.name)
+      .appendingPathComponent(machineController.machine.name)
       .appendingPathComponent("Backup")
       .appendingPathComponent(application.preferences.fileName)
     try fileManager.removeItem(at: backup)
@@ -80,7 +81,7 @@ class SyncController: NSObject, IdleControllerDelegate {
     }
 
     let backup = destination
-      .appendingPathComponent(machine.name)
+      .appendingPathComponent(machineController.machine.name)
       .appendingPathComponent("Backup")
       .appendingPathComponent(application.preferences.fileName)
 
@@ -116,7 +117,7 @@ class SyncController: NSObject, IdleControllerDelegate {
     let folders = try fileManager.contentsOfDirectory(at: destination,
                                                        includingPropertiesForKeys: [.isDirectoryKey],
                                                        options: [.skipsHiddenFiles])
-      .filter({ !$0.absoluteString.contains( machine.name.lowercased() ) })
+      .filter({ !$0.absoluteString.contains( machineController.machine.name.lowercased() ) })
 
     for folder in folders {
       let backupPath = folder.appendingPathComponent("Backup")
@@ -163,7 +164,7 @@ class SyncController: NSObject, IdleControllerDelegate {
     let runningApplications = workspace.runningApplications
     let bundleIdentifiers = runningApplications.compactMap({ $0.bundleIdentifier })
     let pending = destination
-      .appendingPathComponent(machine.name)
+      .appendingPathComponent(machineController.machine.name)
       .appendingPathComponent("Pending")
 
     let files = try fileManager.contentsOfDirectory(at: pending,
@@ -199,7 +200,7 @@ class SyncController: NSObject, IdleControllerDelegate {
 
   private func createPendingFolder(for application: Application, on machine: Machine) throws {
     let folder = destination
-      .appendingPathComponent(machine.name)
+      .appendingPathComponent(machineController.machine.name)
       .appendingPathComponent("Pending")
     try fileManager.createFolderAtUrlIfNeeded(folder)
   }
@@ -209,7 +210,7 @@ class SyncController: NSObject, IdleControllerDelegate {
     from.resolveSymlinksInPath()
 
     let folder = destination
-      .appendingPathComponent(machine.name)
+      .appendingPathComponent(machineController.machine.name)
       .appendingPathComponent("Backup")
 
     try fileManager.createFolderAtUrlIfNeeded(folder)
@@ -243,11 +244,11 @@ class SyncController: NSObject, IdleControllerDelegate {
 
   // MARK: - IdleControllerDelegate
 
-  func idleController(_ controller: IdleController, didChangeState state: IdleController.State) {
+  func machineController(_ controller: MachineController, didChangeState state: MachineController.State) {
     guard state == .idle else { return }
 
     let pending = destination
-      .appendingPathComponent(machine.name)
+      .appendingPathComponent(machineController.machine.name)
       .appendingPathComponent("Pending")
     guard let files = try? fileManager.contentsOfDirectory(at: pending,
                                                            includingPropertiesForKeys: [.isRegularFileKey],

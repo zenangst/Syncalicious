@@ -6,6 +6,30 @@ class SplitViewController: NSSplitViewController {
   // swiftlint:disable function_body_length
   override func viewDidLoad() {
     super.viewDidLoad()
+    configureViews()
+  }
+
+  override func viewWillLayout() {
+    super.viewWillLayout()
+    let dividers = view.subviews.compactMap({ $0 as? DividerView })
+    let darkDividers = view.subviews.compactMap({ $0 as? DarkDividerView })
+    let lightDividers = view.subviews.compactMap({ $0 as? LightDividerView })
+    let backgrounds = view.subviews.compactMap({ $0 as? BackgroundView })
+
+    if view.effectiveAppearance.name == .aqua {
+      dividers.forEach { $0.layer?.backgroundColor = NSColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00).cgColor }
+      backgrounds.forEach { $0.layer?.backgroundColor = $0.belongsToView?.layer?.backgroundColor }
+      darkDividers.forEach { $0.layer?.backgroundColor = NSColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00).cgColor }
+      lightDividers.forEach { $0.layer?.backgroundColor = NSColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00).cgColor }
+    } else {
+      dividers.forEach { $0.layer?.backgroundColor = NSColor.black.cgColor }
+      backgrounds.forEach { $0.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor }
+      darkDividers.forEach { $0.layer?.backgroundColor = NSColor.black.cgColor }
+      lightDividers.forEach { $0.layer?.backgroundColor = NSColor.darkGray.cgColor }
+    }
+  }
+
+  private func configureViews() {
     let decorationViews = view.subviews.compactMap({ $0 as? DecorationView })
     decorationViews.forEach { $0.removeFromSuperview() }
     NSLayoutConstraint.deactivate(layoutConstraints)
@@ -33,11 +57,11 @@ class SplitViewController: NSSplitViewController {
       horizontalDivider.belongsToView = view
       self.view.addSubview(horizontalDivider, positioned: .above, relativeTo: splitView)
 
-      let verticalDividerDark = DividerView(cgColor: NSColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00).cgColor)
+      let verticalDividerDark = DarkDividerView(cgColor: NSColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00).cgColor)
       verticalDividerDark.belongsToView = view
       self.view.addSubview(verticalDividerDark)
 
-      let verticalDividerLight = DividerView(cgColor: NSColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00).cgColor)
+      let verticalDividerLight = LightDividerView(cgColor: NSColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00).cgColor)
       verticalDividerLight.wantsLayer = view.layer?.backgroundColor?.components?.first == 1 ? false : true
       verticalDividerLight.belongsToView = view
       self.view.addSubview(verticalDividerLight)

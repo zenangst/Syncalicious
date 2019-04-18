@@ -18,6 +18,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
   let backupController: BackupController
   let syncController: SyncController
   let machineController: MachineController
+  let customizeViewController = ViewController()
   var application: Application?
 
   init(applicationInfoViewController: ApplicationDetailInfoViewController,
@@ -46,15 +47,24 @@ class ApplicationDetailFeatureViewController: NSViewController,
   override func viewDidLoad() {
     super.viewDidLoad()
     view.wantsLayer = true
-    view.layer?.backgroundColor = NSColor.white.cgColor
 
-    let customizeViewController = ViewController()
     customizeViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-
     containerViewController.addChild(applicationInfoViewController,
                                      customInsets: .init(top: 15, left: 30, bottom: 15, right: 30))
 
     containerViewController.addChild(customizeViewController, height: 280)
+  }
+
+  override func viewWillLayout() {
+    super.viewWillLayout()
+
+    if view.effectiveAppearance.name == .aqua {
+      customizeViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+      view.layer?.backgroundColor = NSColor.white.cgColor
+    } else {
+      customizeViewController.view.layer?.backgroundColor = NSColor.darkGray.cgColor
+      view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+    }
   }
 
   private func render(_ applications: [Application]) {

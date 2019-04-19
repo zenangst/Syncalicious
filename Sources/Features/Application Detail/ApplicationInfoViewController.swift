@@ -64,7 +64,10 @@ class ApplicationDetailInfoViewController: ViewController {
 
     if let backupDestination = UserDefaults.standard.backupDestination {
       let backupText = backupController.doesBackupExists(for: application, at: backupDestination) ? "Yes" : "No"
-      stackView.addArrangedSubview(createVerticalStackView(with: [BoldLabel(text: "Backup exists:"), Label(text: backupText)]))
+      stackView.addArrangedSubview(createVerticalStackView(with: [
+        BoldLabel(text: "Backup exists:"),
+        Label(text: backupText)
+        ]))
     }
 
     let syncText = applicationIsSynced ? "Yes" : "No"

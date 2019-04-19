@@ -108,8 +108,8 @@ class ApplicationDetailFeatureViewController: NSViewController,
     } else {
       guard let indexPath = collectionView.selectionIndexPaths.first else { return }
       guard let listViewController = listViewController else { return }
-      guard let application = listViewController.model(at: indexPath).application as? Application else { return }
 
+      let application = listViewController.model(at: indexPath).application
       self.application = application
       render(application)
     }
@@ -117,7 +117,8 @@ class ApplicationDetailFeatureViewController: NSViewController,
 
   // MARK: - ApplicationDetailInfoViewControllerDelegate
 
-  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController, didTapBackup backupButton: NSButton) {
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
+                                           didTapBackup backupButton: NSButton) {
     guard let application = application else { return }
     guard let backupDestination = UserDefaults.standard.backupDestination else { return }
     try? backupController.runBackup(for: [application], to: backupDestination)
@@ -125,14 +126,16 @@ class ApplicationDetailFeatureViewController: NSViewController,
     refreshApplicationList()
   }
 
-  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController, didTapSync syncButton: NSButton) {
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
+                                           didTapSync syncButton: NSButton) {
     guard let application = application else { return }
     try? syncController.enableSync(for: application, on: machineController.machine)
     render(application)
     refreshApplicationList()
   }
 
-  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController, didTapUnsync unsyncButton: NSButton) {
+  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
+                                           didTapUnsync unsyncButton: NSButton) {
     guard let application = application else { return }
     try? syncController.disableSync(for: application, on: machineController.machine)
     render(application)

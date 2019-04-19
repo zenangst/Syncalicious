@@ -20,13 +20,12 @@ class ViewControllerFactory {
     return featureViewController
   }
 
-  // swiftlint:disable line_length
   func createApplicationDetailViewController() -> ApplicationDetailFeatureViewController {
     let iconController = dependencyContainer.iconController
     let applicationInfoViewController = ApplicationDetailInfoViewController(backupController: dependencyContainer.backupController,
-                                                                      iconController: iconController,
-                                                                      machine: dependencyContainer.machineController.machine,
-                                                                      syncController: dependencyContainer.syncController)
+                                                                            iconController: iconController,
+                                                                            machine: dependencyContainer.machineController.machine,
+                                                                            syncController: dependencyContainer.syncController)
     let containerViewController = ApplicationDetailContainerViewController()
     let featureViewController = ApplicationDetailFeatureViewController(applicationInfoViewController: applicationInfoViewController,
                                                                        applicationController: dependencyContainer.applicationController,

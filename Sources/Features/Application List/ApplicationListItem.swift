@@ -1,6 +1,5 @@
 import Cocoa
 
-// swiftlint:disable line_length function_body_length
 // sourcery: let path = "URL"
 // sourcery: let bundleIdentifier = "String"
 // sourcery: let application = "Application"

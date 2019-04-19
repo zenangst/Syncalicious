@@ -3,8 +3,10 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, ApplicationControllerDelegate {
   var window: NSWindow?
+  var statusItem: NSStatusItem?
   var dependencyContainer: DependencyContainer?
   var listFeatureViewController: ApplicationListFeatureViewController?
+  @IBOutlet var statusMenu: NSMenu!
   @IBOutlet var mainMenuController: MainMenuController?
 
   // MARK: - NSApplicationDelegate
@@ -33,16 +35,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     loadApplication()
   }
 
-  private func loadApplication() {
+  func loadApplication() {
     do {
       let previousFrame = self.window?.frame
       self.window?.close()
       self.window = nil
 
+      configureStatusMenu()
+
       let dependencyContainer = try createDependencyContainer()
       let locations = try dependencyContainer.applicationController.applicationDirectories()
       let (windowController, listFeatureViewController) = dependencyContainer.windowFactory.createMainWindowControllers()
       self.listFeatureViewController = listFeatureViewController
+      self.mainMenuController?.appDelegate = self
       self.mainMenuController?.dependencyContainer = dependencyContainer
       self.mainMenuController?.listContainerViewController = listFeatureViewController.containerViewController
       self.window = windowController.window
@@ -58,6 +63,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
       let alert = NSAlert(error: error)
       alert.runModal()
     }
+  }
+
+  private func configureStatusMenu() {
+    let statusBar = NSStatusBar.system
+    let statusItem = statusBar.statusItem(withLength: statusBar.thickness)
+    statusItem.button?.image = NSImage(named: "StatusMenu")
+    statusItem.button?.toolTip = "Syncalicious"
+    statusItem.button?.isEnabled = true
+    statusItem.menu = statusMenu
+    self.statusItem = statusItem
   }
 
   private func createDependencyContainer() throws -> DependencyContainer {

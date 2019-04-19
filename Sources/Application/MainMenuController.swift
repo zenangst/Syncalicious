@@ -1,10 +1,20 @@
 import Cocoa
 
 class MainMenuController: NSObject {
+  weak var appDelegate: AppDelegate?
   weak var dependencyContainer: DependencyContainer?
   weak var listContainerViewController: ApplicationListContainerViewController?
 
   // MARK: - Actions
+
+  @IBAction func openWindow(_ sender: Any?) {
+    if let window = appDelegate?.window {
+      NSApplication.shared.activate(ignoringOtherApps: true)
+      window.makeKeyAndOrderFront(nil)
+    } else {
+      appDelegate?.loadApplication()
+    }
+  }
 
   @IBAction func selectBackupDestination(_ sender: Any?) {
     dependencyContainer?.backupController.chooseDestination()

@@ -14,9 +14,28 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Syncalicious" customModuleProvider="target">
             <connections>
                 <outlet property="mainMenuController" destination="GQy-uY-iF5" id="uue-a8-n7w"/>
+                <outlet property="statusMenu" destination="el7-m5-pdK" id="FUV-6e-2au"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <menu id="el7-m5-pdK" userLabel="Status Menu">
+            <items>
+                <menuItem title="Open Syncalicious" id="Icz-gP-eSk">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openWindow:" target="GQy-uY-iF5" id="ohL-l7-tLa"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="P1S-iC-nF6"/>
+                <menuItem title="Preferences…" keyEquivalent="," id="b4k-W6-mjN"/>
+                <menuItem title="Quit Syncalicious" keyEquivalent="q" id="qW5-be-JgX">
+                    <connections>
+                        <action selector="terminate:" target="-1" id="JcE-BM-9hX"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="338" y="375"/>
+        </menu>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="Syncalicious" id="1Xt-HY-uBw">

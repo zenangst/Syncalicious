@@ -3,7 +3,6 @@ import Cocoa
 class SplitViewController: NSSplitViewController {
   private var layoutConstraints = [NSLayoutConstraint]()
 
-  // swiftlint:disable function_body_length
   override func viewDidLoad() {
     super.viewDidLoad()
     configureViews()

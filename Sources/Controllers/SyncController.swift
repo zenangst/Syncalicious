@@ -261,7 +261,11 @@ class SyncController: NSObject, MachineControllerDelegate {
         continue
       }
 
-      if let runningApplication = workspace.runningApplications.first(where: { $0.bundleIdentifier == application.propertyList.bundleIdentifier }) {
+      let query: (NSRunningApplication) -> Bool = {
+        return $0.bundleIdentifier == application.propertyList.bundleIdentifier
+      }
+
+      if let runningApplication = workspace.runningApplications.first(where: query) {
         let targetApplication = TargetApplication(application: application,
                                                   pendingUrl: file,
                                                   runningApplication: runningApplication)

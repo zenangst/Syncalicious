@@ -27,7 +27,8 @@ class ApplicationListItem: NSCollectionViewItem, CollectionViewItemComponent {
     view.addSubview(subtitleLabel)
     view.addSubview(syncView)
     syncView.image = NSImage(named: "Synced")
-//    addView(checkbox, with: "checkbox")
+
+    iconView.contentTintColor = NSColor.controlAccentColor
 
     let verticalStackView = NSStackView(views: [titleLabel, subtitleLabel])
     verticalStackView.alignment = .left

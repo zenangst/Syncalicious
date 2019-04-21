@@ -1,7 +1,8 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, ApplicationControllerDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, ApplicationControllerDelegate, FirstLaunchViewControllerDelegate {
+  var firstLaunchViewController: FirstLaunchViewController?
   var window: NSWindow?
   var statusItem: NSStatusItem?
   var dependencyContainer: DependencyContainer?
@@ -37,27 +38,44 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
   func loadApplication() {
     do {
-      let previousFrame = self.window?.frame
-      self.window?.close()
-      self.window = nil
+      if UserDefaults.standard.backupDestination == nil {
+        NSApplication.shared.windows.forEach { $0.close() }
 
-      configureStatusMenu()
+        let machineController = try MachineController(host: Host.current(), shellController: ShellController())
+        let backupController = BackupController(machineController: machineController)
+        let welcomeWindow = WelcomeWindow()
+        welcomeWindow.loadWindow()
+        let firstLaunchWindowController = NSWindowController(window: welcomeWindow)
+        let firstLaunchViewController = FirstLaunchViewController(backupController: backupController)
+        firstLaunchViewController.delegate = self
+        self.firstLaunchViewController = firstLaunchViewController
+        backupController.delegate = self
+        firstLaunchWindowController.contentViewController = firstLaunchViewController
+        firstLaunchWindowController.showWindow(nil)
+        firstLaunchWindowController.window?.center()
+      } else {
+        let previousFrame = self.window?.frame
+        self.window?.close()
+        self.window = nil
 
-      let dependencyContainer = try createDependencyContainer()
-      let locations = try dependencyContainer.applicationController.applicationDirectories()
-      let (windowController, listFeatureViewController) = dependencyContainer.windowFactory.createMainWindowControllers()
-      self.listFeatureViewController = listFeatureViewController
-      self.mainMenuController?.appDelegate = self
-      self.mainMenuController?.dependencyContainer = dependencyContainer
-      self.mainMenuController?.listContainerViewController = listFeatureViewController.containerViewController
-      self.window = windowController.window
-      self.dependencyContainer = dependencyContainer
+        configureStatusMenu()
 
-      dependencyContainer.applicationController.loadApplications(at: locations)
+        let dependencyContainer = try createDependencyContainer()
+        let locations = try dependencyContainer.applicationController.applicationDirectories()
+        let (windowController, listFeatureViewController) = dependencyContainer.windowFactory.createMainWindowControllers()
+        self.listFeatureViewController = listFeatureViewController
+        self.mainMenuController?.appDelegate = self
+        self.mainMenuController?.dependencyContainer = dependencyContainer
+        self.mainMenuController?.listContainerViewController = listFeatureViewController.containerViewController
+        self.window = windowController.window
+        self.dependencyContainer = dependencyContainer
 
-      windowController.showWindow(nil)
-      if let previousFrame = previousFrame {
-        windowController.window?.setFrame(previousFrame, display: true)
+        dependencyContainer.applicationController.loadApplications(at: locations)
+
+        windowController.showWindow(nil)
+        if let previousFrame = previousFrame {
+          windowController.window?.setFrame(previousFrame, display: true)
+        }
       }
     } catch let error {
       let alert = NSAlert(error: error)
@@ -113,10 +131,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     return dependencyContainer
   }
 
+  func firstLaunchViewController(_ controller: FirstLaunchViewController, didPressDoneButton button: NSButton) {
+    controller.view.window?.close()
+    loadApplication()
+  }
+
   // MARK: - BackupControllerDelegate
 
   func backupController(_ controller: BackupController, didSelectDestination destination: URL) {
     UserDefaults.standard.backupDestination = destination
+    firstLaunchViewController?.backupController(controller, didSelectDestination: destination)
   }
 
   // MARK: - ApplicationControllerDelegate

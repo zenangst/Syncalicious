@@ -16,7 +16,6 @@ class WindowFactory {
   func createMainWindow() -> MainWindow {
     let window = MainWindow()
     window.loadWindow()
-    window.setFrameAutosaveName(Bundle.main.bundleIdentifier!)
     return window
   }
 
@@ -41,6 +40,9 @@ class WindowFactory {
 
     let windowController = WindowController(window: window,
                                             with: [sidebarItem, detailControllerItem])
+    let bundleName = (Bundle.main.infoDictionary?["CFBundleName"] as? String) ?? "Syncalicious"
+    let frameAutosaveName = "\(bundleName)MainWindow"
+    windowController.windowFrameAutosaveName = NSWindow.FrameAutosaveName.init(frameAutosaveName)
 
     return (windowController, listFeatureViewController)
   }

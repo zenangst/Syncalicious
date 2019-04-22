@@ -136,7 +136,7 @@ class SyncController: NSObject, MachineControllerDelegate {
 
   // swiftlint:disable identifier_name
   private func copyApplicationIfNeeded(_ application: Application, to: URL, machineFolder: String) throws {
-    guard applicationHasBeenActive.contains(application) else { return }
+    guard applicationHasBeenActive.contains(application) && machineController.state == .active else { return }
 
     let initialDictionary = plistHashDictionary[application]
 

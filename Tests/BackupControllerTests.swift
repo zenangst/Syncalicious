@@ -19,7 +19,7 @@ class BackupControllerTests: XCTestCase {
     let host = TestHost(machineName: "BackupMachineTest")
     let applicationController = testController.createApplicationController()
     let shellController = ShellController()
-    let machineController = try MachineController(host: host, shellController: shellController)
+    let machineController = try MachineController(host: host)
     let backupController = BackupController(machineController: machineController)
 
     let applicationUrl = testController.applicationUrl

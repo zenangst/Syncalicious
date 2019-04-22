@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
       if UserDefaults.standard.backupDestination == nil {
         NSApplication.shared.windows.forEach { $0.close() }
 
-        let machineController = try MachineController(host: Host.current(), shellController: ShellController())
+        let machineController = try MachineController(host: Host.current())
         let backupController = BackupController(machineController: machineController)
         let welcomeWindow = WelcomeWindow()
         welcomeWindow.loadWindow()

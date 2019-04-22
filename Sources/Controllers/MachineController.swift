@@ -19,13 +19,11 @@ class MachineController {
   }
 
   let machine: Machine
-  let shellController: ShellController
   var threshold: Double = 60
   var timer: Timer?
   private(set) var state: State = .active
 
-  public init(host: Host, shellController: ShellController) throws {
-    self.shellController = shellController
+  public init(host: Host) throws {
     guard let name = host.name else {
       throw MachineError.unableToResolveName
     }

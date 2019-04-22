@@ -103,8 +103,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                                                        appropriateFor: nil,
                                                        create: false)
     let shellController = ShellController()
-    let machineController = try MachineController(host: Host.current(),
-                                                  shellController: shellController)
+    let machineController = try MachineController(host: Host.current())
     let infoPlistController = InfoPropertyListController()
     let preferencesController = PreferencesController(libraryDirectory: libraryDirectory)
     let queue = DispatchQueue(label: String(describing: ApplicationController.self),

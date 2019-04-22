@@ -139,6 +139,8 @@ class SyncController: NSObject, MachineControllerDelegate {
     guard applicationHasBeenActive.contains(application) && machineController.state == .active else { return }
 
     let initialDictionary = plistHashDictionary[application]
+    var applicationPath = application.preferences.path
+    applicationPath.resolveSymlinksInPath()
 
     if let lhs = NSDictionary.init(contentsOf: application.preferences.path),
       let rhs = NSDictionary.init(contentsOf: to) {
@@ -146,14 +148,14 @@ class SyncController: NSObject, MachineControllerDelegate {
 
       if !listsAreEqual {
         try? fileManager.removeItem(at: to)
-        try? fileManager.copyItem(at: application.preferences.path, to: to)
+        try? fileManager.copyItem(at: applicationPath, to: to)
         debugPrint("🍫 Added \(application.propertyList.bundleName) to \(machineFolder) (pending).")
       }
     } else if let dictionary = NSDictionary.init(contentsOf: application.preferences.path),
       let initialDictionary = initialDictionary, initialDictionary !== dictionary {
       pendingApplications.remove(application)
       plistHashDictionary[application] = nil
-      try? fileManager.copyItem(at: application.preferences.path, to: to)
+      try? fileManager.copyItem(at: applicationPath, to: to)
       debugPrint("🍫 Added \(application.propertyList.bundleName) to \(machineFolder) (pending).")
     }
 

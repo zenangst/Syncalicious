@@ -76,17 +76,23 @@ class ApplicationListFeatureViewController: NSViewController,
 
     self.applications = models
 
-    let collectionView = containerViewController.listViewController.collectionView
-    var indexPaths = collectionView.selectionIndexPaths
+    let searchViewController = containerViewController.searchViewController
+    let searchField = containerViewController.searchViewController.searchField
+    if !searchField.stringValue.isEmpty {
+      applicationDetailSearchViewController(searchViewController, didStartSearch: searchField)
+    } else {
+      let collectionView = containerViewController.listViewController.collectionView
+      var indexPaths = collectionView.selectionIndexPaths
 
-    containerViewController.listViewController.reload(with: models.compactMap(createViewModel))
+      containerViewController.listViewController.reload(with: models.compactMap(createViewModel))
 
-    if indexPaths.isEmpty {
-      indexPaths = [IndexPath.init(item: 0, section: 0)]
+      if indexPaths.isEmpty {
+        indexPaths = [IndexPath.init(item: 0, section: 0)]
+      }
+
+      collectionView.selectItems(at: indexPaths, scrollPosition: [])
+      collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: indexPaths)
     }
-
-    collectionView.selectItems(at: indexPaths, scrollPosition: [])
-    collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: indexPaths)
   }
 
   // MARK: - Private methods

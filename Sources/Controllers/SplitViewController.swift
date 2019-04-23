@@ -31,7 +31,7 @@ class SplitViewController: NSSplitViewController {
     NSLayoutConstraint.deactivate(layoutConstraints)
     splitView.translatesAutoresizingMaskIntoConstraints = false
     layoutConstraints = [
-      splitView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+      splitView.topAnchor.constraint(equalTo: view.topAnchor, constant: 38),
       splitView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       splitView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       splitView.bottomAnchor.constraint(equalTo: view.bottomAnchor)

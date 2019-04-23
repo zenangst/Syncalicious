@@ -229,7 +229,9 @@ class SyncController: NSObject, MachineControllerDelegate {
       return
     }
 
-    runDefaultsShellScript(for: targetApplication.application, withFilePath: targetApplication.pendingUrl.path)
+    runDefaultsShellScript(for: targetApplication.application,
+                           withFilePath: targetApplication.pendingUrl.path)
+
     try? fileManager.removeItem(at: targetApplication.pendingUrl)
 
     perform(#selector(restartApplication),
@@ -238,10 +240,10 @@ class SyncController: NSObject, MachineControllerDelegate {
   }
 
   @objc func restartApplication(with bundleIdentifier: String) {
-    NSWorkspace.shared.launchApplication(withBundleIdentifier: bundleIdentifier,
-                                         options: [.withoutActivation],
-                                         additionalEventParamDescriptor: nil,
-                                         launchIdentifier: nil)
+    workspace.launchApplication(withBundleIdentifier: bundleIdentifier,
+                                options: [.withoutActivation],
+                                additionalEventParamDescriptor: nil,
+                                launchIdentifier: nil)
   }
 
   // MARK: - IdleControllerDelegate

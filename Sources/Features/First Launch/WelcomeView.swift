@@ -172,7 +172,6 @@ class WelcomeView: NSView {
     button.layer?.borderWidth = 0
     button.contentTintColor = NSColor.white
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.wantsLayer = true
 
     gridView.wantsLayer = true
     gridView.xPlacement = .fill

@@ -46,6 +46,7 @@ class ApplicationDetailInfoViewController: ViewController {
     layoutConstraints = []
 
     let iconView = NSImageView()
+    iconView.imageScaling = .scaleProportionallyUpOrDown
     let image = iconController.icon(at: application.url, for: application.propertyList.bundleIdentifier)
     iconView.image = image
 
@@ -58,12 +59,40 @@ class ApplicationDetailInfoViewController: ViewController {
     horizontalStackView.alignment = .top
     horizontalStackView.spacing = 20
 
-    let backupButton = NSButton(title: "Backup", target: self, action: #selector(performBackup))
+    let backupButton: NSButton
+    if backupController.doesBackupExists(for: application, at: UserDefaults.standard.backupDestination!) {
+      backupButton = Button(title: "Backup",
+                                 backgroundColor: NSColor(named: "Green")!,
+                                 borderColor: NSColor(named: "Green")!,
+                                 borderWidth: 1.5,
+                                 cornerRadius: .custom(4),
+                                 target: self,
+                                 action: #selector(performBackup))
+    } else {
+      backupButton = Button(title: "Backup",
+                                 backgroundColor: NSColor.clear,
+                                 borderColor: NSColor(named: "Green")!,
+                                 borderWidth: 1.5,
+                                 cornerRadius: .custom(4),
+                                 target: self,
+                                 action: #selector(performBackup))
+    }
+
     let syncButton: NSButton
     if syncController.applicationIsSynced(application, on: machineController.machine) {
-      syncButton = NSButton(title: "Unsync", target: self, action: #selector(unsync(_:)))
+      syncButton = Button(title: "Unsync",
+                               backgroundColor: NSColor.init(named: "Blue")!,
+                               borderColor: NSColor.init(named: "Blue")!,
+                               borderWidth: 1.5,
+                               cornerRadius: .custom(4),
+                               target: self, action: #selector(unsync(_:)))
     } else {
-      syncButton = NSButton(title: "Sync", target: self, action: #selector(sync(_:)))
+      syncButton = Button(title: "Sync",
+                               backgroundColor: NSColor.clear,
+                               borderColor: NSColor.init(named: "Blue")!,
+                               borderWidth: 1.5,
+                               cornerRadius: .custom(4),
+                               target: self, action: #selector(sync(_:)))
     }
 
     let leftStackView = createStackView(.vertical, views: [
@@ -103,6 +132,9 @@ class ApplicationDetailInfoViewController: ViewController {
     view.addSubview(horizontalStackView)
 
     layoutConstraints = [
+      syncButton.widthAnchor.constraint(equalTo: backupButton.widthAnchor),
+      iconView.widthAnchor.constraint(equalToConstant: 128),
+      iconView.heightAnchor.constraint(equalToConstant: 128),
       horizontalStackView.topAnchor.constraint(equalTo: view.topAnchor),
       horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)

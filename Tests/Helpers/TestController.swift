@@ -20,11 +20,13 @@ class TestController {
   }
 
   func createApplicationController() -> ApplicationController {
+    let shellController = ShellController()
     let libraryDirectory = environmentUrl.appendingPathComponent("Library")
     let preferencesController = PreferencesController(libraryDirectory: libraryDirectory)
     let infoPlistController = InfoPropertyListController()
     let applicationController = ApplicationController(infoPlistController: infoPlistController,
-                                                      preferencesController: preferencesController)
+                                                      preferencesController: preferencesController,
+                                                      shellController: shellController)
 
     return applicationController
   }

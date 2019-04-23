@@ -13,22 +13,19 @@ class ApplicationDetailFeatureViewController: NSViewController,
   private var layoutConstraints = [NSLayoutConstraint]()
 
   let containerViewController: ApplicationDetailContainerViewController
-  let applicationInfoViewController: ApplicationDetailInfoViewController
   let applicationController: ApplicationController
   let backupController: BackupController
   let syncController: SyncController
   let machineController: MachineController
-  let customizeViewController = ViewController()
+
   var application: Application?
 
-  init(applicationInfoViewController: ApplicationDetailInfoViewController,
-       applicationController: ApplicationController,
+  init(applicationController: ApplicationController,
        backupController: BackupController,
        containerViewController: ApplicationDetailContainerViewController,
        machineController: MachineController,
        syncController: SyncController) {
     self.applicationController = applicationController
-    self.applicationInfoViewController = applicationInfoViewController
     self.backupController = backupController
     self.containerViewController = containerViewController
     self.machineController = machineController
@@ -42,40 +39,28 @@ class ApplicationDetailFeatureViewController: NSViewController,
 
   override func loadView() {
     view = containerViewController.view
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
     view.wantsLayer = true
-
-    customizeViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-    containerViewController.addChild(applicationInfoViewController,
-                                     customInsets: .init(top: 15, left: 30, bottom: 15, right: 30))
-
-    containerViewController.addChild(customizeViewController, height: 280)
   }
 
   override func viewWillLayout() {
     super.viewWillLayout()
 
     if view.effectiveAppearance.name == .aqua {
-      customizeViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
       view.layer?.backgroundColor = NSColor.white.cgColor
     } else {
-      customizeViewController.view.layer?.backgroundColor = NSColor.darkGray.cgColor
       view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
     }
   }
 
   private func render(_ applications: [Application]) {
-    applicationInfoViewController.view.isHidden = true
+    containerViewController.applicationInfoViewController.view.isHidden = true
   }
 
   private func render(_ application: Application) {
-    applicationInfoViewController.view.isHidden = false
-    applicationInfoViewController.render(application,
-                                         syncController: syncController,
-                                         machineController: machineController)
+    containerViewController.applicationInfoViewController.view.isHidden = false
+    containerViewController.applicationInfoViewController.render(application,
+                                                                 syncController: syncController,
+                                                                 machineController: machineController)
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = []
 
@@ -92,7 +77,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
       titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
       ])
 
-    applicationInfoViewController.delegate = self
+    containerViewController.applicationInfoViewController.delegate = self
 
     NSLayoutConstraint.activate(layoutConstraints)
   }

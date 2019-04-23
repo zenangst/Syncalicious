@@ -26,9 +26,8 @@ class ViewControllerFactory {
                                                                             iconController: iconController,
                                                                             machine: dependencyContainer.machineController.machine,
                                                                             syncController: dependencyContainer.syncController)
-    let containerViewController = ApplicationDetailContainerViewController()
-    let featureViewController = ApplicationDetailFeatureViewController(applicationInfoViewController: applicationInfoViewController,
-                                                                       applicationController: dependencyContainer.applicationController,
+    let containerViewController = ApplicationDetailContainerViewController(applicationInfoViewController: applicationInfoViewController)
+    let featureViewController = ApplicationDetailFeatureViewController(applicationController: dependencyContainer.applicationController,
                                                                        backupController: dependencyContainer.backupController,
                                                                        containerViewController: containerViewController,
                                                                        machineController: dependencyContainer.machineController,

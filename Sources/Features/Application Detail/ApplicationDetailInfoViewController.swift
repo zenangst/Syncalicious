@@ -2,11 +2,14 @@ import Cocoa
 
 protocol ApplicationDetailInfoViewControllerDelegate: class {
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapBackup backupButton: NSButton)
+                                           didTapBackup backupButton: NSButton,
+                                           on application: Application)
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapSync syncButton: NSButton)
+                                           didTapSync syncButton: NSButton,
+                                           on application: Application)
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapUnsync unsyncButton: NSButton)
+                                           didTapUnsync unsyncButton: NSButton,
+                                           on application: Application)
 }
 
 class ApplicationDetailInfoViewController: ViewController {
@@ -18,6 +21,8 @@ class ApplicationDetailInfoViewController: ViewController {
   let machine: Machine
   lazy var stackView = NSStackView()
   lazy var horizontalStackView = NSStackView()
+
+  var application: Application?
 
   init(backupController: BackupController,
        iconController: IconController,
@@ -37,6 +42,7 @@ class ApplicationDetailInfoViewController: ViewController {
   func render(_ application: Application,
               syncController: SyncController,
               machineController: MachineController) {
+    self.application = application
     let applicationIsSynced = syncController.applicationIsSynced(application, on: machine)
 
     view.subviews.forEach { $0.removeFromSuperview() }
@@ -162,14 +168,17 @@ class ApplicationDetailInfoViewController: ViewController {
   // MARK: - Actions
 
   @objc func performBackup(_ sender: NSButton) {
-    delegate?.applicationDetailInfoViewController(self, didTapBackup: sender)
+    guard let application = application else { return }
+    delegate?.applicationDetailInfoViewController(self, didTapBackup: sender, on: application)
   }
 
   @objc func sync(_ sender: NSButton) {
-    delegate?.applicationDetailInfoViewController(self, didTapSync: sender)
+    guard let application = application else { return }
+    delegate?.applicationDetailInfoViewController(self, didTapSync: sender, on: application)
   }
 
   @objc func unsync(_ sender: NSButton) {
-    delegate?.applicationDetailInfoViewController(self, didTapUnsync: sender)
+    guard let application = application else { return }
+    delegate?.applicationDetailInfoViewController(self, didTapUnsync: sender, on: application)
   }
 }

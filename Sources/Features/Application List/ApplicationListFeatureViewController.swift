@@ -58,14 +58,22 @@ class ApplicationListFeatureViewController: NSViewController,
     containerViewController.sortViewController.delegate = self
   }
 
-  func render(applications: [Application]) {
+  func render(applications: [Application], sort: ApplicationListSortViewController.SortKind? = nil) {
+    let sort = sort ?? self.sort
+    let collectionView = containerViewController.listViewController.collectionView
+    var selectedApplications = [Application]()
+    for indexPath in collectionView.selectionIndexPaths {
+      guard indexPath.item < self.applications.count else { return }
+      let application = self.applications[indexPath.item]
+      selectedApplications.append(application)
+    }
+
     var models = applications
 
     switch sort {
     case .name:
       models = models.sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
     case .synced:
-
       let synced = models.filter({ syncController.applicationIsSynced($0, on: machineController.machine) })
         .sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
       let unsynced = models.filter({ !(syncController.applicationIsSynced($0, on: machineController.machine)) })
@@ -74,25 +82,39 @@ class ApplicationListFeatureViewController: NSViewController,
       models = (synced + unsynced)
     }
 
-    self.applications = models
+    var selectedIndexPaths = Set<IndexPath>()
+    for (offset, application) in self.applications.enumerated() where selectedApplications.contains(application) {
+      selectedIndexPaths.insert(IndexPath(item: offset, section: 0))
+    }
+
+    if selectedIndexPaths.isEmpty { selectedIndexPaths.insert(IndexPath(item: 0, section: 0)) }
 
     let searchViewController = containerViewController.searchViewController
     let searchField = containerViewController.searchViewController.searchField
     if !searchField.stringValue.isEmpty {
       applicationDetailSearchViewController(searchViewController, didStartSearch: searchField)
     } else {
-      let collectionView = containerViewController.listViewController.collectionView
-      var indexPaths = collectionView.selectionIndexPaths
-
       containerViewController.listViewController.reload(with: models.compactMap(createViewModel))
-
-      if indexPaths.isEmpty {
-        indexPaths = [IndexPath.init(item: 0, section: 0)]
-      }
-
-      collectionView.selectItems(at: indexPaths, scrollPosition: [])
-      collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: indexPaths)
     }
+
+    if self.sort == sort {
+      var scrollPosition: NSCollectionView.ScrollPosition = []
+      if let firstSelectedIndexPath = selectedIndexPaths.first,
+        let item = collectionView.item(at: firstSelectedIndexPath),
+        let visibleRect = collectionView.enclosingScrollView?.visibleRect {
+        let converted = collectionView.convert(item.view.frame, from: collectionView)
+
+        if !converted.intersects(visibleRect) {
+          scrollPosition.insert(.nearestHorizontalEdge)
+        }
+      }
+      collectionView.selectItems(at: selectedIndexPaths, scrollPosition: scrollPosition)
+    }
+
+    collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: selectedIndexPaths)
+
+    self.applications = models
+    self.sort = sort
   }
 
   // MARK: - Private methods
@@ -117,12 +139,8 @@ class ApplicationListFeatureViewController: NSViewController,
   // MARK: - ApplicationListSortViewControllerDelegate
 
   func applicationListSortViewController(_ controller: ApplicationListSortViewController,
-
                                          didChangeSort sort: ApplicationListSortViewController.SortKind) {
-    self.sort = sort
-    let collectionView = containerViewController.listViewController.collectionView
-    collectionView.deselectItems(at: collectionView.selectionIndexPaths)
-    render(applications: applications)
+    render(applications: applications, sort: sort)
   }
 
   // MARK: - ApplicationSearchViewControllerDelegate

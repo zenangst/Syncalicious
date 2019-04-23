@@ -103,8 +103,8 @@ class ApplicationDetailFeatureViewController: NSViewController,
   // MARK: - ApplicationDetailInfoViewControllerDelegate
 
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapBackup backupButton: NSButton) {
-    guard let application = application else { return }
+                                           didTapBackup backupButton: NSButton,
+                                           on application: Application) {
     guard let backupDestination = UserDefaults.standard.backupDestination else { return }
     try? backupController.runBackup(for: [application], to: backupDestination)
     render(application)
@@ -112,20 +112,19 @@ class ApplicationDetailFeatureViewController: NSViewController,
   }
 
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapSync syncButton: NSButton) {
-    guard let application = application else { return }
+                                           didTapSync syncButton: NSButton,
+                                           on application: Application) {
     try? syncController.enableSync(for: application, on: machineController.machine)
     render(application)
     refreshApplicationList()
   }
 
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapUnsync unsyncButton: NSButton) {
-    guard let application = application else { return }
+                                           didTapUnsync unsyncButton: NSButton,
+                                           on application: Application) {
     try? syncController.disableSync(for: application, on: machineController.machine)
     render(application)
     refreshApplicationList()
-
   }
 
   // MARK: - NSCollectionViewDelegate

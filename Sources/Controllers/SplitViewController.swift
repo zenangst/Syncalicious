@@ -6,6 +6,13 @@ class SplitViewController: NSSplitViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureViews()
+    NotificationCenter.default.addObserver(self, selector: #selector(mainWindowDidResignKey),
+                                           name: MainWindowNotification.didResign.notificationName,
+                                           object: nil)
+
+    NotificationCenter.default.addObserver(self, selector: #selector(mainWindowDidBecomeKey),
+                                           name: MainWindowNotification.becomeKey.notificationName,
+                                           object: nil)
   }
 
   override func viewWillLayout() {
@@ -22,6 +29,22 @@ class SplitViewController: NSSplitViewController {
       dividers.forEach { $0.layer?.backgroundColor = NSColor.black.cgColor }
       backgrounds.forEach { $0.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor }
       lightDividers.forEach { $0.layer?.backgroundColor = NSColor.darkGray.cgColor }
+    }
+  }
+
+  @objc func mainWindowDidResignKey() {
+    for item in splitViewItems {
+      let viewController = item.viewController
+      let containedViewController = viewController as? SplitViewContainedController
+      containedViewController?.titlebarView.alphaValue = 0.75
+    }
+  }
+
+  @objc func mainWindowDidBecomeKey() {
+    for item in splitViewItems {
+      let viewController = item.viewController
+      let containedViewController = viewController as? SplitViewContainedController
+      containedViewController?.titlebarView.alphaValue = 1.0
     }
   }
 

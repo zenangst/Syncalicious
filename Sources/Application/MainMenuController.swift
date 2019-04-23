@@ -8,9 +8,9 @@ class MainMenuController: NSObject {
   // MARK: - Actions
 
   @IBAction func openWindow(_ sender: Any?) {
-    if let window = appDelegate?.window {
+    if let windowController = appDelegate?.windowController {
       NSApplication.shared.activate(ignoringOtherApps: true)
-      window.makeKeyAndOrderFront(nil)
+      windowController.showWindow(nil)
     } else {
       appDelegate?.loadApplication()
     }

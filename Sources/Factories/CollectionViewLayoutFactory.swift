@@ -6,8 +6,8 @@ class CollectionViewLayoutFactory {
     let layout = VerticalBlueprintLayout(itemsPerRow: 1,
                                          height: 48,
                                          minimumInteritemSpacing: 0,
-                                         minimumLineSpacing: 0,
-                                         sectionInset: .init(top: 10, left: 10, bottom: 10, right: 10),
+                                         minimumLineSpacing: 5,
+                                         sectionInset: .init(top: 5, left: 5, bottom: 5, right: 5),
                                          stickyHeaders: false,
                                          stickyFooters: false)
     return layout

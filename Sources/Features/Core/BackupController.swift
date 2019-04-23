@@ -44,7 +44,7 @@ class BackupController {
   }
 
   func doesBackupExists(for application: Application, at url: URL) -> Bool {
-    var from = application.preferences.path
+    var from = application.preferences.url
     from.resolveSymlinksInPath()
     let destination = machineController.machineBackupDestination(for: url)
       .appendingPathComponent(application.preferences.kind.rawValue)
@@ -55,8 +55,8 @@ class BackupController {
 
   func runBackup(for applications: [Application], to url: URL) throws {
     try createFolderIfNeeded(at: machineController.machineBackupDestination(for: url))
-    for application in applications where application.preferences.path.isFileURL {
-      var from = application.preferences.path
+    for application in applications where application.preferences.url.isFileURL {
+      var from = application.preferences.url
       from.resolveSymlinksInPath()
       let backupFolder = machineController.machineBackupDestination(for: url)
         .appendingPathComponent(application.preferences.kind.rawValue)

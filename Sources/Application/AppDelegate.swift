@@ -112,7 +112,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                               qos: .userInitiated)
     let applicationController = ApplicationController(queue: queue,
                                                       infoPlistController: infoPlistController,
-                                                      preferencesController: preferencesController)
+                                                      preferencesController: preferencesController,
+                                                      shellController: shellController)
     let backupController = BackupController(machineController: machineController)
     let iconController = IconController()
     let syncController = SyncController(destination: backupDestination.appendingPathComponent("Sync"),

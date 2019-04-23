@@ -8,5 +8,5 @@ enum PreferenceKind: String, Hashable {
 struct Preferences: Hashable {
   let fileName: String
   let kind: PreferenceKind
-  let path: URL
+  let url: URL
 }

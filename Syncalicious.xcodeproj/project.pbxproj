@@ -68,6 +68,7 @@
 		BDDAA347225DC89F00D87664 /* ApplicationDetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */; };
 		BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */; };
 		BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */; };
+		BDDC19A4226F93D9002D17F5 /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC19A3226F93D9002D17F5 /* PermissionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,7 @@
 		BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailInfoViewController.swift; sourceTree = "<group>"; };
 		BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainedController.swift; sourceTree = "<group>"; };
 		BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailContainerViewController.swift; sourceTree = "<group>"; };
+		BDDC19A3226F93D9002D17F5 /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				BD438BFD226A5E3A00A21017 /* FirstLaunchViewController.swift */,
 				BD5903B4226C7DD90037A1AC /* WelcomeView.swift */,
 				BD438BF82269CD1900A21017 /* WelcomeWindow.swift */,
+				BDDC19A3226F93D9002D17F5 /* PermissionView.swift */,
 			);
 			path = "First Launch";
 			sourceTree = "<group>";
@@ -501,6 +504,9 @@
 					BD9313822251703400D116E4 = {
 						CreatedOnToolsVersion = 10.2;
 						SystemCapabilities = {
+							com.apple.HardenedRuntime = {
+								enabled = 1;
+							};
 							com.apple.Sandbox = {
 								enabled = 0;
 							};
@@ -627,6 +633,7 @@
 				BD62D2EE2267547B007B047B /* ApplicationListFeatureViewController.swift in Sources */,
 				BD7D96192252912100C93211 /* Preferences.swift in Sources */,
 				BD62D2F022675F54007B047B /* ApplicationDetailFeatureViewController.swift in Sources */,
+				BDDC19A4226F93D9002D17F5 /* PermissionView.swift in Sources */,
 				BD7D961F22532BA100C93211 /* UserDefaults+Extensions.swift in Sources */,
 				BD7D9617225290C800C93211 /* PreferencesController.swift in Sources */,
 				BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */,
@@ -843,6 +850,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E23HUP39A3;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -862,6 +870,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E23HUP39A3;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

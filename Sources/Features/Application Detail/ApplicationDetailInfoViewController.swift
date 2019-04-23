@@ -65,47 +65,57 @@ class ApplicationDetailInfoViewController: ViewController {
     horizontalStackView.alignment = .top
     horizontalStackView.spacing = 20
 
-    let backupButton: NSButton
-    if backupController.doesBackupExists(for: application, at: UserDefaults.standard.backupDestination!) {
-      backupButton = Button(title: "Backup",
-                                 backgroundColor: NSColor(named: "Green")!,
-                                 borderColor: NSColor(named: "Green")!,
-                                 borderWidth: 1.5,
-                                 cornerRadius: .custom(4),
-                                 target: self,
-                                 action: #selector(performBackup))
+    let leftStackView: NSStackView
+    if application.needsFullDiskAccess {
+      leftStackView = createStackView(.vertical, views: [iconView])
+      leftStackView.alignment = .centerX
+      leftStackView.setCustomSpacing(20, after: iconView)
+      horizontalStackView.addArrangedSubview(leftStackView)
     } else {
-      backupButton = Button(title: "Backup",
-                                 backgroundColor: NSColor.clear,
-                                 borderColor: NSColor(named: "Green")!,
-                                 borderWidth: 1.5,
-                                 cornerRadius: .custom(4),
-                                 target: self,
-                                 action: #selector(performBackup))
+      let backupButton: NSButton
+      if backupController.doesBackupExists(for: application, at: UserDefaults.standard.backupDestination!) {
+        backupButton = Button(title: "Backup",
+                              backgroundColor: NSColor(named: "Green")!,
+                              borderColor: NSColor(named: "Green")!,
+                              borderWidth: 1.5,
+                              cornerRadius: .custom(4),
+                              target: self,
+                              action: #selector(performBackup))
+      } else {
+        backupButton = Button(title: "Backup",
+                              backgroundColor: NSColor.clear,
+                              borderColor: NSColor(named: "Green")!,
+                              borderWidth: 1.5,
+                              cornerRadius: .custom(4),
+                              target: self,
+                              action: #selector(performBackup))
+      }
+
+      let syncButton: NSButton
+      if syncController.applicationIsSynced(application, on: machineController.machine) {
+        syncButton = Button(title: "Unsync",
+                            backgroundColor: NSColor.init(named: "Blue")!,
+                            borderColor: NSColor.init(named: "Blue")!,
+                            borderWidth: 1.5,
+                            cornerRadius: .custom(4),
+                            target: self, action: #selector(unsync(_:)))
+      } else {
+        syncButton = Button(title: "Sync",
+                            backgroundColor: NSColor.clear,
+                            borderColor: NSColor.init(named: "Blue")!,
+                            borderWidth: 1.5,
+                            cornerRadius: .custom(4),
+                            target: self, action: #selector(sync(_:)))
+      }
+
+      leftStackView = createStackView(.vertical, views: [iconView, backupButton, syncButton])
+      leftStackView.alignment = .centerX
+      leftStackView.setCustomSpacing(20, after: iconView)
+      horizontalStackView.addArrangedSubview(leftStackView)
+      layoutConstraints.append(syncButton.widthAnchor.constraint(equalTo: backupButton.widthAnchor))
     }
 
-    let syncButton: NSButton
-    if syncController.applicationIsSynced(application, on: machineController.machine) {
-      syncButton = Button(title: "Unsync",
-                               backgroundColor: NSColor.init(named: "Blue")!,
-                               borderColor: NSColor.init(named: "Blue")!,
-                               borderWidth: 1.5,
-                               cornerRadius: .custom(4),
-                               target: self, action: #selector(unsync(_:)))
-    } else {
-      syncButton = Button(title: "Sync",
-                               backgroundColor: NSColor.clear,
-                               borderColor: NSColor.init(named: "Blue")!,
-                               borderWidth: 1.5,
-                               cornerRadius: .custom(4),
-                               target: self, action: #selector(sync(_:)))
-    }
-
-    let leftStackView = createStackView(.vertical, views: [
-      iconView, backupButton, syncButton])
-    leftStackView.alignment = .centerX
-    leftStackView.setCustomSpacing(20, after: iconView)
-    horizontalStackView.addArrangedSubview(leftStackView)
+    layoutConstraints.append(leftStackView.widthAnchor.constraint(equalToConstant: 128))
 
     stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.alignment = .top
@@ -134,17 +144,28 @@ class ApplicationDetailInfoViewController: ViewController {
       BoldLabel(text: "Is synced:"),
       Label(text: syncText)]))
 
+    if application.needsFullDiskAccess {
+      let fullDiskPermission = Button(title: "Needs Full Disk Permission",
+                                      backgroundColor: NSColor(named: "Yellow")!,
+                                      borderColor: NSColor(named: "Yellow")!,
+                                      borderWidth: 1.5,
+                                      cornerRadius: .custom(4),
+                                      target: self,
+                                      action: #selector(fullDiskAccess))
+
+      stackView.addArrangedSubview(fullDiskPermission)
+    }
+
     horizontalStackView.addArrangedSubview(stackView)
     view.addSubview(horizontalStackView)
 
-    layoutConstraints = [
-      syncButton.widthAnchor.constraint(equalTo: backupButton.widthAnchor),
+    layoutConstraints.append(contentsOf: [
       iconView.widthAnchor.constraint(equalToConstant: 128),
       iconView.heightAnchor.constraint(equalToConstant: 128),
       horizontalStackView.topAnchor.constraint(equalTo: view.topAnchor),
       horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-    ]
+    ])
     NSLayoutConstraint.activate(layoutConstraints)
   }
 
@@ -165,7 +186,29 @@ class ApplicationDetailInfoViewController: ViewController {
     return stackView
   }
 
+  private func showPermissionsDialog(for application: Application, handler completion : (Bool)->Void) {
+    let alert = NSAlert()
+    alert.messageText = "Additional privileges needed"
+    alert.informativeText = """
+    To be able to change the appearance of apps like Mail, Messages, Safari and Home, you need to grant permission Full Disk Access.
+
+    """
+    alert.alertStyle = .informational
+    alert.addButton(withTitle: "Open Security & Preferences")
+    alert.addButton(withTitle: "OK")
+    completion(alert.runModal() == .alertFirstButtonReturn)
+  }
+
   // MARK: - Actions
+
+  @objc func fullDiskAccess(_ sender: NSButton) {
+    guard let application = application else { return }
+    showPermissionsDialog(for: application) { result in
+      guard result else { return }
+      let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!
+      NSWorkspace.shared.open(url)
+    }
+  }
 
   @objc func performBackup(_ sender: NSButton) {
     guard let application = application else { return }

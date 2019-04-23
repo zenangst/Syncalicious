@@ -158,6 +158,7 @@ class WelcomeView: NSView {
 
     titleLabel.font = NSFont.boldSystemFont(ofSize: 48)
     titleLabel.stringValue = "Welcome to Syncalicious"
+    titleLabel.textColor = NSColor(named: "Pompadour")
     titleLabel.maximumNumberOfLines = 2
     titleLabel.lineBreakMode = .byWordWrapping
     titleLabel.alignment = .left
@@ -190,6 +191,7 @@ class WelcomeView: NSView {
     let backupLabel = Label.init(labelWithString: "Backup your preferences files in case something goes wrong")
     backupLabel.maximumNumberOfLines = 2
     backupLabel.lineBreakMode = .byWordWrapping
+    backupIcon.contentTintColor = NSColor.init(named: "Blue")
     backupIcon.image = NSImage.init(named: "Backup")
     let backupRow = gridView.addRow(with: [backupIcon, backupLabel])
     backupRow.yPlacement = .center

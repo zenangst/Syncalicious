@@ -94,7 +94,7 @@ class SyncController: NSObject, MachineControllerDelegate {
     let isSynced = FileManager.default.fileExists(atPath: backupDestination.path, isDirectory: &isDirectory)
 
     if isSynced {
-      if let dictionary = NSDictionary.init(contentsOf: application.preferences.path) {
+      if let dictionary = NSDictionary.init(contentsOf: application.preferences.url) {
         plistHashDictionary[application] = dictionary
       }
       pendingApplications.insert(application)
@@ -139,10 +139,10 @@ class SyncController: NSObject, MachineControllerDelegate {
     guard applicationHasBeenActive.contains(application) && machineController.state == .active else { return }
 
     let initialDictionary = plistHashDictionary[application]
-    var applicationPath = application.preferences.path
+    var applicationPath = application.preferences.url
     applicationPath.resolveSymlinksInPath()
 
-    if let lhs = NSDictionary.init(contentsOf: application.preferences.path),
+    if let lhs = NSDictionary.init(contentsOf: application.preferences.url),
       let rhs = NSDictionary.init(contentsOf: to) {
       let listsAreEqual = lhs.isEqual(to: rhs)
 
@@ -151,7 +151,7 @@ class SyncController: NSObject, MachineControllerDelegate {
         try? fileManager.copyItem(at: applicationPath, to: to)
         debugPrint("🍫 Added \(application.propertyList.bundleName) to \(machineFolder) (pending).")
       }
-    } else if let dictionary = NSDictionary.init(contentsOf: application.preferences.path),
+    } else if let dictionary = NSDictionary.init(contentsOf: application.preferences.url),
       let initialDictionary = initialDictionary, initialDictionary !== dictionary {
       pendingApplications.remove(application)
       plistHashDictionary[application] = nil
@@ -187,7 +187,7 @@ class SyncController: NSObject, MachineControllerDelegate {
 
   private func runDefaultsShellScript(for application: Application, withFilePath filePath: String) {
     let command = """
-    defaults import \(application.preferences.path.path) "\(filePath)"
+    defaults import \(application.preferences.url.path) "\(filePath)"
     defaults read \(application.propertyList.bundleIdentifier)
     """
     shellController.execute(command: command)
@@ -208,7 +208,7 @@ class SyncController: NSObject, MachineControllerDelegate {
   }
 
   private func createSyncBackup(for application: Application, on machine: Machine) throws {
-    var from = application.preferences.path
+    var from = application.preferences.url
     from.resolveSymlinksInPath()
 
     let folder = destination

@@ -7,8 +7,5 @@ before_install:
 script:
   - set -o pipefail && xcodebuild -workspace Syncalicious.xcworkspace -scheme "Tests" -sdk macosx clean test build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED="NO" | xcpretty
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
 notifications:
   email: false

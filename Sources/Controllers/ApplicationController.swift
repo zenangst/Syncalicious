@@ -8,14 +8,19 @@ class ApplicationController {
   weak var delegate: ApplicationControllerDelegate?
 
   private let preferencesController: PreferencesController
+  private let shellController: ShellController
   private let infoPlistController: InfoPropertyListController
+  let SIPIsEnabled: Bool
   var queue: DispatchQueue?
 
   init(queue: DispatchQueue? = nil,
        infoPlistController: InfoPropertyListController,
-       preferencesController: PreferencesController) {
+       preferencesController: PreferencesController,
+       shellController: ShellController) {
     self.infoPlistController = infoPlistController
     self.preferencesController = preferencesController
+    self.shellController = shellController
+    self.SIPIsEnabled = shellController.execute(command: "csrutil status").contains("enabled")
   }
 
   // MARK: - Public methods
@@ -107,9 +112,14 @@ class ApplicationController {
     let infoPath = url.appendingPathComponent("Contents/Info.plist")
     let propertyList = try infoPlistController.load(at: infoPath)
     let preferences = try preferencesController.load(propertyList)
+    let needsFullDiskAccess = SIPIsEnabled &&
+      FileManager.default.fileExists(atPath: preferences.url.path) &&
+      NSDictionary.init(contentsOfFile: preferences.url.path) == nil
+
     let application = Application(url: url,
                                   propertyList: propertyList,
-                                  preferences: preferences)
+                                  preferences: preferences,
+                                  needsFullDiskAccess: needsFullDiskAccess)
     return application
   }
 }

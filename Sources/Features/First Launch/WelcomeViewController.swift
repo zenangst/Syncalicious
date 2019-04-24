@@ -13,6 +13,8 @@ class WelcomeViewController: ViewController {
   lazy var button = NSButton(title: "Get started", target: self, action: #selector(getStarted(_:)))
   lazy var gridView = NSGridView()
 
+  let factory = AnimationFactory()
+
   override func viewDidLoad() {
     super.viewDidLoad()
     configureViews()
@@ -37,51 +39,41 @@ class WelcomeViewController: ViewController {
     NSAnimationContext.current.duration = 1.0
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 0
       fadeIn.toValue = 1
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.fromValue = 600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       titleLabel.layer?.add(groupAnimation, forKey: nil)
       titleLabel.alphaValue = 1.0
     }
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 0
       fadeIn.toValue = 1
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.fromValue = -600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       button.layer?.add(groupAnimation, forKey: nil)
       button.alphaValue = 1.0
     }
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 0
       fadeIn.toValue = 1
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.fromValue = 600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       gridView.layer?.add(groupAnimation, forKey: nil)
       gridView.alphaValue = 1.0
     }
 
-    let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
+    let rotate = factory.createBasicAnimation(keyPath: "transform.rotation.z")
     rotate.duration = 7.5
     rotate.fromValue = CGFloat(Double.pi) * 5 / 180.0
-    rotate.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
     iconView.layer?.add(rotate, forKey: "transform.rotation.z")
     iconView.animator().alphaValue = 1.0
   }
@@ -93,54 +85,43 @@ class WelcomeViewController: ViewController {
     NSAnimationContext.current.duration = 1.0
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
       let fadeIn = CABasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 1
       fadeIn.toValue = 0
       let position = CABasicAnimation(keyPath: "position.y")
       position.toValue = 600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       titleLabel.layer?.add(groupAnimation, forKey: nil)
       titleLabel.alphaValue = 0.0
     }
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 1
       fadeIn.toValue = 0
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.toValue = -600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       button.layer?.add(groupAnimation, forKey: nil)
       button.alphaValue = 0.0
     }
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 1
       fadeIn.toValue = 0
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.toValue = -600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       gridView.layer?.add(groupAnimation, forKey: nil)
       gridView.alphaValue = 0.0
     }
 
-    let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
+    let rotate = factory.createBasicAnimation(keyPath: "transform.rotation.z")
     rotate.duration = 1.25
     rotate.toValue = CGFloat(Double.pi) * 45 / 180.0
     rotate.isAdditive = true
     rotate.isCumulative = true
-
-    rotate.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
     iconView.layer?.add(rotate, forKey: "transform.rotation.z")
     iconView.animator().alphaValue = 0.0
   }

@@ -70,6 +70,7 @@
 		BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */; };
 		BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */; };
 		BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */; };
+		BDE9E63622704AFD00C28F34 /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,7 @@
 		BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainedController.swift; sourceTree = "<group>"; };
 		BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailContainerViewController.swift; sourceTree = "<group>"; };
 		BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
+		BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
 		D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */,
 				BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */,
 				BDDAA33D225DB56B00D87664 /* WindowFactory.swift */,
+				BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -650,6 +653,7 @@
 				BD895C08225A698600DEC9FE /* PrototypeItemComponent.generated.swift in Sources */,
 				BDDAA337225D37D100D87664 /* BackgroundView.swift in Sources */,
 				BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */,
+				BDE9E63622704AFD00C28F34 /* AnimationFactory.swift in Sources */,
 				BD8EDD822255CE3400110E56 /* IconController.swift in Sources */,
 				BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */,
 				BD3CC250225B147F006D7877 /* SplitViewController.swift in Sources */,

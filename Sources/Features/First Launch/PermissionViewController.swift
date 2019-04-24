@@ -2,9 +2,9 @@ import Cocoa
 
 @objc protocol PermissionViewControllerDelegate: class {
   func permissionViewController(_ controller: PermissionViewController,
-                      didTapPermissions button: NSButton)
+                                didTapPermissions button: NSButton)
   func permissionViewController(_ controller: PermissionViewController,
-                      didTapDoneButton button: NSButton)
+                                didTapDoneButton button: NSButton)
 }
 
 class PermissionViewController: ViewController {

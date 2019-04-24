@@ -38,6 +38,7 @@ class ApplicationDetailInfoViewController: ViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // swiftlint:disable function_body_length
   func render(_ application: Application,
               syncController: SyncController,
               machineController: MachineController) {
@@ -185,7 +186,7 @@ class ApplicationDetailInfoViewController: ViewController {
     return stackView
   }
 
-  private func showPermissionsDialog(for application: Application, handler completion : (Bool)->Void) {
+  private func showPermissionsDialog(for application: Application, handler completion: (Bool) -> Void) {
     let alert = NSAlert()
     alert.messageText = "Additional privileges needed"
     alert.informativeText = """

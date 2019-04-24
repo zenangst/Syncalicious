@@ -53,11 +53,27 @@ class ApplicationDetailFeatureViewController: NSViewController,
   }
 
   private func render(_ applications: [Application]) {
-    containerViewController.applicationInfoViewController.view.isHidden = true
+    let models = applications
+      .compactMap({ ApplicationDetailItemModel(title: $0.propertyList.bundleName,
+                                               application: $0) })
+    titleLabel.stringValue = "Multi selection (\(models.count))"
+    NSAnimationContext.current.duration = 0.0
+    containerViewController.performBatchUpdates({ _ in
+      containerViewController.applicationsDetailViewController.collectionView.isHidden = false
+      containerViewController.applicationInfoViewController.view.isHidden = true
+    }, completion: { _ in
+      NSAnimationContext.current.duration = 0.25
+      self.containerViewController.applicationsDetailViewController.reload(with: models)
+    })
   }
 
   private func render(_ application: Application) {
-    containerViewController.applicationInfoViewController.view.isHidden = false
+    NSAnimationContext.current.duration = 0.0
+    containerViewController.performBatchUpdates({ _ in
+      containerViewController.applicationInfoViewController.view.isHidden = false
+      containerViewController.applicationsDetailViewController.collectionView.isHidden = true
+      containerViewController.applicationsDetailViewController.reload(with: [])
+    }, completion: nil)
     containerViewController.applicationInfoViewController.render(application,
                                                                  syncController: syncController,
                                                                  machineController: machineController)
@@ -89,7 +105,12 @@ class ApplicationDetailFeatureViewController: NSViewController,
 
   private func handleSelections(in collectionView: NSCollectionView) {
     if collectionView.selectionIndexPaths.count > 1 {
-      render([])
+      guard let listViewController = listViewController else { return }
+      var applications = [Application]()
+      collectionView.selectionIndexPaths.forEach {
+        applications.append( listViewController.model(at: $0).application )
+      }
+      render(applications.sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() }))
     } else {
       guard let indexPath = collectionView.selectionIndexPaths.first else { return }
       guard let listViewController = listViewController else { return }

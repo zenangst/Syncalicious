@@ -21,12 +21,16 @@ class ViewControllerFactory {
   }
 
   func createApplicationDetailViewController() -> ApplicationDetailFeatureViewController {
+    let layoutFactory = dependencyContainer.layoutFactory
     let iconController = dependencyContainer.iconController
+    let applicationsDetailViewController = ApplicationDetailItemViewController(layout: layoutFactory.createApplicationsLayout(),
+                                                                               iconStore: dependencyContainer)
     let applicationInfoViewController = ApplicationDetailInfoViewController(backupController: dependencyContainer.backupController,
                                                                             iconController: iconController,
                                                                             machine: dependencyContainer.machineController.machine,
                                                                             syncController: dependencyContainer.syncController)
-    let containerViewController = ApplicationDetailContainerViewController(applicationInfoViewController: applicationInfoViewController)
+    let containerViewController = ApplicationDetailContainerViewController(applicationInfoViewController: applicationInfoViewController,
+                                                                           applicationsDetailViewController: applicationsDetailViewController)
     let featureViewController = ApplicationDetailFeatureViewController(applicationController: dependencyContainer.applicationController,
                                                                        backupController: dependencyContainer.backupController,
                                                                        containerViewController: containerViewController,

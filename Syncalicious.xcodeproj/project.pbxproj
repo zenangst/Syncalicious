@@ -71,6 +71,8 @@
 		BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */; };
 		BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */; };
 		BDE9E63622704AFD00C28F34 /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */; };
+		BDE9E6392270514700C28F34 /* ApplicationDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */; };
+		BDE9E63B2270519100C28F34 /* CollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +163,8 @@
 		BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailContainerViewController.swift; sourceTree = "<group>"; };
 		BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
 		BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
+		BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailItem.swift; sourceTree = "<group>"; };
+		BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewItem.swift; sourceTree = "<group>"; };
 		D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 			children = (
 				BDDAA336225D37D100D87664 /* BackgroundView.swift */,
 				BD2199D5226EFB7D00D86AA6 /* Button.swift */,
+				BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */,
 				BDDAA338225D37DE00D87664 /* DividerView.swift */,
 				BD438BFA226A548D00A21017 /* GradientView.swift */,
 				BDDAA33A225D383400D87664 /* Label.swift */,
@@ -297,10 +302,11 @@
 		BD7D961A22532B5900C93211 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				BD438BFF226AFFE800A21017 /* First Launch */,
+				BDE9E6372270512F00C28F34 /* Applications Detail */,
 				BDDAA345225DC88F00D87664 /* Application Detail */,
 				BDDAA344225DC87300D87664 /* Application List */,
 				BDDAA343225DC86200D87664 /* Core */,
+				BD438BFF226AFFE800A21017 /* First Launch */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -454,6 +460,14 @@
 				BD62D2EF22675F54007B047B /* ApplicationDetailFeatureViewController.swift */,
 			);
 			path = "Application Detail";
+			sourceTree = "<group>";
+		};
+		BDE9E6372270512F00C28F34 /* Applications Detail */ = {
+			isa = PBXGroup;
+			children = (
+				BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */,
+			);
+			path = "Applications Detail";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -637,6 +651,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD62D2EE2267547B007B047B /* ApplicationListFeatureViewController.swift in Sources */,
+				BDE9E63B2270519100C28F34 /* CollectionViewItem.swift in Sources */,
 				BD7D96192252912100C93211 /* Preferences.swift in Sources */,
 				BD62D2F022675F54007B047B /* ApplicationDetailFeatureViewController.swift in Sources */,
 				BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */,
@@ -681,6 +696,7 @@
 				BDAB1ED522702C4E00B1070F /* NSLayoutConstraint+Extensions.swift in Sources */,
 				BD8EDD892255CF7500110E56 /* Component.swift in Sources */,
 				BD8EDD7A22553A5A00110E56 /* CollectionViewItemComponent.swift in Sources */,
+				BDE9E6392270514700C28F34 /* ApplicationDetailItem.swift in Sources */,
 				BDDAA33E225DB56B00D87664 /* WindowFactory.swift in Sources */,
 				BD7D962322533FF300C93211 /* MainMenuController.swift in Sources */,
 				BD8EDD862255CF4800110E56 /* CollectionViewItemComponent.generated.swift in Sources */,

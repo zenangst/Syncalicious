@@ -28,6 +28,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
   private func loadInjection() {
     Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection.bundle")?.load()
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(injected),
+      name: NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION"),
+      object: nil
+    )
   }
 
   @objc func injected() {

@@ -131,9 +131,7 @@ class ApplicationListFeatureViewController: NSViewController,
     return ApplicationListItemModel(title: application.propertyList.bundleName,
                                     subtitle: subtitle,
                                     synced: isSynched,
-                                    application: application,
-                                    bundleIdentifier: application.propertyList.bundleIdentifier,
-                                    path: application.url)
+                                    application: application)
   }
 
   // MARK: - ApplicationListSortViewControllerDelegate

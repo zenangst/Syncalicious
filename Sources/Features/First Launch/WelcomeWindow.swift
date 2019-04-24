@@ -16,5 +16,6 @@ class WelcomeWindow: NSWindow {
     titlebarAppearsTransparent = true
     isMovableByWindowBackground = true
     animationBehavior = .documentWindow
+    setFrame(.init(origin: .zero, size: maxSize), display: true, animate: false)
   }
 }

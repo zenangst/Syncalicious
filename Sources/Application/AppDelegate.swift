@@ -24,20 +24,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
   private func loadInjection() {
     Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection.bundle")?.load()
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(injected(_:)),
-      name: NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION"),
-      object: nil
-    )
   }
 
-  @objc func injected(_ notification: Notification) {
+  @objc func injected() {
     loadApplication()
   }
 
   func loadApplication() {
     do {
+      UserDefaults.standard.backupDestination = nil
+
       if UserDefaults.standard.backupDestination == nil {
         NSApplication.shared.windows.forEach { $0.close() }
 

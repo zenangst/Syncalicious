@@ -1,14 +1,14 @@
 import Cocoa
 
-@objc protocol PermissionViewDelegate: class {
-  func permissionView(_ view: PermissionView,
+@objc protocol PermissionViewControllerDelegate: class {
+  func permissionViewController(_ controller: PermissionViewController,
                       didTapPermissions button: NSButton)
-  func permissionView(_ view: PermissionView,
+  func permissionViewController(_ controller: PermissionViewController,
                       didTapDoneButton button: NSButton)
 }
 
-class PermissionView: NSView {
-  weak var delegate: PermissionViewDelegate?
+class PermissionViewController: ViewController {
+  weak var delegate: PermissionViewControllerDelegate?
 
   lazy var iconView = NSImageView()
   lazy var titleLabel = BoldLabel()
@@ -18,18 +18,13 @@ class PermissionView: NSView {
                                       target: self,
                                       action: #selector(grantPermission(_:)))
 
-  private var layoutConstraints = [NSLayoutConstraint]()
-
-  override init(frame frameRect: NSRect) {
-    super.init(frame: frameRect)
-    loadView()
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    configureViews()
   }
 
-  required init?(coder decoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  func reset() {
+  override func viewWillAppear() {
+    super.viewWillAppear()
     titleLabel.alphaValue = 0.0
     iconView.alphaValue = 0.0
     doneButton.alphaValue = 0.0
@@ -37,10 +32,15 @@ class PermissionView: NSView {
     permissionsButton.alphaValue = 0.0
   }
 
+  override func viewDidAppear() {
+    super.viewDidAppear()
+    animateIn()
+  }
+
   func animateIn() {
     CATransaction.begin()
     defer { CATransaction.commit() }
-    NSAnimationContext.current.duration = 1.5
+    NSAnimationContext.current.duration = 1.0
 
     do {
       let groupAnimation = CAAnimationGroup()
@@ -52,7 +52,6 @@ class PermissionView: NSView {
       let position = CABasicAnimation(keyPath: "position.y")
       position.fromValue = 600
       groupAnimation.animations = [position, fadeIn]
-      titleLabel.layer?.anchorPoint = .init(x: 0.5, y: 0.5)
       titleLabel.layer?.add(groupAnimation, forKey: nil)
       titleLabel.alphaValue = 1.0
     }
@@ -67,7 +66,6 @@ class PermissionView: NSView {
       let position = CABasicAnimation(keyPath: "position.y")
       position.fromValue = -600
       groupAnimation.animations = [position, fadeIn]
-      permissionsButton.layer?.anchorPoint = .init(x: 0.5, y: 0.5)
       permissionsButton.layer?.add(groupAnimation, forKey: nil)
       permissionsButton.alphaValue = 1.0
     }
@@ -111,7 +109,7 @@ class PermissionView: NSView {
   func animateOut() {
     CATransaction.begin()
     CATransaction.setCompletionBlock({
-      self.removeFromSuperview()
+      self.view.removeFromSuperview()
     })
     defer { CATransaction.commit() }
     NSAnimationContext.current.duration = 1.0
@@ -171,21 +169,19 @@ class PermissionView: NSView {
 
   // MARK: - Private methods
 
-  private func loadView() {
+  private func configureViews() {
     iconView.imageScaling = .scaleAxesIndependently
     iconView.wantsLayer = true
     let image = NSImage(named: "Hand")
     image?.isTemplate = true
     iconView.image = image
     iconView.contentTintColor = NSColor.init(named: "Orange")
-    iconView.translatesAutoresizingMaskIntoConstraints = false
 
     titleLabel.font = NSFont.boldSystemFont(ofSize: 32)
     titleLabel.stringValue = "Security & Privacy"
     titleLabel.maximumNumberOfLines = 2
     titleLabel.lineBreakMode = .byWordWrapping
     titleLabel.alignment = .center
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.wantsLayer = true
 
     doneButton.wantsLayer = true
@@ -195,11 +191,9 @@ class PermissionView: NSView {
     doneButton.layer?.borderColor = NSColor.red.cgColor
     doneButton.layer?.borderWidth = 0
     doneButton.contentTintColor = NSColor.white
-    doneButton.translatesAutoresizingMaskIntoConstraints = false
 
     gridView.wantsLayer = true
     gridView.xPlacement = .fill
-    gridView.translatesAutoresizingMaskIntoConstraints = false
     gridView.rowSpacing = 30
 
     let syncIcon = NSImageView()
@@ -226,25 +220,24 @@ This step is optional but know that you cannot sync the applications mentioned a
     let backupRow = gridView.addRow(with: [backupIcon, backupLabel])
     backupRow.yPlacement = .top
 
-    permissionsButton.translatesAutoresizingMaskIntoConstraints = false
     permissionsButton.wantsLayer = true
 
-    addSubview(gridView)
-    addSubview(titleLabel)
-    addSubview(iconView)
-    addSubview(permissionsButton)
-    addSubview(doneButton)
+    view.addSubview(gridView)
+    view.addSubview(titleLabel)
+    view.addSubview(iconView)
+    view.addSubview(permissionsButton)
+    view.addSubview(doneButton)
 
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = [
-      iconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -120),
-      iconView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 72),
+      iconView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -120),
+      iconView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 72),
       iconView.widthAnchor.constraint(equalToConstant: 512),
       iconView.heightAnchor.constraint(equalToConstant: 512),
 
       titleLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 385),
-      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 64),
-      titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -64),
+      titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 64),
+      titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
 
       gridView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 32),
       gridView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
@@ -259,21 +252,21 @@ This step is optional but know that you cannot sync the applications mentioned a
       backupIcon.heightAnchor.constraint(equalToConstant: 48),
       backupIcon.widthAnchor.constraint(equalToConstant: 48),
 
-      doneButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -48),
+      doneButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -48),
       doneButton.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
       doneButton.heightAnchor.constraint(equalToConstant: 36),
       doneButton.widthAnchor.constraint(equalToConstant: 120)
     ]
-    NSLayoutConstraint.activate(layoutConstraints)
+    NSLayoutConstraint.constrain(layoutConstraints)
   }
 
   // MARK: - Actions
 
   @objc func grantPermission(_ sender: NSButton) {
-    delegate?.permissionView(self, didTapPermissions: sender)
+    delegate?.permissionViewController(self, didTapPermissions: sender)
   }
 
   @objc func doneButton(_ sender: NSButton) {
-    delegate?.permissionView(self, didTapDoneButton: sender)
+    delegate?.permissionViewController(self, didTapDoneButton: sender)
   }
 }

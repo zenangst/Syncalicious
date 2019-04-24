@@ -12,6 +12,7 @@
 		BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */; };
 		BD084B792258E0B600E91A7F /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B782258E0B600E91A7F /* TestHost.swift */; };
 		BD2199D6226EFB7D00D86AA6 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2199D5226EFB7D00D86AA6 /* Button.swift */; };
+		BD2E976122702A2000C2CD98 /* DestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2E976022702A2000C2CD98 /* DestinationViewController.swift */; };
 		BD3CC24E225B1463006D7877 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC24D225B1463006D7877 /* WindowController.swift */; };
 		BD3CC250225B147F006D7877 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC24F225B147F006D7877 /* SplitViewController.swift */; };
 		BD438BF92269CD1900A21017 /* WelcomeWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD438BF82269CD1900A21017 /* WelcomeWindow.swift */; };
@@ -21,8 +22,7 @@
 		BD4A69312253BADE00F588AD /* MachineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69302253BADE00F588AD /* MachineController.swift */; };
 		BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69392253DCF100F588AD /* MainWindow.swift */; };
 		BD4A6941225406A300F588AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A6940225406A300F588AD /* ViewController.swift */; };
-		BD5903B5226C7DD90037A1AC /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5903B4226C7DD90037A1AC /* WelcomeView.swift */; };
-		BD5903B7226CAA850037A1AC /* DestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5903B6226CAA850037A1AC /* DestinationView.swift */; };
+		BD5903B5226C7DD90037A1AC /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5903B4226C7DD90037A1AC /* WelcomeViewController.swift */; };
 		BD62D2E22262362C007B047B /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E12262362C007B047B /* SyncController.swift */; };
 		BD62D2E4226393B4007B047B /* ShellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E3226393B4007B047B /* ShellController.swift */; };
 		BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */; };
@@ -54,6 +54,7 @@
 		BD9313872251703400D116E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9313862251703400D116E4 /* AppDelegate.swift */; };
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
+		BDAB1ED522702C4E00B1070F /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */; };
 		BDB919642259F7020096294D /* BackupControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB919632259F7020096294D /* BackupControllerTests.swift */; };
 		BDCBB2AB22551372007C9404 /* ApplicationControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */; };
 		BDCBB2C022551C5B007C9404 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDCBB2C222551C5B007C9404 /* Localizable.strings */; };
@@ -68,7 +69,7 @@
 		BDDAA347225DC89F00D87664 /* ApplicationDetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */; };
 		BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */; };
 		BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */; };
-		BDDC19A4226F93D9002D17F5 /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC19A3226F93D9002D17F5 /* PermissionView.swift */; };
+		BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		BD084B782258E0B600E91A7F /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
 		BD084B7A2258F15500E91A7F /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
 		BD2199D5226EFB7D00D86AA6 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		BD2E976022702A2000C2CD98 /* DestinationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationViewController.swift; sourceTree = "<group>"; };
 		BD3CC24D225B1463006D7877 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		BD3CC24F225B147F006D7877 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		BD438BF82269CD1900A21017 /* WelcomeWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeWindow.swift; sourceTree = "<group>"; };
@@ -100,8 +102,7 @@
 		BD4A69342253D9C900F588AD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BD4A69392253DCF100F588AD /* MainWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		BD4A6940225406A300F588AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BD5903B4226C7DD90037A1AC /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		BD5903B6226CAA850037A1AC /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
+		BD5903B4226C7DD90037A1AC /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		BD62D2E12262362C007B047B /* SyncController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
 		BD62D2E3226393B4007B047B /* ShellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellController.swift; sourceTree = "<group>"; };
 		BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
@@ -139,6 +140,7 @@
 		BD93138B2251703700D116E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BD93138D2251703700D116E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD93138E2251703700D116E4 /* Syncalicious.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syncalicious.entitlements; sourceTree = "<group>"; };
+		BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		BDB919632259F7020096294D /* BackupControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupControllerTests.swift; sourceTree = "<group>"; };
 		BDCBB2A822551372007C9404 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationControllerTests.swift; sourceTree = "<group>"; };
@@ -156,7 +158,7 @@
 		BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailInfoViewController.swift; sourceTree = "<group>"; };
 		BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainedController.swift; sourceTree = "<group>"; };
 		BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailContainerViewController.swift; sourceTree = "<group>"; };
-		BDDC19A3226F93D9002D17F5 /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
+		BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
 		D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -215,11 +217,11 @@
 		BD438BFF226AFFE800A21017 /* First Launch */ = {
 			isa = PBXGroup;
 			children = (
-				BD5903B6226CAA850037A1AC /* DestinationView.swift */,
+				BD2E976022702A2000C2CD98 /* DestinationViewController.swift */,
 				BD438BFD226A5E3A00A21017 /* FirstLaunchViewController.swift */,
-				BD5903B4226C7DD90037A1AC /* WelcomeView.swift */,
+				BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */,
+				BD5903B4226C7DD90037A1AC /* WelcomeViewController.swift */,
 				BD438BF82269CD1900A21017 /* WelcomeWindow.swift */,
-				BDDC19A3226F93D9002D17F5 /* PermissionView.swift */,
 			);
 			path = "First Launch";
 			sourceTree = "<group>";
@@ -304,8 +306,9 @@
 		BD7D961D22532B8F00C93211 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
 				BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */,
+				BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */,
+				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -633,7 +636,7 @@
 				BD62D2EE2267547B007B047B /* ApplicationListFeatureViewController.swift in Sources */,
 				BD7D96192252912100C93211 /* Preferences.swift in Sources */,
 				BD62D2F022675F54007B047B /* ApplicationDetailFeatureViewController.swift in Sources */,
-				BDDC19A4226F93D9002D17F5 /* PermissionView.swift in Sources */,
+				BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */,
 				BD7D961F22532BA100C93211 /* UserDefaults+Extensions.swift in Sources */,
 				BD7D9617225290C800C93211 /* PreferencesController.swift in Sources */,
 				BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */,
@@ -652,7 +655,7 @@
 				BD3CC250225B147F006D7877 /* SplitViewController.swift in Sources */,
 				BDDAA33B225D383400D87664 /* Label.swift in Sources */,
 				BD4A69312253BADE00F588AD /* MachineController.swift in Sources */,
-				BD5903B5226C7DD90037A1AC /* WelcomeView.swift in Sources */,
+				BD5903B5226C7DD90037A1AC /* WelcomeViewController.swift in Sources */,
 				BD4A6941225406A300F588AD /* ViewController.swift in Sources */,
 				BD8EDD7E22553ADD00110E56 /* ApplicationListItem.swift in Sources */,
 				BD62D2E4226393B4007B047B /* ShellController.swift in Sources */,
@@ -662,7 +665,6 @@
 				BD62D2EC22674E0A007B047B /* ApplicationListSearchViewController.swift in Sources */,
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,
-				BD5903B7226CAA850037A1AC /* DestinationView.swift in Sources */,
 				BD62D2E22262362C007B047B /* SyncController.swift in Sources */,
 				BD3CC24E225B1463006D7877 /* WindowController.swift in Sources */,
 				BDDAA339225D37DE00D87664 /* DividerView.swift in Sources */,
@@ -672,6 +674,7 @@
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
 				BDDAA347225DC89F00D87664 /* ApplicationDetailInfoViewController.swift in Sources */,
 				BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */,
+				BDAB1ED522702C4E00B1070F /* NSLayoutConstraint+Extensions.swift in Sources */,
 				BD8EDD892255CF7500110E56 /* Component.swift in Sources */,
 				BD8EDD7A22553A5A00110E56 /* CollectionViewItemComponent.swift in Sources */,
 				BDDAA33E225DB56B00D87664 /* WindowFactory.swift in Sources */,
@@ -682,6 +685,7 @@
 				BD2199D6226EFB7D00D86AA6 /* Button.swift in Sources */,
 				BD895C06225A693C00DEC9FE /* PrototypeItemComponent.swift in Sources */,
 				BD438BFB226A548D00A21017 /* GradientView.swift in Sources */,
+				BD2E976122702A2000C2CD98 /* DestinationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -847,6 +851,7 @@
 			baseConfigurationReference = 0D524E3138AC0B59B67FF0DD /* Pods-Syncalicious.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Resources/Syncalicious.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E23HUP39A3;
@@ -867,6 +872,7 @@
 			baseConfigurationReference = 8D3875EE15B4C6FB1AFB28CF /* Pods-Syncalicious.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Resources/Syncalicious.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E23HUP39A3;

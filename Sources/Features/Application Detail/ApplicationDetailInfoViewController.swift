@@ -14,7 +14,6 @@ protocol ApplicationDetailInfoViewControllerDelegate: class {
 
 class ApplicationDetailInfoViewController: ViewController {
   weak var delegate: ApplicationDetailInfoViewControllerDelegate?
-  private var layoutConstraints = [NSLayoutConstraint]()
   let backupController: BackupController
   let iconController: IconController
   let syncController: SyncController

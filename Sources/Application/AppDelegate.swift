@@ -32,8 +32,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
   func loadApplication() {
     do {
-      UserDefaults.standard.backupDestination = nil
-
       if UserDefaults.standard.backupDestination == nil {
         NSApplication.shared.windows.forEach { $0.close() }
 

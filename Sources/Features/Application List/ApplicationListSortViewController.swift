@@ -11,7 +11,6 @@ class ApplicationListSortViewController: ViewController {
   }
 
   weak var delegate: ApplicationListSortViewControllerDelegate?
-  private var layoutConstraints = [NSLayoutConstraint]()
   lazy var segmentedControl = NSSegmentedControl(labels: SortKind.allCases.compactMap({ $0.rawValue }),
                                                trackingMode: .selectOne,
                                                target: self,

@@ -12,7 +12,7 @@ class MainMenuController: NSObject {
       NSApplication.shared.activate(ignoringOtherApps: true)
       windowController.showWindow(nil)
     } else {
-      appDelegate?.loadApplication()
+      try? appDelegate?.loadApplication()
     }
   }
 

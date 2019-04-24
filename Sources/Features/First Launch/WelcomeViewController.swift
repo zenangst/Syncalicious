@@ -1,89 +1,79 @@
 import Cocoa
 
-@objc protocol WelcomeViewDelegate: class {
-  func welcomeView(_ view: WelcomeView,
-                   didTapGetStarted button: NSButton)
+@objc protocol WelcomeViewControllerDelegate: class {
+  func welcomeViewController(_ viewController: WelcomeViewController,
+                             didTapGetStarted button: NSButton)
 }
 
-class WelcomeView: NSView {
-  weak var delegate: WelcomeViewDelegate?
+class WelcomeViewController: ViewController {
+  weak var delegate: WelcomeViewControllerDelegate?
 
   lazy var iconView = NSImageView()
   lazy var titleLabel = BoldLabel()
   lazy var button = NSButton(title: "Get started", target: self, action: #selector(getStarted(_:)))
   lazy var gridView = NSGridView()
 
-  private var layoutConstraints = [NSLayoutConstraint]()
+  let factory = AnimationFactory()
 
-  override init(frame frameRect: NSRect) {
-    super.init(frame: frameRect)
-    loadView()
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    configureViews()
   }
 
-  required init?(coder decoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  func reset() {
+  override func viewWillAppear() {
+    super.viewWillAppear()
     titleLabel.alphaValue = 0.0
     iconView.alphaValue = 0.0
     button.alphaValue = 0.0
     gridView.alphaValue = 0.0
   }
 
+  override func viewDidAppear() {
+    super.viewDidAppear()
+    animateIn()
+  }
+
   func animateIn() {
     CATransaction.begin()
     defer { CATransaction.commit() }
-    NSAnimationContext.current.duration = 1.5
+    NSAnimationContext.current.duration = 1.0
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 0
       fadeIn.toValue = 1
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.fromValue = 600
-      groupAnimation.animations = [position, fadeIn]
-      titleLabel.layer?.anchorPoint = .init(x: 0.5, y: 0.5)
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       titleLabel.layer?.add(groupAnimation, forKey: nil)
       titleLabel.alphaValue = 1.0
     }
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 0
       fadeIn.toValue = 1
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.fromValue = -600
-      groupAnimation.animations = [position, fadeIn]
-      button.layer?.anchorPoint = .init(x: 0.5, y: 0.5)
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       button.layer?.add(groupAnimation, forKey: nil)
       button.alphaValue = 1.0
     }
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 0
       fadeIn.toValue = 1
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.fromValue = 600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       gridView.layer?.add(groupAnimation, forKey: nil)
       gridView.alphaValue = 1.0
     }
 
-    let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
+    let rotate = factory.createBasicAnimation(keyPath: "transform.rotation.z")
     rotate.duration = 7.5
     rotate.fromValue = CGFloat(Double.pi) * 5 / 180.0
-    rotate.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
     iconView.layer?.add(rotate, forKey: "transform.rotation.z")
     iconView.animator().alphaValue = 1.0
   }
@@ -95,66 +85,54 @@ class WelcomeView: NSView {
     NSAnimationContext.current.duration = 1.0
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
       let fadeIn = CABasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 1
       fadeIn.toValue = 0
       let position = CABasicAnimation(keyPath: "position.y")
       position.toValue = 600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       titleLabel.layer?.add(groupAnimation, forKey: nil)
       titleLabel.alphaValue = 0.0
     }
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 1
       fadeIn.toValue = 0
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.toValue = -600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       button.layer?.add(groupAnimation, forKey: nil)
       button.alphaValue = 0.0
     }
 
     do {
-      let groupAnimation = CAAnimationGroup()
-      groupAnimation.isRemovedOnCompletion = false
-      groupAnimation.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
-      let fadeIn = CABasicAnimation(keyPath: "opacity")
+      let fadeIn = factory.createBasicAnimation(keyPath: "opacity")
       fadeIn.fromValue = 1
       fadeIn.toValue = 0
-      let position = CABasicAnimation(keyPath: "position.y")
+      let position = factory.createBasicAnimation(keyPath: "position.y")
       position.toValue = -600
-      groupAnimation.animations = [position, fadeIn]
+      let groupAnimation = factory.createAnimationGroup([position, fadeIn])
       gridView.layer?.add(groupAnimation, forKey: nil)
       gridView.alphaValue = 0.0
     }
 
-    let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
+    let rotate = factory.createBasicAnimation(keyPath: "transform.rotation.z")
     rotate.duration = 1.25
     rotate.toValue = CGFloat(Double.pi) * 45 / 180.0
     rotate.isAdditive = true
     rotate.isCumulative = true
-
-    rotate.timingFunction = .init(name: CAMediaTimingFunctionName.easeInEaseOut)
     iconView.layer?.add(rotate, forKey: "transform.rotation.z")
     iconView.animator().alphaValue = 0.0
   }
 
   // MARK: - Private methods
 
-  private func loadView() {
+  private func configureViews() {
     iconView.imageScaling = .scaleAxesIndependently
     iconView.wantsLayer = true
     let image = NSImage(named: "AppIcon")
     iconView.image = image
-    iconView.translatesAutoresizingMaskIntoConstraints = false
 
     titleLabel.font = NSFont.boldSystemFont(ofSize: 48)
     titleLabel.stringValue = "Welcome to Syncalicious"
@@ -162,7 +140,6 @@ class WelcomeView: NSView {
     titleLabel.maximumNumberOfLines = 2
     titleLabel.lineBreakMode = .byWordWrapping
     titleLabel.alignment = .left
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.wantsLayer = true
 
     button.wantsLayer = true
@@ -172,11 +149,9 @@ class WelcomeView: NSView {
     button.layer?.borderColor = NSColor.red.cgColor
     button.layer?.borderWidth = 0
     button.contentTintColor = NSColor.white
-    button.translatesAutoresizingMaskIntoConstraints = false
 
     gridView.wantsLayer = true
     gridView.xPlacement = .fill
-    gridView.translatesAutoresizingMaskIntoConstraints = false
 
     let syncIcon = NSImageView()
     let syncLabel = Label.init(labelWithString: "Sync application preferences across all your macs")
@@ -196,21 +171,20 @@ class WelcomeView: NSView {
     let backupRow = gridView.addRow(with: [backupIcon, backupLabel])
     backupRow.yPlacement = .center
 
-    addSubview(gridView)
-    addSubview(titleLabel)
-    addSubview(iconView)
-    addSubview(button)
+    view.addSubview(gridView)
+    view.addSubview(titleLabel)
+    view.addSubview(iconView)
+    view.addSubview(button)
 
-    NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = [
-      iconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -120),
-      iconView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 72),
+      iconView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -120),
+      iconView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 72),
       iconView.widthAnchor.constraint(equalToConstant: 512),
       iconView.heightAnchor.constraint(equalToConstant: 512),
 
       titleLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 340),
-      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 64),
-      titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -64),
+      titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 64),
+      titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
 
       gridView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 32),
       gridView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
@@ -221,17 +195,17 @@ class WelcomeView: NSView {
       backupIcon.heightAnchor.constraint(equalToConstant: 48),
       backupIcon.widthAnchor.constraint(equalToConstant: 48),
 
-      button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -64),
+      button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -64),
       button.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
       button.heightAnchor.constraint(equalToConstant: 36),
       button.widthAnchor.constraint(equalToConstant: 120)
     ]
-    NSLayoutConstraint.activate(layoutConstraints)
+    NSLayoutConstraint.constrain(layoutConstraints)
   }
 
   // MARK: - Actions
 
   @objc func getStarted(_ sender: NSButton) {
-    delegate?.welcomeView(self, didTapGetStarted: sender)
+    delegate?.welcomeViewController(self, didTapGetStarted: sender)
   }
 }

@@ -17,71 +17,68 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     #if DEBUG
     loadInjection()
     #endif
-    loadApplication()
+    do { try loadApplication() }
+    catch let error {
+      let alert = NSAlert(error: error)
+      alert.runModal()
+    }
   }
 
   // MARK: - Private methods
 
   private func loadInjection() {
     Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection.bundle")?.load()
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(injected(_:)),
-      name: NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION"),
-      object: nil
-    )
   }
 
-  @objc func injected(_ notification: Notification) {
-    loadApplication()
-  }
-
-  func loadApplication() {
-    do {
-      if UserDefaults.standard.backupDestination == nil {
-        NSApplication.shared.windows.forEach { $0.close() }
-
-        let machineController = try MachineController(host: Host.current())
-        let backupController = BackupController(machineController: machineController)
-        let welcomeWindow = WelcomeWindow()
-        welcomeWindow.loadWindow()
-        let firstLaunchWindowController = NSWindowController(window: welcomeWindow)
-        let firstLaunchViewController = FirstLaunchViewController(backupController: backupController)
-        firstLaunchViewController.delegate = self
-        self.firstLaunchViewController = firstLaunchViewController
-        backupController.delegate = self
-        firstLaunchWindowController.contentViewController = firstLaunchViewController
-        firstLaunchWindowController.showWindow(nil)
-        firstLaunchWindowController.window?.center()
-      } else {
-        let previousFrame = self.windowController?.window?.frame
-        self.windowController?.close()
-        self.windowController = nil
-
-        configureStatusMenu()
-
-        let dependencyContainer = try createDependencyContainer()
-        let locations = try dependencyContainer.applicationController.applicationDirectories()
-        let (windowController, listFeatureViewController) = dependencyContainer.windowFactory.createMainWindowControllers()
-        self.listFeatureViewController = listFeatureViewController
-        self.mainMenuController?.appDelegate = self
-        self.mainMenuController?.dependencyContainer = dependencyContainer
-        self.mainMenuController?.listContainerViewController = listFeatureViewController.containerViewController
-        self.windowController = windowController
-        self.dependencyContainer = dependencyContainer
-
-        dependencyContainer.applicationController.loadApplications(at: locations)
-
-        #if DEBUG
-        windowController.showWindow(nil)
-        if let previousFrame = previousFrame {
-          windowController.window?.setFrame(previousFrame, display: true)
-        }
-        #endif
-      }
-    } catch let error {
+  @objc func injected() {
+    do { try loadApplication() }
+    catch let error {
       let alert = NSAlert(error: error)
       alert.runModal()
+    }
+  }
+
+  func loadApplication() throws {
+    if UserDefaults.standard.backupDestination == nil {
+      NSApplication.shared.windows.forEach { $0.close() }
+
+      let machineController = try MachineController(host: Host.current())
+      let backupController = BackupController(machineController: machineController)
+      let welcomeWindow = WelcomeWindow()
+      welcomeWindow.loadWindow()
+      let firstLaunchWindowController = NSWindowController(window: welcomeWindow)
+      let firstLaunchViewController = FirstLaunchViewController(backupController: backupController)
+      firstLaunchViewController.delegate = self
+      self.firstLaunchViewController = firstLaunchViewController
+      backupController.delegate = self
+      firstLaunchWindowController.contentViewController = firstLaunchViewController
+      firstLaunchWindowController.showWindow(nil)
+      firstLaunchWindowController.window?.center()
+    } else {
+      let previousFrame = self.windowController?.window?.frame
+      self.windowController?.close()
+      self.windowController = nil
+
+      configureStatusMenu()
+
+      let dependencyContainer = try createDependencyContainer()
+      let locations = try dependencyContainer.applicationController.applicationDirectories()
+      let (windowController, listFeatureViewController) = dependencyContainer.windowFactory.createMainWindowControllers()
+      self.listFeatureViewController = listFeatureViewController
+      self.mainMenuController?.appDelegate = self
+      self.mainMenuController?.dependencyContainer = dependencyContainer
+      self.mainMenuController?.listContainerViewController = listFeatureViewController.containerViewController
+      self.windowController = windowController
+      self.dependencyContainer = dependencyContainer
+
+      dependencyContainer.applicationController.loadApplications(at: locations)
+
+      #if DEBUG
+      windowController.showWindow(nil)
+      if let previousFrame = previousFrame {
+        windowController.window?.setFrame(previousFrame, display: true)
+      }
+      #endif
     }
   }
 
@@ -136,7 +133,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
   func firstLaunchViewController(_ controller: FirstLaunchViewController,
                                  didPressDoneButton button: NSButton) {
     controller.view.window?.close()
-    loadApplication()
+    do { try loadApplication() }
+    catch let error {
+      let alert = NSAlert(error: error)
+      alert.runModal()
+    }
     windowController?.showWindow(nil)
   }
 

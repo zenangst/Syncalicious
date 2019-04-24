@@ -4,14 +4,14 @@ protocol FirstLaunchViewControllerDelegate: class {
   func firstLaunchViewController(_ controller: FirstLaunchViewController, didPressDoneButton button: NSButton)
 }
 
-class FirstLaunchViewController: NSViewController, WelcomeViewDelegate, DestinationViewDelegate,
-  PermissionViewDelegate, BackupControllerDelegate {
+class FirstLaunchViewController: NSViewController, WelcomeViewControllerDelegate, DestinationViewControllerDelegate,
+  PermissionViewControllerDelegate, BackupControllerDelegate {
   weak var delegate: FirstLaunchViewControllerDelegate?
 
   lazy var gradientView = GradientView()
-  lazy var welcomeView = WelcomeView()
-  lazy var destinationView = DestinationView()
-  lazy var permissionView = PermissionView()
+  lazy var destinationViewController = DestinationViewController()
+  lazy var welcomeViewController = WelcomeViewController()
+  lazy var permissionViewController = PermissionViewController()
 
   let backupController: BackupController
 
@@ -32,47 +32,18 @@ class FirstLaunchViewController: NSViewController, WelcomeViewDelegate, Destinat
       NSColor(red: 1.00, green: 0.92, blue: 0.88, alpha: 1.00).cgColor
     ]
     view = gradientView
-    welcomeView.delegate = self
-    destinationView.delegate = self
-    permissionView.delegate = self
-    welcomeView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(welcomeView)
+    welcomeViewController.delegate = self
+    destinationViewController.delegate = self
+    permissionViewController.delegate = self
 
-    NSLayoutConstraint.deactivate(layoutConstraints)
-    layoutConstraints = [
-      welcomeView.topAnchor.constraint(equalTo: view.topAnchor),
-      welcomeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      welcomeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      welcomeView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    ]
-    NSLayoutConstraint.activate(layoutConstraints)
-  }
+    addViewController(welcomeViewController)
 
-  override func viewWillAppear() {
-    super.viewWillAppear()
-    welcomeView.reset()
-  }
-
-  override func viewDidAppear() {
-    super.viewDidAppear()
-    welcomeView.animateIn()
+    view.frame.size = CGSize(width: 800, height: 480)
   }
 
   func showDestinationView() {
-    welcomeView.removeFromSuperview()
-    destinationView.translatesAutoresizingMaskIntoConstraints = false
-    destinationView.reset()
-    destinationView.animateIn()
-    view.addSubview(destinationView)
-    NSLayoutConstraint.deactivate(layoutConstraints)
-    layoutConstraints = [
-      destinationView.topAnchor.constraint(equalTo: view.topAnchor),
-      destinationView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      destinationView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      destinationView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    ]
-    NSLayoutConstraint.activate(layoutConstraints)
-
+    removeViewController(welcomeViewController)
+    addViewController(destinationViewController)
     gradientView.gradientLayer.colors = [
       NSColor.windowBackgroundColor.withSystemEffect(.pressed).cgColor,
       NSColor.windowBackgroundColor.cgColor
@@ -80,67 +51,73 @@ class FirstLaunchViewController: NSViewController, WelcomeViewDelegate, Destinat
   }
 
   func showPermissionView() {
-    destinationView.removeFromSuperview()
-    permissionView.translatesAutoresizingMaskIntoConstraints = false
-    permissionView.reset()
-    permissionView.animateIn()
-    view.addSubview(permissionView)
+    removeViewController(destinationViewController)
+    addViewController(permissionViewController)
+    gradientView.gradientLayer.colors = [
+      NSColor(named: "Corn Silk")!.withSystemEffect(.pressed).cgColor,
+      NSColor(named: "Corn Silk")!.cgColor
+    ]
+  }
+
+  private func addViewController(_ viewController: NSViewController) {
+    addChild(viewController)
+    view.addSubview(viewController.view)
+    configureConstraintsForViewController(viewController)
+  }
+
+  private func removeViewController(_ viewController: NSViewController) {
+    destinationViewController.removeFromParent()
+    destinationViewController.view.removeFromSuperview()
+  }
+
+  private func configureConstraintsForViewController(_ viewController: NSViewController) {
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = [
-      permissionView.topAnchor.constraint(equalTo: view.topAnchor),
-      permissionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      permissionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      permissionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+      viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ]
-    NSLayoutConstraint.activate(layoutConstraints)
-
-    gradientView.gradientLayer.colors = [
-      NSColor(named: "Corn Silk")?.withSystemEffect(.pressed).cgColor,
-      NSColor(named: "Corn Silk")?.cgColor
-    ]
+    NSLayoutConstraint.constrain(layoutConstraints)
   }
 
   // MARK: - BackupControllerDelegate
 
   func backupController(_ controller: BackupController, didSelectDestination destination: URL) {
-    destinationView.directoryLabel.stringValue = destination.path
-
+    destinationViewController.directoryLabel.stringValue = destination.path
     if !destination.path.isEmpty {
-      destinationView.nextButton.alphaValue = 1.0
+      destinationViewController.nextButton.animator().alphaValue = 1.0
     }
   }
 
   // MARK: - WelcomeViewDelegate
 
-  func welcomeView(_ view: WelcomeView, didTapGetStarted button: NSButton) {
-    view.animateOut {
-      NSAnimationContext.current.duration = 1.0
+  func welcomeViewController(_ controller: WelcomeViewController, didTapGetStarted button: NSButton) {
+    controller.animateOut {
       self.showDestinationView()
     }
   }
 
   // MARK: - DestinationViewDelegate
 
-  func destinationView(_ view: DestinationView, didTapDirectoryButton button: NSButton) {
+  func destinationViewController(_ controller: DestinationViewController, didTapDirectoryButton button: NSButton) {
     backupController.chooseDestination()
   }
 
-  func destinationView(_ view: DestinationView, didTapNextButton button: NSButton) {
-    view.animateOut {
-      NSAnimationContext.current.duration = 1.0
+  func destinationViewController(_ controller: DestinationViewController, didTapNextButton button: NSButton) {
+    controller.animateOut {
       self.showPermissionView()
     }
-//    delegate?.firstLaunchViewController(self, didPressDoneButton: button)
   }
 
   // MARK: - PermissionViewDelegate
 
-  func permissionView(_ view: PermissionView, didTapPermissions button: NSButton) {
+  func permissionViewController(_ controller: PermissionViewController, didTapPermissions button: NSButton) {
     let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!
     NSWorkspace.shared.open(url)
   }
 
-  func permissionView(_ view: PermissionView, didTapDoneButton button: NSButton) {
+  func permissionViewController(_ controller: PermissionViewController, didTapDoneButton button: NSButton) {
     delegate?.firstLaunchViewController(self, didPressDoneButton: button)
   }
 

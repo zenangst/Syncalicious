@@ -28,6 +28,7 @@ class MainWindow: NSWindow {
 
   override func resignKey() {
     super.resignKey()
+    NSApp.dockTile.badgeLabel = nil
     NotificationCenter.default.post(MainWindowNotification.didResign.notification)
   }
 

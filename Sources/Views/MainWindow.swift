@@ -28,11 +28,14 @@ class MainWindow: NSWindow {
 
   override func resignKey() {
     super.resignKey()
+    NSApp.setActivationPolicy(.accessory)
+    NSApp.dockTile.badgeLabel = nil
     NotificationCenter.default.post(MainWindowNotification.didResign.notification)
   }
 
   override func becomeKey() {
     super.becomeKey()
+    NSApp.setActivationPolicy(.regular)
     NotificationCenter.default.post(MainWindowNotification.becomeKey.notification)
   }
 }

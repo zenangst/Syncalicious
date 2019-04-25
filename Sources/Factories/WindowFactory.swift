@@ -19,20 +19,20 @@ class WindowFactory {
     return window
   }
 
-  func createMainWindowControllers() -> (NSWindowController, ApplicationListFeatureViewController) {
+  func createMainWindowControllers() -> (NSWindowController, ApplicationListFeatureViewController, ApplicationDetailFeatureViewController) {
     let window = createMainWindow()
     let layout = layoutFactory.createApplicationListLayout()
-    let listFeatureViewController = viewControllerFactory.createApplicationListViewController(with: layout)
+    let listViewController = viewControllerFactory.createApplicationListViewController(with: layout)
 
-    let sidebarItem = NSSplitViewItem(contentListWithViewController: listFeatureViewController)
+    let sidebarItem = NSSplitViewItem(contentListWithViewController: listViewController)
     sidebarItem.holdingPriority = .init(rawValue: 260)
     sidebarItem.minimumThickness = 260
     sidebarItem.maximumThickness = sidebarItem.minimumThickness
     sidebarItem.canCollapse = true
 
     let detailViewController = viewControllerFactory.createApplicationDetailViewController()
-    detailViewController.listViewController = listFeatureViewController.containerViewController.listViewController
-    listFeatureViewController.containerViewController.listViewController.collectionView.delegate = detailViewController
+    detailViewController.listViewController = listViewController.containerViewController.listViewController
+    listViewController.containerViewController.listViewController.collectionView.delegate = detailViewController
 
     let detailControllerItem = NSSplitViewItem(viewController: detailViewController)
     detailControllerItem.minimumThickness = 320
@@ -44,7 +44,7 @@ class WindowFactory {
     let frameAutosaveName = "\(bundleName)MainWindow"
     windowController.windowFrameAutosaveName = NSWindow.FrameAutosaveName.init(frameAutosaveName)
 
-    return (windowController, listFeatureViewController)
+    return (windowController, listViewController, detailViewController)
   }
 
   func createAlert(with text: String = "", error: Error? = nil) -> NSAlert {

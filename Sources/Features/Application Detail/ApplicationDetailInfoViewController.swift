@@ -53,7 +53,7 @@ class ApplicationDetailInfoViewController: ViewController {
 
     let iconView = NSImageView()
     iconView.imageScaling = .scaleProportionallyUpOrDown
-    let image = iconController.icon(at: application.url, for: application.propertyList.bundleIdentifier)
+    let image = iconController.icon(at: application.url, filename: application.propertyList.bundleIdentifier)
     iconView.image = image
 
     let nameLabel = Label(text: application.propertyList.bundleName)
@@ -73,7 +73,7 @@ class ApplicationDetailInfoViewController: ViewController {
       horizontalStackView.addArrangedSubview(leftStackView)
     } else {
       let backupButton: NSButton
-      if backupController.doesBackupExists(for: application, at: UserDefaults.standard.backupDestination!) {
+      if backupController.doesBackupExists(for: application, on: machineController.machine, at: UserDefaults.standard.backupDestination!) {
         backupButton = Button(title: "Backup",
                               backgroundColor: NSColor(named: "Green")!,
                               borderColor: NSColor(named: "Green")!,
@@ -133,7 +133,9 @@ class ApplicationDetailInfoViewController: ViewController {
       Label(text: application.url.path)]))
 
     if let backupDestination = UserDefaults.standard.backupDestination {
-      let backupText = backupController.doesBackupExists(for: application, at: backupDestination) ? "Yes" : "No"
+      let backupText = backupController.doesBackupExists(for: application,
+                                                         on: machineController.machine,
+                                                         at: backupDestination) ? "Yes" : "No"
       stackView.addArrangedSubview(createStackView(.horizontal, views: [
         BoldLabel(text: "Backup exists:"),
         Label(text: backupText)]))

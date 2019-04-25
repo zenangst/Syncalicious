@@ -43,10 +43,10 @@ class BackupController {
     debugPrint("Backing up to destination: \(destination.path)")
   }
 
-  func doesBackupExists(for application: Application, at url: URL) -> Bool {
+  func doesBackupExists(for application: Application, on machine: Machine, at url: URL) -> Bool {
     var from = application.preferences.url
     from.resolveSymlinksInPath()
-    let destination = machineController.machineBackupDestination(for: url)
+    let destination = machineController.machineBackupDestination(for: url, on: machine)
       .appendingPathComponent(application.preferences.kind.rawValue)
       .appendingPathComponent(from.lastPathComponent)
 
@@ -54,11 +54,11 @@ class BackupController {
   }
 
   func runBackup(for applications: [Application], to url: URL) throws {
-    try createFolderIfNeeded(at: machineController.machineBackupDestination(for: url))
+    try createFolderIfNeeded(at: machineController.machineBackupDestination(for: url, on: machineController.machine))
     for application in applications where application.preferences.url.isFileURL {
       var from = application.preferences.url
       from.resolveSymlinksInPath()
-      let backupFolder = machineController.machineBackupDestination(for: url)
+      let backupFolder = machineController.machineBackupDestination(for: url, on: machineController.machine)
         .appendingPathComponent(application.preferences.kind.rawValue)
       let destination = backupFolder.appendingPathComponent(from.lastPathComponent)
 

@@ -11,6 +11,16 @@ class CollectionViewLayoutFactory {
     return layout
   }
 
+  func createComputerLayout() -> NSCollectionViewFlowLayout {
+    let layout = HorizontalBlueprintLayout(itemsPerRow: 2,
+                                           itemsPerColumn: 1,
+                                           height: 212,
+                                           minimumInteritemSpacing: 15,
+                                           minimumLineSpacing: 15,
+                                           sectionInset: .init(top: 0, left: 20, bottom: 20, right: 20))
+    return layout
+  }
+
   func createApplicationListLayout() -> NSCollectionViewFlowLayout {
     let layout = VerticalBlueprintLayout(itemsPerRow: 1,
                                          height: 48,

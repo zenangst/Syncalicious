@@ -5,6 +5,11 @@ class ApplicationDetailFeatureViewController: NSViewController,
   SplitViewContainedController,
   NSCollectionViewDelegate {
 
+  enum State {
+    case multiple([Application])
+    case single(Application)
+  }
+
   weak var listViewController: ApplicationListItemViewController?
 
   lazy var titleLabel = SmallBoldLabel()
@@ -18,6 +23,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
   let syncController: SyncController
   let machineController: MachineController
 
+  var machines = [Machine]()
   var application: Application?
 
   init(applicationController: ApplicationController,
@@ -52,42 +58,76 @@ class ApplicationDetailFeatureViewController: NSViewController,
     }
   }
 
-  private func render(_ applications: [Application]) {
-    let models = applications
-      .compactMap({ ApplicationDetailItemModel(title: $0.propertyList.bundleName,
-                                               application: $0) })
-    titleLabel.stringValue = "Multi selection (\(models.count))"
-    containerViewController.applicationsDetailViewController.collectionView.isHidden = false
-    containerViewController.applicationInfoViewController.view.isHidden = true
-    containerViewController.applicationsDetailViewController.reload(with: models)
+  func refreshCurrentApplicationIfNeeded() {
+    guard let application = application else { return }
+    render(.single(application))
   }
 
-  private func render(_ application: Application) {
-    containerViewController.applicationInfoViewController.view.isHidden = false
-    containerViewController.applicationsDetailViewController.collectionView.isHidden = true
-    containerViewController.applicationsDetailViewController.reload(with: [])
-    containerViewController.applicationInfoViewController.render(application,
-                                                                 syncController: syncController,
-                                                                 machineController: machineController)
-    NSLayoutConstraint.deactivate(layoutConstraints)
-    layoutConstraints = []
+  private func render(_ state: State) {
+    switch state {
+    case .multiple(let applications):
+      self.application = nil
+      let models = applications
+        .compactMap({ ApplicationDetailItemModel(title: $0.propertyList.bundleName,
+                                                 application: $0) })
+      titleLabel.stringValue = "Multi selection (\(models.count))"
+      containerViewController.applicationsDetailViewController.collectionView.isHidden = false
+      containerViewController.applicationInfoViewController.view.isHidden = true
+      containerViewController.applicationComputersViewController.reload(with: [])
+      containerViewController.applicationsDetailViewController.reload(with: models)
+    case .single(let application):
+      containerViewController.applicationInfoViewController.view.isHidden = false
+      containerViewController.applicationsDetailViewController.collectionView.isHidden = true
+      containerViewController.applicationsDetailViewController.reload(with: [])
+      containerViewController.applicationInfoViewController.render(application,
+                                                                   syncController: syncController,
+                                                                   machineController: machineController)
 
-    titlebarView.subviews.forEach { $0.removeFromSuperview() }
-    titleLabel.stringValue = application.propertyList.bundleName
-    titleLabel.alignment = .center
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    titlebarView.wantsLayer = true
-    titlebarView.addSubview(titleLabel)
+      if let backupDestination = UserDefaults.standard.backupDestination {
+        let closure: (Machine) -> ApplicationComputerDetailItemModel = { machine in
+          let image = backupDestination
+            .appendingPathComponent(machine.name)
+            .appendingPathComponent("Info")
+            .appendingPathComponent("Computer.tiff")
+          let synced = self.syncController.applicationIsSynced(application, on: machine)
+          let backuped = self.backupController.doesBackupExists(for: application,
+                                                                on: machine,
+                                                                at: UserDefaults.standard.backupDestination!)
 
-    layoutConstraints.append(contentsOf: [
-      titleLabel.leadingAnchor.constraint(equalTo: titlebarView.leadingAnchor, constant: 10),
-      titleLabel.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -10),
-      titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
-      ])
+          return ApplicationComputerDetailItemModel(title: machine.localizedName,
+                                                    subtitle: machine.state.rawValue.capitalized,
+                                                    backuped: backuped,
+                                                    image: image,
+                                                    machine: machine,
+                                                    synced: synced)
+        }
 
-    containerViewController.applicationInfoViewController.delegate = self
+        var models = [ApplicationComputerDetailItemModel]()
+        models.append(closure(machineController.machine))
+        models.append(contentsOf: machines.compactMap(closure))
+        containerViewController.applicationComputersViewController.reload(with: models)
+      }
 
-    NSLayoutConstraint.activate(layoutConstraints)
+      NSLayoutConstraint.deactivate(layoutConstraints)
+      layoutConstraints = []
+
+      titlebarView.subviews.forEach { $0.removeFromSuperview() }
+      titleLabel.stringValue = application.propertyList.bundleName
+      titleLabel.alignment = .center
+      titleLabel.translatesAutoresizingMaskIntoConstraints = false
+      titlebarView.wantsLayer = true
+      titlebarView.addSubview(titleLabel)
+
+      layoutConstraints.append(contentsOf: [
+        titleLabel.leadingAnchor.constraint(equalTo: titlebarView.leadingAnchor, constant: 10),
+        titleLabel.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -10),
+        titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
+        ])
+
+      containerViewController.applicationInfoViewController.delegate = self
+
+      NSLayoutConstraint.activate(layoutConstraints)
+    }
   }
 
   private func refreshApplicationList() {
@@ -102,14 +142,15 @@ class ApplicationDetailFeatureViewController: NSViewController,
       collectionView.selectionIndexPaths.forEach {
         applications.append( listViewController.model(at: $0).application )
       }
-      render(applications.sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() }))
+      let sortedApplications = applications.sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
+      render(.multiple(sortedApplications))
     } else {
       guard let indexPath = collectionView.selectionIndexPaths.first else { return }
       guard let listViewController = listViewController else { return }
 
       let application = listViewController.model(at: indexPath).application
       self.application = application
-      render(application)
+      render(.single(application))
     }
   }
 
@@ -120,7 +161,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
                                            on application: Application) {
     guard let backupDestination = UserDefaults.standard.backupDestination else { return }
     try? backupController.runBackup(for: [application], to: backupDestination)
-    render(application)
+    render(.single(application))
     refreshApplicationList()
   }
 
@@ -128,7 +169,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
                                            didTapSync syncButton: NSButton,
                                            on application: Application) {
     try? syncController.enableSync(for: application, on: machineController.machine)
-    render(application)
+    render(.single(application))
     refreshApplicationList()
   }
 
@@ -136,7 +177,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
                                            didTapUnsync unsyncButton: NSButton,
                                            on application: Application) {
     try? syncController.disableSync(for: application, on: machineController.machine)
-    render(application)
+    render(.single(application))
     refreshApplicationList()
   }
 

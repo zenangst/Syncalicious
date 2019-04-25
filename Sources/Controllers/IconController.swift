@@ -1,18 +1,42 @@
 import Cocoa
 
+enum IconControllerError: Error {
+  case tiffRepresentationFailed
+  case bitmapImageRepFailed
+  case representationUsingTiffFailed
+  case saveImageToDestinationFailed(URL)
+}
+
 class IconController {
+  let fileManager: FileManager
+  let workspace: NSWorkspace
   let cache = NSCache<NSString, NSImage>()
 
-  func icon(at url: URL, for bundleIdentifier: String) -> NSImage? {
-    if let image = cache.object(forKey: url.path as NSString) {
+  init(fileManager: FileManager = .default,
+       workspace: NSWorkspace = .shared) {
+    self.fileManager = fileManager
+    self.workspace = workspace
+  }
+
+  // MARK: - Public methods
+
+  func icon(at url: URL, filename: String) -> NSImage {
+    if let image = cache.object(forKey: filename as NSString) {
       return image
     }
 
     var image: NSImage
-    if let cachedImage = loadImageFromDisk(for: bundleIdentifier) {
+    if let cachedImage = loadImageFromDisk(withFilename: filename) {
       image = cachedImage
     } else {
-      image = NSWorkspace.shared.icon(forFile: url.path)
+      let fileExtension = (url.path as NSString).pathExtension
+
+      if fileExtension == "app" {
+        image = NSWorkspace.shared.icon(forFile: url.path)
+      } else {
+        image = NSImage.init(byReferencing: url)
+      }
+
       var imageRect: CGRect = .init(origin: .zero, size: CGSize(width: 128, height: 128))
       let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
       if let imageRef = imageRef {
@@ -20,14 +44,44 @@ class IconController {
       }
     }
 
-    saveImageToDisk(image, bundleIdentifier: bundleIdentifier)
-    cache.setObject(image, forKey: url.path as NSString)
+    try? saveImageToDisk(image, withFilename: filename)
+    cache.setObject(image, forKey: filename as NSString)
     return image
   }
 
-  private func loadImageFromDisk(for bundleIdentifier: String) -> NSImage? {
+  func computerIcon() -> NSImage {
+    let icon = workspace.icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kComputerIcon)))
+    return icon
+  }
+
+  func saveImage(_ image: NSImage,
+                 to destination: URL,
+                 override: Bool = false) throws {
+    let data = try tiffDataFromImage(image)
+    do {
+      if fileManager.fileExists(atPath: destination.path) {
+        if override == false { return }
+        try fileManager.removeItem(at: destination)
+      }
+      try data.write(to: destination)
+    } catch {
+      throw IconControllerError.saveImageToDestinationFailed(destination)
+    }
+  }
+
+  // MARK: - Private methods
+
+  private func tiffDataFromImage(_ image: NSImage) throws -> Data {
+    guard let tiff = image.tiffRepresentation else { throw IconControllerError.tiffRepresentationFailed }
+    guard let imgRep = NSBitmapImageRep(data: tiff) else { throw IconControllerError.bitmapImageRepFailed }
+    guard let data = imgRep.representation(using: .tiff, properties: [:]) else { throw IconControllerError.representationUsingTiffFailed }
+
+    return data
+  }
+
+  private func loadImageFromDisk(withFilename filename: String) -> NSImage? {
     if let applicationFile = try? applicationCacheDirectory()
-      .appendingPathComponent("\(bundleIdentifier).tiff") {
+      .appendingPathComponent("\(filename).tiff") {
       if FileManager.default.fileExists(atPath: applicationFile.path) {
         let image = NSImage.init(contentsOf: applicationFile)
         return image
@@ -37,22 +91,10 @@ class IconController {
     return nil
   }
 
-  private func saveImageToDisk(_ image: NSImage, bundleIdentifier: String) {
-    do {
-      let applicationFile = try applicationCacheDirectory()
-        .appendingPathComponent("\(bundleIdentifier).tiff")
-
-      if let tiff = image.tiffRepresentation {
-        if let imgRep = NSBitmapImageRep(data: tiff) {
-          if let data = imgRep.representation(using: .tiff, properties: [:]) {
-            try data.write(to: applicationFile)
-          }
-        }
-      }
-
-    } catch let error {
-      Swift.print(error)
-    }
+  private func saveImageToDisk(_ image: NSImage, withFilename fileName: String) throws {
+    let applicationFile = try applicationCacheDirectory()
+      .appendingPathComponent("\(fileName).tiff")
+    try saveImage(image, to: applicationFile)
   }
 
   private func applicationCacheDirectory() throws -> URL {

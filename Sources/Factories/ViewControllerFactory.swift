@@ -29,7 +29,13 @@ class ViewControllerFactory {
                                                                             iconController: iconController,
                                                                             machine: dependencyContainer.machineController.machine,
                                                                             syncController: dependencyContainer.syncController)
+
+    let computersViewController = ApplicationComputerDetailItemViewController(title: "Computers",
+                                                                              layout: layoutFactory.createComputerLayout(),
+                                                                              iconStore: dependencyContainer)
+
     let containerViewController = ApplicationDetailContainerViewController(applicationInfoViewController: applicationInfoViewController,
+                                                                           applicationComputersViewController: computersViewController,
                                                                            applicationsDetailViewController: applicationsDetailViewController)
     let featureViewController = ApplicationDetailFeatureViewController(applicationController: dependencyContainer.applicationController,
                                                                        backupController: dependencyContainer.backupController,

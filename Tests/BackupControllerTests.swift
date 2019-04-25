@@ -18,8 +18,8 @@ class BackupControllerTests: XCTestCase {
     let delegate = TestApplicationDelegate()
     let host = TestHost(machineName: "BackupMachineTest")
     let applicationController = testController.createApplicationController()
-    let shellController = ShellController()
-    let machineController = try MachineController(host: host)
+    let iconController = IconController()
+    let machineController = try MachineController(host: host, iconController: iconController)
     let backupController = BackupController(machineController: machineController)
 
     let applicationUrl = testController.applicationUrl
@@ -32,7 +32,7 @@ class BackupControllerTests: XCTestCase {
     try backupController.initializeBackup(to: backupUrl)
 
     let fileManager = FileManager.default
-    let backupDirectory = machineController.machineBackupDestination(for: testController.backupUrl)
+    let backupDirectory = machineController.machineBackupDestination(for: testController.backupUrl, on: machineController.machine)
     var isDirectory = ObjCBool(true)
     XCTAssertTrue(fileManager.fileExists(atPath: backupDirectory.path, isDirectory: &isDirectory))
 

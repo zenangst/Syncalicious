@@ -1,12 +1,17 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, ApplicationControllerDelegate, FirstLaunchViewControllerDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate,
+  ApplicationControllerDelegate,
+  BackupControllerDelegate,
+  FirstLaunchViewControllerDelegate,
+  MachineControllerDelegate {
   var firstLaunchViewController: FirstLaunchViewController?
   var windowController: NSWindowController?
   var statusItem: NSStatusItem?
   var dependencyContainer: DependencyContainer?
   var listFeatureViewController: ApplicationListFeatureViewController?
+  var detailFeatureViewController: ApplicationDetailFeatureViewController?
   @IBOutlet var statusMenu: NSMenu!
   @IBOutlet var mainMenuController: MainMenuController?
 
@@ -50,7 +55,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     if UserDefaults.standard.backupDestination == nil {
       NSApplication.shared.windows.forEach { $0.close() }
 
-      let machineController = try MachineController(host: Host.current())
+      let iconController = IconController()
+      let machineController = try MachineController(host: Host.current(), iconController: iconController)
       let backupController = BackupController(machineController: machineController)
       let welcomeWindow = WelcomeWindow()
       welcomeWindow.loadWindow()
@@ -71,14 +77,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
 
       let dependencyContainer = try createDependencyContainer()
       let locations = try dependencyContainer.applicationController.applicationDirectories()
-      let (windowController, listFeatureViewController) = dependencyContainer.windowFactory.createMainWindowControllers()
-      self.listFeatureViewController = listFeatureViewController
+      let (windowController, listViewController, detailViewController) = dependencyContainer
+        .windowFactory
+        .createMainWindowControllers()
+      self.listFeatureViewController = listViewController
+      self.detailFeatureViewController = detailViewController
       self.mainMenuController?.appDelegate = self
       self.mainMenuController?.dependencyContainer = dependencyContainer
-      self.mainMenuController?.listContainerViewController = listFeatureViewController.containerViewController
+      self.mainMenuController?.listContainerViewController = listViewController.containerViewController
       self.windowController = windowController
       self.dependencyContainer = dependencyContainer
 
+      try? dependencyContainer.machineController.refreshMachines()
       dependencyContainer.applicationController.loadApplications(at: locations)
 
       #if DEBUG
@@ -110,7 +120,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                                                        appropriateFor: nil,
                                                        create: false)
     let shellController = ShellController()
-    let machineController = try MachineController(host: Host.current())
+    let iconController = IconController()
+    let machineController = try MachineController(host: Host.current(),
+                                                  iconController: iconController)
+    try machineController.createMachineInfoDestination(at: backupDestination)
+    machineController.delegate = self
+
     let infoPlistController = InfoPropertyListController()
     let preferencesController = PreferencesController(libraryDirectory: libraryDirectory)
     let queue = DispatchQueue(label: String(describing: ApplicationController.self),
@@ -120,7 +135,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
                                                       preferencesController: preferencesController,
                                                       shellController: shellController)
     let backupController = BackupController(machineController: machineController)
-    let iconController = IconController()
     let syncController = SyncController(destination: backupDestination.appendingPathComponent("Sync"),
                                         machineController: machineController,
                                         shellController: shellController)
@@ -150,14 +164,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     windowController?.showWindow(nil)
   }
 
-  // MARK: - BackupControllerDelegate
-
-  func backupController(_ controller: BackupController,
-                        didSelectDestination destination: URL) {
-    UserDefaults.standard.backupDestination = destination
-    firstLaunchViewController?.backupController(controller, didSelectDestination: destination)
-  }
-
   // MARK: - ApplicationControllerDelegate
 
   func applicationController(_ controller: ApplicationController,
@@ -167,5 +173,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     listFeatureViewController?.render(applications: applications)
 
     debugPrint("Loaded \(applications.count) applications.")
+  }
+
+  // MARK: - BackupControllerDelegate
+
+  func backupController(_ controller: BackupController,
+                        didSelectDestination destination: URL) {
+    UserDefaults.standard.backupDestination = destination
+    firstLaunchViewController?.backupController(controller, didSelectDestination: destination)
+  }
+
+  // MARK: - MachineControllerDelegate
+
+  func machineController(_ controller: MachineController, didChangeState state: Machine.State) {
+    dependencyContainer?.syncController.machineDidChangeState(newState: state)
+    detailFeatureViewController?.refreshCurrentApplicationIfNeeded()
+  }
+
+  func machineController(_ controller: MachineController, didUpdateOtherMachines machines: [Machine]) {
+    detailFeatureViewController?.machines = machines
   }
 }

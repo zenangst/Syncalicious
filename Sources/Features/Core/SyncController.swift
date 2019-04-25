@@ -15,7 +15,7 @@ class TargetApplication: NSObject {
   }
 }
 
-class SyncController: NSObject, MachineControllerDelegate {
+class SyncController: NSObject {
   let destination: URL
   let shellController: ShellController
   let machineController: MachineController
@@ -42,14 +42,13 @@ class SyncController: NSObject, MachineControllerDelegate {
     self.observation = workspace.observe(\.frontmostApplication, options: [.initial, .new]) { [weak self] _, _ in
       self?.frontmostApplicationDidChange()
     }
-    self.machineController.delegate = self
   }
 
   // MARK: - Public methods
 
   func applicationIsSynced(_ application: Application, on machine: Machine) -> Bool {
     let backup = destination
-      .appendingPathComponent(machineController.machine.name)
+      .appendingPathComponent(machine.name)
       .appendingPathComponent("Backup")
       .appendingPathComponent(application.preferences.fileName)
 
@@ -71,9 +70,40 @@ class SyncController: NSObject, MachineControllerDelegate {
     pendingApplications.remove(application)
   }
 
+  func machineDidChangeState(newState state: Machine.State) {
+    guard state == .idle else { return }
+
+    let pending = destination
+      .appendingPathComponent(machineController.machine.name)
+      .appendingPathComponent("Pending")
+    guard let files = try? fileManager.contentsOfDirectory(at: pending,
+                                                           includingPropertiesForKeys: [.isRegularFileKey],
+                                                           options: [.skipsHiddenFiles]) else {
+                                                            return
+    }
+
+    for file in files {
+      guard let application = applications.first(where: { $0.preferences.fileName == file.lastPathComponent }) else {
+        continue
+      }
+
+      let query: (NSRunningApplication) -> Bool = {
+        return $0.bundleIdentifier == application.propertyList.bundleIdentifier
+      }
+
+      if let runningApplication = workspace.runningApplications.first(where: query) {
+        let targetApplication = TargetApplication(application: application,
+                                                  pendingUrl: file,
+                                                  runningApplication: runningApplication)
+        runningApplication.terminate()
+        perform(#selector(updatePreferencesAndRestartApplication), with: targetApplication, afterDelay: 0.5)
+      }
+    }
+  }
+
   // MARK: - Private methods
 
-  private  func frontmostApplicationDidChange() {
+  private func frontmostApplicationDidChange() {
     guard let runningApplication = workspace.frontmostApplication else { return }
     guard let application = applications
       .first(where: { $0.propertyList.bundleIdentifier == runningApplication.bundleIdentifier }) else {
@@ -136,7 +166,7 @@ class SyncController: NSObject, MachineControllerDelegate {
 
   // swiftlint:disable identifier_name
   private func copyApplicationIfNeeded(_ application: Application, to: URL, machineFolder: String) throws {
-    guard applicationHasBeenActive.contains(application) && machineController.state == .active else { return }
+    guard applicationHasBeenActive.contains(application) && machineController.machine.state == .active else { return }
 
     let initialDictionary = plistHashDictionary[application]
     var applicationPath = application.preferences.url
@@ -244,38 +274,5 @@ class SyncController: NSObject, MachineControllerDelegate {
                                 options: [.withoutActivation],
                                 additionalEventParamDescriptor: nil,
                                 launchIdentifier: nil)
-  }
-
-  // MARK: - IdleControllerDelegate
-
-  func machineController(_ controller: MachineController, didChangeState state: MachineController.State) {
-    guard state == .idle else { return }
-
-    let pending = destination
-      .appendingPathComponent(machineController.machine.name)
-      .appendingPathComponent("Pending")
-    guard let files = try? fileManager.contentsOfDirectory(at: pending,
-                                                           includingPropertiesForKeys: [.isRegularFileKey],
-                                                           options: [.skipsHiddenFiles]) else {
-                                                            return
-    }
-
-    for file in files {
-      guard let application = applications.first(where: { $0.preferences.fileName == file.lastPathComponent }) else {
-        continue
-      }
-
-      let query: (NSRunningApplication) -> Bool = {
-        return $0.bundleIdentifier == application.propertyList.bundleIdentifier
-      }
-
-      if let runningApplication = workspace.runningApplications.first(where: query) {
-        let targetApplication = TargetApplication(application: application,
-                                                  pendingUrl: file,
-                                                  runningApplication: runningApplication)
-        runningApplication.terminate()
-        perform(#selector(updatePreferencesAndRestartApplication), with: targetApplication, afterDelay: 0.5)
-      }
-    }
   }
 }

@@ -40,7 +40,7 @@ class DependencyContainer: IconStore {
   func loadIcon(at path: URL, for bundleIdentifier: String, then handler: @escaping (NSImage?) -> Void) {
     DispatchQueue.global(qos: .userInteractive).async { [weak self] in
       guard let strongSelf = self else { return }
-      let image = strongSelf.iconController.icon(at: path, for: bundleIdentifier)
+      let image = strongSelf.iconController.icon(at: path, filename: bundleIdentifier)
       DispatchQueue.main.async { handler(image) }
     }
   }

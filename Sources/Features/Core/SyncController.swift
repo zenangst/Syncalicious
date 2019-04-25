@@ -279,20 +279,20 @@ class SyncController: NSObject {
   }
 
   @objc func updatePreferencesAndRestartApplication(_ targetApplication: TargetApplication) {
+    let delay: TimeInterval = 20
     if !targetApplication.runningApplication.isTerminated {
-      perform(#selector(updatePreferencesAndRestartApplication), with: targetApplication, afterDelay: 0.5)
+      perform(#selector(updatePreferencesAndRestartApplication), with: targetApplication, afterDelay: delay)
       return
     }
 
     runDefaultsShellScript(for: targetApplication.application,
                            withFilePath: targetApplication.pendingUrl.path)
-
     try? fileManager.removeItem(at: targetApplication.pendingUrl)
     updateBadgeCounter()
 
     perform(#selector(restartApplication),
             with: targetApplication.application.propertyList.bundleIdentifier,
-            afterDelay: 1.0)
+            afterDelay: delay)
   }
 
   @objc func restartApplication(with bundleIdentifier: String) {

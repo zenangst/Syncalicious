@@ -114,7 +114,7 @@ class SyncController: NSObject {
   // MARK: - Private methods
 
   @objc private func updateBadgeCounter() {
-    if let files = try? pendingFiles() && !files.isEmpty {
+    if let files = try? pendingFiles(), !files.isEmpty {
       NSApplication.shared.dockTile.badgeLabel = "\(files.count)"
     } else {
       NSApplication.shared.dockTile.badgeLabel = nil

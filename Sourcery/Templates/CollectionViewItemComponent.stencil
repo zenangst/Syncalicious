@@ -10,10 +10,10 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController, Component
 
   init(title: String? = nil,
        layout: NSCollectionViewFlowLayout,
-       iconStore: IconStore,
+       iconController: IconController,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = {{type.name|replace:"View",""}}DataSource(title: title, iconStore: iconStore)
+    self.dataSource = {{type.name|replace:"View",""}}DataSource(title: title, iconController: iconController)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -72,14 +72,14 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
 
   private var title: String?
   private var models = [{{type.name}}Model]()
-  private let iconStore: IconStore
+  private(set) var iconController: IconController
 
   init(title: String? = nil,
-  models: [{{type.name}}Model] = [],
-  iconStore: IconStore) {
+       models: [{{type.name}}Model] = [],
+       iconController: IconController) {
     self.title = title
     self.models = models
-    self.iconStore = iconStore
+    self.iconController = iconController
     super.init()
   }
 
@@ -92,10 +92,15 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
   func reload(_ collectionView: NSCollectionView,
               with models: [{{type.name}}Model],
               then handler: (() -> Void)? = nil) {
-    let changes = DiffManager().diff(self.models, models)
+    let old = self.models
+    let new = models
+    let changes = DiffManager().diff(old, new)
     collectionView.reload(with: changes,
                           animations: false,
-                          updateDataSource: { self.models = models }, completion: handler)
+                          updateDataSource: { [weak self] in
+                            guard let strongSelf = self else { return }
+                            strongSelf.models = new
+                          }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource

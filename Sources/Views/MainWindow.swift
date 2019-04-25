@@ -1,6 +1,7 @@
 import Cocoa
 
 enum MainWindowNotification: String {
+  case didClose
   case didResign
   case becomeKey
 
@@ -26,10 +27,12 @@ class MainWindow: NSWindow {
     }
   }
 
+  deinit {
+    NotificationCenter.default.post(MainWindowNotification.didClose.notification)
+  }
+
   override func resignKey() {
     super.resignKey()
-    NSApp.setActivationPolicy(.accessory)
-    NSApp.dockTile.badgeLabel = nil
     NotificationCenter.default.post(MainWindowNotification.didResign.notification)
   }
 

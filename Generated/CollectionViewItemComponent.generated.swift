@@ -12,10 +12,10 @@ class ApplicationComputerDetailItemViewController: NSViewController, Component {
 
   init(title: String? = nil,
        layout: NSCollectionViewFlowLayout,
-       iconStore: IconStore,
+       iconController: IconController,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = ApplicationComputerDetailItemDataSource(title: title, iconStore: iconStore)
+    self.dataSource = ApplicationComputerDetailItemDataSource(title: title, iconController: iconController)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -74,14 +74,14 @@ class ApplicationComputerDetailItemDataSource: NSObject, NSCollectionViewDataSou
 
   private var title: String?
   private var models = [ApplicationComputerDetailItemModel]()
-  private let iconStore: IconStore
+  private(set) var iconController: IconController
 
   init(title: String? = nil,
-  models: [ApplicationComputerDetailItemModel] = [],
-  iconStore: IconStore) {
+       models: [ApplicationComputerDetailItemModel] = [],
+       iconController: IconController) {
     self.title = title
     self.models = models
-    self.iconStore = iconStore
+    self.iconController = iconController
     super.init()
   }
 
@@ -94,10 +94,15 @@ class ApplicationComputerDetailItemDataSource: NSObject, NSCollectionViewDataSou
   func reload(_ collectionView: NSCollectionView,
               with models: [ApplicationComputerDetailItemModel],
               then handler: (() -> Void)? = nil) {
-    let changes = DiffManager().diff(self.models, models)
+    let old = self.models
+    let new = models
+    let changes = DiffManager().diff(old, new)
     collectionView.reload(with: changes,
                           animations: false,
-                          updateDataSource: { self.models = models }, completion: handler)
+                          updateDataSource: { [weak self] in
+                            guard let strongSelf = self else { return }
+                            strongSelf.models = new
+                          }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource
@@ -126,7 +131,7 @@ class ApplicationComputerDetailItemDataSource: NSObject, NSCollectionViewDataSou
     let model = self.model(at: indexPath)
 
     if let view = item as? ApplicationComputerDetailItem {
-      iconStore.loadIcon(at: model.image, for: model.machine.name) { image in view.iconView.image = image }
+      iconController.loadIcon(at: model.image, identifier: model.machine.name) { image in view.iconView.image = image }
       view.titleLabel.stringValue = model.title
       view.subtitleLabel.stringValue = model.subtitle
       view.backupIconView.isHidden = !model.backuped
@@ -154,10 +159,10 @@ class ApplicationDetailItemViewController: NSViewController, Component {
 
   init(title: String? = nil,
        layout: NSCollectionViewFlowLayout,
-       iconStore: IconStore,
+       iconController: IconController,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = ApplicationDetailItemDataSource(title: title, iconStore: iconStore)
+    self.dataSource = ApplicationDetailItemDataSource(title: title, iconController: iconController)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -216,14 +221,14 @@ class ApplicationDetailItemDataSource: NSObject, NSCollectionViewDataSource {
 
   private var title: String?
   private var models = [ApplicationDetailItemModel]()
-  private let iconStore: IconStore
+  private(set) var iconController: IconController
 
   init(title: String? = nil,
-  models: [ApplicationDetailItemModel] = [],
-  iconStore: IconStore) {
+       models: [ApplicationDetailItemModel] = [],
+       iconController: IconController) {
     self.title = title
     self.models = models
-    self.iconStore = iconStore
+    self.iconController = iconController
     super.init()
   }
 
@@ -236,10 +241,15 @@ class ApplicationDetailItemDataSource: NSObject, NSCollectionViewDataSource {
   func reload(_ collectionView: NSCollectionView,
               with models: [ApplicationDetailItemModel],
               then handler: (() -> Void)? = nil) {
-    let changes = DiffManager().diff(self.models, models)
+    let old = self.models
+    let new = models
+    let changes = DiffManager().diff(old, new)
     collectionView.reload(with: changes,
                           animations: false,
-                          updateDataSource: { self.models = models }, completion: handler)
+                          updateDataSource: { [weak self] in
+                            guard let strongSelf = self else { return }
+                            strongSelf.models = new
+                          }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource
@@ -268,7 +278,7 @@ class ApplicationDetailItemDataSource: NSObject, NSCollectionViewDataSource {
     let model = self.model(at: indexPath)
 
     if let view = item as? ApplicationDetailItem {
-      iconStore.loadIcon(at: model.application.url, for: model.application.propertyList.bundleIdentifier) { image in view.iconView.image = image }
+      iconController.loadIcon(at: model.application.url, identifier: model.application.propertyList.bundleIdentifier) { image in view.iconView.image = image }
       view.titleLabel.stringValue = model.title
     }
 
@@ -289,10 +299,10 @@ class ApplicationListItemViewController: NSViewController, Component {
 
   init(title: String? = nil,
        layout: NSCollectionViewFlowLayout,
-       iconStore: IconStore,
+       iconController: IconController,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
-    self.dataSource = ApplicationListItemDataSource(title: title, iconStore: iconStore)
+    self.dataSource = ApplicationListItemDataSource(title: title, iconController: iconController)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -351,14 +361,14 @@ class ApplicationListItemDataSource: NSObject, NSCollectionViewDataSource {
 
   private var title: String?
   private var models = [ApplicationListItemModel]()
-  private let iconStore: IconStore
+  private(set) var iconController: IconController
 
   init(title: String? = nil,
-  models: [ApplicationListItemModel] = [],
-  iconStore: IconStore) {
+       models: [ApplicationListItemModel] = [],
+       iconController: IconController) {
     self.title = title
     self.models = models
-    self.iconStore = iconStore
+    self.iconController = iconController
     super.init()
   }
 
@@ -371,10 +381,15 @@ class ApplicationListItemDataSource: NSObject, NSCollectionViewDataSource {
   func reload(_ collectionView: NSCollectionView,
               with models: [ApplicationListItemModel],
               then handler: (() -> Void)? = nil) {
-    let changes = DiffManager().diff(self.models, models)
+    let old = self.models
+    let new = models
+    let changes = DiffManager().diff(old, new)
     collectionView.reload(with: changes,
                           animations: false,
-                          updateDataSource: { self.models = models }, completion: handler)
+                          updateDataSource: { [weak self] in
+                            guard let strongSelf = self else { return }
+                            strongSelf.models = new
+                          }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource
@@ -403,7 +418,7 @@ class ApplicationListItemDataSource: NSObject, NSCollectionViewDataSource {
     let model = self.model(at: indexPath)
 
     if let view = item as? ApplicationListItem {
-      iconStore.loadIcon(at: model.application.url, for: model.application.propertyList.bundleIdentifier) { image in view.iconView.image = image }
+      iconController.loadIcon(at: model.application.url, identifier: model.application.propertyList.bundleIdentifier) { view.iconView.image = $0 }
       view.titleLabel.stringValue = model.title
       view.subtitleLabel.stringValue = model.subtitle
       view.syncView.isHidden = !model.synced

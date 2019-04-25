@@ -8,7 +8,8 @@ class ViewControllerFactory {
   }
 
   func createApplicationListViewController(with layout: NSCollectionViewFlowLayout) -> ApplicationListFeatureViewController {
-    let listViewController = ApplicationListItemViewController(layout: layout, iconStore: dependencyContainer)
+    let listViewController = ApplicationListItemViewController(layout: layout,
+                                                               iconController: dependencyContainer.iconController)
     let searchViewController = ApplicationListSearchViewController()
     let sortViewController = ApplicationListSortViewController()
     let containerViewController = ApplicationListContainerViewController(listViewController: listViewController,
@@ -21,27 +22,28 @@ class ViewControllerFactory {
   }
 
   func createApplicationDetailViewController() -> ApplicationDetailFeatureViewController {
+    let applicationController = dependencyContainer.applicationController
+    let backupController = dependencyContainer.backupController
     let layoutFactory = dependencyContainer.layoutFactory
+    let machineController = dependencyContainer.machineController
     let iconController = dependencyContainer.iconController
-    let applicationsDetailViewController = ApplicationDetailItemViewController(layout: layoutFactory.createApplicationsLayout(),
-                                                                               iconStore: dependencyContainer)
-    let applicationInfoViewController = ApplicationDetailInfoViewController(backupController: dependencyContainer.backupController,
-                                                                            iconController: iconController,
-                                                                            machine: dependencyContainer.machineController.machine,
-                                                                            syncController: dependencyContainer.syncController)
+    let syncController = dependencyContainer.syncController
 
+    let applicationsDetailViewController = ApplicationDetailItemViewController(layout: layoutFactory.createApplicationsLayout(),
+                                                                               iconController: iconController)
+    let applicationInfoViewController = ApplicationDetailInfoViewController()
     let computersViewController = ApplicationComputerDetailItemViewController(title: "Computers",
                                                                               layout: layoutFactory.createComputerLayout(),
-                                                                              iconStore: dependencyContainer)
-
+                                                                              iconController: iconController)
     let containerViewController = ApplicationDetailContainerViewController(applicationInfoViewController: applicationInfoViewController,
                                                                            applicationComputersViewController: computersViewController,
                                                                            applicationsDetailViewController: applicationsDetailViewController)
-    let featureViewController = ApplicationDetailFeatureViewController(applicationController: dependencyContainer.applicationController,
-                                                                       backupController: dependencyContainer.backupController,
+    let featureViewController = ApplicationDetailFeatureViewController(applicationController: applicationController,
+                                                                       backupController: backupController,
                                                                        containerViewController: containerViewController,
-                                                                       machineController: dependencyContainer.machineController,
-                                                                       syncController: dependencyContainer.syncController)
+                                                                       iconController: iconController,
+                                                                       machineController: machineController,
+                                                                       syncController: syncController)
     return featureViewController
   }
 }

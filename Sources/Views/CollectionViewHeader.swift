@@ -29,6 +29,6 @@ class CollectionViewHeader: NSView {
   }
 
   func setText(_ text: String) {
-    self.customTextField.stringValue = text
+    customTextField.stringValue = text
   }
 }

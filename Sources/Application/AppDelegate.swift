@@ -17,8 +17,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
     #if DEBUG
     loadInjection()
     #endif
-    do { try loadApplication() }
-    catch let error {
+    do {
+      try loadApplication()
+    } catch let error {
       let alert = NSAlert(error: error)
       alert.runModal()
     }
@@ -37,8 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
   }
 
   @objc func injected() {
-    do { try loadApplication() }
-    catch let error {
+    do {
+      try loadApplication()
+    } catch let error {
       let alert = NSAlert(error: error)
       alert.runModal()
     }
@@ -139,8 +141,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, BackupControllerDelegate, Ap
   func firstLaunchViewController(_ controller: FirstLaunchViewController,
                                  didPressDoneButton button: NSButton) {
     controller.view.window?.close()
-    do { try loadApplication() }
-    catch let error {
+    do {
+      try loadApplication()
+    } catch let error {
       let alert = NSAlert(error: error)
       alert.runModal()
     }

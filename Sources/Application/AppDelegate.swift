@@ -28,6 +28,19 @@ class AppDelegate: NSObject, NSApplicationDelegate,
       let alert = NSAlert(error: error)
       alert.runModal()
     }
+
+    NotificationCenter.default.addObserver(self, selector: #selector(mainWindowDidClose),
+                                           name: MainWindowNotification.didClose.notificationName,
+                                           object: nil)
+  }
+
+  // MARK: - Observers
+
+  @objc func mainWindowDidClose() {
+    listFeatureViewController = nil
+    detailFeatureViewController = nil
+    NSApp.dockTile.badgeLabel = nil
+    NSApp.setActivationPolicy(.accessory)
   }
 
   // MARK: - Private methods
@@ -51,7 +64,8 @@ class AppDelegate: NSObject, NSApplicationDelegate,
     }
   }
 
-  func loadApplication() throws {
+  @discardableResult
+  func loadApplication() throws -> NSWindowController? {
     if UserDefaults.standard.backupDestination == nil {
       NSApplication.shared.windows.forEach { $0.close() }
 
@@ -75,7 +89,13 @@ class AppDelegate: NSObject, NSApplicationDelegate,
 
       configureStatusMenu()
 
-      let dependencyContainer = try createDependencyContainer()
+      let dependencyContainer: DependencyContainer
+      if let previousDependencyContainer = self.dependencyContainer {
+        dependencyContainer = previousDependencyContainer
+      } else {
+        dependencyContainer = try createDependencyContainer()
+      }
+
       let locations = try dependencyContainer.applicationController.applicationDirectories()
       let (windowController, listViewController, detailViewController) = dependencyContainer
         .windowFactory
@@ -85,7 +105,6 @@ class AppDelegate: NSObject, NSApplicationDelegate,
       self.mainMenuController?.appDelegate = self
       self.mainMenuController?.dependencyContainer = dependencyContainer
       self.mainMenuController?.listContainerViewController = listViewController.containerViewController
-      self.windowController = windowController
       self.dependencyContainer = dependencyContainer
 
       try? dependencyContainer.machineController.refreshMachines()
@@ -97,7 +116,11 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         windowController.window?.setFrame(previousFrame, display: true)
       }
       #endif
+
+      return windowController
     }
+
+    return nil
   }
 
   private func configureStatusMenu() {
@@ -156,12 +179,11 @@ class AppDelegate: NSObject, NSApplicationDelegate,
                                  didPressDoneButton button: NSButton) {
     controller.view.window?.close()
     do {
-      try loadApplication()
+      try loadApplication()?.showWindow(nil)
     } catch let error {
       let alert = NSAlert(error: error)
       alert.runModal()
     }
-    windowController?.showWindow(nil)
   }
 
   // MARK: - ApplicationControllerDelegate

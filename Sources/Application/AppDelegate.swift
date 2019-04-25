@@ -39,11 +39,15 @@ class AppDelegate: NSObject, NSApplicationDelegate,
   @objc func mainWindowDidClose() {
     listFeatureViewController = nil
     detailFeatureViewController = nil
-    NSApp.dockTile.badgeLabel = nil
-    NSApp.setActivationPolicy(.accessory)
+    perform(#selector(resetDockAndSetActivationPolicy), with: nil, afterDelay: 0.5)
   }
 
   // MARK: - Private methods
+
+  @objc private func resetDockAndSetActivationPolicy() {
+    NSApp.dockTile.badgeLabel = nil
+    NSApp.setActivationPolicy(.accessory)
+  }
 
   private func loadInjection() {
     Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection.bundle")?.load()

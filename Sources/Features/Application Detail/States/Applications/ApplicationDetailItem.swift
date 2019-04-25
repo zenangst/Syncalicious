@@ -2,7 +2,7 @@ import Cocoa
 
 // sourcery: let application = "Application"
 class ApplicationDetailItem: CollectionViewItem, CollectionViewItemComponent {
-  // sourcery: $RawBinding = "iconStore.loadIcon(at: model.application.url, for: model.application.propertyList.bundleIdentifier) { image in view.iconView.image = image }"
+  // sourcery: $RawBinding = "iconController.loadIcon(at: model.application.url, identifier: model.application.propertyList.bundleIdentifier) { image in view.iconView.image = image }"
   lazy var iconView = NSImageView()
   // sourcery: let title: String = "titleLabel.stringValue = model.title"
   lazy var titleLabel = NSTextField()

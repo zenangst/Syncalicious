@@ -14,36 +14,19 @@ protocol ApplicationDetailInfoViewControllerDelegate: class {
 
 class ApplicationDetailInfoViewController: ViewController {
   weak var delegate: ApplicationDetailInfoViewControllerDelegate?
-  let backupController: BackupController
-  let iconController: IconController
-  let syncController: SyncController
-  let machine: Machine
   lazy var stackView = NSStackView()
   lazy var horizontalStackView = NSStackView()
 
   var application: Application?
 
-  init(backupController: BackupController,
-       iconController: IconController,
-       machine: Machine,
-       syncController: SyncController) {
-    self.backupController = backupController
-    self.iconController = iconController
-    self.machine = machine
-    self.syncController = syncController
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
   // swiftlint:disable function_body_length
   func render(_ application: Application,
+              backupController: BackupController,
+              iconController: IconController,
               syncController: SyncController,
               machineController: MachineController) {
     self.application = application
-    let applicationIsSynced = syncController.applicationIsSynced(application, on: machine)
+    let applicationIsSynced = syncController.applicationIsSynced(application, on: machineController.machine)
 
     view.subviews.forEach { $0.removeFromSuperview() }
     stackView.subviews.forEach { $0.removeFromSuperview() }
@@ -53,8 +36,10 @@ class ApplicationDetailInfoViewController: ViewController {
 
     let iconView = NSImageView()
     iconView.imageScaling = .scaleProportionallyUpOrDown
-    let image = iconController.icon(at: application.url, filename: application.propertyList.bundleIdentifier)
-    iconView.image = image
+
+    iconController.loadIcon(at: application.url, identifier: application.propertyList.bundleIdentifier) { (image) in
+      iconView.image = image
+    }
 
     let nameLabel = Label(text: application.propertyList.bundleName)
     nameLabel.font = NSFont.boldSystemFont(ofSize: 32)

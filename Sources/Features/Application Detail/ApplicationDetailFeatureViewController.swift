@@ -57,23 +57,15 @@ class ApplicationDetailFeatureViewController: NSViewController,
       .compactMap({ ApplicationDetailItemModel(title: $0.propertyList.bundleName,
                                                application: $0) })
     titleLabel.stringValue = "Multi selection (\(models.count))"
-    NSAnimationContext.current.duration = 0.0
-    containerViewController.performBatchUpdates({ _ in
-      containerViewController.applicationsDetailViewController.collectionView.isHidden = false
-      containerViewController.applicationInfoViewController.view.isHidden = true
-    }, completion: { _ in
-      NSAnimationContext.current.duration = 0.25
-      self.containerViewController.applicationsDetailViewController.reload(with: models)
-    })
+    containerViewController.applicationsDetailViewController.collectionView.isHidden = false
+    containerViewController.applicationInfoViewController.view.isHidden = true
+    containerViewController.applicationsDetailViewController.reload(with: models)
   }
 
   private func render(_ application: Application) {
-    NSAnimationContext.current.duration = 0.0
-    containerViewController.performBatchUpdates({ _ in
-      containerViewController.applicationInfoViewController.view.isHidden = false
-      containerViewController.applicationsDetailViewController.collectionView.isHidden = true
-      containerViewController.applicationsDetailViewController.reload(with: [])
-    }, completion: nil)
+    containerViewController.applicationInfoViewController.view.isHidden = false
+    containerViewController.applicationsDetailViewController.collectionView.isHidden = true
+    containerViewController.applicationsDetailViewController.reload(with: [])
     containerViewController.applicationInfoViewController.render(application,
                                                                  syncController: syncController,
                                                                  machineController: machineController)

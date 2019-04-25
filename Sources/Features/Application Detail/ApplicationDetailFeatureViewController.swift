@@ -20,6 +20,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
   let containerViewController: ApplicationDetailContainerViewController
   let applicationController: ApplicationController
   let backupController: BackupController
+  let iconController: IconController
   let syncController: SyncController
   let machineController: MachineController
 
@@ -29,11 +30,13 @@ class ApplicationDetailFeatureViewController: NSViewController,
   init(applicationController: ApplicationController,
        backupController: BackupController,
        containerViewController: ApplicationDetailContainerViewController,
+       iconController: IconController,
        machineController: MachineController,
        syncController: SyncController) {
     self.applicationController = applicationController
     self.backupController = backupController
     self.containerViewController = containerViewController
+    self.iconController = iconController
     self.machineController = machineController
     self.syncController = syncController
     super.init(nibName: nil, bundle: nil)
@@ -80,6 +83,8 @@ class ApplicationDetailFeatureViewController: NSViewController,
       containerViewController.applicationsDetailViewController.collectionView.isHidden = true
       containerViewController.applicationsDetailViewController.reload(with: [])
       containerViewController.applicationInfoViewController.render(application,
+                                                                   backupController: backupController,
+                                                                   iconController: iconController,
                                                                    syncController: syncController,
                                                                    machineController: machineController)
 
@@ -142,7 +147,9 @@ class ApplicationDetailFeatureViewController: NSViewController,
       collectionView.selectionIndexPaths.forEach {
         applications.append( listViewController.model(at: $0).application )
       }
-      let sortedApplications = applications.sorted(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
+      let sortedApplications = applications.sorted(by: {
+        $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased()
+      })
       render(.multiple(sortedApplications))
     } else {
       guard let indexPath = collectionView.selectionIndexPaths.first else { return }

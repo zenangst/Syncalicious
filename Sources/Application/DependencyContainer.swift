@@ -4,7 +4,7 @@ enum DependencyContainerError: Error {
   case noBackupDestination
 }
 
-class DependencyContainer: IconStore {
+class DependencyContainer {
   lazy var layoutFactory = CollectionViewLayoutFactory()
   lazy var viewControllerFactory = ViewControllerFactory(dependencyContainer: self)
   lazy var windowFactory = WindowFactory(dependencyContainer: self,
@@ -26,7 +26,7 @@ class DependencyContainer: IconStore {
        infoPlistController: InfoPropertyListController,
        machineController: MachineController,
        preferencesController: PreferencesController) {
-    self.infoPlistController = InfoPropertyListController()
+    self.infoPlistController = infoPlistController
     self.machineController = machineController
     self.preferencesController = preferencesController
     self.backupController = backupController
@@ -34,18 +34,4 @@ class DependencyContainer: IconStore {
     self.syncController = syncController
     self.iconController = iconController
   }
-
-  // MARK: - IconStore
-
-  func loadIcon(at path: URL, for bundleIdentifier: String, then handler: @escaping (NSImage?) -> Void) {
-    DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-      guard let strongSelf = self else { return }
-      let image = strongSelf.iconController.icon(at: path, filename: bundleIdentifier)
-      DispatchQueue.main.async { handler(image) }
-    }
-  }
-}
-
-protocol IconStore {
-  func loadIcon(at path: URL, for bundleIdentifier: String, then handler: @escaping (NSImage?) -> Void)
 }

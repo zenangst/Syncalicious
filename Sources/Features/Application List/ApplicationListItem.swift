@@ -6,7 +6,7 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
 
   override var isSelected: Bool { didSet { updateState() } }
 
-  // sourcery: $RawBinding = "iconStore.loadIcon(at: model.application.url, for: model.application.propertyList.bundleIdentifier) { image in view.iconView.image = image }"
+  // sourcery: $RawBinding = "iconController.loadIcon(at: model.application.url, identifier: model.application.propertyList.bundleIdentifier) { view.iconView.image = $0 }"
   lazy var iconView = NSImageView()
   // sourcery: let title: String = "titleLabel.stringValue = model.title"
   lazy var titleLabel = NSTextField()

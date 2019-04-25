@@ -8,12 +8,8 @@ class MainMenuController: NSObject {
   // MARK: - Actions
 
   @IBAction func openWindow(_ sender: Any?) {
-    if let windowController = appDelegate?.windowController {
-      NSApplication.shared.activate(ignoringOtherApps: true)
-      windowController.showWindow(nil)
-    } else {
-      try? appDelegate?.loadApplication()
-    }
+    NSApplication.shared.activate(ignoringOtherApps: true)
+    try? appDelegate?.loadApplication()?.showWindow(nil)
   }
 
   @IBAction func selectBackupDestination(_ sender: Any?) {

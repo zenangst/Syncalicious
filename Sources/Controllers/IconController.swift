@@ -20,13 +20,21 @@ class IconController {
 
   // MARK: - Public methods
 
-  func icon(at url: URL, filename: String) -> NSImage {
-    if let image = cache.object(forKey: filename as NSString) {
+  func loadIcon(at path: URL, identifier: String, then handler: @escaping (NSImage?) -> Void) {
+    DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+      guard let strongSelf = self else { return }
+      let image = strongSelf.icon(at: path, identifier: identifier)
+      DispatchQueue.main.async { handler(image) }
+    }
+  }
+
+  func icon(at url: URL, identifier: String) -> NSImage {
+    if let image = cache.object(forKey: identifier as NSString) {
       return image
     }
 
     var image: NSImage
-    if let cachedImage = loadImageFromDisk(withFilename: filename) {
+    if let cachedImage = loadImageFromDisk(withFilename: identifier) {
       image = cachedImage
     } else {
       let fileExtension = (url.path as NSString).pathExtension
@@ -44,8 +52,8 @@ class IconController {
       }
     }
 
-    try? saveImageToDisk(image, withFilename: filename)
-    cache.setObject(image, forKey: filename as NSString)
+    try? saveImageToDisk(image, withFilename: identifier)
+    cache.setObject(image, forKey: identifier as NSString)
     return image
   }
 

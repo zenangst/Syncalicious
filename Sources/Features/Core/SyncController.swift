@@ -42,6 +42,10 @@ class SyncController: NSObject {
     self.observation = workspace.observe(\.frontmostApplication, options: [.initial, .new]) { [weak self] _, _ in
       self?.frontmostApplicationDidChange()
     }
+
+    NotificationCenter.default.addObserver(self, selector: #selector(mainWindowDidBecomeKey),
+                                           name: MainWindowNotification.becomeKey.notificationName,
+                                           object: nil)
   }
 
   // MARK: - Public methods
@@ -101,7 +105,21 @@ class SyncController: NSObject {
     }
   }
 
+  // MARK: - Observers
+
+  @objc func mainWindowDidBecomeKey() {
+    perform(#selector(updateBadgeCounter), with: nil, afterDelay: 1.0)
+  }
+
   // MARK: - Private methods
+
+  @objc private func updateBadgeCounter() {
+    if let files = try? pendingFiles() && !files.isEmpty {
+      NSApplication.shared.dockTile.badgeLabel = "\(files.count)"
+    } else {
+      NSApplication.shared.dockTile.badgeLabel = nil
+    }
+  }
 
   private func frontmostApplicationDidChange() {
     guard let runningApplication = workspace.frontmostApplication else { return }
@@ -192,9 +210,7 @@ class SyncController: NSObject {
     applicationHasBeenActive.remove(application)
   }
 
-  private func checkPendingFolder() throws {
-    let runningApplications = workspace.runningApplications
-    let bundleIdentifiers = runningApplications.compactMap({ $0.bundleIdentifier })
+  private func pendingFiles() throws -> [URL] {
     let pending = destination
       .appendingPathComponent(machineController.machine.name)
       .appendingPathComponent("Pending")
@@ -202,6 +218,14 @@ class SyncController: NSObject {
     let files = try fileManager.contentsOfDirectory(at: pending,
                                                     includingPropertiesForKeys: [.isRegularFileKey],
                                                     options: [.skipsHiddenFiles])
+    return files
+  }
+
+  private func checkPendingFolder() throws {
+    let runningApplications = workspace.runningApplications
+    let bundleIdentifiers = runningApplications.compactMap({ $0.bundleIdentifier })
+    let files = try pendingFiles()
+
     for file in files {
       guard let application = applications
         .first(where: { $0.preferences.fileName == file.lastPathComponent }),
@@ -212,6 +236,7 @@ class SyncController: NSObject {
 
       runDefaultsShellScript(for: application, withFilePath: file.path)
       try? fileManager.removeItem(at: file)
+      updateBadgeCounter()
     }
   }
 
@@ -263,6 +288,7 @@ class SyncController: NSObject {
                            withFilePath: targetApplication.pendingUrl.path)
 
     try? fileManager.removeItem(at: targetApplication.pendingUrl)
+    updateBadgeCounter()
 
     perform(#selector(restartApplication),
             with: targetApplication.application.propertyList.bundleIdentifier,

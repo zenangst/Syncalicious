@@ -11,9 +11,9 @@ class ApplicationDetailItemViewController: NSViewController, Component {
   let collectionView: NSCollectionView
 
   init(title: String? = nil,
-  layout: NSCollectionViewFlowLayout,
-  iconStore: IconStore,
-  collectionView: NSCollectionView? = nil) {
+       layout: NSCollectionViewFlowLayout,
+       iconStore: IconStore,
+       collectionView: NSCollectionView? = nil) {
     self.layout = layout
     self.dataSource = ApplicationDetailItemDataSource(title: title, iconStore: iconStore)
     if let collectionView = collectionView {
@@ -91,7 +91,9 @@ class ApplicationDetailItemDataSource: NSObject, NSCollectionViewDataSource {
   with models: [ApplicationDetailItemModel],
   then handler: (() -> Void)? = nil) {
     let changes = DiffManager().diff(self.models, models)
-    collectionView.reload(with: changes, updateDataSource: { self.models = models }, completion: handler)
+    collectionView.reload(with: changes,
+                          animations: false,
+                          updateDataSource: { self.models = models }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource
@@ -126,9 +128,9 @@ class ApplicationListItemViewController: NSViewController, Component {
   let collectionView: NSCollectionView
 
   init(title: String? = nil,
-  layout: NSCollectionViewFlowLayout,
-  iconStore: IconStore,
-  collectionView: NSCollectionView? = nil) {
+       layout: NSCollectionViewFlowLayout,
+       iconStore: IconStore,
+       collectionView: NSCollectionView? = nil) {
     self.layout = layout
     self.dataSource = ApplicationListItemDataSource(title: title, iconStore: iconStore)
     if let collectionView = collectionView {
@@ -206,7 +208,9 @@ class ApplicationListItemDataSource: NSObject, NSCollectionViewDataSource {
   with models: [ApplicationListItemModel],
   then handler: (() -> Void)? = nil) {
     let changes = DiffManager().diff(self.models, models)
-    collectionView.reload(with: changes, updateDataSource: { self.models = models }, completion: handler)
+    collectionView.reload(with: changes,
+                          animations: false,
+                          updateDataSource: { self.models = models }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource

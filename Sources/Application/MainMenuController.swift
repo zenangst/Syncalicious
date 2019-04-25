@@ -9,7 +9,7 @@ class MainMenuController: NSObject {
 
   @IBAction func openWindow(_ sender: Any?) {
     NSApplication.shared.activate(ignoringOtherApps: true)
-    try? appDelegate?.loadApplication()
+    try? appDelegate?.loadApplication()?.showWindow(nil)
   }
 
   @IBAction func selectBackupDestination(_ sender: Any?) {

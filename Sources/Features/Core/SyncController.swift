@@ -43,7 +43,8 @@ class SyncController: NSObject {
       self?.frontmostApplicationDidChange()
     }
 
-    NotificationCenter.default.addObserver(self, selector: #selector(mainWindowDidBecomeKey),
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(mainWindowDidBecomeKey),
                                            name: MainWindowNotification.becomeKey.notificationName,
                                            object: nil)
   }

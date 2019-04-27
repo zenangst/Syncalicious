@@ -56,6 +56,7 @@
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
 		BDA1C3D72271A8A6009185DE /* ApplicationComputerDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */; };
 		BDA1C3D92271B73B009185DE /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D82271B73B009185DE /* CollectionViewHeader.swift */; };
+		BDA69E7822730B3100EF60E5 /* AppDelegateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */; };
 		BDAB1ED522702C4E00B1070F /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */; };
 		BDB919642259F7020096294D /* BackupControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB919632259F7020096294D /* BackupControllerTests.swift */; };
 		BDCBB2AB22551372007C9404 /* ApplicationControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBB2AA22551372007C9404 /* ApplicationControllerTests.swift */; };
@@ -147,6 +148,7 @@
 		BD93138E2251703700D116E4 /* Syncalicious.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syncalicious.entitlements; sourceTree = "<group>"; };
 		BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationComputerDetailItem.swift; sourceTree = "<group>"; };
 		BDA1C3D82271B73B009185DE /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
+		BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateController.swift; sourceTree = "<group>"; };
 		BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		BDB919632259F7020096294D /* BackupControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupControllerTests.swift; sourceTree = "<group>"; };
 		BDCBB2A822551372007C9404 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,6 +275,7 @@
 				BD9313862251703400D116E4 /* AppDelegate.swift */,
 				BD7D962022533CE100C93211 /* DependencyContainer.swift */,
 				BD7D962222533FF300C93211 /* MainMenuController.swift */,
+				BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -705,6 +708,7 @@
 				BD7D960E2252888000C93211 /* Application.swift in Sources */,
 				BDDAA335225D37C700D87664 /* DecorationView.swift in Sources */,
 				BD438BF92269CD1900A21017 /* WelcomeWindow.swift in Sources */,
+				BDA69E7822730B3100EF60E5 /* AppDelegateController.swift in Sources */,
 				BD62D2EC22674E0A007B047B /* ApplicationListSearchViewController.swift in Sources */,
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,

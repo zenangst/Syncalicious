@@ -27,7 +27,8 @@ class MainWindow: NSWindow {
     }
   }
 
-  deinit {
+  override func close() {
+    super.close()
     NotificationCenter.default.post(MainWindowNotification.didClose.notification)
   }
 

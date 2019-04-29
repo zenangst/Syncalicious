@@ -65,6 +65,9 @@ class BackupController {
       try createFolderIfNeeded(at: backupFolder)
 
       do {
+        if fileManager.fileExists(atPath: destination.path) {
+          try fileManager.removeItem(at: destination)
+        }
         try fileManager.copyItem(at: from, to: destination)
       } catch let error {
         debugPrint(error)

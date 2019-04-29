@@ -93,13 +93,12 @@ class ApplicationDetailFeatureViewController: NSViewController,
             .appendingPathComponent("Info")
             .appendingPathComponent("Computer.tiff")
           let synced = self.syncController.applicationIsSynced(application, on: machine)
-          let backuped = self.backupController.doesBackupExists(for: application,
+          let backupDate = self.backupController.doesBackupExists(for: application,
                                                                 on: machine,
-
                                                                 at: UserDefaults.standard.syncaliciousUrl!)
           return ApplicationComputerDetailItemModel(title: machine.localizedName,
                                                     subtitle: machine.state.rawValue.capitalized,
-                                                    backuped: backuped,
+                                                    backupDate: backupDate,
                                                     image: image,
                                                     machine: machine,
                                                     synced: synced)

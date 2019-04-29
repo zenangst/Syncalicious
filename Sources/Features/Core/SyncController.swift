@@ -61,6 +61,19 @@ class SyncController: NSObject {
     return fileManager.fileExists(atPath: backup.path, isDirectory: &isDirectory)
   }
 
+  func applicationLastSynced(_ application: Application) -> Date? {
+    var from = application.preferences.url
+    from.resolveSymlinksInPath()
+
+    var isDirectory = ObjCBool(false)
+    guard fileManager.fileExists(atPath: from.path, isDirectory: &isDirectory) else {
+      return nil
+    }
+
+    let dictionary = try? fileManager.attributesOfItem(atPath: from.path) as NSDictionary
+    return dictionary?.fileModificationDate()
+  }
+
   func enableSync(for application: Application, on machine: Machine) throws {
     try createMachineFolders(for: application, on: machine)
     pendingApplications.insert(application)

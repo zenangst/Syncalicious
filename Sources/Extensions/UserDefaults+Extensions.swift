@@ -6,6 +6,11 @@ extension UserDefaults {
     set { set(newValue, forKey: #function) }
   }
 
+  var backupWhenIdle: Bool {
+    get { return bool(forKey: #function) }
+    set { set(newValue, forKey: #function) }
+  }
+
   var listSort: ApplicationListSortViewController.SortKind? {
     get {
       if let string = string(forKey: #function),

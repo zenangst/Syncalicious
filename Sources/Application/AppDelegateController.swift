@@ -46,7 +46,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
 
   @discardableResult
   func loadApplication(file: StaticString = #file, function: StaticString = #function, line: UInt = #line) throws -> NSWindowController? {
-    if UserDefaults.standard.backupDestination == nil {
+    if UserDefaults.standard.syncaliciousUrl == nil {
       NSApplication.shared.windows.forEach { $0.close() }
 
       let iconController = IconController()
@@ -102,7 +102,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
   // MARK: - Private methods
 
   private func createDependencyContainer() throws -> DependencyContainer {
-    guard let backupDestination = UserDefaults.standard.backupDestination else {
+    guard let backupDestination = UserDefaults.standard.syncaliciousUrl else {
       throw DependencyContainerError.noBackupDestination
     }
 
@@ -156,7 +156,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
 
   func backupController(_ controller: BackupController,
                         didSelectDestination destination: URL) {
-    UserDefaults.standard.backupDestination = destination
+    UserDefaults.standard.syncaliciousUrl = destination
     firstLaunchViewController?.backupController(controller, didSelectDestination: destination)
   }
 

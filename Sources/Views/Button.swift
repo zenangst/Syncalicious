@@ -7,6 +7,8 @@ class Button: NSButton {
     case round
   }
 
+  var backgroundColor: NSColor
+  var borderColor: NSColor
   var cornerRadius: CornerRadius = .round
 
   init(title: String,
@@ -16,8 +18,11 @@ class Button: NSButton {
        cornerRadius: CornerRadius,
        target: AnyObject?,
        action: Selector?) {
+    self.backgroundColor = backgroundColor
+    self.borderColor = borderColor
     super.init(frame: .zero)
     self.cornerRadius = cornerRadius
+    self.setButtonType(.momentaryChange)
     self.title = title
     self.target = target
     self.action = action
@@ -25,14 +30,32 @@ class Button: NSButton {
     self.isBordered = false
     self.font = NSFont.boldSystemFont(ofSize: 14)
     self.layer?.backgroundColor = backgroundColor.cgColor
-    self.layer?.borderColor = borderColor.cgColor
     self.layer?.borderWidth = borderWidth
+    self.layer?.borderColor = borderColor.cgColor
+  }
 
-    if backgroundColor == .clear {
-      self.contentTintColor = borderColor
+  override func draw(_ dirtyRect: NSRect) {
+    if isHighlighted {
+      if backgroundColor == .clear {
+        borderColor.withSystemEffect(.pressed).setFill()
+        contentTintColor = borderColor.withSystemEffect(.pressed)
+        layer?.borderColor = borderColor.withSystemEffect(.pressed).cgColor
+      } else {
+        backgroundColor.withSystemEffect(.pressed).setFill()
+        contentTintColor = backgroundColor.withSystemEffect(.pressed)
+        layer?.borderColor = backgroundColor.withSystemEffect(.pressed).cgColor
+      }
+      dirtyRect.fill()
     } else {
-      self.contentTintColor = NSColor.white
+      if backgroundColor == .clear {
+        contentTintColor = borderColor
+      } else {
+        contentTintColor = NSColor.white
+      }
+      layer?.borderColor = borderColor.cgColor
     }
+
+    super.draw(dirtyRect)
   }
 
   required init?(coder: NSCoder) {
@@ -41,7 +64,6 @@ class Button: NSButton {
 
   override func layout() {
     super.layout()
-
     switch cornerRadius {
     case .custom(let radius):
       layer?.cornerRadius = radius
@@ -52,7 +74,7 @@ class Button: NSButton {
 
   override var intrinsicContentSize: NSSize {
     var result = super.intrinsicContentSize
-    result.width += 20
+    result.width += 35
     result.height += 10
     return result
   }

@@ -86,7 +86,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
                                                                    syncController: syncController,
                                                                    machineController: machineController)
 
-      if let backupDestination = UserDefaults.standard.backupDestination {
+      if let backupDestination = UserDefaults.standard.syncaliciousUrl {
         let closure: (Machine) -> ApplicationComputerDetailItemModel = { machine in
           let image = backupDestination
             .appendingPathComponent(machine.name)
@@ -95,8 +95,8 @@ class ApplicationDetailFeatureViewController: NSViewController,
           let synced = self.syncController.applicationIsSynced(application, on: machine)
           let backuped = self.backupController.doesBackupExists(for: application,
                                                                 on: machine,
-                                                                at: UserDefaults.standard.backupDestination!)
 
+                                                                at: UserDefaults.standard.syncaliciousUrl!)
           return ApplicationComputerDetailItemModel(title: machine.localizedName,
                                                     subtitle: machine.state.rawValue.capitalized,
                                                     backuped: backuped,
@@ -153,7 +153,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
                                            didTapBackup backupButton: NSButton,
                                            on application: Application) {
-    guard let backupDestination = UserDefaults.standard.backupDestination else { return }
+    guard let backupDestination = UserDefaults.standard.syncaliciousUrl else { return }
     try? backupController.runBackup(for: [application], to: backupDestination)
     render(.single(application))
     refreshApplicationList()

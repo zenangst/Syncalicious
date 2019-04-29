@@ -4,7 +4,7 @@ struct Machine: Codable, Hashable {
   enum State: String, Codable, Hashable {
     case active
     case idle
-    case turnedOff
+    case turnedOff = "Turned off"
   }
 
   let name: String

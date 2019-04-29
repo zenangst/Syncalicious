@@ -8,7 +8,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
   weak var appDelegate: AppDelegate?
   var firstLaunchViewController: FirstLaunchViewController?
   var windowController: NSWindowController?
-  weak var dependencyContainer: DependencyContainer?
+  var dependencyContainer: DependencyContainer?
   weak var listFeatureViewController: ApplicationListFeatureViewController?
   weak var detailFeatureViewController: ApplicationDetailFeatureViewController?
 
@@ -173,8 +173,23 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
   // MARK: - MachineControllerDelegate
 
   func machineController(_ controller: MachineController, didChangeState state: Machine.State) {
-    dependencyContainer?.syncController.machineDidChangeState(newState: state)
+    guard let dependencyContainer = dependencyContainer else { return }
+
+    dependencyContainer.syncController.machineDidChangeState(newState: state)
     detailFeatureViewController?.refreshCurrentApplicationIfNeeded()
+
+    guard let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl,
+      UserDefaults.standard.backupWhenIdle else { return }
+
+    let machine = dependencyContainer.machineController.machine
+    let applications = dependencyContainer.syncController.applications
+
+    let backupApplications = applications.filter({ application in
+      return dependencyContainer.backupController.doesBackupExists(for: application,
+                                                                   on: machine,
+                                                                   at: UserDefaults.standard.syncaliciousUrl!) != nil
+    })
+    try? dependencyContainer.backupController.runBackup(for: backupApplications, to: syncaliciousUrl)
   }
 
   func machineController(_ controller: MachineController, didUpdateOtherMachines machines: [Machine]) {

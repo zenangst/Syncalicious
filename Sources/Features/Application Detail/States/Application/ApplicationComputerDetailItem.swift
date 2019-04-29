@@ -3,7 +3,7 @@ import Cocoa
 // sourcery: let image = "URL"
 // sourcery: let machine = "Machine"
 // sourcery: let synced = "Bool"
-// sourcery: let backuped = "Bool"
+// sourcery: let backupDate = "Date?"
 class ApplicationComputerDetailItem: CollectionViewItem, CollectionViewItemComponent {
   // sourcery: $RawBinding = "iconController.loadIcon(at: model.image, identifier: model.machine.name) { image in view.iconView.image = image }"
   lazy var iconView = NSImageView()
@@ -11,7 +11,7 @@ class ApplicationComputerDetailItem: CollectionViewItem, CollectionViewItemCompo
   lazy var titleLabel = NSTextField()
   // sourcery: let subtitle: String = "subtitleLabel.stringValue = model.subtitle"
   lazy var subtitleLabel = NSTextField()
-  // sourcery: $RawBinding = "view.backupIconView.isHidden = !model.backuped"
+  // sourcery: $RawBinding = "view.backupIconView.isHidden = model.backupDate == nil"
   lazy var backupIconView = NSImageView()
   // sourcery: $RawBinding = "view.syncIconView.isHidden = !model.synced"
   lazy var syncIconView = NSImageView()

@@ -16,6 +16,11 @@ class ApplicationDetailInfoViewController: ViewController {
   weak var delegate: ApplicationDetailInfoViewControllerDelegate?
   lazy var stackView = NSStackView()
   lazy var horizontalStackView = NSStackView()
+  lazy var iso8601DateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    return dateFormatter
+  }()
 
   var application: Application?
 
@@ -117,19 +122,22 @@ class ApplicationDetailInfoViewController: ViewController {
       BoldLabel(text: "Location:"),
       Label(text: application.url.path)]))
 
+<<<<<<< HEAD
     if let backupDestination = UserDefaults.standard.backupDestination {
       let backupText = backupController.doesBackupExists(for: application,
+=======
+    if let backupDestination = UserDefaults.standard.syncaliciousUrl {
+      let backupDate = backupController.doesBackupExists(for: application,
+>>>>>>> eb1f15d... Show sync and backup dates instead of just Yes or No
                                                          on: machineController.machine,
-                                                         at: backupDestination) ? "Yes" : "No"
-      stackView.addArrangedSubview(createStackView(.horizontal, views: [
-        BoldLabel(text: "Backup exists:"),
-        Label(text: backupText)]))
+                                                         at: backupDestination)
+      if let backupDate = backupDate {
+        let dateString = iso8601DateFormatter.string(from: backupDate)
+        stackView.addArrangedSubview(createStackView(.horizontal, views: [
+          BoldLabel(text: "Last backup:"),
+          Label(text: "\(dateString)")]))
+      }
     }
-
-    let syncText = applicationIsSynced ? "Yes" : "No"
-    stackView.addArrangedSubview(createStackView(.horizontal, views: [
-      BoldLabel(text: "Is synced:"),
-      Label(text: syncText)]))
 
     if application.needsFullDiskAccess {
       let fullDiskPermission = Button(title: "Needs Full Disk Permission",
@@ -141,6 +149,13 @@ class ApplicationDetailInfoViewController: ViewController {
                                       action: #selector(fullDiskAccess))
 
       stackView.addArrangedSubview(fullDiskPermission)
+    } else {
+      if let syncDate = syncController.applicationLastSynced(application) {
+        let dateString = iso8601DateFormatter.string(from: syncDate)
+        stackView.addArrangedSubview(createStackView(.horizontal, views: [
+          BoldLabel(text: "Last sync:"),
+          Label(text: "\(dateString)")]))
+      }
     }
 
     horizontalStackView.addArrangedSubview(stackView)

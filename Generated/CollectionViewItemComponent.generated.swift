@@ -134,7 +134,7 @@ class ApplicationComputerDetailItemDataSource: NSObject, NSCollectionViewDataSou
       iconController.loadIcon(at: model.image, identifier: model.machine.name) { image in view.iconView.image = image }
       view.titleLabel.stringValue = model.title
       view.subtitleLabel.stringValue = model.subtitle
-      view.backupIconView.isHidden = !model.backuped
+      view.backupIconView.isHidden = model.backupDate == nil
       view.syncIconView.isHidden = !model.synced
     }
 
@@ -145,7 +145,7 @@ class ApplicationComputerDetailItemDataSource: NSObject, NSCollectionViewDataSou
 struct ApplicationComputerDetailItemModel: Hashable {
   let title: String
   let subtitle: String
-  let backuped: Bool
+  let backupDate: Date?
   let image: URL
   let machine: Machine
   let synced: Bool

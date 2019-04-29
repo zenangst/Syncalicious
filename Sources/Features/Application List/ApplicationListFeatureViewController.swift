@@ -1,10 +1,19 @@
 import Cocoa
 
+protocol ApplicationListFeatureViewControllerDelegate: class {
+  func applicationListFeatureViewController(_ controller: ApplicationListFeatureViewController,
+                                            didSelectApplications applications: [Application])
+}
+
 class ApplicationListFeatureViewController: NSViewController,
   SplitViewContainedController,
   ApplicationListSearchViewControllerDelegate,
-  ApplicationListSortViewControllerDelegate {
+  ApplicationListSortViewControllerDelegate,
+  NSCollectionViewDelegate {
 
+  weak var delegate: ApplicationListFeatureViewControllerDelegate?
+
+  let iconController: IconController
   let syncController: SyncController
   let machineController: MachineController
   let containerViewController: ApplicationListContainerViewController
@@ -15,9 +24,11 @@ class ApplicationListFeatureViewController: NSViewController,
   private var layoutConstraints = [NSLayoutConstraint]()
 
   init(containerViewController: ApplicationListContainerViewController,
+       iconController: IconController,
        machineController: MachineController,
        syncController: SyncController) {
     self.containerViewController = containerViewController
+    self.iconController = iconController
     self.machineController = machineController
     self.syncController = syncController
     super.init(nibName: nil, bundle: nil)
@@ -119,6 +130,18 @@ class ApplicationListFeatureViewController: NSViewController,
 
   // MARK: - Private methods
 
+  private func createSortedApplications(from indexPaths: [IndexPath]) -> [Application] {
+    var applications = [Application]()
+    indexPaths.forEach {
+      applications.append(
+        containerViewController.listViewController.model(at: $0).application)
+    }
+
+    applications.sort(by: { $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased() })
+
+    return applications
+  }
+
   private func createViewModel(from application: Application) -> ApplicationListItemModel {
     var subtitle = "\(application.propertyList.versionString)"
     if !application.propertyList.buildVersion.isEmpty &&
@@ -171,5 +194,34 @@ class ApplicationListFeatureViewController: NSViewController,
 
     collectionView.selectItems(at: [IndexPath.init(item: 0, section: 0)], scrollPosition: [])
     collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: [IndexPath.init(item: 0, section: 0)])
+  }
+
+  // MARK: - NSCollectionViewDelegate
+
+  func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
+    let model = containerViewController.listViewController.model(at: indexPath)
+    let view = item as? ApplicationListItem
+
+    guard let wrapperView = containerViewController.listViewController.collectionView.enclosingScrollView,
+      let familyScrollView = wrapperView.enclosingScrollView else {
+        return
+    }
+
+    if familyScrollView.documentVisibleRect.intersects(wrapperView.frame) {
+      iconController.loadIcon(at: model.application.url,
+                              identifier: model.application.propertyList.bundleIdentifier) { (image) in
+                                view?.iconView.image = image
+      }
+    }
+  }
+
+  func collectionView(_ collectionView: NSCollectionView, didDeselectItemsAt indexPaths: Set<IndexPath>) {
+    let applications = createSortedApplications(from: Array(collectionView.selectionIndexPaths))
+    delegate?.applicationListFeatureViewController(self, didSelectApplications: applications)
+  }
+
+  func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    let applications = createSortedApplications(from: Array(collectionView.selectionIndexPaths))
+    delegate?.applicationListFeatureViewController(self, didSelectApplications: applications)
   }
 }

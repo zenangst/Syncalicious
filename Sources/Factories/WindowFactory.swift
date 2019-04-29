@@ -22,7 +22,8 @@ class WindowFactory {
   func createMainWindowControllers() -> (NSWindowController, ApplicationListFeatureViewController, ApplicationDetailFeatureViewController) {
     let window = createMainWindow()
     let layout = layoutFactory.createApplicationListLayout()
-    let listViewController = viewControllerFactory.createApplicationListViewController(with: layout)
+    let listViewController = viewControllerFactory.createApplicationListFeatureViewController(with: layout)
+    listViewController.containerViewController.listViewController.collectionView.delegate = listViewController
 
     let sidebarItem = NSSplitViewItem(contentListWithViewController: listViewController)
     sidebarItem.holdingPriority = .init(rawValue: 260)
@@ -30,9 +31,8 @@ class WindowFactory {
     sidebarItem.maximumThickness = sidebarItem.minimumThickness
     sidebarItem.canCollapse = true
 
-    let detailViewController = viewControllerFactory.createApplicationDetailViewController()
-    detailViewController.listViewController = listViewController.containerViewController.listViewController
-    listViewController.containerViewController.listViewController.collectionView.delegate = detailViewController
+    let detailViewController = viewControllerFactory.createApplicationDetailFeatureViewController()
+    listViewController.delegate = detailViewController
 
     let detailControllerItem = NSSplitViewItem(viewController: detailViewController)
     detailControllerItem.minimumThickness = 320

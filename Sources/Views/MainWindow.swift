@@ -11,7 +11,7 @@ enum MainWindowNotification: String {
 
 class MainWindow: NSWindow {
   func loadWindow() {
-    let windowSize = CGSize(width: 800, height: 480)
+    let windowSize = CGSize(width: 800, height: 280)
     styleMask = [
       .closable, .miniaturizable, .resizable, .titled, .fullSizeContentView
     ]

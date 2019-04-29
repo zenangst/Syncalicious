@@ -7,7 +7,7 @@ class CollectionViewLayoutFactory {
                                          height: 96,
                                          minimumInteritemSpacing: 15,
                                          minimumLineSpacing: 30,
-                                         sectionInset: .init(top: 5, left: 5, bottom: 5, right: 5))
+                                         sectionInset: .init(top: 25, left: 5, bottom: 5, right: 5))
     return layout
   }
 

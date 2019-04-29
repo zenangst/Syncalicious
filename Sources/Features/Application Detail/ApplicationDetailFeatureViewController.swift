@@ -1,16 +1,14 @@
 import Cocoa
 
 class ApplicationDetailFeatureViewController: NSViewController,
+  ApplicationListFeatureViewControllerDelegate,
   ApplicationDetailInfoViewControllerDelegate,
-  SplitViewContainedController,
-  NSCollectionViewDelegate {
+  SplitViewContainedController {
 
   enum State {
     case multiple([Application])
     case single(Application)
   }
-
-  weak var listViewController: ApplicationListItemViewController?
 
   lazy var titleLabel = SmallBoldLabel()
   lazy var titlebarView = NSView()
@@ -140,22 +138,11 @@ class ApplicationDetailFeatureViewController: NSViewController,
     applicationController.loadApplications(at: locations)
   }
 
-  private func handleSelections(in collectionView: NSCollectionView) {
-    if collectionView.selectionIndexPaths.count > 1 {
-      guard let listViewController = listViewController else { return }
-      var applications = [Application]()
-      collectionView.selectionIndexPaths.forEach {
-        applications.append( listViewController.model(at: $0).application )
-      }
-      let sortedApplications = applications.sorted(by: {
-        $0.propertyList.bundleName.lowercased() < $1.propertyList.bundleName.lowercased()
-      })
-      render(.multiple(sortedApplications))
+  private func handleSelections(for applications: [Application]) {
+    if applications.count > 1 {
+      render(.multiple(applications))
     } else {
-      guard let indexPath = collectionView.selectionIndexPaths.first else { return }
-      guard let listViewController = listViewController else { return }
-
-      let application = listViewController.model(at: indexPath).application
+      guard let application = applications.first else { return }
       self.application = application
       render(.single(application))
     }
@@ -188,13 +175,10 @@ class ApplicationDetailFeatureViewController: NSViewController,
     refreshApplicationList()
   }
 
-  // MARK: - NSCollectionViewDelegate
+  // MARK: - ApplicationListFeatureViewControllerDelegate
 
-  func collectionView(_ collectionView: NSCollectionView, didDeselectItemsAt indexPaths: Set<IndexPath>) {
-    handleSelections(in: collectionView)
-  }
-
-  func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-    handleSelections(in: collectionView)
+  func applicationListFeatureViewController(_ controller: ApplicationListFeatureViewController,
+                                            didSelectApplications applications: [Application]) {
+    handleSelections(for: applications)
   }
 }

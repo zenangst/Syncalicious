@@ -418,7 +418,6 @@ class ApplicationListItemDataSource: NSObject, NSCollectionViewDataSource {
     let model = self.model(at: indexPath)
 
     if let view = item as? ApplicationListItem {
-      iconController.loadIcon(at: model.application.url, identifier: model.application.propertyList.bundleIdentifier) { view.iconView.image = $0 }
       view.titleLabel.stringValue = model.title
       view.subtitleLabel.stringValue = model.subtitle
       view.syncView.isHidden = !model.synced

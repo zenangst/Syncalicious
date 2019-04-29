@@ -7,7 +7,8 @@ class ViewControllerFactory {
     self.dependencyContainer = dependencyContainer
   }
 
-  func createApplicationListViewController(with layout: NSCollectionViewFlowLayout) -> ApplicationListFeatureViewController {
+  func createApplicationListFeatureViewController(with layout: NSCollectionViewFlowLayout) -> ApplicationListFeatureViewController {
+    let iconController = dependencyContainer.iconController
     let listViewController = ApplicationListItemViewController(layout: layout,
                                                                iconController: dependencyContainer.iconController)
     let searchViewController = ApplicationListSearchViewController()
@@ -16,12 +17,13 @@ class ViewControllerFactory {
                                                                          searchViewController: searchViewController,
                                                                          sortViewController: sortViewController)
     let featureViewController = ApplicationListFeatureViewController(containerViewController: containerViewController,
+                                                                     iconController: iconController,
                                                                      machineController: dependencyContainer.machineController,
                                                                      syncController: dependencyContainer.syncController)
     return featureViewController
   }
 
-  func createApplicationDetailViewController() -> ApplicationDetailFeatureViewController {
+  func createApplicationDetailFeatureViewController() -> ApplicationDetailFeatureViewController {
     let applicationController = dependencyContainer.applicationController
     let backupController = dependencyContainer.backupController
     let layoutFactory = dependencyContainer.layoutFactory

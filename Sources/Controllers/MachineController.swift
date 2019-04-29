@@ -92,11 +92,11 @@ class MachineController {
   }
 
   func refreshMachines() throws {
-    guard let backupDestination = UserDefaults.standard.backupDestination else {
+    guard let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl else {
       return
     }
 
-    let folders = try fileManager.contentsOfDirectory(at: backupDestination,
+    let folders = try fileManager.contentsOfDirectory(at: syncaliciousUrl,
                                                       includingPropertiesForKeys: [.isDirectoryKey],
                                                       options: [.skipsHiddenFiles])
     var machines = [Machine]()
@@ -161,9 +161,9 @@ class MachineController {
     let idleTime = systemIdleTime() ?? 0
     let state: Machine.State = idleTime > threshold ? .idle : .active
 
-    if let backupDestination = UserDefaults.standard.backupDestination, machine.state != state {
+    if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl, machine.state != state {
       machine.state = state
-      try? updateMachineInfoPlist(to: backupDestination)
+      try? updateMachineInfoPlist(to: syncaliciousUrl)
       delegate?.machineController(self, didChangeState: state)
     }
 

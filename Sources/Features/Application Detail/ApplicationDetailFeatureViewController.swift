@@ -86,7 +86,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
                                                                    syncController: syncController,
                                                                    machineController: machineController)
 
-      if let backupDestination = UserDefaults.standard.backupDestination {
+      if let backupDestination = UserDefaults.standard.syncaliciousUrl {
         let closure: (Machine) -> ApplicationComputerDetailItemModel = { machine in
           let image = backupDestination
             .appendingPathComponent(machine.name)
@@ -95,12 +95,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
           let synced = self.syncController.applicationIsSynced(application, on: machine)
           let backupDate = self.backupController.doesBackupExists(for: application,
                                                                 on: machine,
-<<<<<<< HEAD
-                                                                at: UserDefaults.standard.backupDestination!)
-
-=======
                                                                 at: UserDefaults.standard.syncaliciousUrl!)
->>>>>>> eb1f15d... Show sync and backup dates instead of just Yes or No
           return ApplicationComputerDetailItemModel(title: machine.localizedName,
                                                     subtitle: machine.state.rawValue.capitalized,
                                                     backupDate: backupDate,
@@ -157,7 +152,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
                                            didTapBackup backupButton: NSButton,
                                            on application: Application) {
-    guard let backupDestination = UserDefaults.standard.backupDestination else { return }
+    guard let backupDestination = UserDefaults.standard.syncaliciousUrl else { return }
     try? backupController.runBackup(for: [application], to: backupDestination)
     render(.single(application))
     refreshApplicationList()

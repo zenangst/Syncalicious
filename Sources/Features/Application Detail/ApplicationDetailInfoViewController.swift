@@ -63,7 +63,7 @@ class ApplicationDetailInfoViewController: ViewController {
       horizontalStackView.addArrangedSubview(leftStackView)
     } else {
       let backupButton: NSButton
-      if backupController.doesBackupExists(for: application, on: machineController.machine, at: UserDefaults.standard.backupDestination!) {
+      if backupController.doesBackupExists(for: application, on: machineController.machine, at: UserDefaults.standard.syncaliciousUrl!) != nil {
         backupButton = Button(title: "Backup",
                               backgroundColor: NSColor(named: "Green")!,
                               borderColor: NSColor(named: "Green")!,
@@ -122,13 +122,8 @@ class ApplicationDetailInfoViewController: ViewController {
       BoldLabel(text: "Location:"),
       Label(text: application.url.path)]))
 
-<<<<<<< HEAD
-    if let backupDestination = UserDefaults.standard.backupDestination {
-      let backupText = backupController.doesBackupExists(for: application,
-=======
     if let backupDestination = UserDefaults.standard.syncaliciousUrl {
       let backupDate = backupController.doesBackupExists(for: application,
->>>>>>> eb1f15d... Show sync and backup dates instead of just Yes or No
                                                          on: machineController.machine,
                                                          at: backupDestination)
       if let backupDate = backupDate {

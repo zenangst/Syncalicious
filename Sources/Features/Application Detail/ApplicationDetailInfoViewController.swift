@@ -117,10 +117,10 @@ class ApplicationDetailInfoViewController: ViewController {
       BoldLabel(text: "Location:"),
       Label(text: application.url.path)]))
 
-      let backupText = backupController.doesBackupExists(for: application,
     if let backupDestination = UserDefaults.standard.syncaliciousUrl {
-                                                         on: machineController.machine,
-                                                         at: backupDestination) ? "Yes" : "No"
+      let backupText = backupController.doesBackupExists(for: application,
+        on: machineController.machine,
+        at: backupDestination) ? "Yes" : "No"
       stackView.addArrangedSubview(createStackView(.horizontal, views: [
         BoldLabel(text: "Backup exists:"),
         Label(text: backupText)]))

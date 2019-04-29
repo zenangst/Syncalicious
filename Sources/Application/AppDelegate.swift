@@ -29,6 +29,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     return applicationDelegateController.applicationShouldHandleReopen()
   }
 
+  func applicationWillTerminate(_ notification: Notification) {
+    applicationDelegateController.applicationWillTerminate()
+  }
+
   // MARK: - Observers
 
   @objc func mainWindowDidClose() {

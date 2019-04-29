@@ -34,6 +34,10 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
     return true
   }
 
+  func applicationWillTerminate() {
+    dependencyContainer?.machineController.applicationWillTerminate()
+  }
+
   // MARK: - Observers
 
   @objc func mainWindowDidClose() {

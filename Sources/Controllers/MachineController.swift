@@ -70,6 +70,15 @@ class MachineController {
     try dictionary.write(to: url)
   }
 
+  func applicationWillTerminate() {
+    guard let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl else {
+      return
+    }
+    let computerInfoUrl = machineInfoDestination(for: syncaliciousUrl, fileName: "Computer.plist")
+    machine.state = .turnedOff
+    try? updateMachineInfoPlist(to: computerInfoUrl)
+  }
+
   func createMachineBackupDestinationIfNeeded(at destination: URL) throws {
     let url = machineBackupDestination(for: destination, on: machine)
     if !FileManager.default.fileExists(atPath: url.path) {

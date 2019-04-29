@@ -69,6 +69,8 @@ class BackupController {
           try fileManager.removeItem(at: destination)
         }
         try fileManager.copyItem(at: from, to: destination)
+        try fileManager.setAttributes([FileAttributeKey.modificationDate: Date()],
+                                      ofItemAtPath: destination.path)
       } catch let error {
         debugPrint(error)
       }

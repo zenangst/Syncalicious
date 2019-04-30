@@ -179,8 +179,8 @@ class DestinationViewController: ViewController {
     let syncLabel = Label.init(labelWithString: "To sync and make backups of your preferences files, Syncalicious needs a directory to use as a home.")
     syncLabel.maximumNumberOfLines = -1
     syncLabel.lineBreakMode = .byWordWrapping
-    syncIcon.image = NSImage.init(named: "Synced")
-    syncIcon.contentTintColor = NSColor.init(named: "Green")
+    syncIcon.image = NSImage.init(named: "Preferences")
+    syncIcon.contentTintColor = NSColor.init(named: "Light Blue")
     let syncRow = gridView.addRow(with: [syncIcon, syncLabel])
     syncRow.yPlacement = .center
 

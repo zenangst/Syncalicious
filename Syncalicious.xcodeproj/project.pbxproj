@@ -54,6 +54,7 @@
 		BD9313872251703400D116E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9313862251703400D116E4 /* AppDelegate.swift */; };
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
+		BD9B7C34227788C100472B41 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9B7C33227788C100472B41 /* SearchField.swift */; };
 		BDA1C3D72271A8A6009185DE /* ApplicationComputerDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */; };
 		BDA1C3D92271B73B009185DE /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D82271B73B009185DE /* CollectionViewHeader.swift */; };
 		BDA69E7822730B3100EF60E5 /* AppDelegateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */; };
@@ -146,6 +147,7 @@
 		BD93138B2251703700D116E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BD93138D2251703700D116E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD93138E2251703700D116E4 /* Syncalicious.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syncalicious.entitlements; sourceTree = "<group>"; };
+		BD9B7C33227788C100472B41 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationComputerDetailItem.swift; sourceTree = "<group>"; };
 		BDA1C3D82271B73B009185DE /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
 		BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateController.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				BD4A69392253DCF100F588AD /* MainWindow.swift */,
 				BD895C00225A67C200DEC9FE /* PrototypeItem.swift */,
 				BD895C02225A681D00DEC9FE /* PrototypeView.swift */,
+				BD9B7C33227788C100472B41 /* SearchField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -447,10 +450,10 @@
 		BDDAA33C225DB55A00D87664 /* Factories */ = {
 			isa = PBXGroup;
 			children = (
+				BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */,
 				BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */,
 				BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */,
 				BDDAA33D225DB56B00D87664 /* WindowFactory.swift */,
-				BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -681,6 +684,7 @@
 				BD62D2F022675F54007B047B /* ApplicationDetailFeatureViewController.swift in Sources */,
 				BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */,
 				BD7D961F22532BA100C93211 /* UserDefaults+Extensions.swift in Sources */,
+				BD9B7C34227788C100472B41 /* SearchField.swift in Sources */,
 				BD7D9617225290C800C93211 /* PreferencesController.swift in Sources */,
 				BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */,
 				BD62D2EA226727C0007B047B /* ApplicationListContainerViewController.swift in Sources */,

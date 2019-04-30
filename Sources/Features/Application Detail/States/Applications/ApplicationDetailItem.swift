@@ -19,6 +19,8 @@ class ApplicationDetailItem: CollectionViewItem, CollectionViewItemComponent {
     titleLabel.drawsBackground = false
     titleLabel.isBezeled = false
     titleLabel.font = NSFont.boldSystemFont(ofSize: 13)
+    titleLabel.lineBreakMode = .byTruncatingMiddle
+    titleLabel.maximumNumberOfLines = 2
     titleLabel.alignment = .center
 
     layoutConstraints = [

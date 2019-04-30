@@ -12,11 +12,11 @@ class PermissionViewController: ViewController {
 
   lazy var iconView = NSImageView()
   lazy var titleLabel = BoldLabel()
-  lazy var doneButton = NSButton(title: "All done!", target: self, action: #selector(doneButton(_:)))
   lazy var gridView = NSGridView()
-  lazy var permissionsButton = NSButton(title: "System preferences",
-                                      target: self,
-                                      action: #selector(grantPermission(_:)))
+  lazy var doneButton = NSButton(title: "All done!", target: self,
+                                 action: #selector(doneButton(_:)))
+  lazy var permissionsButton = NSButton(title: "System preferences", target: self,
+                                        action: #selector(grantPermission(_:)))
 
   let factory = AnimationFactory()
 

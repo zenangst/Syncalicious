@@ -10,7 +10,8 @@ class WelcomeViewController: ViewController {
 
   lazy var iconView = NSImageView()
   lazy var titleLabel = BoldLabel()
-  lazy var button = NSButton(title: "Get started", target: self, action: #selector(getStarted(_:)))
+  lazy var button = NSButton(title: "Get started", target: self,
+                             action: #selector(getStarted(_:)))
   lazy var gridView = NSGridView()
 
   let factory = AnimationFactory()

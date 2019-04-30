@@ -12,10 +12,12 @@ protocol BackupControllerDelegate: class {
 
 class BackupController {
   weak var delegate: BackupControllerDelegate?
-  var applications = [Application]()
-  var openPanel: NSOpenPanel?
+
   let machineController: MachineController
   let fileManager = FileManager.default
+
+  var applications = [Application]()
+  var openPanel: NSOpenPanel?
 
   init(machineController: MachineController) {
     self.machineController = machineController

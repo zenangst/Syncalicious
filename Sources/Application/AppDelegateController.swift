@@ -102,7 +102,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
   // MARK: - Private methods
 
   private func createDependencyContainer() throws -> DependencyContainer {
-    guard let backupDestination = UserDefaults.standard.syncaliciousUrl else {
+    guard let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl else {
       throw DependencyContainerError.noBackupDestination
     }
 
@@ -114,7 +114,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
     let iconController = IconController()
     let machineController = try MachineController(host: Host.current(),
                                                   iconController: iconController)
-    try machineController.createMachineInfoDestination(at: backupDestination)
+    try machineController.createMachineInfoDestination(at: syncaliciousUrl)
     machineController.delegate = self
 
     let infoPlistController = InfoPropertyListController()
@@ -126,7 +126,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                                                       preferencesController: preferencesController,
                                                       shellController: shellController)
     let backupController = BackupController(machineController: machineController)
-    let syncController = SyncController(destination: backupDestination.appendingPathComponent("Sync"),
+    let syncController = SyncController(destination: syncaliciousUrl.appendingPathComponent("Sync"),
                                         machineController: machineController,
                                         shellController: shellController)
     let dependencyContainer = DependencyContainer(applicationController: applicationController,

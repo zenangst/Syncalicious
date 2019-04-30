@@ -2,16 +2,16 @@ import Cocoa
 import Family
 
 class ApplicationDetailContainerViewController: FamilyViewController {
-  let applicationInfoViewController: ApplicationDetailInfoViewController
-  let applicationComputersViewController: ApplicationComputerDetailItemViewController
-  let applicationsDetailViewController: ApplicationDetailItemViewController
+  let infoViewController: ApplicationDetailInfoViewController
+  let computersViewController: ApplicationComputerDetailItemViewController
+  let detailViewController: ApplicationDetailItemViewController
 
   init(applicationInfoViewController: ApplicationDetailInfoViewController,
        applicationComputersViewController: ApplicationComputerDetailItemViewController,
        applicationsDetailViewController: ApplicationDetailItemViewController) {
-    self.applicationInfoViewController = applicationInfoViewController
-    self.applicationComputersViewController = applicationComputersViewController
-    self.applicationsDetailViewController = applicationsDetailViewController
+    self.infoViewController = applicationInfoViewController
+    self.computersViewController = applicationComputersViewController
+    self.detailViewController = applicationsDetailViewController
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -23,14 +23,14 @@ class ApplicationDetailContainerViewController: FamilyViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    addChild(applicationsDetailViewController,
+    addChild(detailViewController,
              customInsets: .init(top: 0, left: 30, bottom: 15, right: 30),
              view: { $0.collectionView })
-    addChild(applicationInfoViewController,
+    addChild(infoViewController,
              customInsets: .init(top: 15, left: 30, bottom: 15, right: 30))
-    addChild(applicationComputersViewController,
+    addChild(computersViewController,
              customInsets: .init(top: 15, left: 0, bottom: 0, right: 0),
              view: { $0.collectionView })
-    applicationComputersViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]
+    computersViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]
   }
 }

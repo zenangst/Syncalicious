@@ -122,10 +122,10 @@ class ApplicationDetailInfoViewController: ViewController {
       BoldLabel(text: "Location:"),
       Label(text: application.url.path)]))
 
-    if let backupDestination = UserDefaults.standard.syncaliciousUrl {
+    if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl {
       let backupDate = backupController.doesBackupExists(for: application,
                                                          on: machineController.machine,
-                                                         at: backupDestination)
+                                                         at: syncaliciousUrl)
       if let backupDate = backupDate {
         let dateString = iso8601DateFormatter.string(from: backupDate)
         stackView.addArrangedSubview(createStackView(.horizontal, views: [

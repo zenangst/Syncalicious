@@ -12,11 +12,11 @@ class DestinationViewController: ViewController {
 
   lazy var iconView = NSImageView()
   lazy var titleLabel = BoldLabel()
-  lazy var nextButton = NSButton(title: "Next", target: self, action: #selector(nextScreen(_:)))
+  lazy var nextButton = NSButton(title: "Next", target: self,
+                                 action: #selector(nextScreen(_:)))
   lazy var gridView = NSGridView()
   lazy var directoryLabel = Label.init(labelWithString: "No destination")
-  lazy var directoryButton = NSButton(title: "Select directory",
-                                      target: self,
+  lazy var directoryButton = NSButton(title: "Select directory", target: self,
                                       action: #selector(selectDirectory(_:)))
 
   let factory = AnimationFactory()

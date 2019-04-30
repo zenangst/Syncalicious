@@ -72,30 +72,30 @@ class ApplicationDetailFeatureViewController: NSViewController,
         .compactMap({ ApplicationDetailItemModel(title: $0.propertyList.bundleName,
                                                  application: $0) })
       titleLabel.stringValue = "Multi selection (\(models.count))"
-      containerViewController.applicationsDetailViewController.collectionView.isHidden = false
-      containerViewController.applicationInfoViewController.view.isHidden = true
-      containerViewController.applicationComputersViewController.reload(with: [])
-      containerViewController.applicationsDetailViewController.reload(with: models)
+      containerViewController.detailViewController.collectionView.isHidden = false
+      containerViewController.infoViewController.view.isHidden = true
+      containerViewController.computersViewController.reload(with: [])
+      containerViewController.detailViewController.reload(with: models)
     case .single(let application):
-      containerViewController.applicationInfoViewController.view.isHidden = false
-      containerViewController.applicationsDetailViewController.collectionView.isHidden = true
-      containerViewController.applicationsDetailViewController.reload(with: [])
-      containerViewController.applicationInfoViewController.render(application,
+      containerViewController.infoViewController.view.isHidden = false
+      containerViewController.detailViewController.collectionView.isHidden = true
+      containerViewController.detailViewController.reload(with: [])
+      containerViewController.infoViewController.render(application,
                                                                    backupController: backupController,
                                                                    iconController: iconController,
                                                                    syncController: syncController,
                                                                    machineController: machineController)
 
-      if let backupDestination = UserDefaults.standard.syncaliciousUrl {
+      if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl {
         let closure: (Machine) -> ApplicationComputerDetailItemModel = { machine in
-          let image = backupDestination
+          let image = syncaliciousUrl
             .appendingPathComponent(machine.name)
             .appendingPathComponent("Info")
             .appendingPathComponent("Computer.tiff")
           let synced = self.syncController.applicationIsSynced(application, on: machine)
           let backupDate = self.backupController.doesBackupExists(for: application,
-                                                                on: machine,
-                                                                at: UserDefaults.standard.syncaliciousUrl!)
+                                                                  on: machine,
+                                                                  at: UserDefaults.standard.syncaliciousUrl!)
           return ApplicationComputerDetailItemModel(title: machine.localizedName,
                                                     subtitle: machine.state.rawValue.capitalized,
                                                     backupDate: backupDate,
@@ -107,7 +107,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
         var models = [ApplicationComputerDetailItemModel]()
         models.append(closure(machineController.machine))
         models.append(contentsOf: machines.compactMap(closure))
-        containerViewController.applicationComputersViewController.reload(with: models)
+        containerViewController.computersViewController.reload(with: models)
       }
 
       NSLayoutConstraint.deactivate(layoutConstraints)
@@ -126,7 +126,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
         titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
         ])
 
-      containerViewController.applicationInfoViewController.delegate = self
+      containerViewController.infoViewController.delegate = self
 
       NSLayoutConstraint.activate(layoutConstraints)
     }
@@ -152,8 +152,8 @@ class ApplicationDetailFeatureViewController: NSViewController,
   func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
                                            didTapBackup backupButton: NSButton,
                                            on application: Application) {
-    guard let backupDestination = UserDefaults.standard.syncaliciousUrl else { return }
-    try? backupController.runBackup(for: [application], to: backupDestination)
+    guard let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl else { return }
+    try? backupController.runBackup(for: [application], to: syncaliciousUrl)
     render(.single(application))
     refreshApplicationList()
   }

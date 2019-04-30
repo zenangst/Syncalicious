@@ -31,7 +31,8 @@ class ApplicationDetailInfoViewController: ViewController {
               syncController: SyncController,
               machineController: MachineController) {
     self.application = application
-    let applicationIsSynced = syncController.applicationIsSynced(application, on: machineController.machine)
+    let applicationIsSynced = syncController.applicationIsSynced(application,
+                                                                 on: machineController.machine)
 
     view.subviews.forEach { $0.removeFromSuperview() }
     stackView.subviews.forEach { $0.removeFromSuperview() }
@@ -62,27 +63,19 @@ class ApplicationDetailInfoViewController: ViewController {
       leftStackView.setCustomSpacing(20, after: iconView)
       horizontalStackView.addArrangedSubview(leftStackView)
     } else {
-      let backupButton: NSButton
-      if backupController.doesBackupExists(for: application, on: machineController.machine, at: UserDefaults.standard.syncaliciousUrl!) != nil {
-        backupButton = Button(title: "Backup",
-                              backgroundColor: NSColor(named: "Green")!,
-                              borderColor: NSColor(named: "Green")!,
-                              borderWidth: 1.5,
-                              cornerRadius: .custom(4),
-                              target: self,
-                              action: #selector(performBackup))
-      } else {
-        backupButton = Button(title: "Backup",
-                              backgroundColor: NSColor.clear,
-                              borderColor: NSColor(named: "Green")!,
-                              borderWidth: 1.5,
-                              cornerRadius: .custom(4),
-                              target: self,
-                              action: #selector(performBackup))
-      }
+      let backupExists = backupController.doesBackupExists(for: application,
+                                                           on: machineController.machine,
+                                                           at: UserDefaults.standard.syncaliciousUrl!) != nil
+      let backupButton = Button(title: "Backup",
+                                backgroundColor: backupExists ? NSColor(named: "Green")! : NSColor.clear,
+                                borderColor: NSColor(named: "Green")!,
+                                borderWidth: 1.5,
+                                cornerRadius: .custom(4),
+                                target: self,
+                                action: #selector(performBackup))
 
       let syncButton: NSButton
-      if syncController.applicationIsSynced(application, on: machineController.machine) {
+      if applicationIsSynced {
         syncButton = Button(title: "Unsync",
                             backgroundColor: NSColor.init(named: "Blue")!,
                             borderColor: NSColor.init(named: "Blue")!,

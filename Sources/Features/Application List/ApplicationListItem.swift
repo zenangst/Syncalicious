@@ -21,8 +21,8 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
     view.addSubview(subtitleLabel)
     view.addSubview(syncView)
     syncView.image = NSImage(named: "Synced")
-
-    iconView.contentTintColor = NSColor.controlAccentColor
+    syncView.image?.isTemplate = true
+    syncView.contentTintColor = NSColor.controlAccentColor
 
     let verticalStackView = NSStackView(views: [titleLabel, subtitleLabel])
     verticalStackView.alignment = .left
@@ -60,6 +60,7 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
       syncView.widthAnchor.constraint(equalToConstant: 32)
     ]
     NSLayoutConstraint.constrain(layoutConstraints)
+    updateState()
   }
 
   override func prepareForReuse() {
@@ -69,9 +70,15 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
 
   private func updateState() {
     if isSelected {
-      view.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.33).cgColor
+      view.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.2).cgColor
+      syncView.contentTintColor = NSColor.controlAccentColor
+      titleLabel.textColor = NSColor.controlAccentColor.blended(withFraction: 0.75, of: .textColor)
+      subtitleLabel.textColor = NSColor.controlAccentColor.blended(withFraction: 0.4, of: .textColor)
     } else {
       view.layer?.backgroundColor = NSColor.clear.cgColor
+      syncView.contentTintColor = NSColor.controlAccentColor
+      titleLabel.textColor = NSColor.textColor
+      subtitleLabel.textColor = NSColor.textColor.blended(withFraction: 0.4, of: .white)
     }
   }
 }

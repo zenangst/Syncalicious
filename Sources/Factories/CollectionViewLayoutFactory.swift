@@ -13,10 +13,9 @@ class CollectionViewLayoutFactory {
 
   func createComputerLayout() -> NSCollectionViewFlowLayout {
     let layout = HorizontalBlueprintLayout(itemsPerRow: 2,
-                                           itemsPerColumn: 1,
                                            height: 212,
-                                           minimumInteritemSpacing: 15,
-                                           minimumLineSpacing: 15,
+                                           minimumInteritemSpacing: 10,
+                                           minimumLineSpacing: 10,
                                            sectionInset: .init(top: 0, left: 20, bottom: 20, right: 20))
     return layout
   }

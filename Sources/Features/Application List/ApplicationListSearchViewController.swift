@@ -8,7 +8,7 @@ protocol ApplicationListSearchViewControllerDelegate: class {
 }
 
 class ApplicationListSearchViewController: ViewController, NSSearchFieldDelegate {
-  private(set) lazy var searchField = NSSearchField()
+  private(set) lazy var searchField = SearchField()
   weak var delegate: ApplicationListSearchViewControllerDelegate?
 
   override func viewDidLoad() {
@@ -17,6 +17,7 @@ class ApplicationListSearchViewController: ViewController, NSSearchFieldDelegate
     view.subviews.forEach { $0.removeFromSuperview() }
 
     searchField.delegate = self
+    searchField.focusRingType = .none
     searchField.sendsSearchStringImmediately = true
     searchField.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(searchField)

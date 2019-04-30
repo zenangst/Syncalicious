@@ -42,9 +42,9 @@ class ApplicationDetailInfoViewController: ViewController {
     let iconView = NSImageView()
     iconView.imageScaling = .scaleProportionallyUpOrDown
 
-    iconController.loadIcon(at: application.url, identifier: application.propertyList.bundleIdentifier) { (image) in
-      iconView.image = image
-    }
+    iconController.loadIcon(at: application.url,
+                            identifier: application.propertyList.bundleIdentifier,
+                            queue: nil) { iconView.image = $0 }
 
     let nameLabel = Label(text: application.propertyList.bundleName)
     nameLabel.font = NSFont.boldSystemFont(ofSize: 32)

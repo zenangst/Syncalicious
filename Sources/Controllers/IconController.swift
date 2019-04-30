@@ -20,11 +20,17 @@ class IconController {
 
   // MARK: - Public methods
 
-  func loadIcon(at path: URL, identifier: String, then handler: @escaping (NSImage?) -> Void) {
-    DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-      guard let strongSelf = self else { return }
-      let image = strongSelf.icon(at: path, identifier: identifier)
-      DispatchQueue.main.async { handler(image) }
+  func loadIcon(at path: URL, identifier: String,
+                queue: DispatchQueue? = DispatchQueue.global(qos: .userInteractive),
+                then handler: @escaping (NSImage?) -> Void) {
+    if let queue = queue {
+      queue.async { [weak self] in
+        guard let strongSelf = self else { return }
+        let image = strongSelf.icon(at: path, identifier: identifier)
+        DispatchQueue.main.async { handler(image) }
+      }
+    } else {
+      handler(icon(at: path, identifier: identifier))
     }
   }
 

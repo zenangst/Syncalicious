@@ -13,14 +13,17 @@ class ApplicationListFeatureViewController: NSViewController,
 
   weak var delegate: ApplicationListFeatureViewControllerDelegate?
 
+  lazy var titlebarView = NSView()
+  lazy var titleLabel = SmallLabel()
+
   let iconController: IconController
   let syncController: SyncController
   let machineController: MachineController
   let containerViewController: ApplicationListContainerViewController
-  lazy var titlebarView = NSView()
-  lazy var titleLabel = SmallLabel()
+
   var applications = [Application]()
   var sort: ApplicationListSortViewController.SortKind = UserDefaults.standard.listSort ?? .name
+
   private var layoutConstraints = [NSLayoutConstraint]()
 
   init(containerViewController: ApplicationListContainerViewController,
@@ -40,6 +43,14 @@ class ApplicationListFeatureViewController: NSViewController,
 
   override func loadView() {
     view = containerViewController.view
+
+    NotificationCenter.default.addObserver(self, selector: #selector(mainWindowDidResignKey),
+                                           name: MainWindowNotification.didResign.notificationName,
+                                           object: nil)
+
+    NotificationCenter.default.addObserver(self, selector: #selector(mainWindowDidBecomeKey),
+                                           name: MainWindowNotification.becomeKey.notificationName,
+                                           object: nil)
   }
 
   override func viewDidLoad() {
@@ -49,11 +60,13 @@ class ApplicationListFeatureViewController: NSViewController,
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = []
 
-    titlebarView.subviews.forEach { $0.removeFromSuperview() }
     titleLabel.alignment = .center
     titleLabel.stringValue = title!
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+    titlebarView.subviews.forEach { $0.removeFromSuperview() }
     titlebarView.wantsLayer = true
+    titlebarView.layer?.backgroundColor =  NSColor.windowBackgroundColor.cgColor
     titlebarView.addSubview(titleLabel)
 
     layoutConstraints.append(contentsOf: [
@@ -68,6 +81,9 @@ class ApplicationListFeatureViewController: NSViewController,
     containerViewController.searchViewController.delegate = self
     containerViewController.sortViewController.delegate = self
   }
+
+  @objc func mainWindowDidResignKey() { containerViewController.listViewController.collectionView.alphaValue = 0.8 }
+  @objc func mainWindowDidBecomeKey() { containerViewController.listViewController.collectionView.alphaValue = 1.0 }
 
   func render(applications: [Application], sort: ApplicationListSortViewController.SortKind? = nil) {
     let sort = sort ?? self.sort

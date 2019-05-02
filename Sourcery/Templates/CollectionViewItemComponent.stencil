@@ -47,10 +47,6 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController, Component
                             withIdentifier: headerIdentifier)
     let itemIdentifier = NSUserInterfaceItemIdentifier.init("{{type.name}}")
     collectionView.register({{type.name}}.self, forItemWithIdentifier: itemIdentifier)
-
-    if title != nil {
-      layout.headerReferenceSize.height = 40
-    }
   }
 
   // MARK: - Public API
@@ -64,6 +60,7 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController, Component
   }
 
   func reload(with models: [{{type.name}}Model], completion: (() -> Void)? = nil) {
+    layout.headerReferenceSize.height = title != nil && !models.isEmpty ? 40 : 0
     dataSource.reload(collectionView, with: models, then: completion)
   }
 }

@@ -49,10 +49,6 @@ class ApplicationComputerDetailItemViewController: NSViewController, Component {
                             withIdentifier: headerIdentifier)
     let itemIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationComputerDetailItem")
     collectionView.register(ApplicationComputerDetailItem.self, forItemWithIdentifier: itemIdentifier)
-
-    if title != nil {
-      layout.headerReferenceSize.height = 40
-    }
   }
 
   // MARK: - Public API
@@ -66,6 +62,7 @@ class ApplicationComputerDetailItemViewController: NSViewController, Component {
   }
 
   func reload(with models: [ApplicationComputerDetailItemModel], completion: (() -> Void)? = nil) {
+    layout.headerReferenceSize.height = title != nil && !models.isEmpty ? 40 : 0
     dataSource.reload(collectionView, with: models, then: completion)
   }
 }
@@ -196,10 +193,6 @@ class ApplicationDetailItemViewController: NSViewController, Component {
                             withIdentifier: headerIdentifier)
     let itemIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationDetailItem")
     collectionView.register(ApplicationDetailItem.self, forItemWithIdentifier: itemIdentifier)
-
-    if title != nil {
-      layout.headerReferenceSize.height = 40
-    }
   }
 
   // MARK: - Public API
@@ -213,6 +206,7 @@ class ApplicationDetailItemViewController: NSViewController, Component {
   }
 
   func reload(with models: [ApplicationDetailItemModel], completion: (() -> Void)? = nil) {
+    layout.headerReferenceSize.height = title != nil && !models.isEmpty ? 40 : 0
     dataSource.reload(collectionView, with: models, then: completion)
   }
 }
@@ -336,10 +330,6 @@ class ApplicationKeyboardBindingItemViewController: NSViewController, Component 
                             withIdentifier: headerIdentifier)
     let itemIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationKeyboardBindingItem")
     collectionView.register(ApplicationKeyboardBindingItem.self, forItemWithIdentifier: itemIdentifier)
-
-    if title != nil {
-      layout.headerReferenceSize.height = 40
-    }
   }
 
   // MARK: - Public API
@@ -353,6 +343,7 @@ class ApplicationKeyboardBindingItemViewController: NSViewController, Component 
   }
 
   func reload(with models: [ApplicationKeyboardBindingItemModel], completion: (() -> Void)? = nil) {
+    layout.headerReferenceSize.height = title != nil && !models.isEmpty ? 40 : 0
     dataSource.reload(collectionView, with: models, then: completion)
   }
 }
@@ -476,10 +467,6 @@ class ApplicationListItemViewController: NSViewController, Component {
                             withIdentifier: headerIdentifier)
     let itemIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationListItem")
     collectionView.register(ApplicationListItem.self, forItemWithIdentifier: itemIdentifier)
-
-    if title != nil {
-      layout.headerReferenceSize.height = 40
-    }
   }
 
   // MARK: - Public API
@@ -493,6 +480,7 @@ class ApplicationListItemViewController: NSViewController, Component {
   }
 
   func reload(with models: [ApplicationListItemModel], completion: (() -> Void)? = nil) {
+    layout.headerReferenceSize.height = title != nil && !models.isEmpty ? 40 : 0
     dataSource.reload(collectionView, with: models, then: completion)
   }
 }

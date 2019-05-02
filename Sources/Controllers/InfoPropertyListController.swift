@@ -7,7 +7,7 @@ enum InfoPropertyListError: Error {
 }
 
 class InfoPropertyListController {
-  func load(at url: URL) throws -> InfoPropertyList {
+  func load(at url: URL) throws -> ApplicationPropertyList {
     let path = url.path
     let fileExists = FileManager.default.fileExists(atPath: path)
 
@@ -26,17 +26,11 @@ class InfoPropertyListController {
     let defaultsDomain = contents.value(forPropertyListKey: .defaultsDomain)
     let versionString = contents.value(forPropertyListKey: .versionString) ?? ""
 
-    return InfoPropertyList(buildVersion: buildVersion,
+    return ApplicationPropertyList(buildVersion: buildVersion,
                             bundleIdentifier: bundleIdentifier,
                             bundleName: bundleName,
                             defaultsDomain: defaultsDomain,
                             path: path,
                             versionString: versionString)
-  }
-}
-
-fileprivate extension NSDictionary {
-  func value(forPropertyListKey key: InfoPropertyListKey) -> String? {
-    return value(forKey: key.rawValue) as? String
   }
 }

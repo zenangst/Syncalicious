@@ -7,6 +7,7 @@ enum PreferenceKind: String, Hashable {
 
 struct Preferences: Hashable {
   let fileName: String
+  let keyEquivalents: [String: String]?
   let kind: PreferenceKind
   let url: URL
 }

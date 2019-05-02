@@ -76,15 +76,25 @@ class ApplicationDetailFeatureViewController: NSViewController,
       containerViewController.infoViewController.view.isHidden = true
       containerViewController.computersViewController.reload(with: [])
       containerViewController.detailViewController.reload(with: models)
+      containerViewController.keyboardShortcutViewController.reload(with: [])
     case .single(let application):
       containerViewController.infoViewController.view.isHidden = false
       containerViewController.detailViewController.collectionView.isHidden = true
       containerViewController.detailViewController.reload(with: [])
       containerViewController.infoViewController.render(application,
-                                                                   backupController: backupController,
-                                                                   iconController: iconController,
-                                                                   syncController: syncController,
-                                                                   machineController: machineController)
+                                                        backupController: backupController,
+                                                        iconController: iconController,
+                                                        syncController: syncController,
+                                                        machineController: machineController)
+      var keyboardShortcuts = [ApplicationKeyboardBindingItemModel]()
+
+      if let keyboardContents = application.preferences.keyEquivalents {
+        for (key, value) in keyboardContents {
+          keyboardShortcuts.append(ApplicationKeyboardBindingItemModel(menuTitle: key, keyboardShortcut: value))
+        }
+      }
+
+      containerViewController.keyboardShortcutViewController.reload(with: keyboardShortcuts)
 
       if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl {
         let closure: (Machine) -> ApplicationComputerDetailItemModel = { machine in

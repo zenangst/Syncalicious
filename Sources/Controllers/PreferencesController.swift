@@ -1,7 +1,8 @@
 import Foundation
 
 enum PreferencesControllerError: Error {
-  case unableToFindPreferenceFile
+  case findPreferenceFileFailed
+  case parseContentsFailed
 }
 
 class PreferencesController {
@@ -12,7 +13,7 @@ class PreferencesController {
     self.libraryDirectory = libraryDirectory
   }
 
-  func load(_ infoPlist: InfoPropertyList) throws -> Preferences {
+  func load(_ infoPlist: ApplicationPropertyList) throws -> Preferences {
     let suffix = "Preferences/\(infoPlist.bundleIdentifier).plist"
     let applicationPreference = libraryDirectory.appendingPathComponent(suffix)
     let containerPreferenceUrl = libraryDirectory
@@ -31,22 +32,36 @@ class PreferencesController {
     defaultsDomainContainerUrl?.resolveSymlinksInPath()
     defaultsDomainLibraryUrl?.resolveSymlinksInPath()
 
+    let propertyListUrl: URL
+    let preferenceKind: PreferenceKind
+
     if let defaultsDomainUrl = defaultsDomainContainerUrl,
       FileManager.default.fileExists(atPath: defaultsDomainUrl.path) {
-      return Preferences(fileName: defaultsDomainUrl.lastPathComponent,
-                         kind: .container, url: defaultsDomainUrl)
+      propertyListUrl = defaultsDomainUrl
+      preferenceKind = .container
     } else if FileManager.default.fileExists(atPath: containerPreferenceUrl.path) {
-      return Preferences(fileName: containerPreferenceUrl.lastPathComponent,
-                         kind: .container, url: containerPreferenceUrl)
+      propertyListUrl = containerPreferenceUrl
+      preferenceKind = .container
     } else if let defaultsDomainUrl = defaultsDomainLibraryUrl,
       FileManager.default.fileExists(atPath: defaultsDomainUrl.path) {
-      return Preferences(fileName: defaultsDomainUrl.lastPathComponent,
-                         kind: .library, url: defaultsDomainUrl)
+      propertyListUrl = defaultsDomainUrl
+      preferenceKind = .library
     } else if FileManager.default.fileExists(atPath: applicationPreference.path) {
-      return Preferences(fileName: applicationPreference.lastPathComponent,
-                         kind: .library, url: applicationPreference)
+      propertyListUrl = applicationPreference
+      preferenceKind = .library
+    } else {
+      throw PreferencesControllerError.findPreferenceFileFailed
     }
 
-    throw PreferencesControllerError.unableToFindPreferenceFile
+    guard let contents = NSDictionary.init(contentsOfFile: propertyListUrl.path) else {
+      throw PreferencesControllerError.parseContentsFailed
+    }
+
+    let keyEquivalents = contents.value(forPropertyListKey: .keyEquivalents,
+                                        ofType: [String: String].self)
+
+    return Preferences(fileName: propertyListUrl.lastPathComponent,
+                       keyEquivalents: keyEquivalents,
+                       kind: preferenceKind, url: propertyListUrl)
   }
 }

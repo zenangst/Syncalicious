@@ -19,16 +19,16 @@ class ApplicationListSearchViewController: ViewController, NSSearchFieldDelegate
     searchField.delegate = self
     searchField.focusRingType = .none
     searchField.sendsSearchStringImmediately = true
-    searchField.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(searchField)
 
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = [
       searchField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
       searchField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      searchField.widthAnchor.constraint(greaterThanOrEqualToConstant: 240)
+      searchField.widthAnchor.constraint(greaterThanOrEqualToConstant: 240),
+      searchField.heightAnchor.constraint(equalTo: view.heightAnchor)
     ]
-    NSLayoutConstraint.activate(layoutConstraints)
+    NSLayoutConstraint.constrain(layoutConstraints)
 
     view.frame.size.height = 28
   }

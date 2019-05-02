@@ -1,7 +1,7 @@
 PODS:
-  - Blueprints (0.10.3)
+  - Blueprints (0.10.5)
   - Differific (0.7.1)
-  - Family (0.14.12)
+  - Family (0.14.15)
 
 DEPENDENCIES:
   - Blueprints
@@ -15,9 +15,9 @@ SPEC REPOS:
     - Family
 
 SPEC CHECKSUMS:
-  Blueprints: 8c96d5c4fb9f59cabbc3fd8516984fa3850b7ee9
+  Blueprints: 0cd68556432de83fa3937108ee959d0afffd455e
   Differific: 8624df953dd5254fb7708ce28529fdda11b08e3b
-  Family: b4c2fc8f590dd3e8b4288aaddb9e7df0ca6c1011
+  Family: adea29853dbebdb3054bcb33229decc598c7645a
 
 PODFILE CHECKSUM: ebedcde7b481251b46b737f8c9c8f281e62c2e22
 

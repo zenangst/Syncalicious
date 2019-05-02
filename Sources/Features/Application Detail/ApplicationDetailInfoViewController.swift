@@ -154,7 +154,8 @@ class ApplicationDetailInfoViewController: ViewController {
       iconView.heightAnchor.constraint(equalToConstant: 128),
       horizontalStackView.topAnchor.constraint(equalTo: view.topAnchor),
       horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+      horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      stackView.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor)
     ])
     NSLayoutConstraint.activate(layoutConstraints)
   }
@@ -166,13 +167,17 @@ class ApplicationDetailInfoViewController: ViewController {
 
   // MARK: - Private methods
 
+  private func addStackView(_ stackView: NSStackView, to otherStackView: NSStackView) {
+    otherStackView.addArrangedSubview(stackView)
+  }
+
   private func createStackView(_ orientation: NSUserInterfaceLayoutOrientation, views: [NSView]) -> NSStackView {
     let stackView = NSStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.alignment = .leading
     stackView.orientation = orientation
     stackView.spacing = 5
     views.forEach { stackView.addArrangedSubview($0) }
+
     return stackView
   }
 

@@ -37,9 +37,13 @@ class ViewControllerFactory {
     let computersViewController = ApplicationComputerDetailItemViewController(title: "Computers",
                                                                               layout: layoutFactory.createComputerLayout(),
                                                                               iconController: iconController)
+    let keyboardViewController = ApplicationKeyboardBindingItemViewController(title: "Keyboard shortcuts",
+                                                                              layout: layoutFactory.createKeyboardShortcutLayout(),
+                                                                              iconController: iconController)
     let containerViewController = ApplicationDetailContainerViewController(applicationInfoViewController: applicationInfoViewController,
                                                                            applicationComputersViewController: computersViewController,
-                                                                           applicationsDetailViewController: applicationsDetailViewController)
+                                                                           applicationsDetailViewController: applicationsDetailViewController,
+                                                                           keyboardShortcutViewController: keyboardViewController)
     let featureViewController = ApplicationDetailFeatureViewController(applicationController: applicationController,
                                                                        backupController: backupController,
                                                                        containerViewController: containerViewController,

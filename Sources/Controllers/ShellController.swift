@@ -14,7 +14,6 @@ class ShellController {
 
 extension Process {
   public func shell(command: String) -> String {
-    let outputQueue = DispatchQueue.init(label: "shell-queue")
     let outputPipe = Pipe()
     let errorPipe = Pipe()
 
@@ -27,11 +26,11 @@ extension Process {
     var error = Data()
 
     outputPipe.fileHandleForReading.readabilityHandler = { handler in
-      outputQueue.async { result.append(handler.availableData) }
+      result.append(handler.availableData)
     }
 
     errorPipe.fileHandleForReading.readabilityHandler = { handler in
-      outputQueue.async { error.append(handler.availableData) }
+      error.append(handler.availableData)
     }
 
     launch()
@@ -40,9 +39,7 @@ extension Process {
     outputPipe.fileHandleForReading.readabilityHandler = nil
     errorPipe.fileHandleForReading.readabilityHandler = nil
 
-    return outputQueue.sync {
-      return result.string()
-    }
+    return result.string()
   }
 }
 

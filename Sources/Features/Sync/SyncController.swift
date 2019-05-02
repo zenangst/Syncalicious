@@ -16,6 +16,7 @@ class TargetApplication: NSObject {
 }
 
 class SyncController: NSObject {
+  let operationController = OperationController<DispatchOperation>()
   let destination: URL
   let shellController: ShellController
   let machineController: MachineController
@@ -89,7 +90,7 @@ class SyncController: NSObject {
   }
 
   func machineDidChangeState(newState state: Machine.State) {
-    guard state == .idle else { return }
+    guard state == .idle, !operationController.isExecuting else { return }
 
     let pending = destination
       .appendingPathComponent(machineController.machine.name)
@@ -100,8 +101,8 @@ class SyncController: NSObject {
                                                             return
     }
 
-    for file in files {
-      guard let application = applications.first(where: { $0.preferences.fileName == file.lastPathComponent }) else {
+    for fileUrl in files {
+      guard let application = applications.first(where: { $0.preferences.fileName == fileUrl.lastPathComponent }) else {
         continue
       }
 
@@ -109,14 +110,20 @@ class SyncController: NSObject {
         return $0.bundleIdentifier == application.propertyList.bundleIdentifier
       }
 
-      if let runningApplication = workspace.runningApplications.first(where: query) {
-        let targetApplication = TargetApplication(application: application,
-                                                  pendingUrl: file,
-                                                  runningApplication: runningApplication)
-        runningApplication.terminate()
-        perform(#selector(updatePreferencesAndRestartApplication), with: targetApplication, afterDelay: 0.5)
+      let runningApplication = workspace.runningApplications.first(where: query)
+      let syncOperation = createSyncOperation(for: application,
+                                          location: fileUrl,
+                                          runningApplication: runningApplication)
+      if runningApplication != nil {
+        let restartOperation = createRestartOperation(for: application)
+        restartOperation.addDependency(syncOperation)
+        operationController.add(restartOperation)
       }
+
+      operationController.add(syncOperation)
     }
+
+    operationController.execute()
   }
 
   // MARK: - Observers
@@ -126,6 +133,49 @@ class SyncController: NSObject {
   }
 
   // MARK: - Private methods
+
+  func createRestartOperation(for application: Application) -> DispatchOperation {
+    let operation = UIOperation({ [weak self] operation in
+      guard let strongSelf = self else {
+        operation.finish(true)
+        return
+      }
+      strongSelf.workspace.launchApplication(withBundleIdentifier: application.propertyList.bundleIdentifier,
+                                             options: [.withoutActivation],
+                                             additionalEventParamDescriptor: nil,
+                                             launchIdentifier: nil)
+      operation.finish(true)
+    })
+
+    return operation
+  }
+
+  func createSyncOperation(for application: Application,
+                           location: URL,
+                           runningApplication: NSRunningApplication?) -> DispatchOperation {
+    let operation = UtilityOperation({ [weak self] operation in
+      guard let strongSelf = self else {
+        operation.finish(true)
+        return
+      }
+
+      runningApplication?.terminate()
+
+      _ = try? strongSelf.fileManager.replaceItemAt(application.preferences.url, withItemAt: location)
+
+      if runningApplication != nil {
+        // Wait until the copy process is done.
+        Thread.sleep(until: Date() + 1)
+      }
+
+      strongSelf.shellController.execute(command: "defaults read \(application.propertyList.bundleIdentifier)")
+      try? strongSelf.fileManager.removeItem(at: location)
+      strongSelf.updateBadgeCounter()
+      debugPrint("🍫 Synced \(application.propertyList.bundleName)")
+      operation.finish(true)
+    })
+    return operation
+  }
 
   @objc private func updateBadgeCounter() {
     if let files = try? pendingFiles(), !files.isEmpty {
@@ -236,6 +286,7 @@ class SyncController: NSObject {
   }
 
   private func checkPendingFolder() throws {
+    guard !operationController.isExecuting else { return }
     let runningApplications = workspace.runningApplications
     let bundleIdentifiers = runningApplications.compactMap({ $0.bundleIdentifier })
     let files = try pendingFiles()
@@ -248,20 +299,12 @@ class SyncController: NSObject {
           continue
       }
 
-      runDefaultsShellScript(for: application, withFilePath: file.path)
-      try? fileManager.removeItem(at: file)
-      updateBadgeCounter()
+      let operation = createSyncOperation(for: application,
+                                      location: file,
+                                      runningApplication: nil)
+      operationController.add(operation)
     }
-  }
-
-  private func runDefaultsShellScript(for application: Application, withFilePath filePath: String) {
-    let command = """
-    defaults import \(application.preferences.url.path) "\(filePath)"
-    defaults read \(application.propertyList.bundleIdentifier)
-    """
-    shellController.execute(command: command)
-
-    debugPrint("🍫 Synced \(application.propertyList.bundleName)")
+    operationController.execute()
   }
 
   private func createMachineFolders(for application: Application, on machine: Machine) throws {
@@ -290,29 +333,5 @@ class SyncController: NSObject {
 
     // This should probably not be optional?
     try? fileManager.copyItem(at: from, to: toDestination)
-  }
-
-  @objc func updatePreferencesAndRestartApplication(_ targetApplication: TargetApplication) {
-    let delay: TimeInterval = 20
-    if !targetApplication.runningApplication.isTerminated {
-      perform(#selector(updatePreferencesAndRestartApplication), with: targetApplication, afterDelay: delay)
-      return
-    }
-
-    runDefaultsShellScript(for: targetApplication.application,
-                           withFilePath: targetApplication.pendingUrl.path)
-    try? fileManager.removeItem(at: targetApplication.pendingUrl)
-    updateBadgeCounter()
-
-    perform(#selector(restartApplication),
-            with: targetApplication.application.propertyList.bundleIdentifier,
-            afterDelay: delay)
-  }
-
-  @objc func restartApplication(with bundleIdentifier: String) {
-    workspace.launchApplication(withBundleIdentifier: bundleIdentifier,
-                                options: [.withoutActivation],
-                                additionalEventParamDescriptor: nil,
-                                launchIdentifier: nil)
   }
 }

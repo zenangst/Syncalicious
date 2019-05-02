@@ -115,6 +115,10 @@ class ApplicationDetailInfoViewController: ViewController {
       BoldLabel(text: "Location:"),
       Label(text: application.url.path)]))
 
+    stackView.addArrangedSubview(createStackView(.horizontal, views: [
+      BoldLabel(text: "Property list:"),
+      Label(text: application.preferences.url.path)]))
+
     if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl {
       let backupDate = backupController.doesBackupExists(for: application,
                                                          on: machineController.machine,

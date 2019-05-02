@@ -57,6 +57,14 @@
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
 		BD9B7C34227788C100472B41 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9B7C33227788C100472B41 /* SearchField.swift */; };
+		BD9DA448227B4B6100B745C0 /* CoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA447227B4B6100B745C0 /* CoreOperation.swift */; };
+		BD9DA44A227B4B7600B745C0 /* UIOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA449227B4B7600B745C0 /* UIOperation.swift */; };
+		BD9DA44C227B4B9700B745C0 /* DispatchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA44B227B4B9700B745C0 /* DispatchOperation.swift */; };
+		BD9DA44E227B4BAF00B745C0 /* UtilityOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA44D227B4BAF00B745C0 /* UtilityOperation.swift */; };
+		BD9DA450227B4BD400B745C0 /* Dispatchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA44F227B4BD400B745C0 /* Dispatchable.swift */; };
+		BD9DA452227B4BFA00B745C0 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA451227B4BFA00B745C0 /* DispatchQueue+Extensions.swift */; };
+		BD9DA454227B4C3C00B745C0 /* OperationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA453227B4C3C00B745C0 /* OperationController.swift */; };
+		BD9DA456227B4CEB00B745C0 /* OperationQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA455227B4CEB00B745C0 /* OperationQueue+Extensions.swift */; };
 		BDA1C3D72271A8A6009185DE /* ApplicationComputerDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */; };
 		BDA1C3D92271B73B009185DE /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D82271B73B009185DE /* CollectionViewHeader.swift */; };
 		BDA69E7822730B3100EF60E5 /* AppDelegateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */; };
@@ -152,6 +160,14 @@
 		BD93138D2251703700D116E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD93138E2251703700D116E4 /* Syncalicious.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syncalicious.entitlements; sourceTree = "<group>"; };
 		BD9B7C33227788C100472B41 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		BD9DA447227B4B6100B745C0 /* CoreOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreOperation.swift; sourceTree = "<group>"; };
+		BD9DA449227B4B7600B745C0 /* UIOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIOperation.swift; sourceTree = "<group>"; };
+		BD9DA44B227B4B9700B745C0 /* DispatchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchOperation.swift; sourceTree = "<group>"; };
+		BD9DA44D227B4BAF00B745C0 /* UtilityOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityOperation.swift; sourceTree = "<group>"; };
+		BD9DA44F227B4BD400B745C0 /* Dispatchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatchable.swift; sourceTree = "<group>"; };
+		BD9DA451227B4BFA00B745C0 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
+		BD9DA453227B4C3C00B745C0 /* OperationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationController.swift; sourceTree = "<group>"; };
+		BD9DA455227B4CEB00B745C0 /* OperationQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OperationQueue+Extensions.swift"; sourceTree = "<group>"; };
 		BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationComputerDetailItem.swift; sourceTree = "<group>"; };
 		BDA1C3D82271B73B009185DE /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
 		BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateController.swift; sourceTree = "<group>"; };
@@ -319,8 +335,10 @@
 			children = (
 				BDDAA345225DC88F00D87664 /* Application Detail */,
 				BDDAA344225DC87300D87664 /* Application List */,
+				BD9DA446227B4B0600B745C0 /* Backup */,
 				BDDAA343225DC86200D87664 /* Core */,
 				BD438BFF226AFFE800A21017 /* First Launch */,
+				BD9DA445227B4AFC00B745C0 /* Sync */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -328,10 +346,12 @@
 		BD7D961D22532B8F00C93211 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BD9DA451227B4BFA00B745C0 /* DispatchQueue+Extensions.swift */,
 				BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */,
+				BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */,
 				BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */,
 				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
-				BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */,
+				BD9DA455227B4CEB00B745C0 /* OperationQueue+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -425,6 +445,28 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		BD9DA445227B4AFC00B745C0 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				BD9DA447227B4B6100B745C0 /* CoreOperation.swift */,
+				BD9DA44F227B4BD400B745C0 /* Dispatchable.swift */,
+				BD9DA44B227B4B9700B745C0 /* DispatchOperation.swift */,
+				BD62D2E12262362C007B047B /* SyncController.swift */,
+				BD9DA449227B4B7600B745C0 /* UIOperation.swift */,
+				BD9DA44D227B4BAF00B745C0 /* UtilityOperation.swift */,
+				BD9DA453227B4C3C00B745C0 /* OperationController.swift */,
+			);
+			path = Sync;
+			sourceTree = "<group>";
+		};
+		BD9DA446227B4B0600B745C0 /* Backup */ = {
+			isa = PBXGroup;
+			children = (
+				BD7D961B22532B6900C93211 /* BackupController.swift */,
+			);
+			path = Backup;
+			sourceTree = "<group>";
+		};
 		BDA1C3D42271A887009185DE /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,8 +509,6 @@
 		BDDAA343225DC86200D87664 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				BD7D961B22532B6900C93211 /* BackupController.swift */,
-				BD62D2E12262362C007B047B /* SyncController.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -689,9 +729,11 @@
 				BD7D96192252912100C93211 /* Preferences.swift in Sources */,
 				BD62D2F022675F54007B047B /* ApplicationDetailFeatureViewController.swift in Sources */,
 				BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */,
+				BD9DA448227B4B6100B745C0 /* CoreOperation.swift in Sources */,
 				BD7D961F22532BA100C93211 /* UserDefaults+Extensions.swift in Sources */,
 				BD9B7C34227788C100472B41 /* SearchField.swift in Sources */,
 				BD7D9617225290C800C93211 /* PreferencesController.swift in Sources */,
+				BD9DA456227B4CEB00B745C0 /* OperationQueue+Extensions.swift in Sources */,
 				BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */,
 				BD62D2EA226727C0007B047B /* ApplicationListContainerViewController.swift in Sources */,
 				BD7D961C22532B6900C93211 /* BackupController.swift in Sources */,
@@ -724,6 +766,7 @@
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,
 				BD62D2E22262362C007B047B /* SyncController.swift in Sources */,
+				BD9DA452227B4BFA00B745C0 /* DispatchQueue+Extensions.swift in Sources */,
 				BD3CC24E225B1463006D7877 /* WindowController.swift in Sources */,
 				BDDAA339225D37DE00D87664 /* DividerView.swift in Sources */,
 				BD438BFE226A5E3B00A21017 /* FirstLaunchViewController.swift in Sources */,
@@ -731,7 +774,9 @@
 				BD895C01225A67C200DEC9FE /* PrototypeItem.swift in Sources */,
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
 				BDDAA347225DC89F00D87664 /* ApplicationDetailInfoViewController.swift in Sources */,
+				BD9DA450227B4BD400B745C0 /* Dispatchable.swift in Sources */,
 				BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */,
+				BD9DA44C227B4B9700B745C0 /* DispatchOperation.swift in Sources */,
 				BDAB1ED522702C4E00B1070F /* NSLayoutConstraint+Extensions.swift in Sources */,
 				BD8EDD892255CF7500110E56 /* Component.swift in Sources */,
 				BD8EDD7A22553A5A00110E56 /* CollectionViewItemComponent.swift in Sources */,
@@ -742,7 +787,10 @@
 				BD8EDD862255CF4800110E56 /* CollectionViewItemComponent.generated.swift in Sources */,
 				BD7D961322528ADB00C93211 /* ApplicationPropertyList.swift in Sources */,
 				BD9313872251703400D116E4 /* AppDelegate.swift in Sources */,
+				BD9DA454227B4C3C00B745C0 /* OperationController.swift in Sources */,
+				BD9DA44A227B4B7600B745C0 /* UIOperation.swift in Sources */,
 				BD2199D6226EFB7D00D86AA6 /* Button.swift in Sources */,
+				BD9DA44E227B4BAF00B745C0 /* UtilityOperation.swift in Sources */,
 				BD895C06225A693C00DEC9FE /* PrototypeItemComponent.swift in Sources */,
 				BD438BFB226A548D00A21017 /* GradientView.swift in Sources */,
 				BD2E976122702A2000C2CD98 /* DestinationViewController.swift in Sources */,

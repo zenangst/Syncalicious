@@ -122,6 +122,8 @@ class SplitViewController: NSSplitViewController {
 
         horizontalDivider.widthAnchor.constraint(equalToConstant: 1),
         horizontalDivider.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+        horizontalDivider.topAnchor.constraint(equalTo: self.view.topAnchor),
+        horizontalDivider.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
         horizontalDivider.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.5)
         ])
     }

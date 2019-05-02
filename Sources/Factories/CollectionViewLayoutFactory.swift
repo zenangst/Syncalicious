@@ -16,7 +16,16 @@ class CollectionViewLayoutFactory {
                                            height: 212,
                                            minimumInteritemSpacing: 10,
                                            minimumLineSpacing: 10,
-                                           sectionInset: .init(top: 0, left: 20, bottom: 20, right: 20))
+                                           sectionInset: .init(top: 0, left: 20, bottom: 5, right: 20))
+    return layout
+  }
+
+  func createKeyboardShortcutLayout() -> NSCollectionViewFlowLayout {
+    let layout = VerticalBlueprintLayout(itemsPerRow: 1,
+                                         height: 48,
+                                         minimumInteritemSpacing: 0,
+                                         minimumLineSpacing: 5,
+                                         sectionInset: .init(top: 5, left: 20, bottom: 5, right: 20))
     return layout
   }
 

@@ -25,15 +25,14 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
     syncView.contentTintColor = NSColor.controlAccentColor
 
     let verticalStackView = NSStackView(views: [titleLabel, subtitleLabel])
-    verticalStackView.alignment = .left
+    verticalStackView.alignment = .leading
     verticalStackView.orientation = .vertical
     verticalStackView.spacing = 0
     verticalStackView.setCustomSpacing(8, after: subtitleLabel)
 
     let stackView = NSStackView(views: [iconView, verticalStackView, syncView])
-    stackView.distribution = .fillProportionally
+    stackView.distribution = .fill
     stackView.orientation = .horizontal
-    stackView.alignment = .top
 
     titleLabel.isEditable = false
     titleLabel.drawsBackground = false
@@ -55,6 +54,7 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
       stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
       stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding),
+      verticalStackView.heightAnchor.constraint(equalTo: stackView.heightAnchor),
       iconView.widthAnchor.constraint(equalToConstant: 32),
       iconView.heightAnchor.constraint(equalToConstant: 32),
       syncView.widthAnchor.constraint(equalToConstant: 32)

@@ -410,7 +410,7 @@ class ApplicationKeyboardBindingItemDataSource: NSObject, NSCollectionViewDataSo
 
     if let view = item as? ApplicationKeyboardBindingItem {
       view.menuTitleLabel.stringValue = model.menuTitle
-      view.keyboardShortcutLabel.stringValue = model.keyboardShortcut
+      view.configureWithString(model.keyboardShortcut)
     }
 
     return item

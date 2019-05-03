@@ -336,7 +336,6 @@
 				BDDAA345225DC88F00D87664 /* Application Detail */,
 				BDDAA344225DC87300D87664 /* Application List */,
 				BD9DA446227B4B0600B745C0 /* Backup */,
-				BDDAA343225DC86200D87664 /* Core */,
 				BD438BFF226AFFE800A21017 /* First Launch */,
 				BD9DA445227B4AFC00B745C0 /* Sync */,
 			);
@@ -506,13 +505,6 @@
 			path = Factories;
 			sourceTree = "<group>";
 		};
-		BDDAA343225DC86200D87664 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
 		BDDAA344225DC87300D87664 /* Application List */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,6 +548,7 @@
 				BD9313802251703400D116E4 /* Frameworks */,
 				BD9313812251703400D116E4 /* Resources */,
 				BDCBB2B5225516F1007C9404 /* SwiftLint */,
+				7ADE4B890F1005EB3FEFFC7C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -574,6 +567,7 @@
 				BDCBB2A422551372007C9404 /* Sources */,
 				BDCBB2A522551372007C9404 /* Frameworks */,
 				BDCBB2A622551372007C9404 /* Resources */,
+				39641BE99A78507C9344FF63 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -655,6 +649,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		39641BE99A78507C9344FF63 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tests/Pods-Tests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/KeyHolder/KeyHolder.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/KeyHolder.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tests/Pods-Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7ADE4B890F1005EB3FEFFC7C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Syncalicious/Pods-Syncalicious-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/KeyHolder/KeyHolder.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/KeyHolder.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Syncalicious/Pods-Syncalicious-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		98646FDFCCE7B4C815986960 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

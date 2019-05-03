@@ -2,23 +2,31 @@ PODS:
   - Blueprints (0.10.5)
   - Differific (0.7.1)
   - Family (0.14.15)
+  - KeyHolder (3.0.1):
+    - Magnet (~> 2.3)
+  - Magnet (2.3.1)
 
 DEPENDENCIES:
   - Blueprints
   - Differific
   - Family
+  - KeyHolder
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Blueprints
     - Differific
     - Family
+    - KeyHolder
+    - Magnet
 
 SPEC CHECKSUMS:
   Blueprints: 0cd68556432de83fa3937108ee959d0afffd455e
   Differific: 8624df953dd5254fb7708ce28529fdda11b08e3b
   Family: adea29853dbebdb3054bcb33229decc598c7645a
+  KeyHolder: 142932db4eac7420b003e2eae94c9a61b8b53cb1
+  Magnet: f8dac2ffc845ffe68b2dd21c68a801f866f4a098
 
-PODFILE CHECKSUM: ebedcde7b481251b46b737f8c9c8f281e62c2e22
+PODFILE CHECKSUM: c9ceb4817885e01241875a7bf92ac4f6f5105129
 
 COCOAPODS: 1.6.1

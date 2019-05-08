@@ -42,6 +42,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, ApplicationDelegateControlle
   // MARK: - Private methods
 
   private func loadInjection() {
+    #if DEBUG
+    if Bundle.main.bundlePath.hasPrefix("/Applications/") {
+      return
+    }
+
     Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/macOSInjection.bundle")?.load()
     NotificationCenter.default.addObserver(
       self,
@@ -49,6 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ApplicationDelegateControlle
       name: NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION"),
       object: nil
     )
+    #endif
   }
 
   @objc func injected() {

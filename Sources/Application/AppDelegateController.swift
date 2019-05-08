@@ -1,10 +1,15 @@
 import Cocoa
 
+protocol ApplicationDelegateControllerDelegate: class {
+  func applicationDelegateController(_ controller: ApplicationDelegateController, didLoadApplication: Bool)
+}
+
 class ApplicationDelegateController: ApplicationControllerDelegate,
   BackupControllerDelegate,
   FirstLaunchViewControllerDelegate,
   MachineControllerDelegate {
 
+  weak var delegate: ApplicationDelegateControllerDelegate?
   weak var appDelegate: AppDelegate?
   var firstLaunchViewController: FirstLaunchViewController?
   var windowController: NSWindowController?
@@ -45,7 +50,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
   }
 
   @discardableResult
-  func loadApplication(file: StaticString = #file, function: StaticString = #function, line: UInt = #line) throws -> NSWindowController? {
+  func loadApplication() throws -> NSWindowController? {
     if UserDefaults.standard.syncaliciousUrl == nil {
       NSApplication.shared.windows.forEach { $0.close() }
 
@@ -62,6 +67,8 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
       firstLaunchWindowController.contentViewController = firstLaunchViewController
       firstLaunchWindowController.showWindow(nil)
       firstLaunchWindowController.window?.center()
+
+      delegate?.applicationDelegateController(self, didLoadApplication: false)
     } else {
       let previousFrame = self.windowController?.window?.frame
       self.windowController?.close()
@@ -92,6 +99,8 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
         windowController.window?.setFrame(previousFrame, display: true)
       }
       #endif
+
+      delegate?.applicationDelegateController(self, didLoadApplication: true)
 
       return windowController
     }

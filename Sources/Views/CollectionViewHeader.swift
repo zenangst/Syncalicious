@@ -1,6 +1,8 @@
 import Cocoa
 
 class CollectionViewHeader: NSView {
+  override var isFlipped: Bool { return true }
+
   lazy var customTextField = NSTextField()
 
   override init(frame frameRect: NSRect) {
@@ -14,11 +16,6 @@ class CollectionViewHeader: NSView {
 
   @objc func loadView() {
     addSubview(customTextField)
-    NSLayoutConstraint.constrain([
-      customTextField.bottomAnchor.constraint(equalTo: bottomAnchor),
-      customTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-      customTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
-    ])
     customTextField.isBezeled = false
     customTextField.isBordered = false
     customTextField.isEditable = false
@@ -30,5 +27,12 @@ class CollectionViewHeader: NSView {
 
   func setText(_ text: String) {
     customTextField.stringValue = text
+  }
+
+  override func layout() {
+    super.layout()
+    let height: CGFloat = customTextField.intrinsicContentSize.height
+    customTextField.frame = .init(origin: .init(x: 10, y: bounds.maxY - height),
+                                  size: .init(width: frame.width - 10, height: height))
   }
 }

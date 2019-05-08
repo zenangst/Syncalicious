@@ -6,6 +6,7 @@ inhibit_all_warnings!
 pod 'Blueprints'
 pod 'Differific'
 pod 'Family'
+pod 'KeyHolder'
 
 target 'Syncalicious'
 target 'Tests'

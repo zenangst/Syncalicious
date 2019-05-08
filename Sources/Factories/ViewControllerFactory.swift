@@ -31,16 +31,18 @@ class ViewControllerFactory {
     let iconController = dependencyContainer.iconController
     let syncController = dependencyContainer.syncController
 
+    let actionsViewController = ApplicationActionsViewController()
     let applicationsDetailViewController = ApplicationDetailItemViewController(layout: layoutFactory.createApplicationsLayout(),
                                                                                iconController: iconController)
-    let applicationInfoViewController = ApplicationDetailInfoViewController()
+    let applicationInfoViewController = ApplicationInfoViewController()
     let computersViewController = ApplicationComputerDetailItemViewController(title: "Computers",
                                                                               layout: layoutFactory.createComputerLayout(),
                                                                               iconController: iconController)
-    let keyboardViewController = ApplicationKeyboardBindingItemViewController(title: "Keyboard shortcuts",
+    let keyboardViewController = ApplicationKeyboardBindingViewController(title: "Keyboard shortcuts",
                                                                               layout: layoutFactory.createKeyboardShortcutLayout(),
                                                                               iconController: iconController)
-    let containerViewController = ApplicationDetailContainerViewController(applicationInfoViewController: applicationInfoViewController,
+    let containerViewController = ApplicationDetailContainerViewController(actionsViewController: actionsViewController,
+                                                                           applicationInfoViewController: applicationInfoViewController,
                                                                            applicationComputersViewController: computersViewController,
                                                                            applicationsDetailViewController: applicationsDetailViewController,
                                                                            keyboardShortcutViewController: keyboardViewController)

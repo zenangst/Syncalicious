@@ -2,8 +2,13 @@ import Cocoa
 
 class ApplicationDetailFeatureViewController: NSViewController,
   ApplicationListFeatureViewControllerDelegate,
-  ApplicationDetailInfoViewControllerDelegate,
+  ApplicationActionsViewControllerDelegate,
   SplitViewContainedController {
+
+  enum Tab: String, CaseIterable {
+    case general = "General"
+    case customize = "Customize"
+  }
 
   enum State {
     case multiple([Application])
@@ -12,6 +17,9 @@ class ApplicationDetailFeatureViewController: NSViewController,
 
   lazy var titleLabel = SmallBoldLabel()
   lazy var titlebarView = NSView()
+  lazy var segmentedControl = NSSegmentedControl(labels: Tab.allCases.compactMap({ $0.rawValue }),
+                                                 trackingMode: .selectOne,
+                                                 target: self, action: #selector(changeTab(_:)))
 
   private var layoutConstraints = [NSLayoutConstraint]()
 
@@ -67,6 +75,8 @@ class ApplicationDetailFeatureViewController: NSViewController,
   private func render(_ state: State) {
     switch state {
     case .multiple(let applications):
+      segmentedControl.isHidden = true
+      titleLabel.isHidden = false
       self.application = nil
       let models = applications
         .compactMap({ ApplicationDetailItemModel(title: $0.propertyList.bundleName,
@@ -77,69 +87,90 @@ class ApplicationDetailFeatureViewController: NSViewController,
       containerViewController.computersViewController.reload(with: [])
       containerViewController.detailViewController.reload(with: models)
       containerViewController.keyboardShortcutViewController.reload(with: [])
+      containerViewController.actionsViewController.view.isHidden = true
     case .single(let application):
-      containerViewController.infoViewController.view.isHidden = false
-      containerViewController.detailViewController.collectionView.isHidden = true
+      segmentedControl.isHidden = false
+      titleLabel.isHidden = true
       containerViewController.detailViewController.reload(with: [])
       containerViewController.infoViewController.render(application,
-                                                        backupController: backupController,
                                                         iconController: iconController,
-                                                        syncController: syncController,
                                                         machineController: machineController)
-      var keyboardShortcuts = [ApplicationKeyboardBindingItemModel]()
+      containerViewController.infoViewController.view.isHidden = false
+      containerViewController.detailViewController.collectionView.isHidden = true
+
+      var keyboardShortcuts = [ApplicationKeyboardBindingModel]()
 
       if let keyboardContents = application.preferences.keyEquivalents {
         for (key, value) in keyboardContents {
-          keyboardShortcuts.append(ApplicationKeyboardBindingItemModel(menuTitle: key, keyboardShortcut: value))
+          keyboardShortcuts.append(ApplicationKeyboardBindingModel(menuTitle: key, keyboardShortcut: value, modified: false))
         }
       }
+      keyboardShortcuts.append(ApplicationKeyboardBindingModel(menuTitle: "New Shortcut", keyboardShortcut: "", modified: true))
 
-      containerViewController.keyboardShortcutViewController.reload(with: keyboardShortcuts)
+      switch UserDefaults.standard.detailTab {
+      case .general:
+        if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl {
+          let closure: (Machine) -> ApplicationComputerDetailItemModel = { machine in
+            let image = syncaliciousUrl
+              .appendingPathComponent(machine.name)
+              .appendingPathComponent("Info")
+              .appendingPathComponent("Computer.tiff")
+            let synced = self.syncController.applicationIsSynced(application, on: machine)
+            let backupDate = self.backupController.doesBackupExists(for: application,
+                                                                    on: machine,
+                                                                    at: UserDefaults.standard.syncaliciousUrl!)
+            return ApplicationComputerDetailItemModel(title: machine.localizedName,
+                                                      subtitle: machine.state.rawValue.capitalized,
+                                                      backupDate: backupDate,
+                                                      image: image,
+                                                      machine: machine,
+                                                      synced: synced)
+          }
 
-      if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl {
-        let closure: (Machine) -> ApplicationComputerDetailItemModel = { machine in
-          let image = syncaliciousUrl
-            .appendingPathComponent(machine.name)
-            .appendingPathComponent("Info")
-            .appendingPathComponent("Computer.tiff")
-          let synced = self.syncController.applicationIsSynced(application, on: machine)
-          let backupDate = self.backupController.doesBackupExists(for: application,
-                                                                  on: machine,
-                                                                  at: UserDefaults.standard.syncaliciousUrl!)
-          return ApplicationComputerDetailItemModel(title: machine.localizedName,
-                                                    subtitle: machine.state.rawValue.capitalized,
-                                                    backupDate: backupDate,
-                                                    image: image,
-                                                    machine: machine,
-                                                    synced: synced)
+          var models = [ApplicationComputerDetailItemModel]()
+          models.append(closure(machineController.machine))
+          models.append(contentsOf: machines.compactMap(closure))
+          containerViewController.computersViewController.reload(with: models)
         }
-
-        var models = [ApplicationComputerDetailItemModel]()
-        models.append(closure(machineController.machine))
-        models.append(contentsOf: machines.compactMap(closure))
-        containerViewController.computersViewController.reload(with: models)
+        containerViewController.actionsViewController.render(application: application,
+                                                             backupController: backupController,
+                                                             syncController: syncController,
+                                                             machineController: machineController)
+        containerViewController.actionsViewController.view.isHidden = false
+        containerViewController.computersViewController.collectionView.isHidden = false
+        containerViewController.keyboardShortcutViewController.collectionView.isHidden = true
+      case .customize:
+        containerViewController.actionsViewController.view.isHidden = true
+        containerViewController.computersViewController.collectionView.isHidden = true
+        containerViewController.keyboardShortcutViewController.collectionView.isHidden = false
+        containerViewController.keyboardShortcutViewController.reload(with: [])
+        containerViewController.keyboardShortcutViewController.reload(with: keyboardShortcuts)
       }
-
-      NSLayoutConstraint.deactivate(layoutConstraints)
-      layoutConstraints = []
-
-      titlebarView.subviews.forEach { $0.removeFromSuperview() }
-      titleLabel.stringValue = application.propertyList.bundleName
-      titleLabel.alignment = .center
-      titleLabel.translatesAutoresizingMaskIntoConstraints = false
-      titlebarView.wantsLayer = true
-      titlebarView.addSubview(titleLabel)
-
-      layoutConstraints.append(contentsOf: [
-        titleLabel.leadingAnchor.constraint(equalTo: titlebarView.leadingAnchor, constant: 10),
-        titleLabel.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -10),
-        titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
-        ])
-
-      containerViewController.infoViewController.delegate = self
-
-      NSLayoutConstraint.activate(layoutConstraints)
     }
+
+    NSLayoutConstraint.deactivate(layoutConstraints)
+    layoutConstraints = []
+
+    titlebarView.subviews.forEach { $0.removeFromSuperview() }
+
+    titleLabel.alignment = .center
+    titlebarView.addSubview(titleLabel)
+
+    segmentedControl.segmentStyle = .texturedRounded
+    segmentedControl.setSelected(true, with: UserDefaults.standard.detailTab)
+    titlebarView.addSubview(segmentedControl)
+
+    layoutConstraints.append(contentsOf: [
+      segmentedControl.centerXAnchor.constraint(equalTo: titlebarView.centerXAnchor),
+      segmentedControl.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor),
+      titleLabel.leadingAnchor.constraint(equalTo: titlebarView.leadingAnchor, constant: 10),
+      titleLabel.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -10),
+      titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
+      ])
+
+    containerViewController.actionsViewController.delegate = self
+
+    NSLayoutConstraint.constrain(layoutConstraints)
   }
 
   private func refreshApplicationList() {
@@ -157,28 +188,36 @@ class ApplicationDetailFeatureViewController: NSViewController,
     }
   }
 
+  @objc func changeTab(_ segmentedControl: NSSegmentedControl) {
+    guard let label = segmentedControl.label(forSegment: segmentedControl.selectedSegment),
+      let tab = Tab(rawValue: label) else { return }
+    UserDefaults.standard.detailTab = tab
+    guard let application = application else { return }
+    render(.single(application))
+  }
+
   // MARK: - ApplicationDetailInfoViewControllerDelegate
 
-  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapBackup backupButton: NSButton,
-                                           on application: Application) {
+  func applicationActionsViewController(_ controller: ApplicationActionsViewController,
+                                        didTapBackup backupButton: NSButton,
+                                        on application: Application) {
     guard let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl else { return }
     try? backupController.runBackup(for: [application], to: syncaliciousUrl)
     render(.single(application))
     refreshApplicationList()
   }
 
-  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapSync syncButton: NSButton,
-                                           on application: Application) {
+  func applicationActionsViewController(_ controller: ApplicationActionsViewController,
+                                        didTapSync syncButton: NSButton,
+                                        on application: Application) {
     try? syncController.enableSync(for: application, on: machineController.machine)
     render(.single(application))
     refreshApplicationList()
   }
 
-  func applicationDetailInfoViewController(_ controller: ApplicationDetailInfoViewController,
-                                           didTapUnsync unsyncButton: NSButton,
-                                           on application: Application) {
+  func applicationActionsViewController(_ controller: ApplicationActionsViewController,
+                                        didTapUnsync unsyncButton: NSButton,
+                                        on application: Application) {
     try? syncController.disableSync(for: application, on: machineController.machine)
     render(.single(application))
     refreshApplicationList()

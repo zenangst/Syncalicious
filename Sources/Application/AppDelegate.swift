@@ -1,7 +1,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, ApplicationDelegateControllerDelegate {
 
   var applicationDelegateController: ApplicationDelegateController!
   var statusItem: NSStatusItem?
@@ -62,17 +62,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   private func configureApplication() {
     applicationDelegateController = ApplicationDelegateController()
+    applicationDelegateController.delegate = self
     applicationDelegateController.appDelegate = self
     applicationDelegateController.applicationDidFinishLaunching(with: self)
     configureStatusMenu()
-
-    self.mainMenuController?.appDelegate = self
-    self.mainMenuController?.dependencyContainer =  applicationDelegateController.dependencyContainer
-    self.mainMenuController?.listContainerViewController = applicationDelegateController
-      .listFeatureViewController?
-      .containerViewController
-
-    self.dependencyContainer = applicationDelegateController.dependencyContainer
   }
 
   private func configureStatusMenu() {
@@ -83,5 +76,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     statusItem.button?.isEnabled = true
     statusItem.menu = statusMenu
     self.statusItem = statusItem
+  }
+
+  private func configureMainMenuController() {
+    self.mainMenuController?.appDelegate = self
+    self.mainMenuController?.dependencyContainer =  applicationDelegateController.dependencyContainer
+    self.mainMenuController?.listContainerViewController = applicationDelegateController
+      .listFeatureViewController?
+      .containerViewController
+    self.mainMenuController?.detailFeatureViewController = applicationDelegateController.detailFeatureViewController
+  }
+
+  // MARK: - ApplicationDelegateControllerDelegate
+
+  func applicationDelegateController(_ controller: ApplicationDelegateController, didLoadApplication: Bool) {
+    if didLoadApplication {
+      configureMainMenuController()
+    }
   }
 }

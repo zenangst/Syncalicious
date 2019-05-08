@@ -306,16 +306,35 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
+                            <menuItem title="Section" id="uth-Ul-zg7">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Section" id="edr-W8-Sr2">
+                                    <items>
+                                        <menuItem title="General" keyEquivalent="1" id="XnK-2J-mBV">
+                                            <connections>
+                                                <action selector="viewGeneral:" target="GQy-uY-iF5" id="2Lp-5V-4f9"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Customize" keyEquivalent="2" id="9EK-Lh-fmd">
+                                            <connections>
+                                                <action selector="viewCustomize:" target="GQy-uY-iF5" id="rPk-51-Nu2"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Sort" id="xAJ-4g-5ko" userLabel="Sort">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" id="sWQ-VU-1K0">
                                     <items>
                                         <menuItem title="Sort by name" keyEquivalent="1" id="nuT-l3-amO">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="sortByName:" target="GQy-uY-iF5" id="KOb-dK-xHV"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Sort by synced" keyEquivalent="2" id="xkG-vF-J61">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="sortBySynced:" target="GQy-uY-iF5" id="8sF-nh-QoC"/>
                                             </connections>

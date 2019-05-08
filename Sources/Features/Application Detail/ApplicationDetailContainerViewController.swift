@@ -2,15 +2,18 @@ import Cocoa
 import Family
 
 class ApplicationDetailContainerViewController: FamilyViewController {
-  let infoViewController: ApplicationDetailInfoViewController
+  let actionsViewController: ApplicationActionsViewController
+  let infoViewController: ApplicationInfoViewController
   let computersViewController: ApplicationComputerDetailItemViewController
   let detailViewController: ApplicationDetailItemViewController
-  let keyboardShortcutViewController: ApplicationKeyboardBindingItemViewController
+  let keyboardShortcutViewController: ApplicationKeyboardBindingViewController
 
-  init(applicationInfoViewController: ApplicationDetailInfoViewController,
+  init(actionsViewController: ApplicationActionsViewController,
+       applicationInfoViewController: ApplicationInfoViewController,
        applicationComputersViewController: ApplicationComputerDetailItemViewController,
        applicationsDetailViewController: ApplicationDetailItemViewController,
-       keyboardShortcutViewController: ApplicationKeyboardBindingItemViewController) {
+       keyboardShortcutViewController: ApplicationKeyboardBindingViewController) {
+    self.actionsViewController = actionsViewController
     self.infoViewController = applicationInfoViewController
     self.computersViewController = applicationComputersViewController
     self.detailViewController = applicationsDetailViewController
@@ -27,16 +30,17 @@ class ApplicationDetailContainerViewController: FamilyViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     addChild(detailViewController,
-             customInsets: .init(top: 0, left: 30, bottom: 15, right: 30),
-             view: { $0.collectionView })
+             customInsets: .init(top: 0, left: 30, bottom: 15, right: 30)) {
+              $0.collectionView }
     addChild(infoViewController,
-             customInsets: .init(top: 15, left: 30, bottom: 15, right: 30))
-    addChild(computersViewController,
-             customInsets: .init(top: 15, left: 0, bottom: 0, right: 0),
-             view: { $0.collectionView })
+             customInsets: .init(top: 15, left: 30, bottom: 0, right: 30))
+    addChild(actionsViewController)
+    addChild(computersViewController) { $0.collectionView }
     addChild(keyboardShortcutViewController,
-             customInsets: .init(top: 0, left: 0, bottom: 0, right: 0),
-             view: { $0.collectionView })
+             customInsets: .init(top: 15, left: 0, bottom: 0, right: 0)) {
+              $0.collectionView }
+
     computersViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]
+    keyboardShortcutViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]
   }
 }

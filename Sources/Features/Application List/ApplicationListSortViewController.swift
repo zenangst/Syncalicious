@@ -19,8 +19,6 @@ class ApplicationListSortViewController: ViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-
     if let sortKind = UserDefaults.standard.listSort,
       let index = ApplicationListSortViewController.SortKind.allCases.firstIndex(of: sortKind) {
       segmentedControl.setSelected(true, forSegment: index)
@@ -37,7 +35,7 @@ class ApplicationListSortViewController: ViewController {
       segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       segmentedControl.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ]
-    NSLayoutConstraint.activate(layoutConstraints)
+    NSLayoutConstraint.constrain(layoutConstraints)
 
     view.frame.size.height = 28
   }

@@ -22,6 +22,7 @@
 		BD4A69312253BADE00F588AD /* MachineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69302253BADE00F588AD /* MachineController.swift */; };
 		BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A69392253DCF100F588AD /* MainWindow.swift */; };
 		BD4A6941225406A300F588AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A6940225406A300F588AD /* ViewController.swift */; };
+		BD52B0C5227DF19100E7B52B /* NSSegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD52B0C4227DF19100E7B52B /* NSSegmentedControl+Extensions.swift */; };
 		BD5903B5226C7DD90037A1AC /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5903B4226C7DD90037A1AC /* WelcomeViewController.swift */; };
 		BD5AE9A62278850A002E7949 /* NSDictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */; };
 		BD5AE9A822788786002E7949 /* ApplicationKeyboardBindingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */; };
@@ -33,6 +34,10 @@
 		BD62D2EE2267547B007B047B /* ApplicationListFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2ED2267547B007B047B /* ApplicationListFeatureViewController.swift */; };
 		BD62D2F022675F54007B047B /* ApplicationDetailFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2EF22675F54007B047B /* ApplicationDetailFeatureViewController.swift */; };
 		BD62D2F222677FEB007B047B /* ApplicationListSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2F122677FEB007B047B /* ApplicationListSortViewController.swift */; };
+		BD74974A2282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7497492282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift */; };
+		BD74974F2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD74974E2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift */; };
+		BD7497522282A1AF00431776 /* ApplicationKeyboardBindingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7497512282A1AF00431776 /* ApplicationKeyboardBindingModel.swift */; };
+		BD7497562282A23A00431776 /* KeyHolderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7497552282A23A00431776 /* KeyHolderController.swift */; };
 		BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960B2252849100C93211 /* ApplicationController.swift */; };
 		BD7D960E2252888000C93211 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960D2252888000C93211 /* Application.swift */; };
 		BD7D961322528ADB00C93211 /* ApplicationPropertyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D961222528ADB00C93211 /* ApplicationPropertyList.swift */; };
@@ -80,13 +85,14 @@
 		BDDAA33E225DB56B00D87664 /* WindowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33D225DB56B00D87664 /* WindowFactory.swift */; };
 		BDDAA340225DB57500D87664 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */; };
 		BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */; };
-		BDDAA347225DC89F00D87664 /* ApplicationDetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */; };
+		BDDAA347225DC89F00D87664 /* ApplicationInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */; };
 		BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */; };
 		BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */; };
 		BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */; };
 		BDE9E63622704AFD00C28F34 /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */; };
 		BDE9E6392270514700C28F34 /* ApplicationDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */; };
 		BDE9E63B2270519100C28F34 /* CollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */; };
+		BDFB33442281F13200199641 /* ApplicationActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFB33432281F13200199641 /* ApplicationActionsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +125,7 @@
 		BD4A69342253D9C900F588AD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BD4A69392253DCF100F588AD /* MainWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		BD4A6940225406A300F588AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BD52B0C4227DF19100E7B52B /* NSSegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
 		BD5903B4226C7DD90037A1AC /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Extensions.swift"; sourceTree = "<group>"; };
 		BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingItem.swift; sourceTree = "<group>"; };
@@ -130,6 +137,10 @@
 		BD62D2ED2267547B007B047B /* ApplicationListFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListFeatureViewController.swift; sourceTree = "<group>"; };
 		BD62D2EF22675F54007B047B /* ApplicationDetailFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailFeatureViewController.swift; sourceTree = "<group>"; };
 		BD62D2F122677FEB007B047B /* ApplicationListSortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListSortViewController.swift; sourceTree = "<group>"; };
+		BD7497492282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingViewController.swift; sourceTree = "<group>"; };
+		BD74974E2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingDataSource.swift; sourceTree = "<group>"; };
+		BD7497512282A1AF00431776 /* ApplicationKeyboardBindingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingModel.swift; sourceTree = "<group>"; };
+		BD7497552282A23A00431776 /* KeyHolderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyHolderController.swift; sourceTree = "<group>"; };
 		BD7D960B2252849100C93211 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		BD7D960D2252888000C93211 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		BD7D961222528ADB00C93211 /* ApplicationPropertyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationPropertyList.swift; sourceTree = "<group>"; };
@@ -186,13 +197,14 @@
 		BDDAA33D225DB56B00D87664 /* WindowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowFactory.swift; sourceTree = "<group>"; };
 		BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutFactory.swift; sourceTree = "<group>"; };
-		BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailInfoViewController.swift; sourceTree = "<group>"; };
+		BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationInfoViewController.swift; sourceTree = "<group>"; };
 		BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainedController.swift; sourceTree = "<group>"; };
 		BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailContainerViewController.swift; sourceTree = "<group>"; };
 		BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
 		BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
 		BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailItem.swift; sourceTree = "<group>"; };
 		BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewItem.swift; sourceTree = "<group>"; };
+		BDFB33432281F13200199641 /* ApplicationActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationActionsViewController.swift; sourceTree = "<group>"; };
 		D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -279,6 +291,49 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		BD74974B2282A14F00431776 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */,
+				BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BD74974C2282A15600431776 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BDFB33432281F13200199641 /* ApplicationActionsViewController.swift */,
+				BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */,
+				BD7497492282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BD74974D2282A16F00431776 /* Data sources */ = {
+			isa = PBXGroup;
+			children = (
+				BD74974E2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift */,
+			);
+			path = "Data sources";
+			sourceTree = "<group>";
+		};
+		BD7497502282A1A100431776 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BD7497512282A1AF00431776 /* ApplicationKeyboardBindingModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BD7497542282A21400431776 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BD7497552282A23A00431776 /* KeyHolderController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		BD7D960A225281E600C93211 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,8 +404,9 @@
 				BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */,
 				BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */,
 				BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */,
-				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
+				BD52B0C4227DF19100E7B52B /* NSSegmentedControl+Extensions.swift */,
 				BD9DA455227B4CEB00B745C0 /* OperationQueue+Extensions.swift */,
+				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -469,8 +525,11 @@
 		BDA1C3D42271A887009185DE /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */,
-				BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */,
+				BD7497542282A21400431776 /* Controllers */,
+				BD74974D2282A16F00431776 /* Data sources */,
+				BD7497502282A1A100431776 /* Models */,
+				BD74974C2282A15600431776 /* View Controllers */,
+				BD74974B2282A14F00431776 /* Views */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -521,7 +580,6 @@
 			isa = PBXGroup;
 			children = (
 				BDA1C3D52271A890009185DE /* States */,
-				BDDAA346225DC89F00D87664 /* ApplicationDetailInfoViewController.swift */,
 				BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */,
 				BD62D2EF22675F54007B047B /* ApplicationDetailFeatureViewController.swift */,
 			);
@@ -775,6 +833,7 @@
 				BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */,
 				BD62D2EA226727C0007B047B /* ApplicationListContainerViewController.swift in Sources */,
 				BD7D961C22532B6900C93211 /* BackupController.swift in Sources */,
+				BDFB33442281F13200199641 /* ApplicationActionsViewController.swift in Sources */,
 				BD62D2F222677FEB007B047B /* ApplicationListSortViewController.swift in Sources */,
 				BD5AE9A822788786002E7949 /* ApplicationKeyboardBindingItem.swift in Sources */,
 				BDDAA333225D37BD00D87664 /* LayeredView.swift in Sources */,
@@ -790,6 +849,7 @@
 				BD8EDD822255CE3400110E56 /* IconController.swift in Sources */,
 				BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */,
 				BD3CC250225B147F006D7877 /* SplitViewController.swift in Sources */,
+				BD74974A2282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift in Sources */,
 				BDDAA33B225D383400D87664 /* Label.swift in Sources */,
 				BD4A69312253BADE00F588AD /* MachineController.swift in Sources */,
 				BD5903B5226C7DD90037A1AC /* WelcomeViewController.swift in Sources */,
@@ -799,9 +859,11 @@
 				BD7D960E2252888000C93211 /* Application.swift in Sources */,
 				BDDAA335225D37C700D87664 /* DecorationView.swift in Sources */,
 				BD438BF92269CD1900A21017 /* WelcomeWindow.swift in Sources */,
+				BD7497562282A23A00431776 /* KeyHolderController.swift in Sources */,
 				BDA69E7822730B3100EF60E5 /* AppDelegateController.swift in Sources */,
 				BD62D2EC22674E0A007B047B /* ApplicationListSearchViewController.swift in Sources */,
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
+				BD74974F2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,
 				BD62D2E22262362C007B047B /* SyncController.swift in Sources */,
 				BD9DA452227B4BFA00B745C0 /* DispatchQueue+Extensions.swift in Sources */,
@@ -809,9 +871,11 @@
 				BDDAA339225D37DE00D87664 /* DividerView.swift in Sources */,
 				BD438BFE226A5E3B00A21017 /* FirstLaunchViewController.swift in Sources */,
 				BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */,
+				BD7497522282A1AF00431776 /* ApplicationKeyboardBindingModel.swift in Sources */,
+				BD52B0C5227DF19100E7B52B /* NSSegmentedControl+Extensions.swift in Sources */,
 				BD895C01225A67C200DEC9FE /* PrototypeItem.swift in Sources */,
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
-				BDDAA347225DC89F00D87664 /* ApplicationDetailInfoViewController.swift in Sources */,
+				BDDAA347225DC89F00D87664 /* ApplicationInfoViewController.swift in Sources */,
 				BD9DA450227B4BD400B745C0 /* Dispatchable.swift in Sources */,
 				BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */,
 				BD9DA44C227B4B9700B745C0 /* DispatchOperation.swift in Sources */,

@@ -71,8 +71,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     self.mainMenuController?.listContainerViewController = applicationDelegateController
       .listFeatureViewController?
       .containerViewController
-
-    self.dependencyContainer = applicationDelegateController.dependencyContainer
+    self.mainMenuController?.detailFeatureViewController = applicationDelegateController.detailFeatureViewController
   }
 
   private func configureStatusMenu() {

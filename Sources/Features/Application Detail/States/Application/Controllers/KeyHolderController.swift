@@ -1,5 +1,5 @@
 import Carbon
-import Cocoa
+import Foundation
 import KeyHolder
 import Magnet
 
@@ -23,39 +23,8 @@ enum ModifierKey: String, CaseIterable {
   }
 }
 
-class ApplicationKeyboardBindingItem: CollectionViewItem, CollectionViewItemComponent {
-  // sourcery: let menuTitle: String = "menuTitleLabel.stringValue = model.menuTitle"
-  lazy var menuTitleLabel = NSTextField()
-  // sourcery: let keyboardShortcut: String = "configureWithString(model.keyboardShortcut)"
-  lazy var recorderView = RecordView()
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    let containerView = NSView()
-    containerView.addSubview(menuTitleLabel)
-    containerView.addSubview(recorderView)
-    view.addSubview(containerView)
-
-    layoutConstraints = [
-      containerView.topAnchor.constraint(equalTo: view.topAnchor),
-      containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
-      menuTitleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-      menuTitleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-      menuTitleLabel.trailingAnchor.constraint(equalTo: recorderView.leadingAnchor, constant: -20),
-
-      recorderView.widthAnchor.constraint(equalToConstant: 160),
-      recorderView.heightAnchor.constraint(equalToConstant: 32),
-      recorderView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-      recorderView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
-    ]
-    NSLayoutConstraint.constrain(layoutConstraints)
-  }
-
-  func configureWithString(_ string: String) {
+class KeyHolderController {
+  func keyComboFromString(_ string: String) -> KeyCombo? {
     let keyCodeString = string.replacingOccurrences(of: ModifierKey.allCases.compactMap({ $0.rawValue }))
     let currentModifier = ModifierKey.allCases.filter({ string.contains($0.rawValue) })
       .reduce(0, { $0 + $1.eventModifierFlag.rawValue })
@@ -68,12 +37,12 @@ class ApplicationKeyboardBindingItem: CollectionViewItem, CollectionViewItemComp
       dictionary[keyName] = offset
     }
 
-    guard let keyCode = dictionary[keyCodeString] else { return }
+    guard let keyCode = dictionary[keyCodeString] else { return nil }
     let keyCombo = KeyCombo.init(keyCode: keyCode, cocoaModifiers: modifiers)
-    recorderView.keyCombo = keyCombo
+    return keyCombo
   }
 
-  func keyName(scanCode: UInt16) -> String? {
+  private func keyName(scanCode: UInt16) -> String? {
     let maxNameLength = 4
     let modifierKeys: UInt32  = 0
     let nameBuffer = UnsafeMutablePointer<UniChar>.allocate(capacity: maxNameLength)

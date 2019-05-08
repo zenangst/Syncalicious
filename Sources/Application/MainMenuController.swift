@@ -4,6 +4,7 @@ class MainMenuController: NSObject {
   weak var appDelegate: AppDelegate?
   weak var dependencyContainer: DependencyContainer?
   weak var listContainerViewController: ApplicationListContainerViewController?
+  weak var detailFeatureViewController: ApplicationDetailFeatureViewController?
 
   // MARK: - Actions
 
@@ -14,6 +15,32 @@ class MainMenuController: NSObject {
 
   @IBAction func selectBackupDestination(_ sender: Any?) {
     dependencyContainer?.backupController.chooseDestination()
+  }
+
+  @IBAction func viewGeneral(_ sender: Any?) {
+    let tab = ApplicationDetailFeatureViewController.Tab.general
+    guard let segmentedControl = detailFeatureViewController?.segmentedControl else {
+      return
+    }
+    if let index = ApplicationDetailFeatureViewController.Tab.allCases.firstIndex(of: tab) {
+      segmentedControl.setSelected(true, forSegment: index)
+    } else {
+      segmentedControl.setSelected(true, forSegment: 0)
+    }
+    detailFeatureViewController?.changeTab(segmentedControl)
+  }
+
+  @IBAction func viewCustomize(_ sender: Any?) {
+    let tab = ApplicationDetailFeatureViewController.Tab.customize
+    guard let segmentedControl = detailFeatureViewController?.segmentedControl else {
+      return
+    }
+    if let index = ApplicationDetailFeatureViewController.Tab.allCases.firstIndex(of: tab) {
+      segmentedControl.setSelected(true, forSegment: index)
+    } else {
+      segmentedControl.setSelected(true, forSegment: 0)
+    }
+    detailFeatureViewController?.changeTab(segmentedControl)
   }
 
   @IBAction func sortByName(_ sender: Any?) {

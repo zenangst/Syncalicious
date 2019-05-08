@@ -112,8 +112,8 @@ class SyncController: NSObject {
 
       let runningApplication = workspace.runningApplications.first(where: query)
       let syncOperation = createSyncOperation(for: application,
-                                          location: fileUrl,
-                                          runningApplication: runningApplication)
+                                              location: fileUrl,
+                                              runningApplication: runningApplication)
       if runningApplication != nil {
         let restartOperation = createRestartOperation(for: application)
         restartOperation.addDependency(syncOperation)
@@ -150,8 +150,7 @@ class SyncController: NSObject {
     return operation
   }
 
-  func createSyncOperation(for application: Application,
-                           location: URL,
+  func createSyncOperation(for application: Application, location: URL,
                            runningApplication: NSRunningApplication?) -> DispatchOperation {
     let operation = UtilityOperation({ [weak self] operation in
       guard let strongSelf = self else {

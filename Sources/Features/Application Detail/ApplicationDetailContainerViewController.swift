@@ -7,17 +7,20 @@ class ApplicationDetailContainerViewController: FamilyViewController {
   let computersViewController: ApplicationComputerDetailItemViewController
   let detailViewController: ApplicationDetailItemViewController
   let keyboardShortcutViewController: ApplicationKeyboardBindingViewController
+  let keyboardShortcutActionsViewController: ApplicationKeyboardActionsViewController
 
   init(actionsViewController: ApplicationActionsViewController,
        applicationInfoViewController: ApplicationInfoViewController,
        applicationComputersViewController: ApplicationComputerDetailItemViewController,
        applicationsDetailViewController: ApplicationDetailItemViewController,
-       keyboardShortcutViewController: ApplicationKeyboardBindingViewController) {
+       keyboardShortcutViewController: ApplicationKeyboardBindingViewController,
+       keyboardShortcutActionsViewController: ApplicationKeyboardActionsViewController) {
     self.actionsViewController = actionsViewController
     self.infoViewController = applicationInfoViewController
     self.computersViewController = applicationComputersViewController
     self.detailViewController = applicationsDetailViewController
     self.keyboardShortcutViewController = keyboardShortcutViewController
+    self.keyboardShortcutActionsViewController = keyboardShortcutActionsViewController
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -39,8 +42,12 @@ class ApplicationDetailContainerViewController: FamilyViewController {
     addChild(keyboardShortcutViewController,
              customInsets: .init(top: 15, left: 0, bottom: 0, right: 0)) {
               $0.collectionView }
+    addChild(keyboardShortcutActionsViewController,
+             customInsets: .init(top: 0, left: 0, bottom: 0, right: 0))
 
     computersViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]
     keyboardShortcutViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]
+    keyboardShortcutActionsViewController.view.wantsLayer = true
+    keyboardShortcutActionsViewController.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
   }
 }

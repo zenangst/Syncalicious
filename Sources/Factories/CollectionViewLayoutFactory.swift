@@ -24,8 +24,8 @@ class CollectionViewLayoutFactory {
     let layout = VerticalBlueprintLayout(itemsPerRow: 1,
                                          height: 48,
                                          minimumInteritemSpacing: 0,
-                                         minimumLineSpacing: 5,
-                                         sectionInset: .init(top: 5, left: 20, bottom: 20, right: 20))
+                                         minimumLineSpacing: 1,
+                                         sectionInset: .init(top: 10, left: 15, bottom: 10, right: 15))
     return layout
   }
 

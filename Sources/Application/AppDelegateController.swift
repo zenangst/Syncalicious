@@ -138,13 +138,15 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
     let syncController = SyncController(destination: syncaliciousUrl.appendingPathComponent("Sync"),
                                         machineController: machineController,
                                         shellController: shellController)
+    let keyboardController = KeyboardController()
     let dependencyContainer = DependencyContainer(applicationController: applicationController,
                                                   syncController: syncController,
                                                   backupController: backupController,
                                                   iconController: iconController,
                                                   infoPlistController: infoPlistController,
                                                   machineController: machineController,
-                                                  preferencesController: preferencesController)
+                                                  preferencesController: preferencesController,
+                                                  keyboardController: keyboardController)
 
     backupController.delegate = self
     applicationController.delegate = self

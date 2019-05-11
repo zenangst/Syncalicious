@@ -1,7 +1,7 @@
 PODS:
   - Blueprints (0.10.5)
   - Differific (0.7.2)
-  - Family (0.14.15)
+  - Family (0.14.16)
   - KeyHolder (3.0.1):
     - Magnet (~> 2.3)
   - Magnet (2.3.1)
@@ -23,7 +23,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Blueprints: 0cd68556432de83fa3937108ee959d0afffd455e
   Differific: 049c3a02aefa9519a694a4e5e532baf20c2799e8
-  Family: adea29853dbebdb3054bcb33229decc598c7645a
+  Family: 6515d430f5f0b4f62e5ee11dbd2501d071fd72a1
   KeyHolder: 142932db4eac7420b003e2eae94c9a61b8b53cb1
   Magnet: f8dac2ffc845ffe68b2dd21c68a801f866f4a098
 

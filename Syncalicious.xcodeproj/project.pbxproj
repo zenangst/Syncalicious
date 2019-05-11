@@ -11,6 +11,7 @@
 		A47DC085643951080DBAE4EF /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */; };
 		BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */; };
 		BD084B792258E0B600E91A7F /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B782258E0B600E91A7F /* TestHost.swift */; };
+		BD2059AD2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2059AC2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift */; };
 		BD2199D6226EFB7D00D86AA6 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2199D5226EFB7D00D86AA6 /* Button.swift */; };
 		BD2E976122702A2000C2CD98 /* DestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2E976022702A2000C2CD98 /* DestinationViewController.swift */; };
 		BD3CC24E225B1463006D7877 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC24D225B1463006D7877 /* WindowController.swift */; };
@@ -61,6 +62,7 @@
 		BD9313872251703400D116E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9313862251703400D116E4 /* AppDelegate.swift */; };
 		BD9313892251703600D116E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9313882251703600D116E4 /* Assets.xcassets */; };
 		BD93138C2251703700D116E4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD93138A2251703700D116E4 /* MainMenu.xib */; };
+		BD99C6E0228365E10004256D /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99C6DF228365E10004256D /* KeyboardController.swift */; };
 		BD9B7C34227788C100472B41 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9B7C33227788C100472B41 /* SearchField.swift */; };
 		BD9DA448227B4B6100B745C0 /* CoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA447227B4B6100B745C0 /* CoreOperation.swift */; };
 		BD9DA44A227B4B7600B745C0 /* UIOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA449227B4B7600B745C0 /* UIOperation.swift */; };
@@ -112,6 +114,7 @@
 		BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplicationDelegate.swift; sourceTree = "<group>"; };
 		BD084B782258E0B600E91A7F /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
 		BD084B7A2258F15500E91A7F /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
+		BD2059AC2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardActionsViewController.swift; sourceTree = "<group>"; };
 		BD2199D5226EFB7D00D86AA6 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		BD2E976022702A2000C2CD98 /* DestinationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationViewController.swift; sourceTree = "<group>"; };
 		BD3CC24D225B1463006D7877 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
@@ -170,6 +173,7 @@
 		BD93138B2251703700D116E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BD93138D2251703700D116E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD93138E2251703700D116E4 /* Syncalicious.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Syncalicious.entitlements; sourceTree = "<group>"; };
+		BD99C6DF228365E10004256D /* KeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		BD9B7C33227788C100472B41 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		BD9DA447227B4B6100B745C0 /* CoreOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreOperation.swift; sourceTree = "<group>"; };
 		BD9DA449227B4B7600B745C0 /* UIOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIOperation.swift; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 				BDFB33432281F13200199641 /* ApplicationActionsViewController.swift */,
 				BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */,
 				BD7497492282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift */,
+				BD2059AC2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -375,6 +380,7 @@
 				BD7D960B2252849100C93211 /* ApplicationController.swift */,
 				BD8EDD812255CE3400110E56 /* IconController.swift */,
 				BD7D961422528B8700C93211 /* InfoPropertyListController.swift */,
+				BD99C6DF228365E10004256D /* KeyboardController.swift */,
 				BD4A69302253BADE00F588AD /* MachineController.swift */,
 				BD7D9616225290C800C93211 /* PreferencesController.swift */,
 				BD62D2E3226393B4007B047B /* ShellController.swift */,
@@ -890,7 +896,9 @@
 				BD7D961322528ADB00C93211 /* ApplicationPropertyList.swift in Sources */,
 				BD9313872251703400D116E4 /* AppDelegate.swift in Sources */,
 				BD9DA454227B4C3C00B745C0 /* OperationController.swift in Sources */,
+				BD2059AD2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift in Sources */,
 				BD9DA44A227B4B7600B745C0 /* UIOperation.swift in Sources */,
+				BD99C6E0228365E10004256D /* KeyboardController.swift in Sources */,
 				BD2199D6226EFB7D00D86AA6 /* Button.swift in Sources */,
 				BD9DA44E227B4BAF00B745C0 /* UtilityOperation.swift in Sources */,
 				BD895C06225A693C00DEC9FE /* PrototypeItemComponent.swift in Sources */,

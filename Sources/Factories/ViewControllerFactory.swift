@@ -30,6 +30,7 @@ class ViewControllerFactory {
     let machineController = dependencyContainer.machineController
     let iconController = dependencyContainer.iconController
     let syncController = dependencyContainer.syncController
+    let keyboardController = dependencyContainer.keyboardController
 
     let actionsViewController = ApplicationActionsViewController()
     let applicationsDetailViewController = ApplicationDetailItemViewController(layout: layoutFactory.createApplicationsLayout(),
@@ -39,17 +40,21 @@ class ViewControllerFactory {
                                                                               layout: layoutFactory.createComputerLayout(),
                                                                               iconController: iconController)
     let keyboardViewController = ApplicationKeyboardBindingViewController(title: "Keyboard shortcuts",
-                                                                              layout: layoutFactory.createKeyboardShortcutLayout(),
-                                                                              iconController: iconController)
+                                                                          layout: layoutFactory.createKeyboardShortcutLayout(),
+                                                                          iconController: iconController,
+                                                                          keyboardController: keyboardController)
+    let keyboardShortcutActionsViewController = ApplicationKeyboardActionsViewController()
     let containerViewController = ApplicationDetailContainerViewController(actionsViewController: actionsViewController,
                                                                            applicationInfoViewController: applicationInfoViewController,
                                                                            applicationComputersViewController: computersViewController,
                                                                            applicationsDetailViewController: applicationsDetailViewController,
-                                                                           keyboardShortcutViewController: keyboardViewController)
+                                                                           keyboardShortcutViewController: keyboardViewController,
+                                                                           keyboardShortcutActionsViewController: keyboardShortcutActionsViewController)
     let featureViewController = ApplicationDetailFeatureViewController(applicationController: applicationController,
                                                                        backupController: backupController,
                                                                        containerViewController: containerViewController,
                                                                        iconController: iconController,
+                                                                       keyboardController: keyboardController,
                                                                        machineController: machineController,
                                                                        syncController: syncController)
     return featureViewController

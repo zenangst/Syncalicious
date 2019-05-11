@@ -3,7 +3,8 @@ import Cocoa
 class ApplicationDetailFeatureViewController: NSViewController,
   ApplicationListFeatureViewControllerDelegate,
   ApplicationActionsViewControllerDelegate,
-  SplitViewContainedController {
+  SplitViewContainedController,
+  ApplicationKeyboardActionsViewControllerDelegate {
 
   enum Tab: String, CaseIterable {
     case general = "General"
@@ -22,6 +23,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
                                                  target: self, action: #selector(changeTab(_:)))
 
   private var layoutConstraints = [NSLayoutConstraint]()
+  private(set) var modified: Bool = false
 
   let containerViewController: ApplicationDetailContainerViewController
   let applicationController: ApplicationController
@@ -29,6 +31,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
   let iconController: IconController
   let syncController: SyncController
   let machineController: MachineController
+  let keyboardController: KeyboardController
 
   var machines = [Machine]()
   var application: Application?
@@ -37,12 +40,14 @@ class ApplicationDetailFeatureViewController: NSViewController,
        backupController: BackupController,
        containerViewController: ApplicationDetailContainerViewController,
        iconController: IconController,
+       keyboardController: KeyboardController,
        machineController: MachineController,
        syncController: SyncController) {
     self.applicationController = applicationController
     self.backupController = backupController
     self.containerViewController = containerViewController
     self.iconController = iconController
+    self.keyboardController = keyboardController
     self.machineController = machineController
     self.syncController = syncController
     super.init(nibName: nil, bundle: nil)
@@ -88,6 +93,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
       containerViewController.detailViewController.reload(with: models)
       containerViewController.keyboardShortcutViewController.reload(with: [])
       containerViewController.actionsViewController.view.isHidden = true
+      containerViewController.keyboardShortcutActionsViewController.view.isHidden = true
     case .single(let application):
       segmentedControl.isHidden = false
       titleLabel.isHidden = true
@@ -98,14 +104,15 @@ class ApplicationDetailFeatureViewController: NSViewController,
       containerViewController.infoViewController.view.isHidden = false
       containerViewController.detailViewController.collectionView.isHidden = true
 
-      var keyboardShortcuts = [ApplicationKeyboardBindingModel]()
-
-      if let keyboardContents = application.preferences.keyEquivalents {
-        for (key, value) in keyboardContents {
-          keyboardShortcuts.append(ApplicationKeyboardBindingModel(menuTitle: key, keyboardShortcut: value, modified: false))
+      var keyboardShortcuts = keyboardController.keyboardShortcuts(for: application)
+      if keyboardShortcuts.isEmpty {
+        if let keyboardContents = application.preferences.keyEquivalents {
+          for (key, value) in keyboardContents {
+            keyboardShortcuts.append(ApplicationKeyboardBindingModel(menuTitle: key, keyboardShortcut: value))
+          }
         }
+        keyboardShortcuts.append(ApplicationKeyboardBindingModel(placeholder: true))
       }
-      keyboardShortcuts.append(ApplicationKeyboardBindingModel(menuTitle: "New Shortcut", keyboardShortcut: "", modified: true))
 
       switch UserDefaults.standard.detailTab {
       case .general:
@@ -139,12 +146,19 @@ class ApplicationDetailFeatureViewController: NSViewController,
         containerViewController.actionsViewController.view.isHidden = false
         containerViewController.computersViewController.collectionView.isHidden = false
         containerViewController.keyboardShortcutViewController.collectionView.isHidden = true
+        containerViewController.keyboardShortcutActionsViewController.view.isHidden = true
       case .customize:
         containerViewController.actionsViewController.view.isHidden = true
         containerViewController.computersViewController.collectionView.isHidden = true
         containerViewController.keyboardShortcutViewController.collectionView.isHidden = false
-        containerViewController.keyboardShortcutViewController.reload(with: [])
-        containerViewController.keyboardShortcutViewController.reload(with: keyboardShortcuts)
+        containerViewController.keyboardShortcutViewController.application = application
+        containerViewController.keyboardShortcutActionsViewController.delegate = self
+        NSAnimationContext.current.duration = 0.0
+        containerViewController.performBatchUpdates({ _ in
+          containerViewController.keyboardShortcutActionsViewController.view.isHidden = false
+          containerViewController.keyboardShortcutViewController.reload(with: [])
+          containerViewController.keyboardShortcutViewController.reload(with: keyboardShortcuts)
+        }, completion: nil)
       }
     }
 
@@ -228,5 +242,19 @@ class ApplicationDetailFeatureViewController: NSViewController,
   func applicationListFeatureViewController(_ controller: ApplicationListFeatureViewController,
                                             didSelectApplications applications: [Application]) {
     handleSelections(for: applications)
+  }
+
+  // MARK: - ApplicationKeyboardActionsViewControllerDelegate
+
+  func applicationKeyboardActionsViewController(_ controller: ApplicationKeyboardActionsViewController,
+                                                didClickSaveButton button: NSButton) {
+
+  }
+
+  func applicationKeyboardActionsViewController(_ controller: ApplicationKeyboardActionsViewController,
+                                                didClickDiscardButton button: NSButton) {
+    guard let application = application else { return }
+    keyboardController.discardKeyboardShortcuts(for: application)
+    render(.single(application))
   }
 }

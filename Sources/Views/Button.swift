@@ -12,6 +12,7 @@ class Button: NSButton {
   var cornerRadius: CornerRadius = .round
 
   init(title: String,
+       font: NSFont = .boldSystemFont(ofSize: 14),
        backgroundColor: NSColor,
        borderColor: NSColor,
        borderWidth: CGFloat,
@@ -28,7 +29,7 @@ class Button: NSButton {
     self.action = action
     self.wantsLayer = true
     self.isBordered = false
-    self.font = NSFont.boldSystemFont(ofSize: 14)
+    self.font = font
     self.layer?.backgroundColor = backgroundColor.cgColor
     self.layer?.borderWidth = borderWidth
     self.layer?.borderColor = borderColor.cgColor

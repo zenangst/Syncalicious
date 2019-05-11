@@ -9,6 +9,20 @@ enum ModifierKey: String, CaseIterable {
   case option = "~"
   case command = "@"
 
+  static func build(from value: String) -> ModifierKey? {
+    if value == "⇧" {
+      return ModifierKey.shift
+    } else if value == "⌃" {
+      return ModifierKey.control
+    } else if value == "⌥" {
+      return ModifierKey.option
+    } else if value == "⌘" {
+      return ModifierKey.command
+    }
+
+    return ModifierKey.init(rawValue: value)
+  }
+
   var eventModifierFlag: NSEvent.ModifierFlags {
     switch self {
     case .shift:

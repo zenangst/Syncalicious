@@ -3,36 +3,53 @@ import Differific
 
 class ApplicationKeyboardBindingDataSource: NSObject, NSCollectionViewDataSource {
   private var title: String?
-  private var models = [ApplicationKeyboardBindingModel]()
+  private(set) var models = [ApplicationKeyboardBindingModel]()
+  private(set) var originalModels = [ApplicationKeyboardBindingModel]()
   private(set) var iconController: IconController
   lazy var keyHolderController = KeyHolderController()
+
+  var isModified: Bool {
+    return models != originalModels
+  }
 
   init(title: String? = nil,
        models: [ApplicationKeyboardBindingModel] = [],
        iconController: IconController) {
     self.title = title
     self.models = models
+    self.originalModels = models
     self.iconController = iconController
     super.init()
   }
 
   // MARK: - Public API
 
+  func modify(_ model: ApplicationKeyboardBindingModel, at indexPath: IndexPath) {
+    if indexPath.item < models.count {
+      models[indexPath.item] = model
+    } else {
+      models.append(model)
+    }
+  }
+
   func model(at indexPath: IndexPath) -> ApplicationKeyboardBindingModel {
     return models[indexPath.item]
   }
 
   func reload(_ collectionView: NSCollectionView,
+              withAnimations animations: Bool = false,
+              updateOriginals: Bool = true,
               with models: [ApplicationKeyboardBindingModel],
               then handler: (() -> Void)? = nil) {
     let old = self.models
     let new = models
     let changes = DiffManager().diff(old, new)
     collectionView.reload(with: changes,
-                          animations: false,
+                          animations: animations,
                           updateDataSource: { [weak self] in
                             guard let strongSelf = self else { return }
                             strongSelf.models = new
+                            if updateOriginals { strongSelf.originalModels = new }
       }, completion: handler)
   }
 
@@ -62,7 +79,22 @@ class ApplicationKeyboardBindingDataSource: NSObject, NSCollectionViewDataSource
     let model = self.model(at: indexPath)
 
     if let view = item as? ApplicationKeyboardBindingItem {
-      view.menuTitleLabel.stringValue = !model.modified ? model.menuTitle : ""
+      view.menuTitleLabel.stringValue = !model.placeholder ? model.menuTitle : ""
+      view.removeButton.isHidden = model.placeholder
+      view.stackView.layer?.backgroundColor = model.placeholder
+        ? NSColor(named: "Corn Silk")?.blended(withFraction: 0.5, of: .white)?.cgColor
+        : NSColor.white.cgColor
+
+      if models.count == 1 {
+        view.roundCorners(corners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner,
+          .layerMinXMinYCorner, .layerMaxXMinYCorner])
+      } else if indexPath.item == 0 {
+        view.roundCorners(corners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+      } else if indexPath.item == models.count - 1 {
+        view.roundCorners(corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+      } else {
+        view.roundCorners(corners: [])
+      }
 
       if let keyCombo = keyHolderController.keyComboFromString(model.keyboardShortcut) {
         view.recorderView.keyCombo = keyCombo

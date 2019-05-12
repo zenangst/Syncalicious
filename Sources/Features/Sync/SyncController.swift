@@ -265,7 +265,10 @@ class SyncController: NSObject {
       let operation = operationFactory.createSyncOperation(for: application,
                                                            location: file,
                                                            runningApplication: nil,
-                                                           then: updateBadgeCounter)
+                                                           then: { [weak self] in
+                                                            debugPrint("🍫 Synced \(application.propertyList.bundleName)")
+                                                            self?.updateBadgeCounter()
+      })
       operationController.add(operation)
     }
     operationController.execute()

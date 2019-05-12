@@ -63,7 +63,6 @@ class OperationFactory {
       strongSelf.shellController.execute(command: "defaults read \(application.propertyList.bundleIdentifier)")
       try? strongSelf.fileManager.removeItem(at: location)
       handler()
-      debugPrint("🍫 Synced \(application.propertyList.bundleName)")
       operation.finish(true)
     })
     return operation

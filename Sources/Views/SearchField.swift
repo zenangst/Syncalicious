@@ -5,6 +5,7 @@ class SearchField: NSSearchField {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     wantsLayer = true
+    font = NSFont.systemFont(ofSize: 14)
   }
 
   required init?(coder: NSCoder) {

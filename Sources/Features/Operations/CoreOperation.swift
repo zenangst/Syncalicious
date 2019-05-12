@@ -16,12 +16,8 @@ open class CoreOperation: Operation {
     return _finished
   }
 
-  public func executing(_ executing: Bool) {
-    _executing = executing
-  }
-
-  public func finish(_ finished: Bool) {
-    _finished = finished
+  @objc public func execute() {
+    _executing = true
   }
 
   @objc public func complete() {

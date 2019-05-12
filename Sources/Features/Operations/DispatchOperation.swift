@@ -14,14 +14,14 @@ open class DispatchOperation: CoreOperation, Dispatchable {
   }
 
   override open func main() {
-    executing(true)
+    execute()
     dispatchQueue.execute(run)
   }
 
   private func run() {
     operationClosure(self)
     if !waitUntilDone {
-      self.finish(true)
+      self.complete()
     }
   }
 }

@@ -16,7 +16,7 @@ class OperationFactory {
   func createQuitApplicationOperation(for application: Application) -> DispatchOperation {
     let operation = UIOperation({ [weak self] operation in
       guard let strongSelf = self else {
-        operation.finish(true)
+        operation.complete()
         return
       }
       strongSelf.workspace.runningApplication(for: application)?.terminate()
@@ -29,14 +29,14 @@ class OperationFactory {
   func createLaunchApplicationOperation(for application: Application) -> DispatchOperation {
     let operation = UIOperation({ [weak self] operation in
       guard let strongSelf = self else {
-        operation.finish(true)
+        operation.complete()
         return
       }
       strongSelf.workspace.launchApplication(withBundleIdentifier: application.propertyList.bundleIdentifier,
                                              options: [.withoutActivation],
                                              additionalEventParamDescriptor: nil,
                                              launchIdentifier: nil)
-      operation.finish(true)
+      operation.complete()
     })
 
     return operation
@@ -47,7 +47,7 @@ class OperationFactory {
                            then handler: @escaping () -> Void) -> DispatchOperation {
     let operation = UtilityOperation({ [weak self] operation in
       guard let strongSelf = self else {
-        operation.finish(true)
+        operation.complete()
         return
       }
 
@@ -63,7 +63,7 @@ class OperationFactory {
       strongSelf.shellController.execute(command: "defaults read \(application.propertyList.bundleIdentifier)")
       try? strongSelf.fileManager.removeItem(at: location)
       handler()
-      operation.finish(true)
+      operation.complete()
     })
     return operation
   }

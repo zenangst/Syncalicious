@@ -10,17 +10,26 @@ class ApplicationController {
   private let preferencesController: PreferencesController
   private let shellController: ShellController
   private let infoPlistController: InfoPropertyListController
+  private let operationController: OperationController
+  private let operationFactory: OperationFactory
+  let workspace: NSWorkspace
   let SIPIsEnabled: Bool
   var queue: DispatchQueue?
 
   init(queue: DispatchQueue? = nil,
        infoPlistController: InfoPropertyListController,
+       operationController: OperationController,
+       operationFactory: OperationFactory,
        preferencesController: PreferencesController,
-       shellController: ShellController) {
+       shellController: ShellController,
+       workspace: NSWorkspace = .shared) {
     self.infoPlistController = infoPlistController
+    self.operationController = operationController
+    self.operationFactory = operationFactory
     self.preferencesController = preferencesController
     self.shellController = shellController
     self.SIPIsEnabled = shellController.execute(command: "csrutil status").contains("enabled")
+    self.workspace = workspace
   }
 
   // MARK: - Public methods
@@ -40,6 +49,19 @@ class ApplicationController {
                                                            create: false)
 
     return [userDirectory, applicationDirectory]
+  }
+
+  func restart(application: Application, operations: [DispatchOperation] = []) {
+    let quitOperation = operationFactory.createQuitApplicationOperation(for: application)
+    let launchOperation = operationFactory.createLaunchApplicationOperation(for: application)
+    var collection = [DispatchOperation]()
+
+    collection.append(quitOperation)
+    collection.append(contentsOf: operations)
+    collection.append(launchOperation)
+
+    launchOperation.addDependency(quitOperation)
+    operationController.execute(collection)
   }
 
   // MARK: - Private methods

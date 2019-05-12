@@ -45,7 +45,7 @@ class ApplicationKeyboardActionsViewController: ViewController {
   // MARK: - Actions
 
   @objc func saveChanges(_ button: NSButton) {
-    delegate?.applicationKeyboardActionsViewController(self, didClickDiscardButton: button)
+    delegate?.applicationKeyboardActionsViewController(self, didClickSaveButton: button)
   }
 
   @objc func discardChanges(_ button: NSButton) {

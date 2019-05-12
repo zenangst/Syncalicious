@@ -6,8 +6,8 @@ open class DispatchOperation: CoreOperation, Dispatchable {
   let operationClosure: OperationClosure
   let waitUntilDone: Bool
 
-  public init(waitUntilDone: Bool = false, _ operationClosure: @escaping OperationClosure) {
-    self.waitUntilDone = waitUntilDone
+  public init(_ operationClosure: @escaping OperationClosure) {
+    self.waitUntilDone = true
     self.operationClosure = operationClosure
     self.dispatchQueue = DispatchQueue.global(qos: .utility)
     super.init()

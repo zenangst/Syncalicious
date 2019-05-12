@@ -16,10 +16,12 @@ class TargetApplication: NSObject {
 }
 
 class SyncController: NSObject {
-  let operationController = OperationController<DispatchOperation>()
+  let operationController: OperationController
   let destination: URL
+  let applicationController: ApplicationController
   let shellController: ShellController
   let machineController: MachineController
+  let operationFactory: OperationFactory
   let fileManager: FileManager
   let workspace: NSWorkspace
 
@@ -31,12 +33,18 @@ class SyncController: NSObject {
 
   init(destination: URL,
        fileManager: FileManager = .default,
+       applicationController: ApplicationController,
        machineController: MachineController,
+       operationController: OperationController,
+       operationFactory: OperationFactory,
        shellController: ShellController,
        workspace: NSWorkspace = .shared) {
+    self.applicationController = applicationController
     self.destination = destination
     self.fileManager = fileManager
     self.machineController = machineController
+    self.operationController = operationController
+    self.operationFactory = operationFactory
     self.shellController = shellController
     self.workspace = workspace
     super.init()
@@ -106,16 +114,14 @@ class SyncController: NSObject {
         continue
       }
 
-      let query: (NSRunningApplication) -> Bool = {
-        return $0.bundleIdentifier == application.propertyList.bundleIdentifier
-      }
-
+      let query: (NSRunningApplication) -> Bool = { $0.bundleIdentifier == application.propertyList.bundleIdentifier }
       let runningApplication = workspace.runningApplications.first(where: query)
-      let syncOperation = createSyncOperation(for: application,
-                                              location: fileUrl,
-                                              runningApplication: runningApplication)
+      let syncOperation = operationFactory.createSyncOperation(for: application,
+                                                               location: fileUrl,
+                                                               runningApplication: runningApplication,
+                                                               then: updateBadgeCounter)
       if runningApplication != nil {
-        let restartOperation = createRestartOperation(for: application)
+        let restartOperation = operationFactory.createLaunchApplicationOperation(for: application)
         restartOperation.addDependency(syncOperation)
         operationController.add(restartOperation)
       }
@@ -133,48 +139,6 @@ class SyncController: NSObject {
   }
 
   // MARK: - Private methods
-
-  func createRestartOperation(for application: Application) -> DispatchOperation {
-    let operation = UIOperation({ [weak self] operation in
-      guard let strongSelf = self else {
-        operation.finish(true)
-        return
-      }
-      strongSelf.workspace.launchApplication(withBundleIdentifier: application.propertyList.bundleIdentifier,
-                                             options: [.withoutActivation],
-                                             additionalEventParamDescriptor: nil,
-                                             launchIdentifier: nil)
-      operation.finish(true)
-    })
-
-    return operation
-  }
-
-  func createSyncOperation(for application: Application, location: URL,
-                           runningApplication: NSRunningApplication?) -> DispatchOperation {
-    let operation = UtilityOperation({ [weak self] operation in
-      guard let strongSelf = self else {
-        operation.finish(true)
-        return
-      }
-
-      runningApplication?.terminate()
-
-      _ = try? strongSelf.fileManager.replaceItemAt(application.preferences.url, withItemAt: location)
-
-      if runningApplication != nil {
-        // Wait until the copy process is done.
-        Thread.sleep(until: Date() + 1)
-      }
-
-      strongSelf.shellController.execute(command: "defaults read \(application.propertyList.bundleIdentifier)")
-      try? strongSelf.fileManager.removeItem(at: location)
-      strongSelf.updateBadgeCounter()
-      debugPrint("🍫 Synced \(application.propertyList.bundleName)")
-      operation.finish(true)
-    })
-    return operation
-  }
 
   @objc private func updateBadgeCounter() {
     if let files = try? pendingFiles(), !files.isEmpty {
@@ -298,9 +262,10 @@ class SyncController: NSObject {
           continue
       }
 
-      let operation = createSyncOperation(for: application,
-                                      location: file,
-                                      runningApplication: nil)
+      let operation = operationFactory.createSyncOperation(for: application,
+                                                           location: file,
+                                                           runningApplication: nil,
+                                                           then: updateBadgeCounter)
       operationController.add(operation)
     }
     operationController.execute()

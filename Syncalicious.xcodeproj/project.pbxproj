@@ -25,6 +25,8 @@
 		BD4A6941225406A300F588AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A6940225406A300F588AD /* ViewController.swift */; };
 		BD52B0C5227DF19100E7B52B /* NSSegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD52B0C4227DF19100E7B52B /* NSSegmentedControl+Extensions.swift */; };
 		BD5903B5226C7DD90037A1AC /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5903B4226C7DD90037A1AC /* WelcomeViewController.swift */; };
+		BD59F6BA22882E5400C82740 /* NSWorkspace+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59F6B922882E5400C82740 /* NSWorkspace+Extensions.swift */; };
+		BD59F6BC228830F600C82740 /* OperationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59F6BB228830F600C82740 /* OperationFactory.swift */; };
 		BD5AE9A62278850A002E7949 /* NSDictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */; };
 		BD5AE9A822788786002E7949 /* ApplicationKeyboardBindingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */; };
 		BD62D2E22262362C007B047B /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E12262362C007B047B /* SyncController.swift */; };
@@ -130,6 +132,8 @@
 		BD4A6940225406A300F588AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BD52B0C4227DF19100E7B52B /* NSSegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
 		BD5903B4226C7DD90037A1AC /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		BD59F6B922882E5400C82740 /* NSWorkspace+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSWorkspace+Extensions.swift"; sourceTree = "<group>"; };
+		BD59F6BB228830F600C82740 /* OperationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationFactory.swift; sourceTree = "<group>"; };
 		BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Extensions.swift"; sourceTree = "<group>"; };
 		BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingItem.swift; sourceTree = "<group>"; };
 		BD62D2E12262362C007B047B /* SyncController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
@@ -295,6 +299,19 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		BD59F6BD228884F900C82740 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				BD9DA447227B4B6100B745C0 /* CoreOperation.swift */,
+				BD9DA44F227B4BD400B745C0 /* Dispatchable.swift */,
+				BD9DA44B227B4B9700B745C0 /* DispatchOperation.swift */,
+				BD9DA453227B4C3C00B745C0 /* OperationController.swift */,
+				BD9DA449227B4B7600B745C0 /* UIOperation.swift */,
+				BD9DA44D227B4BAF00B745C0 /* UtilityOperation.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
 		BD74974B2282A14F00431776 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,6 +415,7 @@
 				BDDAA344225DC87300D87664 /* Application List */,
 				BD9DA446227B4B0600B745C0 /* Backup */,
 				BD438BFF226AFFE800A21017 /* First Launch */,
+				BD59F6BD228884F900C82740 /* Operations */,
 				BD9DA445227B4AFC00B745C0 /* Sync */,
 			);
 			path = Features;
@@ -411,6 +429,7 @@
 				BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */,
 				BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */,
 				BD52B0C4227DF19100E7B52B /* NSSegmentedControl+Extensions.swift */,
+				BD59F6B922882E5400C82740 /* NSWorkspace+Extensions.swift */,
 				BD9DA455227B4CEB00B745C0 /* OperationQueue+Extensions.swift */,
 				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
 			);
@@ -509,13 +528,7 @@
 		BD9DA445227B4AFC00B745C0 /* Sync */ = {
 			isa = PBXGroup;
 			children = (
-				BD9DA447227B4B6100B745C0 /* CoreOperation.swift */,
-				BD9DA44F227B4BD400B745C0 /* Dispatchable.swift */,
-				BD9DA44B227B4B9700B745C0 /* DispatchOperation.swift */,
 				BD62D2E12262362C007B047B /* SyncController.swift */,
-				BD9DA449227B4B7600B745C0 /* UIOperation.swift */,
-				BD9DA44D227B4BAF00B745C0 /* UtilityOperation.swift */,
-				BD9DA453227B4C3C00B745C0 /* OperationController.swift */,
 			);
 			path = Sync;
 			sourceTree = "<group>";
@@ -566,6 +579,7 @@
 				BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */,
 				BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */,
 				BDDAA33D225DB56B00D87664 /* WindowFactory.swift */,
+				BD59F6BB228830F600C82740 /* OperationFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -869,6 +883,7 @@
 				BDA69E7822730B3100EF60E5 /* AppDelegateController.swift in Sources */,
 				BD62D2EC22674E0A007B047B /* ApplicationListSearchViewController.swift in Sources */,
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
+				BD59F6BA22882E5400C82740 /* NSWorkspace+Extensions.swift in Sources */,
 				BD74974F2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,
 				BD62D2E22262362C007B047B /* SyncController.swift in Sources */,
@@ -883,6 +898,7 @@
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
 				BDDAA347225DC89F00D87664 /* ApplicationInfoViewController.swift in Sources */,
 				BD9DA450227B4BD400B745C0 /* Dispatchable.swift in Sources */,
+				BD59F6BC228830F600C82740 /* OperationFactory.swift in Sources */,
 				BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */,
 				BD9DA44C227B4B9700B745C0 /* DispatchOperation.swift in Sources */,
 				BDAB1ED522702C4E00B1070F /* NSLayoutConstraint+Extensions.swift in Sources */,

@@ -1,11 +1,11 @@
 import Foundation
 
-public class OperationController<T: Operation> {
+public class OperationController {
   public typealias OperationManagerCompletion = (() -> Void)?
   private let _operationQueue: OperationQueue
   private let _lock = NSLock()
   private var _isLocked: Bool = false
-  private var _operations = [T]()
+  private var _operations = [DispatchOperation]()
   public var isExecuting: Bool { return !_operationQueue.operations.isEmpty }
 
   public init(operationQueue: OperationQueue = .init(maxConcurrentOperationCount: 1) ) {
@@ -24,7 +24,7 @@ public class OperationController<T: Operation> {
   }
 
   @discardableResult
-  public func add(_ operations: T ...) -> OperationController {
+  public func add(_ operations: DispatchOperation ...) -> OperationController {
     for operation in operations as [Operation] {
       operation.completionBlock = removeOperationClosure(operation: operation)
     }
@@ -47,12 +47,11 @@ public class OperationController<T: Operation> {
     }
   }
 
-  public func execute(_ operations: [T], waitUntilFinished: Bool = false) {
-    Swift.print(_operations.count)
+  public func execute(_ operations: [DispatchOperation], waitUntilFinished: Bool = false) {
     _operationQueue.addOperations(operations, waitUntilFinished: waitUntilFinished)
   }
 
-  public func execute(waitUntilFinished: Bool = false, _ operations: T ...) {
+  public func execute(waitUntilFinished: Bool = false, _ operations: DispatchOperation ...) {
     execute(operations, waitUntilFinished: waitUntilFinished)
   }
 

@@ -104,16 +104,6 @@ class ApplicationDetailFeatureViewController: NSViewController,
       containerViewController.infoViewController.view.isHidden = false
       containerViewController.detailViewController.collectionView.isHidden = true
 
-      var keyboardShortcuts = keyboardController.keyboardShortcuts(for: application)
-      if keyboardShortcuts.isEmpty {
-        if let keyboardContents = application.preferences.keyEquivalents {
-          for (key, value) in keyboardContents {
-            keyboardShortcuts.append(ApplicationKeyboardBindingModel(menuTitle: key, keyboardShortcut: value))
-          }
-        }
-        keyboardShortcuts.append(ApplicationKeyboardBindingModel(placeholder: true))
-      }
-
       switch UserDefaults.standard.detailTab {
       case .general:
         if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl {
@@ -148,6 +138,7 @@ class ApplicationDetailFeatureViewController: NSViewController,
         containerViewController.keyboardShortcutViewController.collectionView.isHidden = true
         containerViewController.keyboardShortcutActionsViewController.view.isHidden = true
       case .customize:
+        let keyboardShortcuts = keyboardController.keyboardShortcuts(for: application)
         containerViewController.actionsViewController.view.isHidden = true
         containerViewController.computersViewController.collectionView.isHidden = true
         containerViewController.keyboardShortcutViewController.collectionView.isHidden = false
@@ -248,7 +239,8 @@ class ApplicationDetailFeatureViewController: NSViewController,
 
   func applicationKeyboardActionsViewController(_ controller: ApplicationKeyboardActionsViewController,
                                                 didClickSaveButton button: NSButton) {
-
+    guard let application = application else { return }
+    keyboardController.saveKeyboardShortcutsIfNeeded(for: application)
   }
 
   func applicationKeyboardActionsViewController(_ controller: ApplicationKeyboardActionsViewController,

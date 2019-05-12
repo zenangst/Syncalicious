@@ -121,6 +121,8 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                                                        create: false)
     let shellController = ShellController()
     let iconController = IconController()
+    let operationFactory = OperationFactory(shellController: shellController)
+    let operationController = OperationController()
     let machineController = try MachineController(host: Host.current(),
                                                   iconController: iconController)
     try machineController.createMachineInfoDestination(at: syncaliciousUrl)
@@ -132,13 +134,21 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                               qos: .userInitiated)
     let applicationController = ApplicationController(queue: queue,
                                                       infoPlistController: infoPlistController,
+                                                      operationController: operationController,
+                                                      operationFactory: operationFactory,
                                                       preferencesController: preferencesController,
                                                       shellController: shellController)
     let backupController = BackupController(machineController: machineController)
     let syncController = SyncController(destination: syncaliciousUrl.appendingPathComponent("Sync"),
+                                        applicationController: applicationController,
                                         machineController: machineController,
+                                        operationController: operationController,
+                                        operationFactory: operationFactory,
                                         shellController: shellController)
-    let keyboardController = KeyboardController()
+    let keyboardController = KeyboardController(applicationController: applicationController,
+                                                machineController: machineController,
+                                                operationController: operationController,
+                                                operationFactory: operationFactory)
     let dependencyContainer = DependencyContainer(applicationController: applicationController,
                                                   syncController: syncController,
                                                   backupController: backupController,

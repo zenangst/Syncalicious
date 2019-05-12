@@ -37,6 +37,7 @@ class ApplicationKeyboardActionsViewController: ViewController {
 
     stackView.spacing = 8
     stackView.orientation = .horizontal
+    stackView.distribution = .fill
     stackView.addArrangedSubview(noteLabel)
     stackView.addArrangedSubview(saveButton)
     stackView.addArrangedSubview(discardButton)

@@ -24,7 +24,10 @@ class TestController {
     let libraryDirectory = environmentUrl.appendingPathComponent("Library")
     let preferencesController = PreferencesController(libraryDirectory: libraryDirectory)
     let infoPlistController = InfoPropertyListController()
+    let operationController = OperationController()
     let applicationController = ApplicationController(infoPlistController: infoPlistController,
+                                                      operationController: operationController,
+                                                      operationFactory: OperationFactory(shellController: shellController),
                                                       preferencesController: preferencesController,
                                                       shellController: shellController)
 

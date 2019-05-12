@@ -32,7 +32,7 @@ class PreferencesController {
     defaultsDomainContainerUrl?.resolveSymlinksInPath()
     defaultsDomainLibraryUrl?.resolveSymlinksInPath()
 
-    let propertyListUrl: URL
+    var propertyListUrl: URL
     let preferenceKind: PreferenceKind
 
     if let defaultsDomainUrl = defaultsDomainContainerUrl,
@@ -52,6 +52,8 @@ class PreferencesController {
     } else {
       throw PreferencesControllerError.findPreferenceFileFailed
     }
+
+    propertyListUrl.resolveSymlinksInPath()
 
     guard let contents = NSDictionary.init(contentsOfFile: propertyListUrl.path) else {
       throw PreferencesControllerError.parseContentsFailed

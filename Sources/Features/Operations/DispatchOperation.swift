@@ -6,22 +6,22 @@ open class DispatchOperation: CoreOperation, Dispatchable {
   let operationClosure: OperationClosure
   let waitUntilDone: Bool
 
-  public init(waitUntilDone: Bool = false, _ operationClosure: @escaping OperationClosure) {
-    self.waitUntilDone = waitUntilDone
+  public init(_ operationClosure: @escaping OperationClosure) {
+    self.waitUntilDone = true
     self.operationClosure = operationClosure
     self.dispatchQueue = DispatchQueue.global(qos: .utility)
     super.init()
   }
 
   override open func main() {
-    executing(true)
+    execute()
     dispatchQueue.execute(run)
   }
 
   private func run() {
     operationClosure(self)
     if !waitUntilDone {
-      self.finish(true)
+      self.complete()
     }
   }
 }

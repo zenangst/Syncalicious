@@ -30,7 +30,7 @@ class ApplicationListSearchViewController: ViewController, NSSearchFieldDelegate
     ]
     NSLayoutConstraint.constrain(layoutConstraints)
 
-    view.frame.size.height = 28
+    view.frame.size.height = 24
   }
 
   func controlTextDidChange(_ obj: Notification) {

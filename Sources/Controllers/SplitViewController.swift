@@ -134,8 +134,11 @@ class SplitViewController: NSSplitViewController {
   override func splitView(_ splitView: NSSplitView, shouldHideDividerAt dividerIndex: Int) -> Bool {
     let result = super.splitView(splitView, shouldHideDividerAt: dividerIndex)
     let item = splitViewItems[dividerIndex]
-    let decorationViews = view.subviews.compactMap({ $0 as? DecorationView })
-      .filter({ $0.belongsToView == item.viewController.view })
+    var decorationViews = view.subviews.filter({ ($0 as? DecorationView)?
+      .belongsToView == item.viewController.view })
+    if let titlebarView = (item.viewController as? SplitViewContainedController)?.titlebarView {
+      decorationViews.append(titlebarView)
+    }
 
     decorationViews.forEach {
       $0.isHidden = item.isCollapsed

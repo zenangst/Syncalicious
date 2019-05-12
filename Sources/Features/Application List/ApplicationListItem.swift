@@ -63,6 +63,11 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
     updateState()
   }
 
+  override func viewDidLayout() {
+    super.viewDidLayout()
+    updateState()
+  }
+
   override func prepareForReuse() {
     super.prepareForReuse()
     updateState()

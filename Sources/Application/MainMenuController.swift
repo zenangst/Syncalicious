@@ -3,10 +3,20 @@ import Cocoa
 class MainMenuController: NSObject {
   weak var appDelegate: AppDelegate?
   weak var dependencyContainer: DependencyContainer?
+  weak var splitViewController: SplitViewController?
   weak var listContainerViewController: ApplicationListContainerViewController?
   weak var detailFeatureViewController: ApplicationDetailFeatureViewController?
 
+  var sidebarSplitItem: NSSplitViewItem? {
+    return splitViewController?.splitViewItems.first
+  }
+
   // MARK: - Actions
+
+  @IBAction func toggleSidebar(_ sender: Any?) {
+    guard let splitItem = sidebarSplitItem else { return }
+    toggleSplitItemSidebar(to: !splitItem.isCollapsed)
+  }
 
   @IBAction func openWindow(_ sender: Any?) {
     NSApplication.shared.activate(ignoringOtherApps: true)
@@ -45,17 +55,20 @@ class MainMenuController: NSObject {
 
   @IBAction func sortByName(_ sender: Any?) {
     guard let segmentControl = listContainerViewController?.sortViewController.segmentedControl else { return }
+    if sidebarSplitItem?.isCollapsed == true { toggleSplitItemSidebar(to: false) }
     segmentControl.setSelected(true, forSegment: 0)
     listContainerViewController?.sortViewController.didChangeSort(segmentControl)
   }
 
   @IBAction func sortBySynced(_ sender: Any?) {
     guard let segmentControl = listContainerViewController?.sortViewController.segmentedControl else { return }
+    if sidebarSplitItem?.isCollapsed == true { toggleSplitItemSidebar(to: false) }
     segmentControl.setSelected(true, forSegment: 1)
     listContainerViewController?.sortViewController.didChangeSort(segmentControl)
   }
 
   @IBAction func search(_ sender: Any?) {
+    if sidebarSplitItem?.isCollapsed == true { toggleSplitItemSidebar(to: false) }
     listContainerViewController?.searchViewController.searchField.becomeFirstResponder()
   }
 
@@ -75,5 +88,14 @@ class MainMenuController: NSObject {
       let alert = windowFactory.createAlert(error: error)
       alert.runModal()
     }
+  }
+
+  private func toggleSplitItemSidebar(to newValue: Bool) {
+    sidebarSplitItem?.isCollapsed = newValue
+    splitViewController?.splitViewItems.forEach {
+      $0.viewController.view.needsLayout = true
+      $0.viewController.view.layoutSubtreeIfNeeded()
+    }
+    NotificationCenter.default.post(Notification.init(name: NSSplitView.didResizeSubviewsNotification))
   }
 }

@@ -19,7 +19,7 @@ class WindowFactory {
     return window
   }
 
-  func createMainWindowControllers() -> (NSWindowController, ApplicationListFeatureViewController, ApplicationDetailFeatureViewController) {
+  func createMainWindowControllers() -> (WindowController, ApplicationListFeatureViewController, ApplicationDetailFeatureViewController) {
     let window = createMainWindow()
     let layout = layoutFactory.createApplicationListLayout()
     let listViewController = viewControllerFactory.createApplicationListFeatureViewController(with: layout)

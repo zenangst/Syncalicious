@@ -284,14 +284,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Speech" id="3rS-ZA-NoH">
                                     <items>
-                                        <menuItem title="Start Speaking" id="Ynk-f8-cLZ">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Start Speaking" keyEquivalent="8" id="Ynk-f8-cLZ">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" control="YES" command="YES"/>
                                             <connections>
                                                 <action selector="startSpeaking:" target="-1" id="654-Ng-kyl"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Stop Speaking" id="Oyz-dy-DGm">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Stop Speaking" keyEquivalent="7" id="Oyz-dy-DGm">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" control="YES" command="YES"/>
                                             <connections>
                                                 <action selector="stopSpeaking:" target="-1" id="dX8-6p-jy9"/>
                                             </connections>
@@ -352,7 +352,7 @@
                             <menuItem title="Show Sidebar" keyEquivalent="s" id="1ja-Gw-KF6">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
                                 <connections>
-                                    <action selector="toggleSidebar:" target="-1" id="HhC-1q-AXH"/>
+                                    <action selector="toggleSidebar:" target="GQy-uY-iF5" id="gip-jh-iIh"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Enter Full Screen" keyEquivalent="↩" id="4J7-dP-txa">

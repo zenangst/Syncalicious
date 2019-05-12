@@ -12,7 +12,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
   weak var delegate: ApplicationDelegateControllerDelegate?
   weak var appDelegate: AppDelegate?
   var firstLaunchViewController: FirstLaunchViewController?
-  var windowController: NSWindowController?
+  var windowController: WindowController?
   var dependencyContainer: DependencyContainer?
   weak var listFeatureViewController: ApplicationListFeatureViewController?
   weak var detailFeatureViewController: ApplicationDetailFeatureViewController?

@@ -85,6 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ApplicationDelegateControlle
   }
 
   private func configureMainMenuController() {
+    self.mainMenuController?.splitViewController = applicationDelegateController.windowController?.splitViewController
     self.mainMenuController?.appDelegate = self
     self.mainMenuController?.dependencyContainer =  applicationDelegateController.dependencyContainer
     self.mainMenuController?.listContainerViewController = applicationDelegateController

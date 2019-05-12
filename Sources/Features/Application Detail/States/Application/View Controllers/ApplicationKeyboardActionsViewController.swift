@@ -9,7 +9,7 @@ protocol ApplicationKeyboardActionsViewControllerDelegate: class {
 
 class ApplicationKeyboardActionsViewController: ViewController {
   weak var delegate: ApplicationKeyboardActionsViewControllerDelegate?
-  lazy var gridView = NSGridView()
+  lazy var stackView = NSStackView()
 
   // MARK: - View lifecycle
 
@@ -27,19 +27,32 @@ class ApplicationKeyboardActionsViewController: ViewController {
                                borderWidth: 1,
                                cornerRadius: .custom(4), target: self, action: #selector(discardChanges(_:)))
 
-    gridView.addRow(with: [discardButton, saveButton])
-    gridView.xPlacement = .trailing
-    view.addSubview(gridView)
+    let noteLabel = SmallLabel(text: "The application will restart when you save your changes.")
+    noteLabel.textColor = NSColor.textColor.highlight(withLevel: 0.4)
+    noteLabel.lineBreakMode = .byTruncatingMiddle
+    noteLabel.alignment = .right
+
+    saveButton.setContentHuggingPriority(.required, for: .horizontal)
+    discardButton.setContentHuggingPriority(.required, for: .horizontal)
+
+    stackView.spacing = 8
+    stackView.orientation = .horizontal
+    stackView.addArrangedSubview(noteLabel)
+    stackView.addArrangedSubview(saveButton)
+    stackView.addArrangedSubview(discardButton)
+
+    view.addSubview(stackView)
 
     NSLayoutConstraint.constrain([
-      gridView.topAnchor.constraint(equalTo: view.topAnchor),
-      gridView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
+      stackView.topAnchor.constraint(equalTo: view.topAnchor),
+      stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+      stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
       ])
   }
 
-  override func viewWillAppear() {
-    super.viewWillAppear()
-    view.frame.size.height = gridView.frame.size.height + 10
+  override func viewWillLayout() {
+    super.viewWillLayout()
+    view.frame.size.height = stackView.frame.size.height + 10
   }
 
   // MARK: - Actions

@@ -1,14 +1,14 @@
 import Cocoa
 import Family
 
-class ApplicationListContainerViewController: FamilyViewController {
+class ListContainerViewController: FamilyViewController {
   let listViewController: ApplicationListItemViewController
-  let searchViewController: ApplicationListSearchViewController
-  let sortViewController: ApplicationListSortViewController
+  let searchViewController: ListSearchViewController
+  let sortViewController: ListSortViewController
 
   init(listViewController: ApplicationListItemViewController,
-       searchViewController: ApplicationListSearchViewController,
-       sortViewController: ApplicationListSortViewController) {
+       searchViewController: ListSearchViewController,
+       sortViewController: ListSortViewController) {
     self.listViewController = listViewController
     self.searchViewController = searchViewController
     self.sortViewController = sortViewController

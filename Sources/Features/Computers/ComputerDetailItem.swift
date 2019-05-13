@@ -4,7 +4,7 @@ import Cocoa
 // sourcery: let machine = "Machine"
 // sourcery: let synced = "Bool"
 // sourcery: let backupDate = "Date?"
-class ApplicationComputerDetailItem: CollectionViewItem, CollectionViewItemComponent {
+class ComputerDetailItem: CollectionViewItem, CollectionViewItemComponent {
   // sourcery: $RawBinding = "iconController.loadIcon(at: model.image, identifier: model.machine.name) { image in view.iconView.image = image }"
   lazy var iconView = NSImageView()
   // sourcery: let title: String = "titleLabel.stringValue = model.title"

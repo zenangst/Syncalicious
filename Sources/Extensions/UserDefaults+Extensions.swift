@@ -11,10 +11,10 @@ extension UserDefaults {
     set { set(newValue, forKey: #function) }
   }
 
-  var detailTab: ApplicationDetailFeatureViewController.Tab {
+  var detailTab: DetailFeatureViewController.Tab {
     get {
       if let string = string(forKey: #function),
-        let tab = ApplicationDetailFeatureViewController.Tab.init(rawValue: string) {
+        let tab = DetailFeatureViewController.Tab.init(rawValue: string) {
         return tab
       }
       return .general
@@ -24,10 +24,10 @@ extension UserDefaults {
     }
   }
 
-  var listSort: ApplicationListSortViewController.SortKind? {
+  var listSort: ListSortViewController.SortKind? {
     get {
       if let string = string(forKey: #function) {
-        return ApplicationListSortViewController.SortKind.init(rawValue: string)
+        return ListSortViewController.SortKind.init(rawValue: string)
       }
       return nil
     }

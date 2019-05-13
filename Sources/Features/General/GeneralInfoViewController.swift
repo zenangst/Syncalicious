@@ -1,6 +1,6 @@
 import Cocoa
 
-class ApplicationInfoViewController: ViewController {
+class GeneralInfoViewController: ViewController {
   lazy var rightStackView = NSStackView()
   lazy var horizontalStackView = NSStackView()
 
@@ -74,7 +74,7 @@ class ApplicationInfoViewController: ViewController {
       horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       rightStackView.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor)
-    ])
+      ])
     NSLayoutConstraint.activate(layoutConstraints)
   }
 

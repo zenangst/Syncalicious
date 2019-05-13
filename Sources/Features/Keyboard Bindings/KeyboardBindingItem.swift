@@ -3,18 +3,18 @@ import Cocoa
 import KeyHolder
 import Magnet
 
-protocol ApplicationKeyboardBindingItemDelegate: class {
-  func applicationKeyboardBindingItem(_ item: ApplicationKeyboardBindingItem,
-                                      menuTitleLabelDidChange textField: NSTextField)
-  func applicationKeyboardBindingItem(_ item: ApplicationKeyboardBindingItem,
-                                      recorderViewDidChange recorderView: RecordView,
-                                      keyCombo: KeyCombo?)
-  func applicationKeyboardBindingItem(_ item: ApplicationKeyboardBindingItem,
-                                      didClickRemoveButton button: NSButton)
+protocol KeyboardBindingItemDelegate: class {
+  func keyboardBindingItem(_ item: KeyboardBindingItem,
+                           menuTitleLabelDidChange textField: NSTextField)
+  func keyboardBindingItem(_ item: KeyboardBindingItem,
+                           recorderViewDidChange recorderView: RecordView,
+                           keyCombo: KeyCombo?)
+  func keyboardBindingItem(_ item: KeyboardBindingItem,
+                           didClickRemoveButton button: NSButton)
 }
 
-class ApplicationKeyboardBindingItem: CollectionViewItem, NSTextFieldDelegate {
-  weak var delegate: ApplicationKeyboardBindingItemDelegate?
+class KeyboardBindingItem: CollectionViewItem, NSTextFieldDelegate {
+  weak var delegate: KeyboardBindingItemDelegate?
   lazy var stackView = NSStackView()
   lazy var menuTitleLabel = NSTextField()
   lazy var recorderView = RecordView()
@@ -42,9 +42,9 @@ class ApplicationKeyboardBindingItem: CollectionViewItem, NSTextFieldDelegate {
     recorderView.cornerRadius = 12
     recorderView.didChange = { [weak self] in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.applicationKeyboardBindingItem(strongSelf,
-                                                          recorderViewDidChange: strongSelf.recorderView,
-                                                          keyCombo: $0)
+      strongSelf.delegate?.keyboardBindingItem(strongSelf,
+                                               recorderViewDidChange: strongSelf.recorderView,
+                                               keyCombo: $0)
     }
 
     stackView.addArrangedSubview(menuTitleLabel)
@@ -82,12 +82,10 @@ class ApplicationKeyboardBindingItem: CollectionViewItem, NSTextFieldDelegate {
   // MARK: - Actions
 
   func controlTextDidChange(_ obj: Notification) {
-    delegate?.applicationKeyboardBindingItem(self,
-                                             menuTitleLabelDidChange: menuTitleLabel)
+    delegate?.keyboardBindingItem(self, menuTitleLabelDidChange: menuTitleLabel)
   }
 
   @objc func removeButtonAction(_ sender: NSButton) {
-    delegate?.applicationKeyboardBindingItem(self,
-                                             didClickRemoveButton: removeButton)
+    delegate?.keyboardBindingItem(self, didClickRemoveButton: removeButton)
   }
 }

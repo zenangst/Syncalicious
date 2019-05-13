@@ -1,15 +1,15 @@
 import Cocoa
 
-protocol ApplicationListSearchViewControllerDelegate: class {
-  func applicationDetailSearchViewController(_ controller: ApplicationListSearchViewController,
-                                             didStartSearch searchField: NSSearchField)
-  func applicationDetailSearchViewController(_ controller: ApplicationListSearchViewController,
-                                             didEndSearch searchField: NSSearchField)
+protocol ListSearchViewControllerDelegate: class {
+  func listSearchViewController(_ controller: ListSearchViewController,
+                                didStartSearch searchField: NSSearchField)
+  func listSearchViewController(_ controller: ListSearchViewController,
+                                didEndSearch searchField: NSSearchField)
 }
 
-class ApplicationListSearchViewController: ViewController, NSSearchFieldDelegate {
+class ListSearchViewController: ViewController, NSSearchFieldDelegate {
   private(set) lazy var searchField = SearchField()
-  weak var delegate: ApplicationListSearchViewControllerDelegate?
+  weak var delegate: ListSearchViewControllerDelegate?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,14 +35,14 @@ class ApplicationListSearchViewController: ViewController, NSSearchFieldDelegate
 
   func controlTextDidChange(_ obj: Notification) {
     guard !searchField.stringValue.isEmpty else { return }
-    delegate?.applicationDetailSearchViewController(self, didStartSearch: searchField)
+    delegate?.listSearchViewController(self, didStartSearch: searchField)
   }
 
   func searchFieldDidStartSearching(_ sender: NSSearchField) {
-    delegate?.applicationDetailSearchViewController(self, didStartSearch: sender)
+    delegate?.listSearchViewController(self, didStartSearch: sender)
   }
 
   func searchFieldDidEndSearching(_ sender: NSSearchField) {
-    delegate?.applicationDetailSearchViewController(self, didEndSearch: sender)
+    delegate?.listSearchViewController(self, didEndSearch: sender)
   }
 }

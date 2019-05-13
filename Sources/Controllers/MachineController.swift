@@ -22,7 +22,7 @@ class MachineController {
   let iconController: IconController
   private(set) var machine: Machine
   var otherMachines = [Machine]()
-  var threshold: Double = 60
+  var threshold: Double = 10
   var timer: Timer?
 
   public init(fileManager: FileManager = .default,
@@ -40,7 +40,7 @@ class MachineController {
 
     self.machine = Machine(name: name, localizedName: localizedName, state: .active)
 
-    let timer = Timer.init(timeInterval: 30.0, repeats: true, block: { [weak self] _ in
+    let timer = Timer.init(timeInterval: 5.0, repeats: true, block: { [weak self] _ in
       guard self?.checkIdleState() == .active else { return }
       try? self?.refreshMachines()
     })

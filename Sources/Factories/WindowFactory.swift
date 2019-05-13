@@ -19,7 +19,8 @@ class WindowFactory {
     return window
   }
 
-  func createMainWindowControllers() -> (WindowController, ApplicationListFeatureViewController, ApplicationDetailFeatureViewController) {
+  // swiftlint:disable large_tuple
+  func createMainWindowControllers() -> (WindowController, ListFeatureViewController, DetailFeatureViewController) {
     let window = createMainWindow()
     let layout = layoutFactory.createApplicationListLayout()
     let listViewController = viewControllerFactory.createApplicationListFeatureViewController(with: layout)

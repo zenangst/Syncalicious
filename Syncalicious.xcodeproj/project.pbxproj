@@ -11,7 +11,7 @@
 		A47DC085643951080DBAE4EF /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */; };
 		BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */; };
 		BD084B792258E0B600E91A7F /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B782258E0B600E91A7F /* TestHost.swift */; };
-		BD2059AD2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2059AC2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift */; };
+		BD2059AD2284AE6E00E1D467 /* KeyboardActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2059AC2284AE6E00E1D467 /* KeyboardActionsViewController.swift */; };
 		BD2199D6226EFB7D00D86AA6 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2199D5226EFB7D00D86AA6 /* Button.swift */; };
 		BD2E976122702A2000C2CD98 /* DestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2E976022702A2000C2CD98 /* DestinationViewController.swift */; };
 		BD3CC24E225B1463006D7877 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC24D225B1463006D7877 /* WindowController.swift */; };
@@ -28,18 +28,18 @@
 		BD59F6BA22882E5400C82740 /* NSWorkspace+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59F6B922882E5400C82740 /* NSWorkspace+Extensions.swift */; };
 		BD59F6BC228830F600C82740 /* OperationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59F6BB228830F600C82740 /* OperationFactory.swift */; };
 		BD5AE9A62278850A002E7949 /* NSDictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */; };
-		BD5AE9A822788786002E7949 /* ApplicationKeyboardBindingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */; };
+		BD5AE9A822788786002E7949 /* KeyboardBindingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5AE9A722788786002E7949 /* KeyboardBindingItem.swift */; };
 		BD62D2E22262362C007B047B /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E12262362C007B047B /* SyncController.swift */; };
 		BD62D2E4226393B4007B047B /* ShellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E3226393B4007B047B /* ShellController.swift */; };
 		BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */; };
-		BD62D2EA226727C0007B047B /* ApplicationListContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E9226727C0007B047B /* ApplicationListContainerViewController.swift */; };
-		BD62D2EC22674E0A007B047B /* ApplicationListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2EB22674E0A007B047B /* ApplicationListSearchViewController.swift */; };
-		BD62D2EE2267547B007B047B /* ApplicationListFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2ED2267547B007B047B /* ApplicationListFeatureViewController.swift */; };
-		BD62D2F022675F54007B047B /* ApplicationDetailFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2EF22675F54007B047B /* ApplicationDetailFeatureViewController.swift */; };
-		BD62D2F222677FEB007B047B /* ApplicationListSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2F122677FEB007B047B /* ApplicationListSortViewController.swift */; };
-		BD74974A2282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7497492282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift */; };
-		BD74974F2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD74974E2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift */; };
-		BD7497522282A1AF00431776 /* ApplicationKeyboardBindingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7497512282A1AF00431776 /* ApplicationKeyboardBindingModel.swift */; };
+		BD62D2EA226727C0007B047B /* ListContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2E9226727C0007B047B /* ListContainerViewController.swift */; };
+		BD62D2EC22674E0A007B047B /* ListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2EB22674E0A007B047B /* ListSearchViewController.swift */; };
+		BD62D2EE2267547B007B047B /* ListFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2ED2267547B007B047B /* ListFeatureViewController.swift */; };
+		BD62D2F022675F54007B047B /* DetailFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2EF22675F54007B047B /* DetailFeatureViewController.swift */; };
+		BD62D2F222677FEB007B047B /* ListSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD62D2F122677FEB007B047B /* ListSortViewController.swift */; };
+		BD74974A2282A0EE00431776 /* KeyboardBindingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7497492282A0EE00431776 /* KeyboardBindingViewController.swift */; };
+		BD74974F2282A17900431776 /* KeyboardBindingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD74974E2282A17900431776 /* KeyboardBindingDataSource.swift */; };
+		BD7497522282A1AF00431776 /* KeyboardBindingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7497512282A1AF00431776 /* KeyboardBindingModel.swift */; };
 		BD7497562282A23A00431776 /* KeyHolderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7497552282A23A00431776 /* KeyHolderController.swift */; };
 		BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960B2252849100C93211 /* ApplicationController.swift */; };
 		BD7D960E2252888000C93211 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D960D2252888000C93211 /* Application.swift */; };
@@ -74,7 +74,7 @@
 		BD9DA452227B4BFA00B745C0 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA451227B4BFA00B745C0 /* DispatchQueue+Extensions.swift */; };
 		BD9DA454227B4C3C00B745C0 /* OperationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA453227B4C3C00B745C0 /* OperationController.swift */; };
 		BD9DA456227B4CEB00B745C0 /* OperationQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9DA455227B4CEB00B745C0 /* OperationQueue+Extensions.swift */; };
-		BDA1C3D72271A8A6009185DE /* ApplicationComputerDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */; };
+		BDA1C3D72271A8A6009185DE /* ComputerDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D62271A8A6009185DE /* ComputerDetailItem.swift */; };
 		BDA1C3D92271B73B009185DE /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA1C3D82271B73B009185DE /* CollectionViewHeader.swift */; };
 		BDA69E7822730B3100EF60E5 /* AppDelegateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */; };
 		BDAB1ED522702C4E00B1070F /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */; };
@@ -89,14 +89,14 @@
 		BDDAA33E225DB56B00D87664 /* WindowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33D225DB56B00D87664 /* WindowFactory.swift */; };
 		BDDAA340225DB57500D87664 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */; };
 		BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */; };
-		BDDAA347225DC89F00D87664 /* ApplicationInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */; };
+		BDDAA347225DC89F00D87664 /* GeneralInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA346225DC89F00D87664 /* GeneralInfoViewController.swift */; };
 		BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */; };
-		BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */; };
+		BDDAA34F225E52DA00D87664 /* DetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA34E225E52DA00D87664 /* DetailContainerViewController.swift */; };
 		BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */; };
 		BDE9E63622704AFD00C28F34 /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */; };
 		BDE9E6392270514700C28F34 /* ApplicationDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */; };
 		BDE9E63B2270519100C28F34 /* CollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */; };
-		BDFB33442281F13200199641 /* ApplicationActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFB33432281F13200199641 /* ApplicationActionsViewController.swift */; };
+		BDFB33442281F13200199641 /* GeneralActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFB33432281F13200199641 /* GeneralActionsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +116,7 @@
 		BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplicationDelegate.swift; sourceTree = "<group>"; };
 		BD084B782258E0B600E91A7F /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
 		BD084B7A2258F15500E91A7F /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
-		BD2059AC2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardActionsViewController.swift; sourceTree = "<group>"; };
+		BD2059AC2284AE6E00E1D467 /* KeyboardActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardActionsViewController.swift; sourceTree = "<group>"; };
 		BD2199D5226EFB7D00D86AA6 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		BD2E976022702A2000C2CD98 /* DestinationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationViewController.swift; sourceTree = "<group>"; };
 		BD3CC24D225B1463006D7877 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
@@ -135,18 +135,18 @@
 		BD59F6B922882E5400C82740 /* NSWorkspace+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSWorkspace+Extensions.swift"; sourceTree = "<group>"; };
 		BD59F6BB228830F600C82740 /* OperationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationFactory.swift; sourceTree = "<group>"; };
 		BD5AE9A52278850A002E7949 /* NSDictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Extensions.swift"; sourceTree = "<group>"; };
-		BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingItem.swift; sourceTree = "<group>"; };
+		BD5AE9A722788786002E7949 /* KeyboardBindingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBindingItem.swift; sourceTree = "<group>"; };
 		BD62D2E12262362C007B047B /* SyncController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
 		BD62D2E3226393B4007B047B /* ShellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellController.swift; sourceTree = "<group>"; };
 		BD62D2E522639C3A007B047B /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
-		BD62D2E9226727C0007B047B /* ApplicationListContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListContainerViewController.swift; sourceTree = "<group>"; };
-		BD62D2EB22674E0A007B047B /* ApplicationListSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListSearchViewController.swift; sourceTree = "<group>"; };
-		BD62D2ED2267547B007B047B /* ApplicationListFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListFeatureViewController.swift; sourceTree = "<group>"; };
-		BD62D2EF22675F54007B047B /* ApplicationDetailFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailFeatureViewController.swift; sourceTree = "<group>"; };
-		BD62D2F122677FEB007B047B /* ApplicationListSortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationListSortViewController.swift; sourceTree = "<group>"; };
-		BD7497492282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingViewController.swift; sourceTree = "<group>"; };
-		BD74974E2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingDataSource.swift; sourceTree = "<group>"; };
-		BD7497512282A1AF00431776 /* ApplicationKeyboardBindingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationKeyboardBindingModel.swift; sourceTree = "<group>"; };
+		BD62D2E9226727C0007B047B /* ListContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContainerViewController.swift; sourceTree = "<group>"; };
+		BD62D2EB22674E0A007B047B /* ListSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSearchViewController.swift; sourceTree = "<group>"; };
+		BD62D2ED2267547B007B047B /* ListFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFeatureViewController.swift; sourceTree = "<group>"; };
+		BD62D2EF22675F54007B047B /* DetailFeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeatureViewController.swift; sourceTree = "<group>"; };
+		BD62D2F122677FEB007B047B /* ListSortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSortViewController.swift; sourceTree = "<group>"; };
+		BD7497492282A0EE00431776 /* KeyboardBindingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBindingViewController.swift; sourceTree = "<group>"; };
+		BD74974E2282A17900431776 /* KeyboardBindingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBindingDataSource.swift; sourceTree = "<group>"; };
+		BD7497512282A1AF00431776 /* KeyboardBindingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBindingModel.swift; sourceTree = "<group>"; };
 		BD7497552282A23A00431776 /* KeyHolderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyHolderController.swift; sourceTree = "<group>"; };
 		BD7D960B2252849100C93211 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		BD7D960D2252888000C93211 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 		BD9DA451227B4BFA00B745C0 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		BD9DA453227B4C3C00B745C0 /* OperationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationController.swift; sourceTree = "<group>"; };
 		BD9DA455227B4CEB00B745C0 /* OperationQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OperationQueue+Extensions.swift"; sourceTree = "<group>"; };
-		BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationComputerDetailItem.swift; sourceTree = "<group>"; };
+		BDA1C3D62271A8A6009185DE /* ComputerDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerDetailItem.swift; sourceTree = "<group>"; };
 		BDA1C3D82271B73B009185DE /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
 		BDA69E7722730B3100EF60E5 /* AppDelegateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateController.swift; sourceTree = "<group>"; };
 		BDAB1ED422702C4E00B1070F /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
@@ -205,14 +205,14 @@
 		BDDAA33D225DB56B00D87664 /* WindowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowFactory.swift; sourceTree = "<group>"; };
 		BDDAA33F225DB57500D87664 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		BDDAA341225DB79300D87664 /* CollectionViewLayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutFactory.swift; sourceTree = "<group>"; };
-		BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationInfoViewController.swift; sourceTree = "<group>"; };
+		BDDAA346225DC89F00D87664 /* GeneralInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoViewController.swift; sourceTree = "<group>"; };
 		BDDAA34C225E460100D87664 /* SplitViewContainedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainedController.swift; sourceTree = "<group>"; };
-		BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailContainerViewController.swift; sourceTree = "<group>"; };
+		BDDAA34E225E52DA00D87664 /* DetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContainerViewController.swift; sourceTree = "<group>"; };
 		BDDC19A3226F93D9002D17F5 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
 		BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
 		BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailItem.swift; sourceTree = "<group>"; };
 		BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewItem.swift; sourceTree = "<group>"; };
-		BDFB33432281F13200199641 /* ApplicationActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationActionsViewController.swift; sourceTree = "<group>"; };
+		BDFB33432281F13200199641 /* GeneralActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralActionsViewController.swift; sourceTree = "<group>"; };
 		D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -312,50 +312,6 @@
 			path = Operations;
 			sourceTree = "<group>";
 		};
-		BD74974B2282A14F00431776 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				BDA1C3D62271A8A6009185DE /* ApplicationComputerDetailItem.swift */,
-				BD5AE9A722788786002E7949 /* ApplicationKeyboardBindingItem.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		BD74974C2282A15600431776 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				BDFB33432281F13200199641 /* ApplicationActionsViewController.swift */,
-				BDDAA346225DC89F00D87664 /* ApplicationInfoViewController.swift */,
-				BD7497492282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift */,
-				BD2059AC2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift */,
-			);
-			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		BD74974D2282A16F00431776 /* Data sources */ = {
-			isa = PBXGroup;
-			children = (
-				BD74974E2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift */,
-			);
-			path = "Data sources";
-			sourceTree = "<group>";
-		};
-		BD7497502282A1A100431776 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				BD7497512282A1AF00431776 /* ApplicationKeyboardBindingModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		BD7497542282A21400431776 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				BD7497552282A23A00431776 /* KeyHolderController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		BD7D960A225281E600C93211 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,13 +351,16 @@
 			isa = PBXGroup;
 			children = (
 				BD7D960B2252849100C93211 /* ApplicationController.swift */,
+				BD7D961B22532B6900C93211 /* BackupController.swift */,
 				BD8EDD812255CE3400110E56 /* IconController.swift */,
 				BD7D961422528B8700C93211 /* InfoPropertyListController.swift */,
 				BD99C6DF228365E10004256D /* KeyboardController.swift */,
+				BD7497552282A23A00431776 /* KeyHolderController.swift */,
 				BD4A69302253BADE00F588AD /* MachineController.swift */,
 				BD7D9616225290C800C93211 /* PreferencesController.swift */,
 				BD62D2E3226393B4007B047B /* ShellController.swift */,
 				BD3CC24F225B147F006D7877 /* SplitViewController.swift */,
+				BD62D2E12262362C007B047B /* SyncController.swift */,
 				BD4A6940225406A300F588AD /* ViewController.swift */,
 				BD3CC24D225B1463006D7877 /* WindowController.swift */,
 			);
@@ -411,12 +370,16 @@
 		BD7D961A22532B5900C93211 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				BDDAA345225DC88F00D87664 /* Application Detail */,
 				BDDAA344225DC87300D87664 /* Application List */,
-				BD9DA446227B4B0600B745C0 /* Backup */,
+				BDE9E6372270512F00C28F34 /* Applications */,
+				BDFF92AE2289CF8B00FEFE0B /* Computers */,
+				BDDAA345225DC88F00D87664 /* Detail */,
 				BD438BFF226AFFE800A21017 /* First Launch */,
+				BDFF92AF2289D01400FEFE0B /* General */,
+				BDFF92AD2289CF6900FEFE0B /* Keyboard Bindings */,
 				BD59F6BD228884F900C82740 /* Operations */,
-				BD9DA445227B4AFC00B745C0 /* Sync */,
+				BDFF92B02289DD0700FEFE0B /* Search */,
+				BDFF92B12289DD0E00FEFE0B /* Sort */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -525,43 +488,6 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		BD9DA445227B4AFC00B745C0 /* Sync */ = {
-			isa = PBXGroup;
-			children = (
-				BD62D2E12262362C007B047B /* SyncController.swift */,
-			);
-			path = Sync;
-			sourceTree = "<group>";
-		};
-		BD9DA446227B4B0600B745C0 /* Backup */ = {
-			isa = PBXGroup;
-			children = (
-				BD7D961B22532B6900C93211 /* BackupController.swift */,
-			);
-			path = Backup;
-			sourceTree = "<group>";
-		};
-		BDA1C3D42271A887009185DE /* Application */ = {
-			isa = PBXGroup;
-			children = (
-				BD7497542282A21400431776 /* Controllers */,
-				BD74974D2282A16F00431776 /* Data sources */,
-				BD7497502282A1A100431776 /* Models */,
-				BD74974C2282A15600431776 /* View Controllers */,
-				BD74974B2282A14F00431776 /* Views */,
-			);
-			path = Application;
-			sourceTree = "<group>";
-		};
-		BDA1C3D52271A890009185DE /* States */ = {
-			isa = PBXGroup;
-			children = (
-				BDA1C3D42271A887009185DE /* Application */,
-				BDE9E6372270512F00C28F34 /* Applications */,
-			);
-			path = States;
-			sourceTree = "<group>";
-		};
 		BDCBB2A922551372007C9404 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -587,23 +513,20 @@
 		BDDAA344225DC87300D87664 /* Application List */ = {
 			isa = PBXGroup;
 			children = (
-				BD62D2E9226727C0007B047B /* ApplicationListContainerViewController.swift */,
-				BD62D2ED2267547B007B047B /* ApplicationListFeatureViewController.swift */,
 				BD8EDD7D22553ADD00110E56 /* ApplicationListItem.swift */,
-				BD62D2EB22674E0A007B047B /* ApplicationListSearchViewController.swift */,
-				BD62D2F122677FEB007B047B /* ApplicationListSortViewController.swift */,
+				BD62D2E9226727C0007B047B /* ListContainerViewController.swift */,
+				BD62D2ED2267547B007B047B /* ListFeatureViewController.swift */,
 			);
 			path = "Application List";
 			sourceTree = "<group>";
 		};
-		BDDAA345225DC88F00D87664 /* Application Detail */ = {
+		BDDAA345225DC88F00D87664 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				BDA1C3D52271A890009185DE /* States */,
-				BDDAA34E225E52DA00D87664 /* ApplicationDetailContainerViewController.swift */,
-				BD62D2EF22675F54007B047B /* ApplicationDetailFeatureViewController.swift */,
+				BDDAA34E225E52DA00D87664 /* DetailContainerViewController.swift */,
+				BD62D2EF22675F54007B047B /* DetailFeatureViewController.swift */,
 			);
-			path = "Application Detail";
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		BDE9E6372270512F00C28F34 /* Applications */ = {
@@ -612,6 +535,51 @@
 				BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */,
 			);
 			path = Applications;
+			sourceTree = "<group>";
+		};
+		BDFF92AD2289CF6900FEFE0B /* Keyboard Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				BD2059AC2284AE6E00E1D467 /* KeyboardActionsViewController.swift */,
+				BD74974E2282A17900431776 /* KeyboardBindingDataSource.swift */,
+				BD5AE9A722788786002E7949 /* KeyboardBindingItem.swift */,
+				BD7497512282A1AF00431776 /* KeyboardBindingModel.swift */,
+				BD7497492282A0EE00431776 /* KeyboardBindingViewController.swift */,
+			);
+			path = "Keyboard Bindings";
+			sourceTree = "<group>";
+		};
+		BDFF92AE2289CF8B00FEFE0B /* Computers */ = {
+			isa = PBXGroup;
+			children = (
+				BDA1C3D62271A8A6009185DE /* ComputerDetailItem.swift */,
+			);
+			path = Computers;
+			sourceTree = "<group>";
+		};
+		BDFF92AF2289D01400FEFE0B /* General */ = {
+			isa = PBXGroup;
+			children = (
+				BDFB33432281F13200199641 /* GeneralActionsViewController.swift */,
+				BDDAA346225DC89F00D87664 /* GeneralInfoViewController.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		BDFF92B02289DD0700FEFE0B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				BD62D2EB22674E0A007B047B /* ListSearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		BDFF92B12289DD0E00FEFE0B /* Sort */ = {
+			isa = PBXGroup;
+			children = (
+				BD62D2F122677FEB007B047B /* ListSortViewController.swift */,
+			);
+			path = Sort;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -840,10 +808,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD62D2EE2267547B007B047B /* ApplicationListFeatureViewController.swift in Sources */,
+				BD62D2EE2267547B007B047B /* ListFeatureViewController.swift in Sources */,
 				BDE9E63B2270519100C28F34 /* CollectionViewItem.swift in Sources */,
 				BD7D96192252912100C93211 /* Preferences.swift in Sources */,
-				BD62D2F022675F54007B047B /* ApplicationDetailFeatureViewController.swift in Sources */,
+				BD62D2F022675F54007B047B /* DetailFeatureViewController.swift in Sources */,
 				BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */,
 				BD9DA448227B4B6100B745C0 /* CoreOperation.swift in Sources */,
 				BD7D961F22532BA100C93211 /* UserDefaults+Extensions.swift in Sources */,
@@ -851,11 +819,11 @@
 				BD7D9617225290C800C93211 /* PreferencesController.swift in Sources */,
 				BD9DA456227B4CEB00B745C0 /* OperationQueue+Extensions.swift in Sources */,
 				BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */,
-				BD62D2EA226727C0007B047B /* ApplicationListContainerViewController.swift in Sources */,
+				BD62D2EA226727C0007B047B /* ListContainerViewController.swift in Sources */,
 				BD7D961C22532B6900C93211 /* BackupController.swift in Sources */,
-				BDFB33442281F13200199641 /* ApplicationActionsViewController.swift in Sources */,
-				BD62D2F222677FEB007B047B /* ApplicationListSortViewController.swift in Sources */,
-				BD5AE9A822788786002E7949 /* ApplicationKeyboardBindingItem.swift in Sources */,
+				BDFB33442281F13200199641 /* GeneralActionsViewController.swift in Sources */,
+				BD62D2F222677FEB007B047B /* ListSortViewController.swift in Sources */,
+				BD5AE9A822788786002E7949 /* KeyboardBindingItem.swift in Sources */,
 				BDDAA333225D37BD00D87664 /* LayeredView.swift in Sources */,
 				BD4A692F2253BA6400F588AD /* Machine.swift in Sources */,
 				BDDAA340225DB57500D87664 /* ViewControllerFactory.swift in Sources */,
@@ -864,12 +832,12 @@
 				BD895C08225A698600DEC9FE /* PrototypeItemComponent.generated.swift in Sources */,
 				BDDAA337225D37D100D87664 /* BackgroundView.swift in Sources */,
 				BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */,
-				BDA1C3D72271A8A6009185DE /* ApplicationComputerDetailItem.swift in Sources */,
+				BDA1C3D72271A8A6009185DE /* ComputerDetailItem.swift in Sources */,
 				BDE9E63622704AFD00C28F34 /* AnimationFactory.swift in Sources */,
 				BD8EDD822255CE3400110E56 /* IconController.swift in Sources */,
-				BDDAA34F225E52DA00D87664 /* ApplicationDetailContainerViewController.swift in Sources */,
+				BDDAA34F225E52DA00D87664 /* DetailContainerViewController.swift in Sources */,
 				BD3CC250225B147F006D7877 /* SplitViewController.swift in Sources */,
-				BD74974A2282A0EE00431776 /* ApplicationKeyboardBindingViewController.swift in Sources */,
+				BD74974A2282A0EE00431776 /* KeyboardBindingViewController.swift in Sources */,
 				BDDAA33B225D383400D87664 /* Label.swift in Sources */,
 				BD4A69312253BADE00F588AD /* MachineController.swift in Sources */,
 				BD5903B5226C7DD90037A1AC /* WelcomeViewController.swift in Sources */,
@@ -881,10 +849,10 @@
 				BD438BF92269CD1900A21017 /* WelcomeWindow.swift in Sources */,
 				BD7497562282A23A00431776 /* KeyHolderController.swift in Sources */,
 				BDA69E7822730B3100EF60E5 /* AppDelegateController.swift in Sources */,
-				BD62D2EC22674E0A007B047B /* ApplicationListSearchViewController.swift in Sources */,
+				BD62D2EC22674E0A007B047B /* ListSearchViewController.swift in Sources */,
 				BD7D962122533CE100C93211 /* DependencyContainer.swift in Sources */,
 				BD59F6BA22882E5400C82740 /* NSWorkspace+Extensions.swift in Sources */,
-				BD74974F2282A17900431776 /* ApplicationKeyboardBindingDataSource.swift in Sources */,
+				BD74974F2282A17900431776 /* KeyboardBindingDataSource.swift in Sources */,
 				BDDAA34D225E460100D87664 /* SplitViewContainedController.swift in Sources */,
 				BD62D2E22262362C007B047B /* SyncController.swift in Sources */,
 				BD9DA452227B4BFA00B745C0 /* DispatchQueue+Extensions.swift in Sources */,
@@ -892,11 +860,11 @@
 				BDDAA339225D37DE00D87664 /* DividerView.swift in Sources */,
 				BD438BFE226A5E3B00A21017 /* FirstLaunchViewController.swift in Sources */,
 				BD62D2E622639C3A007B047B /* FileManager+Extensions.swift in Sources */,
-				BD7497522282A1AF00431776 /* ApplicationKeyboardBindingModel.swift in Sources */,
+				BD7497522282A1AF00431776 /* KeyboardBindingModel.swift in Sources */,
 				BD52B0C5227DF19100E7B52B /* NSSegmentedControl+Extensions.swift in Sources */,
 				BD895C01225A67C200DEC9FE /* PrototypeItem.swift in Sources */,
 				BD7D960C2252849100C93211 /* ApplicationController.swift in Sources */,
-				BDDAA347225DC89F00D87664 /* ApplicationInfoViewController.swift in Sources */,
+				BDDAA347225DC89F00D87664 /* GeneralInfoViewController.swift in Sources */,
 				BD9DA450227B4BD400B745C0 /* Dispatchable.swift in Sources */,
 				BD59F6BC228830F600C82740 /* OperationFactory.swift in Sources */,
 				BDDAA342225DB79300D87664 /* CollectionViewLayoutFactory.swift in Sources */,
@@ -912,7 +880,7 @@
 				BD7D961322528ADB00C93211 /* ApplicationPropertyList.swift in Sources */,
 				BD9313872251703400D116E4 /* AppDelegate.swift in Sources */,
 				BD9DA454227B4C3C00B745C0 /* OperationController.swift in Sources */,
-				BD2059AD2284AE6E00E1D467 /* ApplicationKeyboardActionsViewController.swift in Sources */,
+				BD2059AD2284AE6E00E1D467 /* KeyboardActionsViewController.swift in Sources */,
 				BD9DA44A227B4B7600B745C0 /* UIOperation.swift in Sources */,
 				BD99C6E0228365E10004256D /* KeyboardController.swift in Sources */,
 				BD2199D6226EFB7D00D86AA6 /* Button.swift in Sources */,

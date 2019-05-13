@@ -4,8 +4,8 @@ class MainMenuController: NSObject {
   weak var appDelegate: AppDelegate?
   weak var dependencyContainer: DependencyContainer?
   weak var splitViewController: SplitViewController?
-  weak var listContainerViewController: ApplicationListContainerViewController?
-  weak var detailFeatureViewController: ApplicationDetailFeatureViewController?
+  weak var listContainerViewController: ListContainerViewController?
+  weak var detailFeatureViewController: DetailFeatureViewController?
 
   var sidebarSplitItem: NSSplitViewItem? {
     return splitViewController?.splitViewItems.first
@@ -28,11 +28,11 @@ class MainMenuController: NSObject {
   }
 
   @IBAction func viewGeneral(_ sender: Any?) {
-    let tab = ApplicationDetailFeatureViewController.Tab.general
+    let tab = DetailFeatureViewController.Tab.general
     guard let segmentedControl = detailFeatureViewController?.segmentedControl else {
       return
     }
-    if let index = ApplicationDetailFeatureViewController.Tab.allCases.firstIndex(of: tab) {
+    if let index = DetailFeatureViewController.Tab.allCases.firstIndex(of: tab) {
       segmentedControl.setSelected(true, forSegment: index)
     } else {
       segmentedControl.setSelected(true, forSegment: 0)
@@ -41,11 +41,11 @@ class MainMenuController: NSObject {
   }
 
   @IBAction func viewCustomize(_ sender: Any?) {
-    let tab = ApplicationDetailFeatureViewController.Tab.customize
+    let tab = DetailFeatureViewController.Tab.customize
     guard let segmentedControl = detailFeatureViewController?.segmentedControl else {
       return
     }
-    if let index = ApplicationDetailFeatureViewController.Tab.allCases.firstIndex(of: tab) {
+    if let index = DetailFeatureViewController.Tab.allCases.firstIndex(of: tab) {
       segmentedControl.setSelected(true, forSegment: index)
     } else {
       segmentedControl.setSelected(true, forSegment: 0)

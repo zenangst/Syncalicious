@@ -1,24 +1,24 @@
 import Cocoa
 import Family
 
-class ApplicationDetailContainerViewController: FamilyViewController {
-  let actionsViewController: ApplicationActionsViewController
-  let infoViewController: ApplicationInfoViewController
-  let computersViewController: ApplicationComputerDetailItemViewController
-  let detailViewController: ApplicationDetailItemViewController
-  let keyboardShortcutViewController: ApplicationKeyboardBindingViewController
-  let keyboardShortcutActionsViewController: ApplicationKeyboardActionsViewController
+class DetailContainerViewController: FamilyViewController {
+  let generalActionsViewController: GeneralActionsViewController
+  let generalInfoViewController: GeneralInfoViewController
+  let computersViewController: ComputerDetailItemViewController
+  let applicationDetailViewController: ApplicationDetailItemViewController
+  let keyboardShortcutViewController: KeyboardBindingViewController
+  let keyboardShortcutActionsViewController: KeyboardActionsViewController
 
-  init(actionsViewController: ApplicationActionsViewController,
-       applicationInfoViewController: ApplicationInfoViewController,
-       applicationComputersViewController: ApplicationComputerDetailItemViewController,
+  init(generalActionsViewController: GeneralActionsViewController,
+       generalInfoViewController: GeneralInfoViewController,
+       computersViewController: ComputerDetailItemViewController,
        applicationsDetailViewController: ApplicationDetailItemViewController,
-       keyboardShortcutViewController: ApplicationKeyboardBindingViewController,
-       keyboardShortcutActionsViewController: ApplicationKeyboardActionsViewController) {
-    self.actionsViewController = actionsViewController
-    self.infoViewController = applicationInfoViewController
-    self.computersViewController = applicationComputersViewController
-    self.detailViewController = applicationsDetailViewController
+       keyboardShortcutViewController: KeyboardBindingViewController,
+       keyboardShortcutActionsViewController: KeyboardActionsViewController) {
+    self.generalActionsViewController = generalActionsViewController
+    self.generalInfoViewController = generalInfoViewController
+    self.computersViewController = computersViewController
+    self.applicationDetailViewController = applicationsDetailViewController
     self.keyboardShortcutViewController = keyboardShortcutViewController
     self.keyboardShortcutActionsViewController = keyboardShortcutActionsViewController
     super.init(nibName: nil, bundle: nil)
@@ -32,12 +32,12 @@ class ApplicationDetailContainerViewController: FamilyViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    addChild(detailViewController,
+    addChild(applicationDetailViewController,
              customInsets: .init(top: 0, left: 30, bottom: 15, right: 30)) {
               $0.collectionView }
-    addChild(infoViewController,
+    addChild(generalInfoViewController,
              customInsets: .init(top: 15, left: 30, bottom: 0, right: 30))
-    addChild(actionsViewController)
+    addChild(generalActionsViewController)
     addChild(computersViewController) { $0.collectionView }
     addChild(keyboardShortcutViewController,
              customInsets: .init(top: 15, left: 0, bottom: 0, right: 0)) {

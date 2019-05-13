@@ -1,6 +1,6 @@
 import Foundation
 
-struct ApplicationKeyboardBindingModel: Hashable {
+struct KeyboardBindingModel: Hashable {
   let menuTitle: String
   let keyboardShortcut: String
   let placeholder: Bool
@@ -13,7 +13,7 @@ struct ApplicationKeyboardBindingModel: Hashable {
     self.placeholder = placeholder
   }
 
-  func copy(_ handler: (ApplicationKeyboardBindingModel) -> ApplicationKeyboardBindingModel) -> ApplicationKeyboardBindingModel {
+  func copy(_ handler: (KeyboardBindingModel) -> KeyboardBindingModel) -> KeyboardBindingModel {
     return handler(self)
   }
 }

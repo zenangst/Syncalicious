@@ -3,11 +3,11 @@ import Differific
 import KeyHolder
 import Magnet
 
-class ApplicationKeyboardBindingViewController: NSViewController,
+class KeyboardBindingViewController: NSViewController,
   NSCollectionViewDelegate,
-  ApplicationKeyboardBindingItemDelegate {
+  KeyboardBindingItemDelegate {
   private let layout: NSCollectionViewFlowLayout
-  private let dataSource: ApplicationKeyboardBindingDataSource
+  private let dataSource: KeyboardBindingDataSource
   private let keyboardController: KeyboardController
   lazy var scrollView = NSScrollView()
   let collectionView: NSCollectionView
@@ -20,7 +20,7 @@ class ApplicationKeyboardBindingViewController: NSViewController,
        collectionView: NSCollectionView? = nil) {
     self.layout = layout
     self.keyboardController = keyboardController
-    self.dataSource = ApplicationKeyboardBindingDataSource(title: title, iconController: iconController)
+    self.dataSource = KeyboardBindingDataSource(title: title, iconController: iconController)
     if let collectionView = collectionView {
       self.collectionView = collectionView
     } else {
@@ -54,7 +54,7 @@ class ApplicationKeyboardBindingViewController: NSViewController,
                             forSupplementaryViewOfKind: NSCollectionView.elementKindSectionHeader,
                             withIdentifier: headerIdentifier)
     let itemIdentifier = NSUserInterfaceItemIdentifier.init("ApplicationKeyboardBindingItem")
-    collectionView.register(ApplicationKeyboardBindingItem.self, forItemWithIdentifier: itemIdentifier)
+    collectionView.register(KeyboardBindingItem.self, forItemWithIdentifier: itemIdentifier)
   }
 
   // MARK: - Public API
@@ -63,11 +63,11 @@ class ApplicationKeyboardBindingViewController: NSViewController,
     return collectionView.indexPath(for: item)
   }
 
-  func model(at indexPath: IndexPath) -> ApplicationKeyboardBindingModel {
+  func model(at indexPath: IndexPath) -> KeyboardBindingModel {
     return dataSource.model(at: indexPath)
   }
 
-  func reload(with models: [ApplicationKeyboardBindingModel],
+  func reload(with models: [KeyboardBindingModel],
               withAnimations animations: Bool = false,
               completion: (() -> Void)? = nil) {
     layout.headerReferenceSize.height = title != nil && !models.isEmpty ? 40 : 0
@@ -79,12 +79,12 @@ class ApplicationKeyboardBindingViewController: NSViewController,
   func collectionView(_ collectionView: NSCollectionView,
                       willDisplay item: NSCollectionViewItem,
                       forRepresentedObjectAt indexPath: IndexPath) {
-    (item as? ApplicationKeyboardBindingItem)?.delegate = self
+    (item as? KeyboardBindingItem)?.delegate = self
   }
 
-  // MARK: - ApplicationKeyboardBindingItemDelegate
+  // MARK: - KeyboardBindingItemDelegate
 
-  func applicationKeyboardBindingItem(_ item: ApplicationKeyboardBindingItem, menuTitleLabelDidChange textField: NSTextField) {
+  func keyboardBindingItem(_ item: KeyboardBindingItem, menuTitleLabelDidChange textField: NSTextField) {
     guard let application = application else { return }
 
     let dataSourceCount = dataSource.models.count
@@ -96,7 +96,7 @@ class ApplicationKeyboardBindingViewController: NSViewController,
     let model = dataSource.model(at: indexPath)
     let newModel = model.copy {
       let placeholder = textField.stringValue.isEmpty && isLastItem
-      return ApplicationKeyboardBindingModel(menuTitle: textField.stringValue,
+      return KeyboardBindingModel(menuTitle: textField.stringValue,
                                              keyboardShortcut: $0.keyboardShortcut,
                                              placeholder: placeholder)
     }
@@ -111,9 +111,9 @@ class ApplicationKeyboardBindingViewController: NSViewController,
       newModels[indexPath.item] = newModel
       dataSource.modify(newModel, at: indexPath)
       if isLastItem {
-        newModels.append(ApplicationKeyboardBindingModel(placeholder: true))
+        newModels.append(KeyboardBindingModel(placeholder: true))
         dataSource.reload(collectionView, updateOriginals: false, with: newModels) {
-          let item = (collectionView.item(at: indexPath) as? ApplicationKeyboardBindingItem)
+          let item = (collectionView.item(at: indexPath) as? KeyboardBindingItem)
           item?.menuTitleLabel.becomeFirstResponder()
           item?.menuTitleLabel.currentEditor()?.selectedRange = .init(location: textField.stringValue.count,
                                                                       length: 0)
@@ -128,7 +128,7 @@ class ApplicationKeyboardBindingViewController: NSViewController,
     }
   }
 
-  func applicationKeyboardBindingItem(_ item: ApplicationKeyboardBindingItem, recorderViewDidChange recorderView: RecordView, keyCombo: KeyCombo?) {
+  func keyboardBindingItem(_ item: KeyboardBindingItem, recorderViewDidChange recorderView: RecordView, keyCombo: KeyCombo?) {
     guard let application = application else { return }
     guard let indexPath = collectionView.indexPath(for: item),
       indexPath.item < dataSource.models.count else { return }
@@ -153,7 +153,7 @@ class ApplicationKeyboardBindingViewController: NSViewController,
     }
   }
 
-  func applicationKeyboardBindingItem(_ item: ApplicationKeyboardBindingItem, didClickRemoveButton button: NSButton) {
+  func keyboardBindingItem(_ item: KeyboardBindingItem, didClickRemoveButton button: NSButton) {
     guard let application = application else { return }
     guard let indexPath = collectionView.indexPath(for: item),
       indexPath.item < dataSource.models.count else { return }

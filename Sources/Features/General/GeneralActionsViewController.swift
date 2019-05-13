@@ -1,19 +1,19 @@
 import Cocoa
 
-protocol ApplicationActionsViewControllerDelegate: class {
-  func applicationActionsViewController(_ controller: ApplicationActionsViewController,
-                                        didTapBackup backupButton: NSButton,
-                                        on application: Application)
-  func applicationActionsViewController(_ controller: ApplicationActionsViewController,
-                                        didTapSync syncButton: NSButton,
-                                        on application: Application)
-  func applicationActionsViewController(_ controller: ApplicationActionsViewController,
-                                        didTapUnsync unsyncButton: NSButton,
-                                        on application: Application)
+protocol GeneralActionsViewControllerDelegate: class {
+  func generalActionsViewController(_ controller: GeneralActionsViewController,
+                                    didTapBackup backupButton: NSButton,
+                                    on application: Application)
+  func generalActionsViewController(_ controller: GeneralActionsViewController,
+                                    didTapSync syncButton: NSButton,
+                                    on application: Application)
+  func generalActionsViewController(_ controller: GeneralActionsViewController,
+                                    didTapUnsync unsyncButton: NSButton,
+                                    on application: Application)
 }
 
-class ApplicationActionsViewController: ViewController {
-  weak var delegate: ApplicationActionsViewControllerDelegate?
+class GeneralActionsViewController: ViewController {
+  weak var delegate: GeneralActionsViewControllerDelegate?
   private(set) var application: Application?
   lazy var gridView = NSGridView()
 
@@ -169,17 +169,17 @@ class ApplicationActionsViewController: ViewController {
 
   @objc func performBackup(_ sender: NSButton) {
     guard let application = application else { return }
-    delegate?.applicationActionsViewController(self, didTapBackup: sender, on: application)
+    delegate?.generalActionsViewController(self, didTapBackup: sender, on: application)
   }
 
   @objc func sync(_ sender: NSButton) {
     guard let application = application else { return }
-    delegate?.applicationActionsViewController(self, didTapSync: sender, on: application)
+    delegate?.generalActionsViewController(self, didTapSync: sender, on: application)
   }
 
   @objc func unsync(_ sender: NSButton) {
     guard let application = application else { return }
-    delegate?.applicationActionsViewController(self, didTapUnsync: sender, on: application)
+    delegate?.generalActionsViewController(self, didTapUnsync: sender, on: application)
   }
 
   private func showPermissionsDialog(for application: Application, handler completion: (Bool) -> Void) {

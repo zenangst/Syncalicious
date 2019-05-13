@@ -1,16 +1,16 @@
 import Cocoa
 
-protocol ApplicationListSortViewControllerDelegate: class {
-  func applicationListSortViewController(_ controller: ApplicationListSortViewController,
-                                         didChangeSort sort: ApplicationListSortViewController.SortKind)
+protocol ListSortViewControllerDelegate: class {
+  func listSortViewController(_ controller: ListSortViewController,
+                              didChangeSort sort: ListSortViewController.SortKind)
 }
 
-class ApplicationListSortViewController: ViewController {
+class ListSortViewController: ViewController {
   enum SortKind: String, CaseIterable {
     case name = "Name", synced = "Synced"
   }
 
-  weak var delegate: ApplicationListSortViewControllerDelegate?
+  weak var delegate: ListSortViewControllerDelegate?
   lazy var segmentedControl = NSSegmentedControl(labels: SortKind.allCases.compactMap({ $0.rawValue }),
                                                trackingMode: .selectOne,
                                                target: self,
@@ -20,7 +20,7 @@ class ApplicationListSortViewController: ViewController {
     super.viewDidLoad()
 
     if let sortKind = UserDefaults.standard.listSort,
-      let index = ApplicationListSortViewController.SortKind.allCases.firstIndex(of: sortKind) {
+      let index = ListSortViewController.SortKind.allCases.firstIndex(of: sortKind) {
       segmentedControl.setSelected(true, forSegment: index)
     } else {
       segmentedControl.setSelected(true, forSegment: 0)
@@ -44,6 +44,6 @@ class ApplicationListSortViewController: ViewController {
     guard let label = segmentedControl.label(forSegment: segmentedControl.selectedSegment),
       let kind = SortKind.init(rawValue: label) else { return }
     UserDefaults.standard.listSort = kind
-    delegate?.applicationListSortViewController(self, didChangeSort: kind)
+    delegate?.listSortViewController(self, didChangeSort: kind)
   }
 }

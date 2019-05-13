@@ -1,10 +1,10 @@
 import Cocoa
 import Differific
 
-class ApplicationKeyboardBindingDataSource: NSObject, NSCollectionViewDataSource {
+class KeyboardBindingDataSource: NSObject, NSCollectionViewDataSource {
   private var title: String?
-  private(set) var models = [ApplicationKeyboardBindingModel]()
-  private(set) var originalModels = [ApplicationKeyboardBindingModel]()
+  private(set) var models = [KeyboardBindingModel]()
+  private(set) var originalModels = [KeyboardBindingModel]()
   private(set) var iconController: IconController
   lazy var keyHolderController = KeyHolderController()
 
@@ -13,7 +13,7 @@ class ApplicationKeyboardBindingDataSource: NSObject, NSCollectionViewDataSource
   }
 
   init(title: String? = nil,
-       models: [ApplicationKeyboardBindingModel] = [],
+       models: [KeyboardBindingModel] = [],
        iconController: IconController) {
     self.title = title
     self.models = models
@@ -24,7 +24,7 @@ class ApplicationKeyboardBindingDataSource: NSObject, NSCollectionViewDataSource
 
   // MARK: - Public API
 
-  func modify(_ model: ApplicationKeyboardBindingModel, at indexPath: IndexPath) {
+  func modify(_ model: KeyboardBindingModel, at indexPath: IndexPath) {
     if indexPath.item < models.count {
       models[indexPath.item] = model
     } else {
@@ -32,14 +32,14 @@ class ApplicationKeyboardBindingDataSource: NSObject, NSCollectionViewDataSource
     }
   }
 
-  func model(at indexPath: IndexPath) -> ApplicationKeyboardBindingModel {
+  func model(at indexPath: IndexPath) -> KeyboardBindingModel {
     return models[indexPath.item]
   }
 
   func reload(_ collectionView: NSCollectionView,
               withAnimations animations: Bool = false,
               updateOriginals: Bool = true,
-              with models: [ApplicationKeyboardBindingModel],
+              with models: [KeyboardBindingModel],
               then handler: (() -> Void)? = nil) {
     let old = self.models
     let new = models
@@ -78,7 +78,7 @@ class ApplicationKeyboardBindingDataSource: NSObject, NSCollectionViewDataSource
     let item = collectionView.makeItem(withIdentifier: identifier, for: indexPath)
     let model = self.model(at: indexPath)
 
-    if let view = item as? ApplicationKeyboardBindingItem {
+    if let view = item as? KeyboardBindingItem {
       view.menuTitleLabel.stringValue = !model.placeholder ? model.menuTitle : ""
       view.removeButton.isHidden = model.placeholder
       view.stackView.layer?.backgroundColor = model.placeholder

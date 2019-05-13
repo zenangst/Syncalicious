@@ -1,14 +1,14 @@
 import Cocoa
 
-protocol ApplicationKeyboardActionsViewControllerDelegate: class {
-  func applicationKeyboardActionsViewController(_ controller: ApplicationKeyboardActionsViewController,
-                                                didClickSaveButton button: NSButton)
-  func applicationKeyboardActionsViewController(_ controller: ApplicationKeyboardActionsViewController,
-                                                didClickDiscardButton button: NSButton)
+protocol KeyboardActionsViewControllerDelegate: class {
+  func keyboardActionsViewController(_ controller: KeyboardActionsViewController,
+                                     didClickSaveButton button: NSButton)
+  func keyboardActionsViewController(_ controller: KeyboardActionsViewController,
+                                     didClickDiscardButton button: NSButton)
 }
 
-class ApplicationKeyboardActionsViewController: ViewController {
-  weak var delegate: ApplicationKeyboardActionsViewControllerDelegate?
+class KeyboardActionsViewController: ViewController {
+  weak var delegate: KeyboardActionsViewControllerDelegate?
   lazy var stackView = NSStackView()
 
   // MARK: - View lifecycle
@@ -17,10 +17,10 @@ class ApplicationKeyboardActionsViewController: ViewController {
     super.viewDidLoad()
 
     let saveButton = Button(title: "Save",
-                               backgroundColor: NSColor(named: "Green")!,
-                               borderColor: NSColor(named: "Green")!,
-                               borderWidth: 1,
-                               cornerRadius: .custom(4), target: self, action: #selector(saveChanges(_:)))
+                            backgroundColor: NSColor(named: "Green")!,
+                            borderColor: NSColor(named: "Green")!,
+                            borderWidth: 1,
+                            cornerRadius: .custom(4), target: self, action: #selector(saveChanges(_:)))
     let discardButton = Button(title: "Discard",
                                backgroundColor: NSColor.clear,
                                borderColor: NSColor(named: "Red")!,
@@ -59,10 +59,10 @@ class ApplicationKeyboardActionsViewController: ViewController {
   // MARK: - Actions
 
   @objc func saveChanges(_ button: NSButton) {
-    delegate?.applicationKeyboardActionsViewController(self, didClickSaveButton: button)
+    delegate?.keyboardActionsViewController(self, didClickSaveButton: button)
   }
 
   @objc func discardChanges(_ button: NSButton) {
-    delegate?.applicationKeyboardActionsViewController(self, didClickDiscardButton: button)
+    delegate?.keyboardActionsViewController(self, didClickDiscardButton: button)
   }
 }

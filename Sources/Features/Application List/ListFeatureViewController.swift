@@ -1,17 +1,17 @@
 import Cocoa
 
-protocol ApplicationListFeatureViewControllerDelegate: class {
-  func applicationListFeatureViewController(_ controller: ApplicationListFeatureViewController,
-                                            didSelectApplications applications: [Application])
+protocol ListFeatureViewControllerDelegate: class {
+  func listFeatureViewController(_ controller: ListFeatureViewController,
+                                 didSelectApplications applications: [Application])
 }
 
-class ApplicationListFeatureViewController: NSViewController,
+class ListFeatureViewController: NSViewController,
   SplitViewContainedController,
-  ApplicationListSearchViewControllerDelegate,
-  ApplicationListSortViewControllerDelegate,
+  ListSearchViewControllerDelegate,
+  ListSortViewControllerDelegate,
   NSCollectionViewDelegate {
 
-  weak var delegate: ApplicationListFeatureViewControllerDelegate?
+  weak var delegate: ListFeatureViewControllerDelegate?
 
   lazy var titlebarView = NSView()
   lazy var titleLabel = SmallLabel()
@@ -19,14 +19,14 @@ class ApplicationListFeatureViewController: NSViewController,
   let iconController: IconController
   let syncController: SyncController
   let machineController: MachineController
-  let containerViewController: ApplicationListContainerViewController
+  let containerViewController: ListContainerViewController
 
   var applications = [Application]()
-  var sort: ApplicationListSortViewController.SortKind = UserDefaults.standard.listSort ?? .name
+  var sort: ListSortViewController.SortKind = UserDefaults.standard.listSort ?? .name
 
   private var layoutConstraints = [NSLayoutConstraint]()
 
-  init(containerViewController: ApplicationListContainerViewController,
+  init(containerViewController: ListContainerViewController,
        iconController: IconController,
        machineController: MachineController,
        syncController: SyncController) {
@@ -85,7 +85,7 @@ class ApplicationListFeatureViewController: NSViewController,
   @objc func mainWindowDidResignKey() { containerViewController.listViewController.collectionView.alphaValue = 0.8 }
   @objc func mainWindowDidBecomeKey() { containerViewController.listViewController.collectionView.alphaValue = 1.0 }
 
-  func render(applications: [Application], sort: ApplicationListSortViewController.SortKind? = nil) {
+  func render(applications: [Application], sort: ListSortViewController.SortKind? = nil) {
     let sort = sort ?? self.sort
     let collectionView = containerViewController.listViewController.collectionView
     var selectedApplications = [Application]()
@@ -119,7 +119,7 @@ class ApplicationListFeatureViewController: NSViewController,
     let searchViewController = containerViewController.searchViewController
     let searchField = containerViewController.searchViewController.searchField
     if !searchField.stringValue.isEmpty {
-      applicationDetailSearchViewController(searchViewController, didStartSearch: searchField)
+      listSearchViewController(searchViewController, didStartSearch: searchField)
     } else {
       containerViewController.listViewController.reload(with: models.compactMap(createViewModel))
     }
@@ -173,17 +173,17 @@ class ApplicationListFeatureViewController: NSViewController,
                                     application: application)
   }
 
-  // MARK: - ApplicationListSortViewControllerDelegate
+  // MARK: - ListSortViewControllerDelegate
 
-  func applicationListSortViewController(_ controller: ApplicationListSortViewController,
-                                         didChangeSort sort: ApplicationListSortViewController.SortKind) {
+  func listSortViewController(_ controller: ListSortViewController,
+                              didChangeSort sort: ListSortViewController.SortKind) {
     render(applications: applications, sort: sort)
   }
 
-  // MARK: - ApplicationSearchViewControllerDelegate
+  // MARK: - ListSearchViewControllerDelegate
 
-  func applicationDetailSearchViewController(_ controller: ApplicationListSearchViewController,
-                                             didStartSearch searchField: NSSearchField) {
+  func listSearchViewController(_ controller: ListSearchViewController,
+                                didStartSearch searchField: NSSearchField) {
     let query = searchField.stringValue.lowercased()
     let results = applications.filter({
       $0.propertyList.bundleName.lowercased().contains(query) ||
@@ -200,8 +200,8 @@ class ApplicationListFeatureViewController: NSViewController,
     collectionView.delegate?.collectionView?(collectionView, didSelectItemsAt: [IndexPath.init(item: 0, section: 0)])
   }
 
-  func applicationDetailSearchViewController(_ controller: ApplicationListSearchViewController,
-                                             didEndSearch searchField: NSSearchField) {
+  func listSearchViewController(_ controller: ListSearchViewController,
+                                didEndSearch searchField: NSSearchField) {
     containerViewController.listViewController.reload(with: applications.compactMap(createViewModel))
     let collectionView = containerViewController.listViewController.collectionView
     collectionView.deselectItems(at: collectionView.selectionIndexPaths)
@@ -233,11 +233,11 @@ class ApplicationListFeatureViewController: NSViewController,
 
   func collectionView(_ collectionView: NSCollectionView, didDeselectItemsAt indexPaths: Set<IndexPath>) {
     let applications = createSortedApplications(from: Array(collectionView.selectionIndexPaths))
-    delegate?.applicationListFeatureViewController(self, didSelectApplications: applications)
+    delegate?.listFeatureViewController(self, didSelectApplications: applications)
   }
 
   func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     let applications = createSortedApplications(from: Array(collectionView.selectionIndexPaths))
-    delegate?.applicationListFeatureViewController(self, didSelectApplications: applications)
+    delegate?.listFeatureViewController(self, didSelectApplications: applications)
   }
 }

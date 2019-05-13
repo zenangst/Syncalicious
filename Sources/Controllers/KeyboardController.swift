@@ -1,7 +1,7 @@
 import Cocoa
 
 class KeyboardController {
-  private var keyboardStorage = [String: [ApplicationKeyboardBindingModel]]()
+  private var keyboardStorage = [String: [KeyboardBindingModel]]()
   private let applicationController: ApplicationController
   private let fileManager: FileManager
   private let machineController: MachineController
@@ -23,20 +23,20 @@ class KeyboardController {
     self.workspace = workspace
   }
 
-  func keyboardShortcuts(for application: Application) -> [ApplicationKeyboardBindingModel] {
+  func keyboardShortcuts(for application: Application) -> [KeyboardBindingModel] {
     var keyboardShortcuts = keyboardStorage[application.propertyList.bundleIdentifier] ?? []
     if keyboardShortcuts.isEmpty {
       if let keyboardContents = application.preferences.keyEquivalents {
         for (key, value) in keyboardContents {
-          keyboardShortcuts.append(ApplicationKeyboardBindingModel(menuTitle: key, keyboardShortcut: value))
+          keyboardShortcuts.append(KeyboardBindingModel(menuTitle: key, keyboardShortcut: value))
         }
       }
-      keyboardShortcuts.append(ApplicationKeyboardBindingModel(placeholder: true))
+      keyboardShortcuts.append(KeyboardBindingModel(placeholder: true))
     }
     return keyboardShortcuts.sorted(by: { $0.placeholder == false && $0.menuTitle < $1.menuTitle })
   }
 
-  func addKeyboardShortcuts(_ keyboardShortcuts: [ApplicationKeyboardBindingModel],
+  func addKeyboardShortcuts(_ keyboardShortcuts: [KeyboardBindingModel],
                             for application: Application) {
     keyboardStorage[application.propertyList.bundleIdentifier] = keyboardShortcuts
   }

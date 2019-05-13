@@ -14,6 +14,8 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
   // sourcery: let synced: Bool = "syncView.isHidden = !model.synced"
   lazy var syncView = NSImageView()
 
+  // MARK: - View lifecycle
+
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(iconView)
@@ -72,6 +74,8 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
     super.prepareForReuse()
     updateState()
   }
+
+  // MARK: - Private methods
 
   private func updateState() {
     if isSelected {

@@ -14,8 +14,8 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
   var firstLaunchViewController: FirstLaunchViewController?
   var windowController: WindowController?
   var dependencyContainer: DependencyContainer?
-  weak var listFeatureViewController: ApplicationListFeatureViewController?
-  weak var detailFeatureViewController: ApplicationDetailFeatureViewController?
+  weak var listFeatureViewController: ListFeatureViewController?
+  weak var detailFeatureViewController: DetailFeatureViewController?
 
   func applicationDidFinishLaunching(with appDelegate: AppDelegate) {
     do {

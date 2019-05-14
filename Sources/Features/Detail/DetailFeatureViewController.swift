@@ -246,7 +246,9 @@ class DetailFeatureViewController: NSViewController,
   func keyboardActionsViewController(_ controller: KeyboardActionsViewController,
                                      didClickSaveButton button: NSButton) {
     guard let application = application else { return }
-    keyboardController.saveKeyboardShortcutsIfNeeded(for: application)
+    keyboardController.saveKeyboardShortcutsIfNeeded(for: application) { [weak self] in
+      self?.refreshApplicationList()
+    }
   }
 
   func keyboardActionsViewController(_ controller: KeyboardActionsViewController,

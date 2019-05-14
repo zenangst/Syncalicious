@@ -55,12 +55,24 @@ class PreferencesController {
 
     propertyListUrl.resolveSymlinksInPath()
 
-    guard let contents = NSDictionary.init(contentsOfFile: propertyListUrl.path) else {
-      throw PreferencesControllerError.parseContentsFailed
-    }
+    var keyEquivalents: [String: String]?
 
-    let keyEquivalents = contents.value(forPropertyListKey: .keyEquivalents,
-                                        ofType: [String: String].self)
+    switch preferenceKind {
+    case .container:
+      guard let contents = NSDictionary.init(contentsOfFile: propertyListUrl.path) else {
+        throw PreferencesControllerError.parseContentsFailed
+      }
+      keyEquivalents = contents.value(forPropertyListKey: .keyEquivalents,
+                                      ofType: [String: String].self)
+    case .library:
+      guard let userDefaults = UserDefaults.init(suiteName: infoPlist.bundleIdentifier) else {
+        throw PreferencesControllerError.parseContentsFailed
+      }
+
+      let contents = userDefaults.dictionaryRepresentation() as NSDictionary
+      keyEquivalents = contents.value(forPropertyListKey: .keyEquivalents,
+                                      ofType: [String: String].self)
+    }
 
     return Preferences(fileName: propertyListUrl.lastPathComponent,
                        keyEquivalents: keyEquivalents,

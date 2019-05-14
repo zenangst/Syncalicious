@@ -45,50 +45,31 @@ class KeyboardController {
     keyboardStorage[application.propertyList.bundleIdentifier] = nil
   }
 
-  func saveKeyboardShortcutsIfNeeded(for application: Application) {
-    guard let destination = UserDefaults.standard.syncaliciousUrl else { return }
-
+  func saveKeyboardShortcutsIfNeeded(for application: Application, then handler: @escaping () -> Void) {
     guard let unsavedShortcuts = keyboardStorage[application.propertyList.bundleIdentifier] else {
       return
     }
 
-    guard let contents = NSMutableDictionary(contentsOfFile: application.preferences.url.path) else {
-      return
-    }
-
-    let newContents = contents
     var dictionary = [String: String]()
-
+    var operations = [DispatchOperation]()
     for shortcut in unsavedShortcuts where !shortcut.menuTitle.isEmpty {
       dictionary[shortcut.menuTitle] = shortcut.keyboardShortcut
     }
 
-    newContents.setValue(dictionary, forKey: PropertyListKey.keyEquivalents.rawValue)
+    operations.append(operationFactory.createKeyboardShortcutSync(for: application,
+                                                                  machine: machineController.machine,
+                                                                  dictionary: dictionary))
+    operations.append(operationFactory.createReadPropertyListOperation(for: application))
+    operations.append(UIOperation { handler(); $0.complete() })
+    operations.append(UtilityOperation { [weak self] in
+      self?.keyboardStorage[application.propertyList.bundleIdentifier] = nil
+      $0.complete()
+      })
 
-    let customize = destination
-      .appendingPathComponent(machineController.machine.name)
-      .appendingPathComponent("Customize")
-
-    do {
-      try fileManager.createFolderAtUrlIfNeeded(customize)
-      let filePath = customize.appendingPathComponent(application.preferences.fileName)
-
-      newContents.write(to: filePath, atomically: true)
-
-      let updateKeyboardShortcutsOperation = operationFactory.createSyncOperation(for: application,
-                                                                                  location: filePath,
-                                                                                  runningApplication: nil,
-                                                                                  then: {})
-      if workspace.applicationIsRunning(application) {
-        applicationController.restart(application: application, operations: [
-          updateKeyboardShortcutsOperation
-          ])
-      } else {
-        operationController.execute(updateKeyboardShortcutsOperation)
-      }
-
-    } catch let error {
-      debugPrint(error)
+    if workspace.applicationIsRunning(application) {
+      applicationController.restart(application: application, operations: operations)
+    } else {
+      operationController.execute(operations)
     }
   }
 }

@@ -20,7 +20,8 @@ class OperationFactory {
         return
       }
       strongSelf.workspace.runningApplication(for: application)?.terminate()
-      operation.perform(#selector(CoreOperation.complete), with: nil, afterDelay: 0.5)
+      let delay: TimeInterval = application.preferences.kind == .container ? 6.0 : 1.0
+      operation.perform(#selector(CoreOperation.complete), with: nil, afterDelay: delay)
     })
 
     return operation
@@ -42,8 +43,38 @@ class OperationFactory {
     return operation
   }
 
+  func createKeyboardShortcutSync(for application: Application, machine: Machine,
+                                  dictionary: [String: Any]?) -> DispatchOperation {
+    return UtilityOperation { [weak self] operation in
+      guard let strongSelf = self,
+        let contents = NSMutableDictionary(contentsOfFile: application.preferences.url.path) else {
+        operation.complete()
+        return
+      }
+      contents.setValue(dictionary, forKey: PropertyListKey.keyEquivalents.rawValue)
+
+      let customize = UserDefaults.standard.syncaliciousUrl!
+        .appendingPathComponent(machine.name)
+        .appendingPathComponent("Customize")
+      try? strongSelf.fileManager.createFolderAtUrlIfNeeded(customize)
+      let filePath = customize.appendingPathComponent(application.preferences.fileName)
+      contents.write(to: filePath, atomically: true)
+      Thread.sleep(until: Date() + 0.5)
+      _ = try? strongSelf.fileManager.replaceItemAt(application.preferences.url, withItemAt: filePath)
+      Thread.sleep(until: Date() + 0.5)
+      operation.complete()
+    }
+  }
+
+  func createReadPropertyListOperation(for application: Application) -> DispatchOperation {
+    return UtilityOperation { [weak self] in
+      self?.shellController.execute(command: "defaults read \(application.propertyList.bundleIdentifier)")
+      $0.complete()
+    }
+  }
+
   func createSyncOperation(for application: Application, location: URL,
-                           runningApplication: NSRunningApplication?,
+                           delay: TimeInterval = 1,
                            then handler: @escaping () -> Void) -> DispatchOperation {
     let operation = UtilityOperation({ [weak self] operation in
       guard let strongSelf = self else {
@@ -51,18 +82,14 @@ class OperationFactory {
         return
       }
 
-      runningApplication?.terminate()
-
       _ = try? strongSelf.fileManager.replaceItemAt(application.preferences.url, withItemAt: location)
-
-      if runningApplication != nil {
-        // Wait until the copy process is done.
-        Thread.sleep(until: Date() + 1)
-      }
-
-      strongSelf.shellController.execute(command: "defaults read \(application.propertyList.bundleIdentifier)")
       try? strongSelf.fileManager.removeItem(at: location)
       handler()
+
+      if delay > 0 {
+        Thread.sleep(until: Date() + delay)
+      }
+
       operation.complete()
     })
     return operation

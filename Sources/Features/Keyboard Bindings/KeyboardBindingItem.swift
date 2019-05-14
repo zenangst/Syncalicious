@@ -18,7 +18,7 @@ class KeyboardBindingItem: CollectionViewItem, NSTextFieldDelegate {
   lazy var stackView = NSStackView()
   lazy var menuTitleLabel = NSTextField()
   lazy var recorderView = RecordView()
-  lazy var removeButton = Button(title: "X",
+  lazy var removeButton = Button(title: "",
                                  font: .systemFont(ofSize: 13),
                                  backgroundColor: .clear,
                                  borderColor: NSColor(named: "Red")!,
@@ -27,6 +27,11 @@ class KeyboardBindingItem: CollectionViewItem, NSTextFieldDelegate {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    let image = NSImage(named: "Trash")
+    removeButton.image = image
+    image?.isTemplate = true
+    removeButton.imageScaling = .scaleAxesIndependently
 
     menuTitleLabel.delegate = self
     menuTitleLabel.font = NSFont.systemFont(ofSize: 15)
@@ -58,6 +63,8 @@ class KeyboardBindingItem: CollectionViewItem, NSTextFieldDelegate {
     view.addSubview(stackView)
 
     layoutConstraints = [
+      removeButton.widthAnchor.constraint(equalToConstant: 24),
+      removeButton.heightAnchor.constraint(equalToConstant: 24),
       stackView.topAnchor.constraint(equalTo: view.topAnchor),
       stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

@@ -46,7 +46,6 @@ class KeyboardActionsViewController: ViewController {
 
     NSLayoutConstraint.constrain([
       stackView.topAnchor.constraint(equalTo: view.topAnchor),
-      stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
       stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
       ])
   }

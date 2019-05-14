@@ -118,15 +118,21 @@ class SyncController: NSObject {
       let runningApplication = workspace.runningApplications.first(where: query)
       let syncOperation = operationFactory.createSyncOperation(for: application,
                                                                location: fileUrl,
-                                                               runningApplication: runningApplication,
                                                                then: updateBadgeCounter)
-      if runningApplication != nil {
-        let restartOperation = operationFactory.createLaunchApplicationOperation(for: application)
-        restartOperation.addDependency(syncOperation)
-        operationController.add(restartOperation)
-      }
+      let readPropertyListOperation = operationFactory.createReadPropertyListOperation(for: application)
 
-      operationController.add(syncOperation)
+      if runningApplication != nil {
+        let quitOperation = operationFactory.createQuitApplicationOperation(for: application)
+        let restartOperation = operationFactory.createLaunchApplicationOperation(for: application)
+
+        operationController.add(quitOperation)
+        operationController.add(syncOperation)
+        operationController.add(readPropertyListOperation)
+        operationController.add(restartOperation)
+      } else {
+        operationController.add(syncOperation)
+        operationController.add(readPropertyListOperation)
+      }
     }
 
     operationController.execute()
@@ -262,14 +268,14 @@ class SyncController: NSObject {
           continue
       }
 
-      let operation = operationFactory.createSyncOperation(for: application,
+      let syncOperation = operationFactory.createSyncOperation(for: application,
                                                            location: file,
-                                                           runningApplication: nil,
                                                            then: { [weak self] in
                                                             debugPrint("🍫 Synced \(application.propertyList.bundleName)")
                                                             self?.updateBadgeCounter()
       })
-      operationController.add(operation)
+      let readPropertyListOperation = operationFactory.createReadPropertyListOperation(for: application)
+      operationController.add(syncOperation, readPropertyListOperation)
     }
     operationController.execute()
   }

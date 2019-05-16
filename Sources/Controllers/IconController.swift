@@ -83,19 +83,30 @@ class IconController {
     }
   }
 
+  func pathForApplicationImage(_ application: Application, identifier: String) -> URL? {
+    if let applicationFile = try? applicationCacheDirectory()
+      .appendingPathComponent("\(identifier).png") {
+      if FileManager.default.fileExists(atPath: applicationFile.path) {
+        return applicationFile
+      }
+    }
+
+    return nil
+  }
+
   // MARK: - Private methods
 
   private func tiffDataFromImage(_ image: NSImage) throws -> Data {
     guard let tiff = image.tiffRepresentation else { throw IconControllerError.tiffRepresentationFailed }
     guard let imgRep = NSBitmapImageRep(data: tiff) else { throw IconControllerError.bitmapImageRepFailed }
-    guard let data = imgRep.representation(using: .tiff, properties: [:]) else { throw IconControllerError.representationUsingTiffFailed }
+    guard let data = imgRep.representation(using: .png, properties: [:]) else { throw IconControllerError.representationUsingTiffFailed }
 
     return data
   }
 
   private func loadImageFromDisk(withFilename filename: String) -> NSImage? {
     if let applicationFile = try? applicationCacheDirectory()
-      .appendingPathComponent("\(filename).tiff") {
+      .appendingPathComponent("\(filename).png") {
       if FileManager.default.fileExists(atPath: applicationFile.path) {
         let image = NSImage.init(contentsOf: applicationFile)
         return image
@@ -107,7 +118,7 @@ class IconController {
 
   private func saveImageToDisk(_ image: NSImage, withFilename fileName: String) throws {
     let applicationFile = try applicationCacheDirectory()
-      .appendingPathComponent("\(fileName).tiff")
+      .appendingPathComponent("\(fileName).png")
     try saveImage(image, to: applicationFile)
   }
 

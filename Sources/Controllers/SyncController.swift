@@ -24,6 +24,7 @@ class SyncController: NSObject {
   let operationFactory: OperationFactory
   let fileManager: FileManager
   let workspace: NSWorkspace
+  let notificationController: NotificationController
 
   var applications = [Application]()
   var applicationHasBeenActive = Set<Application>()
@@ -38,6 +39,7 @@ class SyncController: NSObject {
        operationController: OperationController,
        operationFactory: OperationFactory,
        shellController: ShellController,
+       notificationController: NotificationController,
        workspace: NSWorkspace = .shared) {
     self.applicationController = applicationController
     self.destination = destination
@@ -46,6 +48,7 @@ class SyncController: NSObject {
     self.operationController = operationController
     self.operationFactory = operationFactory
     self.shellController = shellController
+    self.notificationController = notificationController
     self.workspace = workspace
     super.init()
     self.observation = workspace.observe(\.frontmostApplication, options: [.initial, .new]) { [weak self] _, _ in
@@ -118,7 +121,11 @@ class SyncController: NSObject {
       let runningApplication = workspace.runningApplications.first(where: query)
       let syncOperation = operationFactory.createSyncOperation(for: application,
                                                                location: fileUrl,
-                                                               then: updateBadgeCounter)
+                                                               then: { [weak self] in
+                                                                self?.updateBadgeCounter()
+                                                                self?.notificationController.post(application: application,
+                                                                                                  text: "Application synced")
+      })
       let readPropertyListOperation = operationFactory.createReadPropertyListOperation(for: application)
 
       if runningApplication != nil {
@@ -272,6 +279,8 @@ class SyncController: NSObject {
                                                            location: file,
                                                            then: { [weak self] in
                                                             debugPrint("🍫 Synced \(application.propertyList.bundleName)")
+                                                            self?.notificationController.post(application: application,
+                                                                                              text: "Application synced")
                                                             self?.updateBadgeCounter()
       })
       let readPropertyListOperation = operationFactory.createReadPropertyListOperation(for: application)

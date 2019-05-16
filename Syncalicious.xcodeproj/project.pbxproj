@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		315E2FCDA36B3A59799011D2 /* libPods-Syncalicious.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8791082ED91FA1B97EC440 /* libPods-Syncalicious.a */; };
 		A47DC085643951080DBAE4EF /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */; };
+		BD0590F2228DA9DD00162E4B /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0590F1228DA9DD00162E4B /* NotificationController.swift */; };
 		BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */; };
 		BD084B792258E0B600E91A7F /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B782258E0B600E91A7F /* TestHost.swift */; };
 		BD2059AD2284AE6E00E1D467 /* KeyboardActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2059AC2284AE6E00E1D467 /* KeyboardActionsViewController.swift */; };
@@ -113,6 +114,7 @@
 		0D524E3138AC0B59B67FF0DD /* Pods-Syncalicious.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.debug.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.debug.xcconfig"; sourceTree = "<group>"; };
 		8D3875EE15B4C6FB1AFB28CF /* Pods-Syncalicious.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.release.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.release.xcconfig"; sourceTree = "<group>"; };
 		9E8791082ED91FA1B97EC440 /* libPods-Syncalicious.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncalicious.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD0590F1228DA9DD00162E4B /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplicationDelegate.swift; sourceTree = "<group>"; };
 		BD084B782258E0B600E91A7F /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
 		BD084B7A2258F15500E91A7F /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				BD99C6DF228365E10004256D /* KeyboardController.swift */,
 				BD7497552282A23A00431776 /* KeyHolderController.swift */,
 				BD4A69302253BADE00F588AD /* MachineController.swift */,
+				BD0590F1228DA9DD00162E4B /* NotificationController.swift */,
 				BD7D9616225290C800C93211 /* PreferencesController.swift */,
 				BD62D2E3226393B4007B047B /* ShellController.swift */,
 				BD3CC24F225B147F006D7877 /* SplitViewController.swift */,
@@ -877,6 +880,7 @@
 				BD7D962322533FF300C93211 /* MainMenuController.swift in Sources */,
 				BD5AE9A62278850A002E7949 /* NSDictionary+Extensions.swift in Sources */,
 				BD8EDD862255CF4800110E56 /* CollectionViewItemComponent.generated.swift in Sources */,
+				BD0590F2228DA9DD00162E4B /* NotificationController.swift in Sources */,
 				BD7D961322528ADB00C93211 /* ApplicationPropertyList.swift in Sources */,
 				BD9313872251703400D116E4 /* AppDelegate.swift in Sources */,
 				BD9DA454227B4C3C00B745C0 /* OperationController.swift in Sources */,

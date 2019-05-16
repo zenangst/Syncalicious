@@ -55,8 +55,9 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
       NSApplication.shared.windows.forEach { $0.close() }
 
       let iconController = IconController()
+      let notificationController = NotificationController(iconController: iconController)
       let machineController = try MachineController(host: Host.current(), iconController: iconController)
-      let backupController = BackupController(machineController: machineController)
+      let backupController = BackupController(machineController: machineController, notificationController: notificationController)
       let welcomeWindow = WelcomeWindow()
       welcomeWindow.loadWindow()
       let firstLaunchWindowController = NSWindowController(window: welcomeWindow)
@@ -121,6 +122,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                                                        create: false)
     let shellController = ShellController()
     let iconController = IconController()
+    let notificationController = NotificationController(iconController: iconController)
     let operationFactory = OperationFactory(shellController: shellController)
     let operationController = OperationController()
     let machineController = try MachineController(host: Host.current(),
@@ -138,13 +140,15 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                                                       operationFactory: operationFactory,
                                                       preferencesController: preferencesController,
                                                       shellController: shellController)
-    let backupController = BackupController(machineController: machineController)
+    let backupController = BackupController(machineController: machineController,
+                                            notificationController: notificationController)
     let syncController = SyncController(destination: syncaliciousUrl.appendingPathComponent("Sync"),
                                         applicationController: applicationController,
                                         machineController: machineController,
                                         operationController: operationController,
                                         operationFactory: operationFactory,
-                                        shellController: shellController)
+                                        shellController: shellController,
+                                        notificationController: notificationController)
     let keyboardController = KeyboardController(applicationController: applicationController,
                                                 machineController: machineController,
                                                 operationController: operationController,
@@ -156,7 +160,8 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                                                   infoPlistController: infoPlistController,
                                                   machineController: machineController,
                                                   preferencesController: preferencesController,
-                                                  keyboardController: keyboardController)
+                                                  keyboardController: keyboardController,
+                                                  notificationController: notificationController)
 
     backupController.delegate = self
     applicationController.delegate = self

@@ -15,12 +15,14 @@ class BackupController {
 
   let machineController: MachineController
   let fileManager = FileManager.default
+  let notificationController: NotificationController
 
   var applications = [Application]()
   var openPanel: NSOpenPanel?
 
-  init(machineController: MachineController) {
+  init(machineController: MachineController, notificationController: NotificationController) {
     self.machineController = machineController
+    self.notificationController = notificationController
   }
 
   // MARK: - Public methods
@@ -79,6 +81,7 @@ class BackupController {
         try fileManager.copyItem(at: from, to: destination)
         try fileManager.setAttributes([FileAttributeKey.modificationDate: Date()],
                                       ofItemAtPath: destination.path)
+        notificationController.post(application: application, text: "Backup complete")
       } catch let error {
         debugPrint(error)
       }

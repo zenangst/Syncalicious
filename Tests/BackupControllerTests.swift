@@ -20,7 +20,9 @@ class BackupControllerTests: XCTestCase {
     let applicationController = testController.createApplicationController()
     let iconController = IconController()
     let machineController = try MachineController(host: host, iconController: iconController)
-    let backupController = BackupController(machineController: machineController)
+    let notificationController = NotificationController(iconController: iconController)
+    let backupController = BackupController(machineController: machineController,
+                                            notificationController: notificationController)
 
     let applicationUrl = testController.applicationUrl
     let backupUrl = testController.backupUrl

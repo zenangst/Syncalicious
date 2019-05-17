@@ -1,11 +1,14 @@
 import Cocoa
 import UserNotifications
 
-class NotificationController {
+class NotificationController: NSObject, UNUserNotificationCenterDelegate {
+  private lazy var notificationCenter = UNUserNotificationCenter.current()
   let iconController: IconController
 
   init(iconController: IconController) {
     self.iconController = iconController
+    super.init()
+    self.notificationCenter.delegate = self
   }
 
   func post(application: Application, text: String) {
@@ -19,7 +22,12 @@ class NotificationController {
     }
 
     let request = UNNotificationRequest(identifier: application.propertyList.bundleIdentifier, content: content, trigger: nil)
-    let notificationCenter = UNUserNotificationCenter.current()
     notificationCenter.add(request)
+  }
+
+  // MARK: - UNUserNotificationCenterDelegate
+
+  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    completionHandler(.alert)
   }
 }

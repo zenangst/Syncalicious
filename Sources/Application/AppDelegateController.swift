@@ -1,4 +1,5 @@
 import Cocoa
+import UserNotifications
 
 protocol ApplicationDelegateControllerDelegate: class {
   func applicationDelegateController(_ controller: ApplicationDelegateController, didLoadApplication: Bool)

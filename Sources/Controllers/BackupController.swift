@@ -20,7 +20,6 @@ class BackupController {
   var applications = [Application]()
   var openPanel: NSOpenPanel?
 
-
   init(machineController: MachineController, notificationController: NotificationController) {
     self.machineController = machineController
     self.notificationController = notificationController

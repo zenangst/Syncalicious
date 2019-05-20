@@ -137,6 +137,7 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                               qos: .userInitiated)
     let applicationController = ApplicationController(queue: queue,
                                                       infoPlistController: infoPlistController,
+                                                      notificationController: notificationController,
                                                       operationController: operationController,
                                                       operationFactory: operationFactory,
                                                       preferencesController: preferencesController,

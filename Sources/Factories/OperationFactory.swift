@@ -13,7 +13,7 @@ class OperationFactory {
     self.workspace = workspace
   }
 
-  func createQuitApplicationOperation(for application: Application) -> DispatchOperation {
+  func createQuitApplicationOperation(for application: Application, then handler: @escaping () -> Void) -> DispatchOperation {
     let operation = UIOperation({ [weak self] operation in
       guard let strongSelf = self else {
         operation.complete()
@@ -22,12 +22,13 @@ class OperationFactory {
       strongSelf.workspace.runningApplication(for: application)?.terminate()
       let delay: TimeInterval = application.preferences.kind == .container ? 6.0 : 1.0
       operation.perform(#selector(CoreOperation.complete), with: nil, afterDelay: delay)
+      handler()
     })
 
     return operation
   }
 
-  func createLaunchApplicationOperation(for application: Application) -> DispatchOperation {
+  func createLaunchApplicationOperation(for application: Application, then handler: @escaping () -> Void) -> DispatchOperation {
     let operation = UIOperation({ [weak self] operation in
       guard let strongSelf = self else {
         operation.complete()
@@ -37,6 +38,7 @@ class OperationFactory {
                                              options: [.withoutActivation],
                                              additionalEventParamDescriptor: nil,
                                              launchIdentifier: nil)
+      handler()
       operation.complete()
     })
 

@@ -129,8 +129,12 @@ class SyncController: NSObject {
       let readPropertyListOperation = operationFactory.createReadPropertyListOperation(for: application)
 
       if runningApplication != nil {
-        let quitOperation = operationFactory.createQuitApplicationOperation(for: application)
-        let restartOperation = operationFactory.createLaunchApplicationOperation(for: application)
+        let quitOperation = operationFactory.createQuitApplicationOperation(for: application) { [weak self] in
+          self?.notificationController.post(application: application, text: "Quit \(application.propertyList.bundleName)")
+        }
+        let restartOperation = operationFactory.createLaunchApplicationOperation(for: application) { [weak self] in
+          self?.notificationController.post(application: application, text: "Restarted \(application.propertyList.bundleName)")
+        }
 
         operationController.add(quitOperation)
         operationController.add(syncOperation)

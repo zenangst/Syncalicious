@@ -10,6 +10,7 @@ class ApplicationController {
   private let preferencesController: PreferencesController
   private let shellController: ShellController
   private let infoPlistController: InfoPropertyListController
+  private let notificationController: NotificationController
   private let operationController: OperationController
   private let operationFactory: OperationFactory
   let workspace: NSWorkspace
@@ -18,12 +19,14 @@ class ApplicationController {
 
   init(queue: DispatchQueue? = nil,
        infoPlistController: InfoPropertyListController,
+       notificationController: NotificationController,
        operationController: OperationController,
        operationFactory: OperationFactory,
        preferencesController: PreferencesController,
        shellController: ShellController,
        workspace: NSWorkspace = .shared) {
     self.infoPlistController = infoPlistController
+    self.notificationController = notificationController
     self.operationController = operationController
     self.operationFactory = operationFactory
     self.preferencesController = preferencesController
@@ -52,8 +55,12 @@ class ApplicationController {
   }
 
   func restart(application: Application, operations: [DispatchOperation] = []) {
-    let quitOperation = operationFactory.createQuitApplicationOperation(for: application)
-    let launchOperation = operationFactory.createLaunchApplicationOperation(for: application)
+    let quitOperation = operationFactory.createQuitApplicationOperation(for: application) { [weak self] in
+      self?.notificationController.post(application: application, text: "Quit \(application.propertyList.bundleName)")
+    }
+    let launchOperation = operationFactory.createLaunchApplicationOperation(for: application) { [weak self] in
+      self?.notificationController.post(application: application, text: "Restarted \(application.propertyList.bundleName)")
+    }
     var collection = [DispatchOperation]()
 
     collection.append(quitOperation)

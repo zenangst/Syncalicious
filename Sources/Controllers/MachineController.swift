@@ -171,10 +171,11 @@ class MachineController {
     let state: Machine.State = idleTime > threshold ? .idle : .active
 
     if let syncaliciousUrl = UserDefaults.standard.syncaliciousUrl, machine.state != state {
-      machine.state = state
       try? updateMachineInfoPlist(to: syncaliciousUrl)
       delegate?.machineController(self, didChangeState: state)
     }
+
+    machine.state = state
 
     return state
   }

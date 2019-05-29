@@ -25,7 +25,10 @@ class TestController {
     let preferencesController = PreferencesController(libraryDirectory: libraryDirectory)
     let infoPlistController = InfoPropertyListController()
     let operationController = OperationController()
+    let iconController = IconController()
+    let notificationContorller = NotificationController(iconController: iconController)
     let applicationController = ApplicationController(infoPlistController: infoPlistController,
+                                                      notificationController: notificationContorller,
                                                       operationController: operationController,
                                                       operationFactory: OperationFactory(shellController: shellController),
                                                       preferencesController: preferencesController,

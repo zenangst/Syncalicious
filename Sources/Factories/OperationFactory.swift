@@ -21,8 +21,16 @@ class OperationFactory {
       }
       strongSelf.workspace.runningApplication(for: application)?.terminate()
       let delay: TimeInterval = application.preferences.kind == .container ? 6.0 : 1.0
-      operation.perform(#selector(CoreOperation.complete), with: nil, afterDelay: delay)
-      handler()
+
+      DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+        guard strongSelf.workspace.runningApplication(for: application) == nil else {
+          operation.cancelChildren()
+          operation.cancel()
+          return
+        }
+        operation.perform(#selector(CoreOperation.complete), with: nil, afterDelay: delay)
+        operation.completionBlock = handler
+      })
     })
 
     return operation
@@ -38,7 +46,7 @@ class OperationFactory {
                                              options: [.withoutActivation],
                                              additionalEventParamDescriptor: nil,
                                              launchIdentifier: nil)
-      handler()
+      operation.completionBlock = handler
       operation.complete()
     })
 
@@ -86,7 +94,7 @@ class OperationFactory {
 
       _ = try? strongSelf.fileManager.replaceItemAt(application.preferences.url, withItemAt: location)
       try? strongSelf.fileManager.removeItem(at: location)
-      handler()
+      operation.completionBlock = handler
 
       if delay > 0 {
         Thread.sleep(until: Date() + delay)

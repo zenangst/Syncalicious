@@ -19,6 +19,7 @@ open class DispatchOperation: CoreOperation, Dispatchable {
   }
 
   private func run() {
+    guard !isCancelled else { return }
     operationClosure(self)
     if !waitUntilDone {
       self.complete()

@@ -15,6 +15,7 @@ class TargetApplication: NSObject {
   }
 }
 
+// swiftlint:disable type_body_length
 class SyncController: NSObject {
   let operationController: OperationController
   let destination: URL
@@ -136,11 +137,17 @@ class SyncController: NSObject {
           self?.notificationController.post(application: application, text: "Restarted \(application.propertyList.bundleName)")
         }
 
+        syncOperation.addDependency(quitOperation)
+        readPropertyListOperation.addDependency(syncOperation)
+        restartOperation.addDependency(readPropertyListOperation)
+
         operationController.add(quitOperation)
-        operationController.add(syncOperation)
         operationController.add(readPropertyListOperation)
+        operationController.add(syncOperation)
         operationController.add(restartOperation)
       } else {
+        readPropertyListOperation.addDependency(syncOperation)
+
         operationController.add(syncOperation)
         operationController.add(readPropertyListOperation)
       }
@@ -239,6 +246,7 @@ class SyncController: NSObject {
       let listsAreEqual = lhs.isEqual(to: rhs)
 
       if !listsAreEqual {
+        pendingApplications.remove(application)
         try? fileManager.removeItem(at: to)
         try? fileManager.copyItem(at: applicationPath, to: to)
         debugPrint("🍫 Added \(application.propertyList.bundleName) to \(machineFolder) (pending).")
@@ -249,6 +257,8 @@ class SyncController: NSObject {
       plistHashDictionary[application] = nil
       try? fileManager.copyItem(at: applicationPath, to: to)
       debugPrint("🍫 Added \(application.propertyList.bundleName) to \(machineFolder) (pending).")
+    } else {
+      debugPrint("🍫 Nothing changed \(application.propertyList.bundleName)")
     }
 
     applicationHasBeenActive.remove(application)

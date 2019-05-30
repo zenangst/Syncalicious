@@ -50,8 +50,17 @@ class ApplicationController {
                                                            in: .localDomainMask,
                                                            appropriateFor: nil,
                                                            create: false)
+    let homeDirectory = FileManager.default.homeDirectoryForCurrentUser
+    let coreServicesDirectory = URL(fileURLWithPath: "/System/Library/CoreServices")
+    let applicationDirectoryD = URL(fileURLWithPath: "/Developer/Applications")
+    let applicationDirectoryN = URL(fileURLWithPath: "/Network/Applications")
+    let applicationDirectoryND = URL(fileURLWithPath: "/Network/Developer/Applications")
+    let applicationDirectoryS = URL(fileURLWithPath: "/Users/Shared/Applications")
 
-    return [userDirectory, applicationDirectory]
+    return [userDirectory, applicationDirectory,
+            homeDirectory, coreServicesDirectory,
+            applicationDirectoryD, applicationDirectoryN,
+            applicationDirectoryND, applicationDirectoryS]
   }
 
   func restart(application: Application, operations: [DispatchOperation] = []) {
@@ -91,10 +100,11 @@ class ApplicationController {
 
   private func runAsync(_ locations: [URL]) {
     var applications = [Application]()
+    var urls = [URL]()
     for location in locations {
-      let urls = recursiveApplicationParse(at: location)
-      applications.append(contentsOf: loadApplications(urls))
+      urls.append(contentsOf: recursiveApplicationParse(at: location))
     }
+    applications.append(contentsOf: loadApplications(urls))
 
     dispatchToMainIfNeeded { [weak self] in
       guard let strongSelf = self else { return }
@@ -124,13 +134,31 @@ class ApplicationController {
 
   private func loadApplications(_ urls: [URL]) -> [Application] {
     var applications = [Application]()
-    var bundleIdentifiers = [String]()
+    var bundleIdentifiers = Set<String>()
     for path in urls {
       do {
         let application = try loadApplication(at: path)
+        var shouldExcludeOnKeyword: Bool = false
+        let excludeKeywords = [
+          "handler", "agent", "migration",
+          "problem", "setup", "uiserver",
+          "install", "system image", "escrow",
+          "assistant"]
+
+        for keyword in excludeKeywords {
+          if application.propertyList.path.lowercased().contains(keyword) {
+            shouldExcludeOnKeyword = true
+            break
+          }
+        }
+
+        if shouldExcludeOnKeyword {
+          continue
+        }
+
         if !bundleIdentifiers.contains(application.propertyList.bundleIdentifier) {
           applications.append(application)
-          bundleIdentifiers.append(application.propertyList.bundleIdentifier)
+          bundleIdentifiers.insert(application.propertyList.bundleIdentifier)
         }
       } catch {}
     }

@@ -129,7 +129,7 @@ class {{type.name|replace:"View",""}}DataSource: NSObject, NSCollectionViewDataS
       {% for variable in type.variables %}
       {% for key, value in variable.annotations %}
       {% ifnot variable|annotated:"$RawBinding" %}
-      {% if value.length > 0 %}
+      {% if value.count > 1 %}
       view.{{key}} = {{value}}
       {% else %}
       {% for variableType in value %}

@@ -1,14 +1,14 @@
 import Foundation
 
-public class OperationController {
+public class OperationController: CoreOperationDelegate {
   public typealias OperationManagerCompletion = (() -> Void)?
   private let _operationQueue: OperationQueue
   private let _lock = NSLock()
   private var _isLocked: Bool = false
-  private var _operations = [DispatchOperation]()
+  private var _operations = [CoreOperation]()
   public var isExecuting: Bool { return !_operationQueue.operations.isEmpty }
 
-  public init(operationQueue: OperationQueue = .init(maxConcurrentOperationCount: 1) ) {
+  public init(operationQueue: OperationQueue = .init()) {
     self._operationQueue = operationQueue
   }
 
@@ -25,45 +25,58 @@ public class OperationController {
 
   @discardableResult
   public func add(_ operations: DispatchOperation ...) -> OperationController {
-    for operation in operations as [Operation] {
-      operation.completionBlock = removeOperationClosure(operation: operation)
+    for operation in operations {
+      if !_operations.contains(operation) {
+        _operations.append(operation)
+      }
+      operation.delegate = self
     }
-    _operations.append(contentsOf: operations)
     return self
   }
 
   public func execute(_ completion: OperationManagerCompletion = nil) {
+    _operations.forEach { $0.delegate = self }
     if _operations.isEmpty {
       DispatchQueue.main.execute(completion)
     } else {
       if let lastOperation = _operations.last {
-        lastOperation.completionBlock = { [weak self] in
-          guard let strongSelf = self else { return }
-          strongSelf.removeOperationClosure(operation: lastOperation)()
-          DispatchQueue.main.execute(completion)
+        lastOperation.completionBlock = {
+          completion?()
         }
         execute(_operations)
       }
     }
   }
 
-  public func execute(_ operations: [DispatchOperation], waitUntilFinished: Bool = false) {
-    _operationQueue.addOperations(operations, waitUntilFinished: waitUntilFinished)
+  public func execute(_ operations: [CoreOperation]) {
+    let validOperations = operations.filter({ operation in
+        !operation.isFinished &&
+        !operation.isCancelled &&
+        !operation.isExecuting
+    })
+
+    _operationQueue.addOperations(validOperations, waitUntilFinished: false)
   }
 
-  public func execute(waitUntilFinished: Bool = false, _ operations: DispatchOperation ...) {
-    execute(operations, waitUntilFinished: waitUntilFinished)
+  public func execute(_ operations: CoreOperation ...) {
+    execute(operations)
   }
 
-  private func removeOperationClosure(operation: Operation) -> (() -> Void) {
-    return { [weak self] in
-      guard let strongSelf = self else { return }
-      strongSelf._lock.lock()
-      let operations = strongSelf._operations as [Operation]
-      if let indexOf = operations.firstIndex(of: operation) {
-        strongSelf._operations.remove(at: indexOf)
-      }
-      strongSelf._lock.unlock()
+  // MARK: - CoreOperationDelegate
+
+  func coreOperation(_ operation: CoreOperation, didCancel flag: Bool) {
+    _lock.lock()
+    if let indexOf = _operations.firstIndex(of: operation) {
+      _operations.remove(at: indexOf)
     }
+    _lock.unlock()
+  }
+
+  func coreOperation(_ operation: CoreOperation, didComplete flag: Bool) {
+    _lock.lock()
+    if let indexOf = _operations.firstIndex(of: operation) {
+      _operations.remove(at: indexOf)
+    }
+    _lock.unlock()
   }
 }

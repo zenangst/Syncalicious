@@ -1,7 +1,7 @@
 PODS:
-  - Blueprints (0.11.0)
-  - Differific (0.8.0)
-  - Family (0.15.0)
+  - Blueprints (0.11.3)
+  - Differific (0.8.2)
+  - Family (0.18.3)
   - KeyHolder (3.0.1):
     - Magnet (~> 2.3)
   - Magnet (2.3.1)
@@ -21,12 +21,12 @@ SPEC REPOS:
     - Magnet
 
 SPEC CHECKSUMS:
-  Blueprints: 19b347c8783ca86f527b7f818320b0e32827ff51
-  Differific: b54449d41410dbca7c76858f28cf3a94a581c195
-  Family: 2efd722ed3d2ea4847d89c70f3a88ea5dce1bbb5
+  Blueprints: 65eb7d69c2c60721a28fade0b7e10b0588e4e96d
+  Differific: c3840b9e4d1ee2216b2c0054c270e4a616df9327
+  Family: c84e5e37e27d84dee0f966a51da61d61c7bc8858
   KeyHolder: 142932db4eac7420b003e2eae94c9a61b8b53cb1
   Magnet: f8dac2ffc845ffe68b2dd21c68a801f866f4a098
 
 PODFILE CHECKSUM: c9ceb4817885e01241875a7bf92ac4f6f5105129
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.1

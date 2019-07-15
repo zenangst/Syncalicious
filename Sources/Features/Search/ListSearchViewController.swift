@@ -11,25 +11,15 @@ class ListSearchViewController: ViewController, NSSearchFieldDelegate {
   private(set) lazy var searchField = SearchField()
   weak var delegate: ListSearchViewControllerDelegate?
 
+  override func loadView() {
+    view = searchField
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    view.subviews.forEach { $0.removeFromSuperview() }
-
     searchField.delegate = self
     searchField.focusRingType = .none
     searchField.sendsSearchStringImmediately = true
-    view.addSubview(searchField)
-
-    NSLayoutConstraint.deactivate(layoutConstraints)
-    layoutConstraints = [
-      searchField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-      searchField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      searchField.widthAnchor.constraint(greaterThanOrEqualToConstant: 240),
-      searchField.heightAnchor.constraint(equalTo: view.heightAnchor)
-    ]
-    NSLayoutConstraint.constrain(layoutConstraints)
-
     view.frame.size.height = 24
   }
 

@@ -704,16 +704,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Tests/Pods-Tests-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/KeyHolder/KeyHolder.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Tests/Pods-Tests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/KeyHolder.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Tests/Pods-Tests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -726,16 +721,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Syncalicious/Pods-Syncalicious-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/KeyHolder/KeyHolder.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Syncalicious/Pods-Syncalicious-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/KeyHolder.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Syncalicious/Pods-Syncalicious-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

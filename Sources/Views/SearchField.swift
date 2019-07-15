@@ -1,7 +1,6 @@
 import Cocoa
 
 class SearchField: NSSearchField {
-
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     wantsLayer = true

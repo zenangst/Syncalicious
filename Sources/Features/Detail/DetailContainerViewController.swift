@@ -32,18 +32,18 @@ class DetailContainerViewController: FamilyViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    addChild(applicationDetailViewController,
-             customInsets: .init(top: 0, left: 30, bottom: 15, right: 30)) {
-              $0.collectionView }
-    addChild(generalInfoViewController,
-             customInsets: .init(top: 15, left: 30, bottom: 0, right: 30))
-    addChild(generalActionsViewController)
-    addChild(computersViewController) { $0.collectionView }
-    addChild(keyboardShortcutViewController,
-             customInsets: .init(top: 15, left: 0, bottom: 0, right: 0)) {
-              $0.collectionView }
-    addChild(keyboardShortcutActionsViewController,
-             customInsets: .init(top: 0, left: 0, bottom: 0, right: 0))
+    body(withDuration: 0) {
+      add(applicationDetailViewController, view: { $0.collectionView })
+        .margin(.init(top: 0, left: 30, bottom: 15, right: 30))
+      add(generalInfoViewController)
+        .margin(.init(top: 15, left: 30, bottom: 0, right: 30))
+      add(generalActionsViewController)
+      add(computersViewController, view: { $0.collectionView })
+      add(keyboardShortcutViewController, view: { $0.collectionView })
+        .margin(.init(top: 15, left: 0, bottom: 0, right: 0))
+      add(keyboardShortcutActionsViewController)
+        .margin(.init(top: 0, left: 0, bottom: 0, right: 0))
+    }
 
     computersViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]
     keyboardShortcutViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]

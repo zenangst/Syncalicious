@@ -225,9 +225,8 @@ class ListFeatureViewController: NSViewController,
 
     if familyScrollView.documentVisibleRect.intersects(wrapperView.frame) {
       iconController.loadIcon(at: model.application.url,
-                              identifier: model.application.propertyList.bundleIdentifier) { (image) in
-                                view?.iconView.image = image
-      }
+                              identifier: model.application.propertyList.bundleIdentifier,
+                              then: { view?.iconView.layer?.contents = $0 })
     }
   }
 

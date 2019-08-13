@@ -11,19 +11,6 @@ extension UserDefaults {
     set { set(newValue, forKey: #function) }
   }
 
-  var detailTab: DetailFeatureViewController.Tab {
-    get {
-      if let string = string(forKey: #function),
-        let tab = DetailFeatureViewController.Tab.init(rawValue: string) {
-        return tab
-      }
-      return .general
-    }
-    set {
-      set(newValue.rawValue, forKey: #function)
-    }
-  }
-
   var listSort: ListSortViewController.SortKind? {
     get {
       if let string = string(forKey: #function) {

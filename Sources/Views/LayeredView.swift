@@ -1,6 +1,8 @@
 import Cocoa
 
 class LayeredView: NSView {
+  override var isOpaque: Bool { return true }
+
   convenience init(cgColor: CGColor?) {
     self.init(frame: .zero)
     self.layer?.backgroundColor = cgColor

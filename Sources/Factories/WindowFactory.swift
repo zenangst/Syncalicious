@@ -35,7 +35,7 @@ class WindowFactory {
     let detailViewController = viewControllerFactory.createApplicationDetailFeatureViewController()
     listViewController.delegate = detailViewController
 
-    let detailControllerItem = NSSplitViewItem(viewController: detailViewController)
+    let detailControllerItem = NSSplitViewItem(contentListWithViewController: detailViewController)
     detailControllerItem.minimumThickness = 320
     detailControllerItem.canCollapse = false
 

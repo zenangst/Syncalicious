@@ -15,7 +15,6 @@ class DependencyContainer {
   let iconController: IconController
   let machineController: MachineController
   let syncController: SyncController
-  let keyboardController: KeyboardController
   let notificationController: NotificationController
 
   private let infoPlistController: InfoPropertyListController
@@ -28,7 +27,6 @@ class DependencyContainer {
        infoPlistController: InfoPropertyListController,
        machineController: MachineController,
        preferencesController: PreferencesController,
-       keyboardController: KeyboardController,
        notificationController: NotificationController) {
     self.infoPlistController = infoPlistController
     self.machineController = machineController
@@ -37,7 +35,6 @@ class DependencyContainer {
     self.applicationController = applicationController
     self.syncController = syncController
     self.iconController = iconController
-    self.keyboardController = keyboardController
     self.notificationController = notificationController
   }
 }

@@ -151,10 +151,6 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                                         operationFactory: operationFactory,
                                         shellController: shellController,
                                         notificationController: notificationController)
-    let keyboardController = KeyboardController(applicationController: applicationController,
-                                                machineController: machineController,
-                                                operationController: operationController,
-                                                operationFactory: operationFactory)
     let dependencyContainer = DependencyContainer(applicationController: applicationController,
                                                   syncController: syncController,
                                                   backupController: backupController,
@@ -162,7 +158,6 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
                                                   infoPlistController: infoPlistController,
                                                   machineController: machineController,
                                                   preferencesController: preferencesController,
-                                                  keyboardController: keyboardController,
                                                   notificationController: notificationController)
 
     backupController.delegate = self

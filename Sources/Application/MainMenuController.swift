@@ -27,32 +27,6 @@ class MainMenuController: NSObject {
     dependencyContainer?.backupController.chooseDestination()
   }
 
-  @IBAction func viewGeneral(_ sender: Any?) {
-    let tab = DetailFeatureViewController.Tab.general
-    guard let segmentedControl = detailFeatureViewController?.segmentedControl else {
-      return
-    }
-    if let index = DetailFeatureViewController.Tab.allCases.firstIndex(of: tab) {
-      segmentedControl.setSelected(true, forSegment: index)
-    } else {
-      segmentedControl.setSelected(true, forSegment: 0)
-    }
-    detailFeatureViewController?.changeTab(segmentedControl)
-  }
-
-  @IBAction func viewCustomize(_ sender: Any?) {
-    let tab = DetailFeatureViewController.Tab.customize
-    guard let segmentedControl = detailFeatureViewController?.segmentedControl else {
-      return
-    }
-    if let index = DetailFeatureViewController.Tab.allCases.firstIndex(of: tab) {
-      segmentedControl.setSelected(true, forSegment: index)
-    } else {
-      segmentedControl.setSelected(true, forSegment: 0)
-    }
-    detailFeatureViewController?.changeTab(segmentedControl)
-  }
-
   @IBAction func sortByName(_ sender: Any?) {
     guard let segmentControl = listContainerViewController?.sortViewController.segmentedControl else { return }
     if sidebarSplitItem?.isCollapsed == true { toggleSplitItemSidebar(to: false) }

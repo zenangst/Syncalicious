@@ -14,12 +14,12 @@ class ViewControllerFactory {
     let searchViewController = ListSearchViewController()
     let sortViewController = ListSortViewController()
     let containerViewController = ListContainerViewController(listViewController: listViewController,
-                                                                         searchViewController: searchViewController,
-                                                                         sortViewController: sortViewController)
+                                                              searchViewController: searchViewController,
+                                                              sortViewController: sortViewController)
     let featureViewController = ListFeatureViewController(containerViewController: containerViewController,
-                                                                     iconController: iconController,
-                                                                     machineController: dependencyContainer.machineController,
-                                                                     syncController: dependencyContainer.syncController)
+                                                          iconController: iconController,
+                                                          machineController: dependencyContainer.machineController,
+                                                          syncController: dependencyContainer.syncController)
     return featureViewController
   }
 
@@ -30,7 +30,6 @@ class ViewControllerFactory {
     let machineController = dependencyContainer.machineController
     let iconController = dependencyContainer.iconController
     let syncController = dependencyContainer.syncController
-    let keyboardController = dependencyContainer.keyboardController
 
     let actionsViewController = GeneralActionsViewController()
     let applicationsDetailViewController = ApplicationDetailItemViewController(layout: layoutFactory.createApplicationsLayout(),
@@ -39,22 +38,14 @@ class ViewControllerFactory {
     let computersViewController = ComputerDetailItemViewController(title: "Computers",
                                                                    layout: layoutFactory.createComputerLayout(),
                                                                    iconController: iconController)
-    let keyboardViewController = KeyboardBindingViewController(title: "Keyboard shortcuts",
-                                                               layout: layoutFactory.createKeyboardShortcutLayout(),
-                                                               iconController: iconController,
-                                                               keyboardController: keyboardController)
-    let keyboardShortcutActionsViewController = KeyboardActionsViewController()
     let containerViewController = DetailContainerViewController(generalActionsViewController: actionsViewController,
                                                                 generalInfoViewController: applicationInfoViewController,
                                                                 computersViewController: computersViewController,
-                                                                applicationsDetailViewController: applicationsDetailViewController,
-                                                                keyboardShortcutViewController: keyboardViewController,
-                                                                keyboardShortcutActionsViewController: keyboardShortcutActionsViewController)
+                                                                applicationsDetailViewController: applicationsDetailViewController)
     let featureViewController = DetailFeatureViewController(applicationController: applicationController,
                                                             backupController: backupController,
                                                             containerViewController: containerViewController,
                                                             iconController: iconController,
-                                                            keyboardController: keyboardController,
                                                             machineController: machineController,
                                                             syncController: syncController)
     return featureViewController

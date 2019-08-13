@@ -3,13 +3,7 @@ import Cocoa
 class DetailFeatureViewController: NSViewController,
   ListFeatureViewControllerDelegate,
   GeneralActionsViewControllerDelegate,
-  SplitViewContainedController,
-  KeyboardActionsViewControllerDelegate {
-
-  enum Tab: String, CaseIterable {
-    case general = "General"
-    case customize = "Customize"
-  }
+  SplitViewContainedController {
 
   enum State {
     case multiple([Application])
@@ -18,9 +12,6 @@ class DetailFeatureViewController: NSViewController,
 
   lazy var titleLabel = SmallBoldLabel()
   lazy var titlebarView = NSView()
-  lazy var segmentedControl = NSSegmentedControl(labels: Tab.allCases.compactMap({ $0.rawValue }),
-                                                 trackingMode: .selectOne,
-                                                 target: self, action: #selector(changeTab(_:)))
 
   private var layoutConstraints = [NSLayoutConstraint]()
   private(set) var modified: Bool = false
@@ -31,7 +22,6 @@ class DetailFeatureViewController: NSViewController,
   let iconController: IconController
   let syncController: SyncController
   let machineController: MachineController
-  let keyboardController: KeyboardController
 
   var machines = [Machine]()
   var application: Application?
@@ -40,14 +30,12 @@ class DetailFeatureViewController: NSViewController,
        backupController: BackupController,
        containerViewController: DetailContainerViewController,
        iconController: IconController,
-       keyboardController: KeyboardController,
        machineController: MachineController,
        syncController: SyncController) {
     self.applicationController = applicationController
     self.backupController = backupController
     self.containerViewController = containerViewController
     self.iconController = iconController
-    self.keyboardController = keyboardController
     self.machineController = machineController
     self.syncController = syncController
     super.init(nibName: nil, bundle: nil)
@@ -80,7 +68,6 @@ class DetailFeatureViewController: NSViewController,
   private func render(_ state: State) {
     switch state {
     case .multiple(let applications):
-      segmentedControl.isHidden = true
       titleLabel.isHidden = false
       self.application = nil
       let models = applications
@@ -91,11 +78,8 @@ class DetailFeatureViewController: NSViewController,
       containerViewController.generalInfoViewController.view.isHidden = true
       containerViewController.computersViewController.reload(with: [])
       containerViewController.applicationDetailViewController.reload(with: models)
-      containerViewController.keyboardShortcutViewController.reload(with: [])
       containerViewController.generalActionsViewController.view.isHidden = true
-      containerViewController.keyboardShortcutActionsViewController.view.isHidden = true
     case .single(let application):
-      segmentedControl.isHidden = false
       titleLabel.isHidden = true
       containerViewController.applicationDetailViewController.reload(with: [])
       containerViewController.generalInfoViewController.render(application,
@@ -103,12 +87,7 @@ class DetailFeatureViewController: NSViewController,
                                                                machineController: machineController)
       containerViewController.generalInfoViewController.view.isHidden = false
       containerViewController.applicationDetailViewController.collectionView.isHidden = true
-      switch UserDefaults.standard.detailTab {
-      case .general:
-        renderGeneral(for: application)
-      case .customize:
-        renderCustomize(for: application)
-      }
+      renderGeneral(for: application)
     }
 
     NSLayoutConstraint.deactivate(layoutConstraints)
@@ -116,15 +95,10 @@ class DetailFeatureViewController: NSViewController,
 
     titlebarView.subviews.forEach { $0.removeFromSuperview() }
     titleLabel.alignment = .center
-    segmentedControl.segmentStyle = .texturedRounded
-    segmentedControl.setSelected(true, with: UserDefaults.standard.detailTab)
 
     titlebarView.addSubview(titleLabel)
-    titlebarView.addSubview(segmentedControl)
 
     layoutConstraints.append(contentsOf: [
-      segmentedControl.centerXAnchor.constraint(equalTo: titlebarView.centerXAnchor),
-      segmentedControl.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor),
       titleLabel.leadingAnchor.constraint(equalTo: titlebarView.leadingAnchor, constant: 10),
       titleLabel.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -10),
       titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
@@ -165,23 +139,6 @@ class DetailFeatureViewController: NSViewController,
                                                                 machineController: machineController)
     containerViewController.generalActionsViewController.view.isHidden = false
     containerViewController.computersViewController.collectionView.isHidden = false
-    containerViewController.keyboardShortcutViewController.collectionView.isHidden = true
-    containerViewController.keyboardShortcutActionsViewController.view.isHidden = true
-  }
-
-  func renderCustomize(for application: Application) {
-    let keyboardShortcuts = keyboardController.keyboardShortcuts(for: application)
-    containerViewController.generalActionsViewController.view.isHidden = true
-    containerViewController.computersViewController.collectionView.isHidden = true
-    containerViewController.keyboardShortcutViewController.collectionView.isHidden = false
-    containerViewController.keyboardShortcutViewController.application = application
-    containerViewController.keyboardShortcutActionsViewController.delegate = self
-    NSAnimationContext.current.duration = 0.0
-    containerViewController.performBatchUpdates({ _ in
-      containerViewController.keyboardShortcutActionsViewController.view.isHidden = false
-      containerViewController.keyboardShortcutViewController.reload(with: [])
-      containerViewController.keyboardShortcutViewController.reload(with: keyboardShortcuts)
-    }, completion: nil)
   }
 
   private func refreshApplicationList() {
@@ -197,14 +154,6 @@ class DetailFeatureViewController: NSViewController,
       self.application = application
       render(.single(application))
     }
-  }
-
-  @objc func changeTab(_ segmentedControl: NSSegmentedControl) {
-    guard let label = segmentedControl.label(forSegment: segmentedControl.selectedSegment),
-      let tab = Tab(rawValue: label) else { return }
-    UserDefaults.standard.detailTab = tab
-    guard let application = application else { return }
-    render(.single(application))
   }
 
   // MARK: - GeneralActionsViewControllerDelegate
@@ -239,22 +188,5 @@ class DetailFeatureViewController: NSViewController,
   func listFeatureViewController(_ controller: ListFeatureViewController,
                                  didSelectApplications applications: [Application]) {
     handleSelections(for: applications)
-  }
-
-  // MARK: - KeyboardActionsViewControllerDelegate
-
-  func keyboardActionsViewController(_ controller: KeyboardActionsViewController,
-                                     didClickSaveButton button: NSButton) {
-    guard let application = application else { return }
-    keyboardController.saveKeyboardShortcutsIfNeeded(for: application) { [weak self] in
-      self?.refreshApplicationList()
-    }
-  }
-
-  func keyboardActionsViewController(_ controller: KeyboardActionsViewController,
-                                     didClickDiscardButton button: NSButton) {
-    guard let application = application else { return }
-    keyboardController.discardKeyboardShortcuts(for: application)
-    render(.single(application))
   }
 }

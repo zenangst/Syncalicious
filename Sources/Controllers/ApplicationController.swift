@@ -143,7 +143,7 @@ class ApplicationController {
           "handler", "agent", "migration",
           "problem", "setup", "uiserver",
           "install", "system image", "escrow",
-          "assistant"]
+          "assistant", "support"]
 
         for keyword in excludeKeywords {
           if application.propertyList.path.lowercased().contains(keyword) {

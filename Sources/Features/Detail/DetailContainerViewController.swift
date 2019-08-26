@@ -22,14 +22,14 @@ class DetailContainerViewController: FamilyViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - View life cycle
+
   override func loadView() {
     super.loadView()
     view = OpaqueView()
     view.autoresizingMask = [.width]
     view.autoresizesSubviews = true
   }
-
-  // MARK: - View lifecycle
 
   override func viewDidLoad() {
     super.viewDidLoad()

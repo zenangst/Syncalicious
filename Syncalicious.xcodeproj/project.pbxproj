@@ -90,6 +90,7 @@
 		BDE9E63622704AFD00C28F34 /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */; };
 		BDE9E6392270514700C28F34 /* ApplicationDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */; };
 		BDE9E63B2270519100C28F34 /* CollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */; };
+		BDF4CABC231EDB0900F1D6D5 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF4CABB231EDB0900F1D6D5 /* NSView+Extensions.swift */; };
 		BDFB33442281F13200199641 /* GeneralActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFB33432281F13200199641 /* GeneralActionsViewController.swift */; };
 		BDFF6FD5231ED8C400F53B71 /* OpaqueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FD4231ED8C400F53B71 /* OpaqueView.swift */; };
 		BDFF6FD7231ED8E300F53B71 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FD6231ED8E300F53B71 /* TextField.swift */; };
@@ -208,6 +209,7 @@
 		BDE9E63522704AFD00C28F34 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
 		BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailItem.swift; sourceTree = "<group>"; };
 		BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewItem.swift; sourceTree = "<group>"; };
+		BDF4CABB231EDB0900F1D6D5 /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
 		BDFB33432281F13200199641 /* GeneralActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralActionsViewController.swift; sourceTree = "<group>"; };
 		BDFF6FD4231ED8C400F53B71 /* OpaqueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpaqueView.swift; sourceTree = "<group>"; };
 		BDFF6FD6231ED8E300F53B71 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				BD59F6B922882E5400C82740 /* NSWorkspace+Extensions.swift */,
 				BD9DA455227B4CEB00B745C0 /* OperationQueue+Extensions.swift */,
 				BD7D961E22532BA100C93211 /* UserDefaults+Extensions.swift */,
+				BDF4CABB231EDB0900F1D6D5 /* NSView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				BD62D2EE2267547B007B047B /* ListFeatureViewController.swift in Sources */,
 				BDE9E63B2270519100C28F34 /* CollectionViewItem.swift in Sources */,
 				BD7D96192252912100C93211 /* Preferences.swift in Sources */,
+				BDF4CABC231EDB0900F1D6D5 /* NSView+Extensions.swift in Sources */,
 				BD62D2F022675F54007B047B /* DetailFeatureViewController.swift in Sources */,
 				BDDC19A4226F93D9002D17F5 /* PermissionViewController.swift in Sources */,
 				BD9DA448227B4B6100B745C0 /* CoreOperation.swift in Sources */,

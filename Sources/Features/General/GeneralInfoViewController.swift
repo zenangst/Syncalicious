@@ -1,8 +1,8 @@
 import Cocoa
 
 class GeneralInfoViewController: ViewController {
-  lazy var rightStackView = NSStackView()
-  lazy var horizontalStackView = NSStackView()
+  lazy var rightStackView = VStack()
+  lazy var horizontalStackView = HStack()
 
   var application: Application?
 
@@ -51,18 +51,30 @@ class GeneralInfoViewController: ViewController {
     rightStackView.addArrangedSubview(applicationTitleLabel)
 
     rightStackView.addArrangedSubview(createStackView(.horizontal, views: [
-      BoldLabel(text: "Version:"),
-      Label(text: application.propertyList.versionString)]))
+      BoldLabel(text: "Version:").horizontalCompressionResistance(.defaultHigh),
+      Label(text: application.propertyList.versionString)
+        .horizontalCompressionResistance(.defaultLow)
+        .horizontalContentHugging(.defaultLow)
+    ]))
     rightStackView.addArrangedSubview(createStackView(.horizontal, views: [
-      BoldLabel(text: "Bundle identifier:"),
-      Label(text: application.propertyList.bundleIdentifier)]))
+      BoldLabel(text: "Bundle identifier:").horizontalCompressionResistance(.defaultHigh),
+      Label(text: application.propertyList.bundleIdentifier)
+        .horizontalCompressionResistance(.defaultLow)
+        .horizontalContentHugging(.defaultLow)
+    ])
+    )
     rightStackView.addArrangedSubview(createStackView(.horizontal, views: [
-      BoldLabel(text: "Location:"),
-      Label(text: application.url.path)]))
-
+      BoldLabel(text: "Location:").horizontalCompressionResistance(.defaultHigh),
+      Label(text: application.url.path)
+        .horizontalCompressionResistance(.defaultLow)
+        .horizontalContentHugging(.defaultLow)
+    ]))
     rightStackView.addArrangedSubview(createStackView(.horizontal, views: [
-      BoldLabel(text: "Property list:"),
-      Label(text: application.preferences.url.path)]))
+      BoldLabel(text: "Property list:").horizontalCompressionResistance(.defaultHigh),
+      Label(text: application.preferences.url.path)
+        .horizontalCompressionResistance(.defaultLow)
+        .horizontalContentHugging(.defaultLow)
+    ]))
 
     horizontalStackView.addArrangedSubview(rightStackView)
     view.addSubview(horizontalStackView)

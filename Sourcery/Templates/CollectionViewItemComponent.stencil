@@ -34,7 +34,7 @@ class {{type.name|replace:"View",""}}ViewController: NSViewController, Component
     self.view = scrollView
     scrollView.documentView = collectionView
     collectionView.isSelectable = true
-    collectionView.allowsMultipleSelection = true
+    collectionView.allowsMultipleSelection = false
     collectionView.allowsEmptySelection = false
   }
 

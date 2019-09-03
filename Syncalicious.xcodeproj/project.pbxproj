@@ -91,6 +91,13 @@
 		BDE9E6392270514700C28F34 /* ApplicationDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */; };
 		BDE9E63B2270519100C28F34 /* CollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */; };
 		BDFB33442281F13200199641 /* GeneralActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFB33432281F13200199641 /* GeneralActionsViewController.swift */; };
+		BDFF6FD5231ED8C400F53B71 /* OpaqueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FD4231ED8C400F53B71 /* OpaqueView.swift */; };
+		BDFF6FD7231ED8E300F53B71 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FD6231ED8E300F53B71 /* TextField.swift */; };
+		BDFF6FD9231ED8F900F53B71 /* SpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FD8231ED8F900F53B71 /* SpacerView.swift */; };
+		BDFF6FDB231ED90900F53B71 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FDA231ED90900F53B71 /* ImageView.swift */; };
+		BDFF6FDD231ED91F00F53B71 /* StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FDC231ED91F00F53B71 /* StackView.swift */; };
+		BDFF6FDF231ED92F00F53B71 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FDE231ED92F00F53B71 /* HStack.swift */; };
+		BDFF6FE1231ED94300F53B71 /* VStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF6FE0231ED94300F53B71 /* VStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +209,13 @@
 		BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailItem.swift; sourceTree = "<group>"; };
 		BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewItem.swift; sourceTree = "<group>"; };
 		BDFB33432281F13200199641 /* GeneralActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralActionsViewController.swift; sourceTree = "<group>"; };
+		BDFF6FD4231ED8C400F53B71 /* OpaqueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpaqueView.swift; sourceTree = "<group>"; };
+		BDFF6FD6231ED8E300F53B71 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		BDFF6FD8231ED8F900F53B71 /* SpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerView.swift; sourceTree = "<group>"; };
+		BDFF6FDA231ED90900F53B71 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		BDFF6FDC231ED91F00F53B71 /* StackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackView.swift; sourceTree = "<group>"; };
+		BDFF6FDE231ED92F00F53B71 /* HStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStack.swift; sourceTree = "<group>"; };
+		BDFF6FE0231ED94300F53B71 /* VStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VStack.swift; sourceTree = "<group>"; };
 		BF4E6F7FAABEE0CCA620D96B /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF7AEBAB021654C097AA3A9 /* Pods-Syncalicious.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.release.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -277,12 +291,19 @@
 				BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */,
 				BDDAA338225D37DE00D87664 /* DividerView.swift */,
 				BD438BFA226A548D00A21017 /* GradientView.swift */,
+				BDFF6FDE231ED92F00F53B71 /* HStack.swift */,
+				BDFF6FDA231ED90900F53B71 /* ImageView.swift */,
 				BDDAA33A225D383400D87664 /* Label.swift */,
 				BDDAA332225D37BD00D87664 /* LayeredView.swift */,
 				BD4A69392253DCF100F588AD /* MainWindow.swift */,
+				BDFF6FD4231ED8C400F53B71 /* OpaqueView.swift */,
 				BD895C00225A67C200DEC9FE /* PrototypeItem.swift */,
 				BD895C02225A681D00DEC9FE /* PrototypeView.swift */,
 				BD9B7C33227788C100472B41 /* SearchField.swift */,
+				BDFF6FD8231ED8F900F53B71 /* SpacerView.swift */,
+				BDFF6FDC231ED91F00F53B71 /* StackView.swift */,
+				BDFF6FD6231ED8E300F53B71 /* TextField.swift */,
+				BDFF6FE0231ED94300F53B71 /* VStack.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -747,9 +768,11 @@
 				BD7D9617225290C800C93211 /* PreferencesController.swift in Sources */,
 				BD9DA456227B4CEB00B745C0 /* OperationQueue+Extensions.swift in Sources */,
 				BD7D961522528B8700C93211 /* InfoPropertyListController.swift in Sources */,
+				BDFF6FD7231ED8E300F53B71 /* TextField.swift in Sources */,
 				BD62D2EA226727C0007B047B /* ListContainerViewController.swift in Sources */,
 				BD7D961C22532B6900C93211 /* BackupController.swift in Sources */,
 				BDFB33442281F13200199641 /* GeneralActionsViewController.swift in Sources */,
+				BDFF6FD5231ED8C400F53B71 /* OpaqueView.swift in Sources */,
 				BD62D2F222677FEB007B047B /* ListSortViewController.swift in Sources */,
 				BDDAA333225D37BD00D87664 /* LayeredView.swift in Sources */,
 				BD4A692F2253BA6400F588AD /* Machine.swift in Sources */,
@@ -760,15 +783,19 @@
 				BDDAA337225D37D100D87664 /* BackgroundView.swift in Sources */,
 				BD4A693A2253DCF300F588AD /* MainWindow.swift in Sources */,
 				BDA1C3D72271A8A6009185DE /* ComputerDetailItem.swift in Sources */,
+				BDFF6FE1231ED94300F53B71 /* VStack.swift in Sources */,
 				BDE9E63622704AFD00C28F34 /* AnimationFactory.swift in Sources */,
 				BD8EDD822255CE3400110E56 /* IconController.swift in Sources */,
 				BDDAA34F225E52DA00D87664 /* DetailContainerViewController.swift in Sources */,
 				BD3CC250225B147F006D7877 /* SplitViewController.swift in Sources */,
+				BDFF6FDB231ED90900F53B71 /* ImageView.swift in Sources */,
 				BDDAA33B225D383400D87664 /* Label.swift in Sources */,
 				BD4A69312253BADE00F588AD /* MachineController.swift in Sources */,
 				BD5903B5226C7DD90037A1AC /* WelcomeViewController.swift in Sources */,
 				BD4A6941225406A300F588AD /* ViewController.swift in Sources */,
 				BD8EDD7E22553ADD00110E56 /* ApplicationListItem.swift in Sources */,
+				BDFF6FD9231ED8F900F53B71 /* SpacerView.swift in Sources */,
+				BDFF6FDF231ED92F00F53B71 /* HStack.swift in Sources */,
 				BD62D2E4226393B4007B047B /* ShellController.swift in Sources */,
 				BD7D960E2252888000C93211 /* Application.swift in Sources */,
 				BDDAA335225D37C700D87664 /* DecorationView.swift in Sources */,
@@ -802,6 +829,7 @@
 				BD8EDD862255CF4800110E56 /* CollectionViewItemComponent.generated.swift in Sources */,
 				BD0590F2228DA9DD00162E4B /* NotificationController.swift in Sources */,
 				BD7D961322528ADB00C93211 /* ApplicationPropertyList.swift in Sources */,
+				BDFF6FDD231ED91F00F53B71 /* StackView.swift in Sources */,
 				BD9313872251703400D116E4 /* AppDelegate.swift in Sources */,
 				BD9DA454227B4C3C00B745C0 /* OperationController.swift in Sources */,
 				BD9DA44A227B4B7600B745C0 /* UIOperation.swift in Sources */,

@@ -94,12 +94,12 @@ class ApplicationDetailItemDataSource: NSObject, NSCollectionViewDataSource {
     let old = self.models
     let new = models
     let changes = DiffManager().diff(old, new)
-    collectionView.reload(with: changes,
-                          animations: false,
-                          updateDataSource: { [weak self] in
-                            guard let strongSelf = self else { return }
-                            strongSelf.models = new
-                          }, completion: handler)
+    collectionView.animator().reload(with: changes,
+                                     animations: true,
+                                     updateDataSource: { [weak self] in
+                                       guard let strongSelf = self else { return }
+                                       strongSelf.models = new
+                                     }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource
@@ -231,12 +231,12 @@ class ApplicationListItemDataSource: NSObject, NSCollectionViewDataSource {
     let old = self.models
     let new = models
     let changes = DiffManager().diff(old, new)
-    collectionView.reload(with: changes,
-                          animations: false,
-                          updateDataSource: { [weak self] in
-                            guard let strongSelf = self else { return }
-                            strongSelf.models = new
-                          }, completion: handler)
+    collectionView.animator().reload(with: changes,
+                                     animations: true,
+                                     updateDataSource: { [weak self] in
+                                       guard let strongSelf = self else { return }
+                                       strongSelf.models = new
+                                     }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource
@@ -371,12 +371,12 @@ class ComputerDetailItemDataSource: NSObject, NSCollectionViewDataSource {
     let old = self.models
     let new = models
     let changes = DiffManager().diff(old, new)
-    collectionView.reload(with: changes,
-                          animations: false,
-                          updateDataSource: { [weak self] in
-                            guard let strongSelf = self else { return }
-                            strongSelf.models = new
-                          }, completion: handler)
+    collectionView.animator().reload(with: changes,
+                                     animations: true,
+                                     updateDataSource: { [weak self] in
+                                       guard let strongSelf = self else { return }
+                                       strongSelf.models = new
+                                     }, completion: handler)
   }
 
   // MARK: - NSCollectionViewDataSource

@@ -165,10 +165,13 @@ class SyncController: NSObject {
   // MARK: - Private methods
 
   @objc private func updateBadgeCounter() {
-    if let files = try? pendingFiles(), !files.isEmpty {
-      NSApplication.shared.dockTile.badgeLabel = "\(files.count)"
-    } else {
-      NSApplication.shared.dockTile.badgeLabel = nil
+    DispatchQueue.main.async { [weak self] in
+      guard let strongSelf = self else { return }
+      if let files = try? strongSelf.pendingFiles(), !files.isEmpty {
+        NSApplication.shared.dockTile.badgeLabel = "\(files.count)"
+      } else {
+        NSApplication.shared.dockTile.badgeLabel = nil
+      }
     }
   }
 

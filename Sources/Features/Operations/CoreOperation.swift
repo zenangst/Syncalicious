@@ -16,9 +16,18 @@ open class CoreOperation: Operation {
     didSet { didChangeValue(forKey: "isExecuting") }
   }
 
+  private var _cancelled = false {
+    willSet { willChangeValue(forKey: "isCancelled") }
+    didSet { didChangeValue(forKey: "isCancelled") }
+  }
+
   private var _finished = false {
     willSet { willChangeValue(forKey: "isFinished") }
     didSet { didChangeValue(forKey: "isFinished") }
+  }
+
+  open override var isCancelled: Bool {
+    return _cancelled
   }
 
   override open var isFinished: Bool {
@@ -33,8 +42,8 @@ open class CoreOperation: Operation {
   open override func cancel() {
     completionBlock = nil
     super.cancel()
-    execute()
-    _finished = true
+    _executing = false
+    _cancelled = true
     delegate?.coreOperation(self, didCancel: true)
   }
 
@@ -43,6 +52,7 @@ open class CoreOperation: Operation {
   }
 
   @objc public func complete() {
+    _executing = false
     _finished = true
     delegate?.coreOperation(self, didComplete: true)
   }
@@ -51,7 +61,6 @@ open class CoreOperation: Operation {
     lock.lock()
     childrenRecursive().forEach {
       $0.cancel()
-      $0.complete()
     }
     lock.unlock()
   }

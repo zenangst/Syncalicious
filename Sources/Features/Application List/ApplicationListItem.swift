@@ -24,6 +24,15 @@ class Spacer: NSView {
 
 class ImageView: NSImageView {
   override var isOpaque: Bool { return true }
+
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+    wantsLayer = true
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 }
 
 class StackView: NSStackView {
@@ -70,7 +79,7 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
 
   override var isSelected: Bool { didSet { updateState() } }
 
-  lazy var iconView = ImageView()
+  lazy var iconView = OpaqueView()
   // sourcery: let title: String = "titleLabel.stringValue = model.title"
   lazy var titleLabel = TextField()
   // sourcery: let subtitle: String = "subtitleLabel.stringValue = model.subtitle"
@@ -92,9 +101,14 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
     view.addSubview(titleLabel)
     view.addSubview(subtitleLabel)
     view.addSubview(syncView)
-    syncView.image = NSImage(named: "Synced")
-    syncView.image?.isTemplate = true
+
+    syncView.wantsLayer = true
+    syncView.layerContentsPlacement = .scaleProportionallyToFit
+    syncView.image = IconController.shared.syncedIcon
     syncView.contentTintColor = NSColor.controlAccentColor
+
+    syncView.layer?.drawsAsynchronously = true
+    iconView.layer?.drawsAsynchronously = true
 
     let verticalStackView = VStack(Spacer(size: 10), titleLabel, subtitleLabel, Spacer(size: 10))
     verticalStackView.alignment = .leading
@@ -129,7 +143,8 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
       verticalStackView.heightAnchor.constraint(equalTo: stackView.heightAnchor),
       iconView.widthAnchor.constraint(equalToConstant: 32),
       iconView.heightAnchor.constraint(equalToConstant: 32),
-      syncView.widthAnchor.constraint(equalToConstant: 32)
+      syncView.widthAnchor.constraint(equalToConstant: 32),
+      syncView.heightAnchor.constraint(equalToConstant: 32)
     ]
     NSLayoutConstraint.constrain(layoutConstraints)
     updateState()

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		315E2FCDA36B3A59799011D2 /* libPods-Syncalicious.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8791082ED91FA1B97EC440 /* libPods-Syncalicious.a */; };
-		A47DC085643951080DBAE4EF /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */; };
+		0BBB588B16897CABEB1AF6DE /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4E6F7FAABEE0CCA620D96B /* libPods-Tests.a */; };
+		93C7B388090084C53F16EA7D /* libPods-Syncalicious.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47D2434DC6FFFA4366225D06 /* libPods-Syncalicious.a */; };
 		BD0590F2228DA9DD00162E4B /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0590F1228DA9DD00162E4B /* NotificationController.swift */; };
 		BD084B772258E07C00E91A7F /* TestApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */; };
 		BD084B792258E0B600E91A7F /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD084B782258E0B600E91A7F /* TestHost.swift */; };
@@ -104,9 +104,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D524E3138AC0B59B67FF0DD /* Pods-Syncalicious.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.debug.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.debug.xcconfig"; sourceTree = "<group>"; };
-		8D3875EE15B4C6FB1AFB28CF /* Pods-Syncalicious.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.release.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.release.xcconfig"; sourceTree = "<group>"; };
-		9E8791082ED91FA1B97EC440 /* libPods-Syncalicious.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncalicious.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47D2434DC6FFFA4366225D06 /* libPods-Syncalicious.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncalicious.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		48336A0602FBBC2C2A501674 /* Pods-Syncalicious.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.debug.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.debug.xcconfig"; sourceTree = "<group>"; };
+		7D59A0AE483BE74A364106EC /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		A612CFF62739B5C975E7D1E4 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BD0590F1228DA9DD00162E4B /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		BD084B762258E07C00E91A7F /* TestApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplicationDelegate.swift; sourceTree = "<group>"; };
 		BD084B782258E0B600E91A7F /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
@@ -201,9 +202,8 @@
 		BDE9E6382270514700C28F34 /* ApplicationDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDetailItem.swift; sourceTree = "<group>"; };
 		BDE9E63A2270519100C28F34 /* CollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewItem.swift; sourceTree = "<group>"; };
 		BDFB33432281F13200199641 /* GeneralActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralActionsViewController.swift; sourceTree = "<group>"; };
-		D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
+		BF4E6F7FAABEE0CCA620D96B /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBF7AEBAB021654C097AA3A9 /* Pods-Syncalicious.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncalicious.release.xcconfig"; path = "Target Support Files/Pods-Syncalicious/Pods-Syncalicious.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,7 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				315E2FCDA36B3A59799011D2 /* libPods-Syncalicious.a in Frameworks */,
+				93C7B388090084C53F16EA7D /* libPods-Syncalicious.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,31 +219,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A47DC085643951080DBAE4EF /* libPods-Tests.a in Frameworks */,
+				0BBB588B16897CABEB1AF6DE /* libPods-Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		269656EE9EAD65C09BDB7879 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				47D2434DC6FFFA4366225D06 /* libPods-Syncalicious.a */,
+				BF4E6F7FAABEE0CCA620D96B /* libPods-Tests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3650F35871850161786D5AC3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0D524E3138AC0B59B67FF0DD /* Pods-Syncalicious.debug.xcconfig */,
-				8D3875EE15B4C6FB1AFB28CF /* Pods-Syncalicious.release.xcconfig */,
-				D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */,
-				F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */,
+				48336A0602FBBC2C2A501674 /* Pods-Syncalicious.debug.xcconfig */,
+				EBF7AEBAB021654C097AA3A9 /* Pods-Syncalicious.release.xcconfig */,
+				7D59A0AE483BE74A364106EC /* Pods-Tests.debug.xcconfig */,
+				A612CFF62739B5C975E7D1E4 /* Pods-Tests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		7C856D046EFDDAA5C3AD5549 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9E8791082ED91FA1B97EC440 /* libPods-Syncalicious.a */,
-				F2371A240BEC8532FF8BBC27 /* libPods-Tests.a */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		BD084B752258E06E00E91A7F /* Helpers */ = {
@@ -446,7 +446,7 @@
 				BDCBB2A922551372007C9404 /* Tests */,
 				BD8EDD73225538D400110E56 /* Sourcery */,
 				3650F35871850161786D5AC3 /* Pods */,
-				7C856D046EFDDAA5C3AD5549 /* Frameworks */,
+				269656EE9EAD65C09BDB7879 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -563,7 +563,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD9313912251703700D116E4 /* Build configuration list for PBXNativeTarget "Syncalicious" */;
 			buildPhases = (
-				98646FDFCCE7B4C815986960 /* [CP] Check Pods Manifest.lock */,
+				FCB2C1670F993779CF5728CB /* [CP] Check Pods Manifest.lock */,
 				BD93137F2251703400D116E4 /* Sources */,
 				BD9313802251703400D116E4 /* Frameworks */,
 				BD9313812251703400D116E4 /* Resources */,
@@ -582,7 +582,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDCBB2B122551372007C9404 /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
-				F1632E0DF195D6AA3BF584DC /* [CP] Check Pods Manifest.lock */,
+				62EE5FE74931502D0F72435B /* [CP] Check Pods Manifest.lock */,
 				BDCBB2A422551372007C9404 /* Sources */,
 				BDCBB2A522551372007C9404 /* Frameworks */,
 				BDCBB2A622551372007C9404 /* Resources */,
@@ -604,7 +604,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = zenangst;
 				TargetAttributes = {
 					BD9313822251703400D116E4 = {
@@ -667,7 +667,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		98646FDFCCE7B4C815986960 /* [CP] Check Pods Manifest.lock */ = {
+		62EE5FE74931502D0F72435B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -682,7 +682,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Syncalicious-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -707,7 +707,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		F1632E0DF195D6AA3BF584DC /* [CP] Check Pods Manifest.lock */ = {
+		FCB2C1670F993779CF5728CB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -722,7 +722,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Syncalicious-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -972,10 +972,11 @@
 		};
 		BD9313922251703700D116E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D524E3138AC0B59B67FF0DD /* Pods-Syncalicious.debug.xcconfig */;
+			baseConfigurationReference = 48336A0602FBBC2C2A501674 /* Pods-Syncalicious.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Resources/Syncalicious.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E23HUP39A3;
@@ -993,10 +994,11 @@
 		};
 		BD9313932251703700D116E4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8D3875EE15B4C6FB1AFB28CF /* Pods-Syncalicious.release.xcconfig */;
+			baseConfigurationReference = EBF7AEBAB021654C097AA3A9 /* Pods-Syncalicious.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Resources/Syncalicious.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E23HUP39A3;
@@ -1014,7 +1016,7 @@
 		};
 		BDCBB2AF22551372007C9404 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6AB979C990CE4B2663D292E /* Pods-Tests.debug.xcconfig */;
+			baseConfigurationReference = 7D59A0AE483BE74A364106EC /* Pods-Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "-";
@@ -1035,7 +1037,7 @@
 		};
 		BDCBB2B022551372007C9404 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9C19719F2BC6AF42A7CB265 /* Pods-Tests.release.xcconfig */;
+			baseConfigurationReference = A612CFF62739B5C975E7D1E4 /* Pods-Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "-";

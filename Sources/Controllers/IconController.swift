@@ -8,9 +8,20 @@ enum IconControllerError: Error {
 }
 
 class IconController {
+  static var shared: IconController {
+    return IconController()
+  }
+
   let fileManager: FileManager
   let workspace: NSWorkspace
   let cache = NSCache<NSString, NSImage>()
+
+  lazy var syncedIcon: NSImage = {
+    let image = self.loadIconNamed("Synced")!
+    image.isTemplate = true
+    image.size = .init(width: 32, height: 32)
+    return image
+  }()
 
   init(fileManager: FileManager = .default,
        workspace: NSWorkspace = .shared) {
@@ -19,6 +30,10 @@ class IconController {
   }
 
   // MARK: - Public methods
+
+  func loadIconNamed(_ imageName: String) -> NSImage? {
+    return NSImage(named: imageName)
+  }
 
   func loadIcon(at path: URL, identifier: String,
                 queue: DispatchQueue? = DispatchQueue.global(qos: .userInteractive),

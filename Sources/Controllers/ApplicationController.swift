@@ -14,10 +14,12 @@ class ApplicationController {
   private let operationController: OperationController
   private let operationFactory: OperationFactory
   let workspace: NSWorkspace
-  let SIPIsEnabled: Bool
+  lazy var SIPIsEnabled: Bool = {
+    return shellController.execute(command: "csrutil status").contains("enabled")
+  }()
   var queue: DispatchQueue?
 
-  init(queue: DispatchQueue? = nil,
+  init(queue: DispatchQueue?,
        infoPlistController: InfoPropertyListController,
        notificationController: NotificationController,
        operationController: OperationController,
@@ -25,13 +27,13 @@ class ApplicationController {
        preferencesController: PreferencesController,
        shellController: ShellController,
        workspace: NSWorkspace = .shared) {
+    self.queue = queue
     self.infoPlistController = infoPlistController
     self.notificationController = notificationController
     self.operationController = operationController
     self.operationFactory = operationFactory
     self.preferencesController = preferencesController
     self.shellController = shellController
-    self.SIPIsEnabled = shellController.execute(command: "csrutil status").contains("enabled")
     self.workspace = workspace
   }
 

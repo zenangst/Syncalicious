@@ -33,7 +33,7 @@ class DetailContainerViewController: FamilyViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    body(withDuration: 0) {
+    body {
       add(applicationDetailViewController, view: { $0.collectionView })
         .margin(.init(top: 0, left: 30, bottom: 15, right: 30))
       add(generalInfoViewController)

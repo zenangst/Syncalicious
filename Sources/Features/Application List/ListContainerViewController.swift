@@ -31,7 +31,7 @@ class ListContainerViewController: FamilyViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    body(withDuration: 0) {
+    body {
       add(searchViewController)
         .padding(.init(top: 10, left: 10, bottom: 0, right: 10))
       add(sortViewController)

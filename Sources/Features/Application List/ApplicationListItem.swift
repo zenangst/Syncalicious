@@ -1,76 +1,12 @@
 import Cocoa
 
-class OpaqueView: NSView {
-  override var isOpaque: Bool { return true }
-}
-
-class TextField: NSTextField {
-  override var isOpaque: Bool { return true }
-}
-
-class Spacer: NSView {
-  override var isOpaque: Bool { return true }
-
-  convenience init(size: CGFloat) {
-    self.init(frame: .init(origin: .zero, size: .init(width: size, height: size)))
-  }
-
-  override func viewWillMove(toSuperview newSuperview: NSView?) {
-    super.viewWillMove(toSuperview: newSuperview)
-    setContentHuggingPriority(.required, for: .horizontal)
-    setContentHuggingPriority(.required, for: .vertical)
-  }
-}
-
-class ImageView: NSImageView {
-  override var isOpaque: Bool { return true }
-}
-
-class StackView: NSStackView {
-  override var isOpaque: Bool { return true }
-
-  convenience init(_ views: [NSView]) {
-    self.init(views: views)
-  }
-
-  convenience init(_ views: NSView...) {
-    self.init(views: views)
-  }
-}
-
-class HStack: StackView {
-  override var isOpaque: Bool { return true }
-
-  override init(frame frameRect: NSRect) {
-    super.init(frame: frameRect)
-    orientation = .horizontal
-  }
-
-  required init?(coder decoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-}
-
-class VStack: StackView {
-  override var isOpaque: Bool { return true }
-
-  override init(frame frameRect: NSRect) {
-    super.init(frame: frameRect)
-    orientation = .vertical
-  }
-
-  required init?(coder decoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-}
-
 // sourcery: let application = "Application"
 class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
   let baseView = NSView()
 
   override var isSelected: Bool { didSet { updateState() } }
 
-  lazy var iconView = ImageView()
+  lazy var iconView = OpaqueView()
   // sourcery: let title: String = "titleLabel.stringValue = model.title"
   lazy var titleLabel = TextField()
   // sourcery: let subtitle: String = "subtitleLabel.stringValue = model.subtitle"
@@ -92,11 +28,16 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
     view.addSubview(titleLabel)
     view.addSubview(subtitleLabel)
     view.addSubview(syncView)
-    syncView.image = NSImage(named: "Synced")
-    syncView.image?.isTemplate = true
+
+    syncView.wantsLayer = true
+    syncView.layerContentsPlacement = .scaleProportionallyToFit
+    syncView.image = IconController.shared.syncedIcon
     syncView.contentTintColor = NSColor.controlAccentColor
 
-    let verticalStackView = VStack(Spacer(size: 10), titleLabel, subtitleLabel, Spacer(size: 10))
+    syncView.layer?.drawsAsynchronously = true
+    iconView.layer?.drawsAsynchronously = true
+
+    let verticalStackView = VStack(SpacerView(size: 10), titleLabel, subtitleLabel, SpacerView(size: 10))
     verticalStackView.alignment = .leading
     verticalStackView.distribution = .equalCentering
     verticalStackView.spacing = 0
@@ -129,7 +70,8 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
       verticalStackView.heightAnchor.constraint(equalTo: stackView.heightAnchor),
       iconView.widthAnchor.constraint(equalToConstant: 32),
       iconView.heightAnchor.constraint(equalToConstant: 32),
-      syncView.widthAnchor.constraint(equalToConstant: 32)
+      syncView.widthAnchor.constraint(equalToConstant: 32),
+      syncView.heightAnchor.constraint(equalToConstant: 32)
     ]
     NSLayoutConstraint.constrain(layoutConstraints)
     updateState()

@@ -1,4 +1,4 @@
-// Generated using Sourcery 0.16.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 0.17.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
 import Cocoa
@@ -36,7 +36,7 @@ class ApplicationDetailItemViewController: NSViewController, Component {
     self.view = scrollView
     scrollView.documentView = collectionView
     collectionView.isSelectable = true
-    collectionView.allowsMultipleSelection = true
+    collectionView.allowsMultipleSelection = false
     collectionView.allowsEmptySelection = false
   }
 
@@ -173,7 +173,7 @@ class ApplicationListItemViewController: NSViewController, Component {
     self.view = scrollView
     scrollView.documentView = collectionView
     collectionView.isSelectable = true
-    collectionView.allowsMultipleSelection = true
+    collectionView.allowsMultipleSelection = false
     collectionView.allowsEmptySelection = false
   }
 
@@ -313,7 +313,7 @@ class ComputerDetailItemViewController: NSViewController, Component {
     self.view = scrollView
     scrollView.documentView = collectionView
     collectionView.isSelectable = true
-    collectionView.allowsMultipleSelection = true
+    collectionView.allowsMultipleSelection = false
     collectionView.allowsEmptySelection = false
   }
 

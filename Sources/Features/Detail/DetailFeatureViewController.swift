@@ -10,7 +10,7 @@ class DetailFeatureViewController: NSViewController,
     case single(Application)
   }
 
-  lazy var titleLabel = SmallBoldLabel()
+  lazy var titleLabel = SmallLabel()
   lazy var titlebarView = NSView()
 
   private var layoutConstraints = [NSLayoutConstraint]()
@@ -80,7 +80,8 @@ class DetailFeatureViewController: NSViewController,
       containerViewController.applicationDetailViewController.reload(with: models)
       containerViewController.generalActionsViewController.view.isHidden = true
     case .single(let application):
-      titleLabel.isHidden = true
+      let version = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "0.0.0"
+      titleLabel.stringValue = "\(version)-alpha"
       containerViewController.applicationDetailViewController.reload(with: [])
       containerViewController.generalInfoViewController.render(application,
                                                                iconController: iconController,
@@ -98,15 +99,34 @@ class DetailFeatureViewController: NSViewController,
 
     titlebarView.addSubview(titleLabel)
 
+    let issueButton = Button(title: "Feedback",
+                             font: .boldSystemFont(ofSize: 12),
+                             backgroundColor: .clear,
+                             borderColor: NSColor.systemGreen.blended(withFraction: 0.5, of: NSColor.white)!,
+                             borderWidth: 1,
+                             cornerRadius: .custom(4),
+                             target: self,
+                             action: #selector(newIssue))
+
+    let hStack = HStack(issueButton)
+
+    titlebarView.addSubview(hStack)
+
     layoutConstraints.append(contentsOf: [
-      titleLabel.leadingAnchor.constraint(equalTo: titlebarView.leadingAnchor, constant: 10),
-      titleLabel.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -10),
-      titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor)
+      titleLabel.centerXAnchor.constraint(equalTo: titlebarView.centerXAnchor),
+      titleLabel.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor),
+      hStack.centerYAnchor.constraint(equalTo: titlebarView.centerYAnchor),
+      hStack.trailingAnchor.constraint(equalTo: titlebarView.trailingAnchor, constant: -5)
       ])
 
     containerViewController.generalActionsViewController.delegate = self
 
     NSLayoutConstraint.constrain(layoutConstraints)
+  }
+
+  @objc func newIssue() {
+    let githubNewIssueUrl = URL(string: "https://github.com/zenangst/Syncalicious/issues/new")!
+    NSWorkspace.shared.open(githubNewIssueUrl)
   }
 
   func renderGeneral(for application: Application) {
@@ -147,13 +167,9 @@ class DetailFeatureViewController: NSViewController,
   }
 
   private func handleSelections(for applications: [Application]) {
-    if applications.count > 1 {
-      render(.multiple(applications))
-    } else {
-      guard let application = applications.first else { return }
-      self.application = application
-      render(.single(application))
-    }
+    guard let application = applications.first else { return }
+    self.application = application
+    render(.single(application))
   }
 
   // MARK: - GeneralActionsViewControllerDelegate

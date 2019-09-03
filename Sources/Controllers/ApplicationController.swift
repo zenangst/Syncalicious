@@ -19,7 +19,7 @@ class ApplicationController {
   }()
   var queue: DispatchQueue?
 
-  init(queue: DispatchQueue? = nil,
+  init(queue: DispatchQueue?,
        infoPlistController: InfoPropertyListController,
        notificationController: NotificationController,
        operationController: OperationController,
@@ -27,6 +27,7 @@ class ApplicationController {
        preferencesController: PreferencesController,
        shellController: ShellController,
        workspace: NSWorkspace = .shared) {
+    self.queue = queue
     self.infoPlistController = infoPlistController
     self.notificationController = notificationController
     self.operationController = operationController

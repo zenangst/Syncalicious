@@ -27,7 +27,8 @@ class TestController {
     let operationController = OperationController()
     let iconController = IconController()
     let notificationContorller = NotificationController(iconController: iconController)
-    let applicationController = ApplicationController(infoPlistController: infoPlistController,
+    let applicationController = ApplicationController(queue: nil,
+                                                      infoPlistController: infoPlistController,
                                                       notificationController: notificationContorller,
                                                       operationController: operationController,
                                                       operationFactory: OperationFactory(shellController: shellController),

@@ -13,19 +13,14 @@
 
 **Syncalicious is in its early stages of development, the features mentioned in the README are not implemented, they are intended to be the North Star for the product development cycle. Watch the repository or follow [@zenangst](https://twitter.com/zenangst) on Twitter for continuous updates.**
 
-On the macOS, preferences are everything; it is what separates your mac from the rest, makes it stand out, gives it personality. Settings up a new installation of macOS can be fun and liberating, but it can also be a choir. This is where Syncalicious comes in; it aims to offer three main features.
+On the macOS, preferences are everything; it is what separates your mac from the rest, makes it stand out, gives it personality. Settings up a new installation of macOS can be fun and liberating, but it can also be a choir. This is where Syncalicious comes in; it aims to offer two main features.
 
 - 🌀 Synchronize
-- 🍱 Customize
 - ✅ Backup
 
 ### Synchronize
 
 Keeping multiple macOS preferences in sync can be painful, and it shouldn't be. Changing settings on one machine should replicate on another if you choose to do so. Syncalicious offers property list syncing for your macOS applications.
-
-### Customize
-
-macOS is a complex ecosystem with a lot of both general and hidden preferences and by design, settings are generally applied system-wide. But they don't have to be. Syncalicious aims to expose both types of preferences to the masses so that you can personalize your experience on an app-per-app basis.
 
 ### Backup
 

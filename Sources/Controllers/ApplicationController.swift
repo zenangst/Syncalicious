@@ -14,7 +14,9 @@ class ApplicationController {
   private let operationController: OperationController
   private let operationFactory: OperationFactory
   let workspace: NSWorkspace
-  let SIPIsEnabled: Bool
+  lazy var SIPIsEnabled: Bool = {
+    return shellController.execute(command: "csrutil status").contains("enabled")
+  }()
   var queue: DispatchQueue?
 
   init(queue: DispatchQueue? = nil,
@@ -31,7 +33,6 @@ class ApplicationController {
     self.operationFactory = operationFactory
     self.preferencesController = preferencesController
     self.shellController = shellController
-    self.SIPIsEnabled = shellController.execute(command: "csrutil status").contains("enabled")
     self.workspace = workspace
   }
 

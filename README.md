@@ -3,7 +3,7 @@
 <div align="center">
 
 [![CI Status](https://travis-ci.com/zenangst/Syncalicious.svg?branch=master)](https://travis-ci.com/zenangst/Syncalicious)
-![Swift](https://img.shields.io/badge/%20in-swift%204.2-orange.svg)
+![Swift](https://img.shields.io/badge/%20in-swift%205.0-orange.svg)
 [![macOS](https://img.shields.io/badge/macOS-10.14-green.svg)](https://www.apple.com/macos/mojave/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

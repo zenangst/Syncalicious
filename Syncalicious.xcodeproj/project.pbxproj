@@ -592,6 +592,7 @@
 				BD9313802251703400D116E4 /* Frameworks */,
 				BD9313812251703400D116E4 /* Resources */,
 				BDCBB2B5225516F1007C9404 /* SwiftLint */,
+				BD6F308723202D9600057B23 /* Increment build version */,
 			);
 			buildRules = (
 			);
@@ -712,6 +713,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		BD6F308723202D9600057B23 /* Increment build version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Increment build version";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "xcrun agvtool next-version -all\n";
 		};
 		BDCBB2B5225516F1007C9404 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;

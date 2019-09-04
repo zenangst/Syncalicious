@@ -7,8 +7,16 @@ class MainMenuController: NSObject {
   weak var listContainerViewController: ListContainerViewController?
   weak var detailFeatureViewController: DetailFeatureViewController?
 
+  @IBOutlet var currentVersionMenuItem: NSMenuItem!
+
   var sidebarSplitItem: NSSplitViewItem? {
     return splitViewController?.splitViewItems.first
+  }
+
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    let version = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "0.0.0"
+    currentVersionMenuItem.title = "\(version)-alpha"
   }
 
   // MARK: - Actions
@@ -44,6 +52,16 @@ class MainMenuController: NSObject {
   @IBAction func search(_ sender: Any?) {
     if sidebarSplitItem?.isCollapsed == true { toggleSplitItemSidebar(to: false) }
     listContainerViewController?.searchViewController.searchField.becomeFirstResponder()
+  }
+
+  @IBAction func newIssue(_ sender: Any?) {
+    let url = URL(string: "https://github.com/zenangst/Syncalicious/issues/new")!
+    NSWorkspace.shared.open(url)
+  }
+
+  @IBAction func openReleases(_ sender: Any?) {
+    let url = URL(string: "https://github.com/zenangst/Syncalicious/releases")!
+    NSWorkspace.shared.open(url)
   }
 
   @IBAction func performBackup(_ sender: Any?) {

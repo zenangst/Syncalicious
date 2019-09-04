@@ -9,9 +9,9 @@
 
 </div>
 
-<img src="https://github.com/zenangst/Syncalicious/blob/master/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png?raw=true" alt="Gray Icon" align="right" />
+<img src="https://github.com/zenangst/Syncalicious/blob/master/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png?raw=true" alt="Syncalicious Icon" align="right" />
 
-**Syncalicious is in its early stages of development, the features mentioned in the README are not implemented, they are intended to be the North Star for the product development cycle. Watch the repository or follow [@zenangst](https://twitter.com/zenangst) on Twitter for continuous updates.**
+**Syncalicious is in its early stages of development. Watch the repository or follow [@zenangst](https://twitter.com/zenangst) on Twitter for continuous updates.**
 
 On the macOS, preferences are everything; it is what separates your mac from the rest, makes it stand out, gives it personality. Settings up a new installation of macOS can be fun and liberating, but it can also be a choir. This is where Syncalicious comes in; it aims to offer two main features.
 
@@ -25,6 +25,10 @@ Keeping multiple macOS preferences in sync can be painful, and it shouldn't be. 
 ### Backup
 
 You don't have to have a science degree to know that backups are a good thing. Syncalicious offers an easy, straight-forward backup feature that makes copies of your property lists (also known as plist files) and stores them in a directory of your choosing or push them to iCloud, Dropbox or Google Drive.
+
+## Screenshot
+
+<img src="https://github.com/zenangst/Syncalicious/blob/master/Images/Screenshot.png" alt="Screenshot" align="center" />
 
 ## Author
 

@@ -6,7 +6,8 @@ public class OperationController: CoreOperationDelegate {
   private let _lock = NSLock()
   private var _isLocked: Bool = false
   private var _operations = [CoreOperation]()
-  public var isExecuting: Bool { return !_operationQueue.operations.isEmpty }
+  public var isExecuting: Bool { return !_operationQueue
+    .operations.filter({ !$0.isCancelled }).isEmpty }
 
   public init(operationQueue: OperationQueue = .init()) {
     self._operationQueue = operationQueue

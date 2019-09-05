@@ -13,7 +13,7 @@
 
 **Syncalicious is in its early stages of development. Watch the repository or follow [@zenangst](https://twitter.com/zenangst) on Twitter for continuous updates.**
 
-On the macOS, preferences are everything; it is what separates your mac from the rest, makes it stand out, gives it personality. Settings up a new installation of macOS can be fun and liberating, but it can also be a choir. This is where Syncalicious comes in; it aims to offer two main features.
+On the macOS, preferences are everything; it is what separates your mac from the rest, makes it stand out, gives it personality. Settings up a new installation of macOS can be fun and liberating, but it can also be a chore. This is where Syncalicious comes in; it aims to offer two main features.
 
 - 🌀 Synchronize
 - ✅ Backup

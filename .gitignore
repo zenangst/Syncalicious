@@ -35,3 +35,6 @@ Carthage
 # SPM
 .build/
 
+# Logs
+Logs/*.log
+

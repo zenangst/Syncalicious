@@ -26,9 +26,11 @@ Keeping multiple macOS preferences in sync can be painful, and it shouldn't be. 
 
 You don't have to have a science degree to know that backups are a good thing. Syncalicious offers an easy, straight-forward backup feature that makes copies of your property lists (also known as plist files) and stores them in a directory of your choosing or push them to iCloud, Dropbox or Google Drive.
 
-## Screenshot
+## Screenshots
 
-<img src="https://github.com/zenangst/Syncalicious/blob/master/Images/Screenshot.png" alt="Screenshot" align="center" />
+| Light mode | Dark mode  |
+| ------------ | ------------ |
+| <img alt="Light mode" src="https://user-images.githubusercontent.com/57446/64492581-9ab3ec00-d275-11e9-820e-55208b8feca6.png">  |  <img alt="Dark mode" src="https://user-images.githubusercontent.com/57446/64492580-9ab3ec00-d275-11e9-8acc-0abdc153929d.png"> |
 
 ## Author
 

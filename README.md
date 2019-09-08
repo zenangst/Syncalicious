@@ -30,7 +30,7 @@ You don't have to have a science degree to know that backups are a good thing. S
 
 | Light mode | Dark mode  |
 | ------------ | ------------ |
-| <img alt="Light mode" src="https://user-images.githubusercontent.com/57446/64492580-9ab3ec00-d275-11e9-8acc-0abdc153929d.png">  | <img alt="Dark mode" src="https://user-images.githubusercontent.com/57446/64492581-9ab3ec00-d275-11e9-820e-55208b8feca6.png">  |
+| <img alt="Light mode" src="https://user-images.githubusercontent.com/57446/64492581-9ab3ec00-d275-11e9-820e-55208b8feca6.png">  |  <img alt="Dark mode" src="https://user-images.githubusercontent.com/57446/64492580-9ab3ec00-d275-11e9-8acc-0abdc153929d.png"> |
 
 ## Author
 

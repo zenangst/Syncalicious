@@ -13,13 +13,14 @@ class ListFeatureViewController: NSViewController,
 
   weak var delegate: ListFeatureViewControllerDelegate?
 
-  lazy var titlebarView = NSView()
+  let titlebarView: NSView
   lazy var titleLabel = SmallLabel()
 
   let iconController: IconController
   let syncController: SyncController
   let machineController: MachineController
   let containerViewController: ListContainerViewController
+  let titlebarVisualEffectView = NSVisualEffectView()
 
   var applications = [Application]()
   var sort: ListSortViewController.SortKind = UserDefaults.standard.listSort ?? .name
@@ -34,6 +35,10 @@ class ListFeatureViewController: NSViewController,
     self.iconController = iconController
     self.machineController = machineController
     self.syncController = syncController
+    self.titlebarVisualEffectView.blendingMode = .withinWindow
+    self.titlebarVisualEffectView.state = .followsWindowActiveState
+    self.titlebarVisualEffectView.material = .titlebar
+    self.titlebarView = titlebarVisualEffectView
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -53,20 +58,20 @@ class ListFeatureViewController: NSViewController,
                                            object: nil)
   }
 
+  // MARK: - View life cycle
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Bundle.main.infoDictionary?["CFBundleName"] as? String
+//    title =
 
     NSLayoutConstraint.deactivate(layoutConstraints)
     layoutConstraints = []
 
     titleLabel.alignment = .center
-    titleLabel.stringValue = title!
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
     titlebarView.subviews.forEach { $0.removeFromSuperview() }
     titlebarView.wantsLayer = true
-    titlebarView.layer?.backgroundColor =  NSColor.windowBackgroundColor.cgColor
     titlebarView.addSubview(titleLabel)
 
     layoutConstraints.append(contentsOf: [
@@ -80,6 +85,16 @@ class ListFeatureViewController: NSViewController,
     containerViewController.listViewController.collectionView.backgroundColors = [NSColor.clear]
     containerViewController.searchViewController.delegate = self
     containerViewController.sortViewController.delegate = self
+  }
+
+  override func viewWillLayout() {
+    super.viewWillLayout()
+    if view.window?.effectiveAppearance.name == .aqua {
+      view.layer?.backgroundColor = NSColor.white.cgColor
+      containerViewController.visualEffect.material = .underWindowBackground
+    } else {
+      view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+    }
   }
 
   @objc func mainWindowDidResignKey() { containerViewController.listViewController.collectionView.alphaValue = 0.8 }

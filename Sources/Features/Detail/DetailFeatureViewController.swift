@@ -11,7 +11,7 @@ class DetailFeatureViewController: NSViewController,
   }
 
   lazy var titleLabel = SmallLabel()
-  lazy var titlebarView = NSView()
+  let titlebarView: NSView
 
   private var layoutConstraints = [NSLayoutConstraint]()
   private(set) var modified: Bool = false
@@ -22,6 +22,7 @@ class DetailFeatureViewController: NSViewController,
   let iconController: IconController
   let syncController: SyncController
   let machineController: MachineController
+  let titlebarVisualEffectView = NSVisualEffectView()
 
   var machines = [Machine]()
   var application: Application?
@@ -38,6 +39,10 @@ class DetailFeatureViewController: NSViewController,
     self.iconController = iconController
     self.machineController = machineController
     self.syncController = syncController
+    self.titlebarVisualEffectView.blendingMode = .withinWindow
+    self.titlebarVisualEffectView.material = .titlebar
+    self.titlebarVisualEffectView.state = .followsWindowActiveState
+    self.titlebarView = titlebarVisualEffectView
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -53,10 +58,12 @@ class DetailFeatureViewController: NSViewController,
   override func viewWillLayout() {
     super.viewWillLayout()
 
-    if view.effectiveAppearance.name == .aqua {
+    if view.window?.effectiveAppearance.name == .aqua {
       view.layer?.backgroundColor = NSColor.white.cgColor
+      titlebarVisualEffectView.state = .followsWindowActiveState
     } else {
       view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+      titlebarVisualEffectView.state = .followsWindowActiveState
     }
   }
 
@@ -81,7 +88,8 @@ class DetailFeatureViewController: NSViewController,
       containerViewController.generalActionsViewController.view.isHidden = true
     case .single(let application):
       let version = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "0.0.0"
-      titleLabel.stringValue = "\(version)-alpha"
+      let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
+      titleLabel.stringValue = "\(appName) \(version)-alpha"
       containerViewController.applicationDetailViewController.reload(with: [])
       containerViewController.generalInfoViewController.render(application,
                                                                iconController: iconController,
@@ -99,14 +107,8 @@ class DetailFeatureViewController: NSViewController,
 
     titlebarView.addSubview(titleLabel)
 
-    let issueButton = Button(title: "Feedback",
-                             font: .boldSystemFont(ofSize: 12),
-                             backgroundColor: .clear,
-                             borderColor: NSColor.systemGreen.blended(withFraction: 0.5, of: NSColor.white)!,
-                             borderWidth: 1,
-                             cornerRadius: .custom(4),
-                             target: self,
-                             action: #selector(newIssue))
+    let issueButton = NSButton(title: "Feedback", target: self, action: #selector(newIssue))
+    issueButton.font = .systemFont(ofSize: 12)
 
     let hStack = HStack(issueButton)
 

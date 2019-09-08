@@ -4,7 +4,7 @@ open class ViewController: NSViewController {
   var layoutConstraints = [NSLayoutConstraint]()
 
   open override func loadView() {
-    view = OpaqueView()
+    view = NSView()
     view.wantsLayer = true
   }
 

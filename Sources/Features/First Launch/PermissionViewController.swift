@@ -15,8 +15,13 @@ class PermissionViewController: ViewController {
   lazy var gridView = NSGridView()
   lazy var doneButton = NSButton(title: "All done!", target: self,
                                  action: #selector(doneButton(_:)))
-  lazy var permissionsButton = NSButton(title: "System preferences", target: self,
-                                        action: #selector(grantPermission(_:)))
+  lazy var permissionsButton = Button(title: "System preferences",
+                                      backgroundColor: NSColor.systemGreen,
+                                      borderColor: NSColor.clear,
+                                      borderWidth: 0,
+                                      cornerRadius: .custom(4),
+                                      target: self,
+                                      action: #selector(grantPermission(_:)))
 
   let factory = AnimationFactory()
 
@@ -111,6 +116,7 @@ class PermissionViewController: ViewController {
     titleLabel.maximumNumberOfLines = 2
     titleLabel.lineBreakMode = .byWordWrapping
     titleLabel.alignment = .center
+    titleLabel.textColor = .black
     titleLabel.wantsLayer = true
 
     doneButton.wantsLayer = true
@@ -132,6 +138,7 @@ To sync and backup applications like Home, Contacts, Mail, News, Safari and Stoc
 
 This step is optional but know that you cannot sync the applications mentioned above without granting access.
 """)
+    syncLabel.textColor = .black
     syncLabel.maximumNumberOfLines = -1
     syncLabel.lineBreakMode = .byWordWrapping
     syncIcon.image = NSImage.init(named: "Cloud")
@@ -142,14 +149,13 @@ This step is optional but know that you cannot sync the applications mentioned a
     let backupIcon = NSImageView()
     // swiftlint:disable line_length
     let backupLabel = Label.init(labelWithString: "You can grant Syncalicious access by adding it to the list of applications that have Full Disk Access under Security & Privacy in System Preferences, located underr the privacy tab.")
+    backupLabel.textColor = .black
     backupLabel.maximumNumberOfLines = -1
     backupLabel.lineBreakMode = .byWordWrapping
     backupIcon.image = NSImage.init(named: "Unlock")
     backupIcon.contentTintColor = NSColor.init(named: "Yellow")
     let backupRow = gridView.addRow(with: [backupIcon, backupLabel])
     backupRow.yPlacement = .top
-
-    permissionsButton.wantsLayer = true
 
     view.addSubview(gridView)
     view.addSubview(titleLabel)
@@ -172,9 +178,8 @@ This step is optional but know that you cannot sync the applications mentioned a
       gridView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
       gridView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
 
-      permissionsButton.heightAnchor.constraint(equalToConstant: 56),
-      permissionsButton.topAnchor.constraint(equalTo: gridView.bottomAnchor),
-      permissionsButton.leadingAnchor.constraint(equalTo: gridView.leadingAnchor, constant: 48),
+      permissionsButton.topAnchor.constraint(equalTo: gridView.bottomAnchor, constant: 10),
+      permissionsButton.leadingAnchor.constraint(equalTo: backupLabel.leadingAnchor),
 
       syncIcon.heightAnchor.constraint(equalToConstant: 48),
       syncIcon.widthAnchor.constraint(equalToConstant: 48),

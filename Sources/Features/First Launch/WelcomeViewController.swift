@@ -156,6 +156,7 @@ class WelcomeViewController: ViewController {
 
     let syncIcon = NSImageView()
     let syncLabel = Label.init(labelWithString: "Sync application preferences across all your macs")
+    syncLabel.textColor = NSColor.black
     syncLabel.maximumNumberOfLines = 2
     syncLabel.lineBreakMode = .byWordWrapping
     syncIcon.image = NSImage.init(named: "Synced")
@@ -166,6 +167,7 @@ class WelcomeViewController: ViewController {
     let backupIcon = NSImageView()
     let backupLabel = Label.init(labelWithString: "Backup your preferences files in case something goes wrong")
     backupLabel.maximumNumberOfLines = 2
+    backupLabel.textColor = NSColor.black
     backupLabel.lineBreakMode = .byWordWrapping
     backupIcon.contentTintColor = NSColor.init(named: "Blue")
     backupIcon.image = NSImage.init(named: "Backup")

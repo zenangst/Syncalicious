@@ -4,7 +4,7 @@ class SearchField: NSSearchField {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     wantsLayer = true
-    font = NSFont.systemFont(ofSize: 14)
+    font = NSFont.systemFont(ofSize: 13)
   }
 
   required init?(coder: NSCoder) {
@@ -16,9 +16,9 @@ class SearchField: NSSearchField {
     if currentEditor() != nil {
       layer?.borderColor = NSColor.controlAccentColor.cgColor
     } else {
-      layer?.borderColor = NSColor.windowFrameColor.cgColor
+      layer?.borderColor = NSColor.windowFrameTextColor.withAlphaComponent(0.1).cgColor
     }
-    layer?.cornerRadius = frame.size.height / 2
+    layer?.cornerRadius = 4
     layer?.borderWidth = 1
   }
 }

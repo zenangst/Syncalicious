@@ -26,7 +26,12 @@ class DetailContainerViewController: FamilyViewController {
 
   override func loadView() {
     super.loadView()
-    view = OpaqueView()
+    let visualEffect = NSVisualEffectView()
+    visualEffect.blendingMode = .behindWindow
+    visualEffect.state = .followsWindowActiveState
+    visualEffect.material = .contentBackground
+
+    view = visualEffect
     view.autoresizingMask = [.width]
     view.autoresizesSubviews = true
   }

@@ -45,33 +45,33 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
 
     stackView = HStack(iconView, verticalStackView, syncView)
     stackView.distribution = .fill
-    stackView.spacing = 8
+    stackView.spacing = 10
     stackView.edgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
 
     titleLabel.isEditable = false
     titleLabel.drawsBackground = false
     titleLabel.isBezeled = false
-    titleLabel.font = NSFont.boldSystemFont(ofSize: 13)
+    titleLabel.font = NSFont.systemFont(ofSize: 13)
 
     subtitleLabel.isEditable = false
     subtitleLabel.drawsBackground = false
     subtitleLabel.isBezeled = false
     subtitleLabel.maximumNumberOfLines = 1
+    subtitleLabel.font = NSFont.systemFont(ofSize: 11)
+    subtitleLabel.alphaValue = 0.4
 
     view.addSubview(stackView)
     stackView.wantsLayer = true
-    stackView.layer?.cornerRadius = 4
 
     layoutConstraints = [
-      stackView.topAnchor.constraint(equalTo: view.topAnchor),
+      stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
       stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       verticalStackView.heightAnchor.constraint(equalTo: stackView.heightAnchor),
       iconView.widthAnchor.constraint(equalToConstant: 32),
       iconView.heightAnchor.constraint(equalToConstant: 32),
-      syncView.widthAnchor.constraint(equalToConstant: 32),
-      syncView.heightAnchor.constraint(equalToConstant: 32)
+      syncView.widthAnchor.constraint(equalToConstant: 28),
+      syncView.heightAnchor.constraint(equalToConstant: 28)
     ]
     NSLayoutConstraint.constrain(layoutConstraints)
     updateState()
@@ -88,13 +88,13 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
     if isSelected {
       stackView.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.3).cgColor
       syncView.contentTintColor = NSColor.controlAccentColor
-      titleLabel.textColor = NSColor.controlAccentColor.blended(withFraction: 0.75, of: .textColor)
-      subtitleLabel.textColor = NSColor.controlAccentColor.blended(withFraction: 0.4, of: .textColor)
+      titleLabel.textColor = NSColor.selectedTextColor
+      subtitleLabel.textColor = NSColor.selectedTextColor
     } else {
       stackView.layer?.backgroundColor = NSColor.clear.cgColor
       syncView.contentTintColor = NSColor.controlAccentColor
       titleLabel.textColor = NSColor.textColor
-      subtitleLabel.textColor = NSColor.textColor.blended(withFraction: 0.4, of: .white)
+      subtitleLabel.textColor = NSColor.textColor
     }
   }
 }

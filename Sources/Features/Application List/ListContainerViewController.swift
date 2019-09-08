@@ -5,6 +5,7 @@ class ListContainerViewController: FamilyViewController {
   let listViewController: ApplicationListItemViewController
   let searchViewController: ListSearchViewController
   let sortViewController: ListSortViewController
+  let visualEffect = NSVisualEffectView()
 
   init(listViewController: ApplicationListItemViewController,
        searchViewController: ListSearchViewController,
@@ -23,7 +24,12 @@ class ListContainerViewController: FamilyViewController {
 
   override func loadView() {
     super.loadView()
-    view = OpaqueView()
+
+    visualEffect.blendingMode = .behindWindow
+    visualEffect.state = .followsWindowActiveState
+    visualEffect.material = .sidebar
+
+    view = visualEffect
     view.autoresizingMask = [.width]
     view.autoresizesSubviews = true
   }
@@ -37,7 +43,6 @@ class ListContainerViewController: FamilyViewController {
       add(sortViewController)
         .padding(.init(top: 10, left: 10, bottom: 0, right: 10))
       add(listViewController, view: { $0.collectionView })
-        .margin(.init(top: 0, left: 10, bottom: 10, right: 10))
     }
   }
 }

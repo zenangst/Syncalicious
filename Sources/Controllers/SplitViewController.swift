@@ -3,9 +3,22 @@ import Cocoa
 class SplitViewController: NSSplitViewController {
   private var layoutConstraints = [NSLayoutConstraint]()
 
+  override func loadView() {
+    self.splitView = SplitView()
+
+    super.loadView()
+
+    let visualEffect = NSVisualEffectView()
+    visualEffect.blendingMode = .behindWindow
+    visualEffect.state = .followsWindowActiveState
+    visualEffect.material = .contentBackground
+    self.view = view
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     configureViews()
+
     NotificationCenter.default.addObserver(self, selector: #selector(mainWindowDidResignKey),
                                            name: MainWindowNotification.didResign.notificationName,
                                            object: nil)
@@ -19,15 +32,12 @@ class SplitViewController: NSSplitViewController {
     super.viewWillLayout()
     let dividers = view.subviews.compactMap({ $0 as? DividerView })
     let lightDividers = view.subviews.compactMap({ $0 as? LightDividerView })
-    let backgrounds = view.subviews.compactMap({ $0 as? BackgroundView })
 
     if view.effectiveAppearance.name == .aqua {
       dividers.forEach { $0.layer?.backgroundColor = NSColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00).cgColor }
-      backgrounds.forEach { $0.layer?.backgroundColor = $0.belongsToView?.layer?.backgroundColor }
       lightDividers.forEach { $0.layer?.backgroundColor = NSColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00).cgColor }
     } else {
       dividers.forEach { $0.layer?.backgroundColor = NSColor.black.cgColor }
-      backgrounds.forEach { $0.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor }
       lightDividers.forEach { $0.layer?.backgroundColor = NSColor.darkGray.cgColor }
     }
   }
@@ -36,7 +46,7 @@ class SplitViewController: NSSplitViewController {
     for item in splitViewItems {
       let viewController = item.viewController
       let containedViewController = viewController as? SplitViewContainedController
-      containedViewController?.titlebarView.alphaValue = 0.75
+      containedViewController?.titlebarView.subviews.forEach { $0.alphaValue = 0.75 }
     }
   }
 
@@ -44,7 +54,7 @@ class SplitViewController: NSSplitViewController {
     for item in splitViewItems {
       let viewController = item.viewController
       let containedViewController = viewController as? SplitViewContainedController
-      containedViewController?.titlebarView.alphaValue = 1.0
+      containedViewController?.titlebarView.subviews.forEach { $0.alphaValue = 1.0 }
     }
   }
 
@@ -64,7 +74,7 @@ class SplitViewController: NSSplitViewController {
       let viewController = item.viewController
       let view = viewController.view
 
-      let toolbarBackground = BackgroundView(cgColor: view.layer?.backgroundColor)
+      let toolbarBackground = BackgroundView(cgColor: NSColor.windowFrameColor.cgColor)
       toolbarBackground.belongsToView = view
       self.view.addSubview(toolbarBackground, positioned: .below, relativeTo: splitView)
 

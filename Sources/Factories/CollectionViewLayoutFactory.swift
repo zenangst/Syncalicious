@@ -31,7 +31,7 @@ class CollectionViewLayoutFactory {
 
   func createApplicationListLayout() -> NSCollectionViewFlowLayout {
     let layout = VerticalBlueprintLayout(itemsPerRow: 1,
-                                         height: 48,
+                                         height: 40,
                                          minimumInteritemSpacing: 0,
                                          minimumLineSpacing: 1,
                                          sectionInset: .init(top: 5, left: 0, bottom: 5, right: 0))

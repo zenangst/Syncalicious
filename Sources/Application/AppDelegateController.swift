@@ -100,6 +100,9 @@ class ApplicationDelegateController: ApplicationControllerDelegate,
       if let previousFrame = previousFrame {
         windowController.window?.setFrame(previousFrame, display: true)
       }
+      #else
+      NSApp.dockTile.badgeLabel = nil
+      NSApp.setActivationPolicy(.accessory)
       #endif
 
       delegate?.applicationDelegateController(self, didLoadApplication: true)

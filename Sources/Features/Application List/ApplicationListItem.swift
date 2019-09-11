@@ -44,13 +44,17 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
     verticalStackView.setCustomSpacing(8, after: subtitleLabel)
 
     stackView = HStack(iconView, verticalStackView, syncView)
-    stackView.distribution = .fill
+    stackView.distribution = .fillProportionally
+    stackView.alignment = .centerY
     stackView.spacing = 10
     stackView.edgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
 
     titleLabel.isEditable = false
     titleLabel.drawsBackground = false
     titleLabel.isBezeled = false
+    titleLabel.maximumNumberOfLines = 1
+    titleLabel.allowsDefaultTighteningForTruncation = true
+    titleLabel.lineBreakMode = .byTruncatingTail
     titleLabel.font = NSFont.systemFont(ofSize: 13)
 
     subtitleLabel.isEditable = false
@@ -67,7 +71,6 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
       stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
       stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      verticalStackView.heightAnchor.constraint(equalTo: stackView.heightAnchor),
       iconView.widthAnchor.constraint(equalToConstant: 32),
       iconView.heightAnchor.constraint(equalToConstant: 32),
       syncView.widthAnchor.constraint(equalToConstant: 28),

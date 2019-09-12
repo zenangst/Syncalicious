@@ -77,12 +77,6 @@ class ApplicationListItem: CollectionViewItem, CollectionViewItemComponent {
       syncView.heightAnchor.constraint(equalToConstant: 28)
     ]
     NSLayoutConstraint.constrain(layoutConstraints)
-    updateState()
-  }
-
-  override func viewDidLayout() {
-    super.viewDidLayout()
-    updateState()
   }
 
   // MARK: - Private methods

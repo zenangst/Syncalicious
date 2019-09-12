@@ -45,9 +45,10 @@ class DetailContainerViewController: FamilyViewController {
         .margin(.init(top: 15, left: 30, bottom: 0, right: 30))
       add(generalActionsViewController)
       add(computersViewController, view: { $0.collectionView })
-        .background(.color(NSColor.windowBackgroundColor))
     }
 
-    computersViewController.collectionView.backgroundColors = [NSColor.windowBackgroundColor]
+    computersViewController.collectionView.backgroundColors = [
+      NSColor.windowBackgroundColor.withSystemEffect(.none)
+    ]
   }
 }

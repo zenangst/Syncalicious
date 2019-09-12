@@ -96,7 +96,7 @@ class SplitViewController: NSSplitViewController {
         self.view.addSubview(containedViewController.titlebarView)
         layoutConstraints.append(contentsOf: [
           containedViewController.titlebarView.topAnchor.constraint(equalTo: toolbarBackground.topAnchor),
-          containedViewController.titlebarView.leadingAnchor.constraint(equalTo: toolbarBackground.leadingAnchor),
+          containedViewController.titlebarView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
           containedViewController.titlebarView.trailingAnchor.constraint(equalTo: toolbarBackground.trailingAnchor),
           containedViewController.titlebarView.bottomAnchor.constraint(equalTo: toolbarBackground.bottomAnchor)
           ])

@@ -104,7 +104,7 @@ class DetailFeatureViewController: NSViewController,
 
     titlebarView.subviews.forEach { $0.removeFromSuperview() }
     titleLabel.alignment = .center
-
+    titleLabel.textColor = NSColor.secondaryLabelColor
     titlebarView.addSubview(titleLabel)
 
     let issueButton = NSButton(title: "Feedback", target: self, action: #selector(newIssue))

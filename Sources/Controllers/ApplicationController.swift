@@ -58,11 +58,13 @@ class ApplicationController {
     let applicationDirectoryN = URL(fileURLWithPath: "/Network/Applications")
     let applicationDirectoryND = URL(fileURLWithPath: "/Network/Developer/Applications")
     let applicationDirectoryS = URL(fileURLWithPath: "/Users/Shared/Applications")
+    let systemApplicationsDirectory = URL(fileURLWithPath: "/System/Applications")
 
     return [userDirectory, applicationDirectory,
             homeDirectory, coreServicesDirectory,
             applicationDirectoryD, applicationDirectoryN,
-            applicationDirectoryND, applicationDirectoryS]
+            applicationDirectoryND, applicationDirectoryS,
+            systemApplicationsDirectory]
   }
 
   func restart(application: Application, operations: [DispatchOperation] = []) {

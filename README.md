@@ -13,18 +13,18 @@
 
 **Syncalicious is in its early stages of development. Watch the repository or follow [@zenangst](https://twitter.com/zenangst) on Twitter for continuous updates.**
 
-On the macOS, preferences are everything; it is what separates your mac from the rest, makes it stand out, gives it personality. Settings up a new installation of macOS can be fun and liberating, but it can also be a chore. This is where Syncalicious comes in; it aims to offer two main features.
+On macOS, preferences are everything; they are what separate your mac from the rest, make it stand out, and give it personality. Setting up a new installation of macOS can be fun and liberating, but it can also be a chore. This is where Syncalicious comes in. It aims to offer two main features:
 
 - 🌀 Synchronize
 - ✅ Backup
 
 ### Synchronize
 
-Keeping multiple macOS preferences in sync can be painful, and it shouldn't be. Changing settings on one machine should replicate on another if you choose to do so. Syncalicious offers property list syncing for your macOS applications.
+Keeping multiple macOS preferences in sync can be painful, but it shouldn't be. Settings changed on one machine should be replicated on another, if you choose to do so. Syncalicious offers property list syncing for your macOS applications.
 
 ### Backup
 
-You don't have to have a science degree to know that backups are a good thing. Syncalicious offers an easy, straight-forward backup feature that makes copies of your property lists (also known as plist files) and stores them in a directory of your choosing or push them to iCloud, Dropbox or Google Drive.
+You don't have to have a science degree to know that backups are a good thing. Syncalicious offers an easy, straight-forward backup feature that makes copies of your property lists (also known as plist files) and can store them in a directory of your choosing or push them to iCloud, Dropbox, or Google Drive.
 
 ## Screenshots
 

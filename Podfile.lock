@@ -1,7 +1,7 @@
 PODS:
-  - Blueprints (0.12.1)
+  - Blueprints (0.13.1)
   - Differific (0.8.2)
-  - Family (0.20.9)
+  - Family (0.22.5)
 
 DEPENDENCIES:
   - Blueprints
@@ -9,16 +9,16 @@ DEPENDENCIES:
   - Family
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Blueprints
     - Differific
     - Family
 
 SPEC CHECKSUMS:
-  Blueprints: a35723fafd8020c984e9d51817bd3c67f8d18ddc
+  Blueprints: ddd6ab1e455c98471aaef2fdd0b09b5f9b53af5b
   Differific: c3840b9e4d1ee2216b2c0054c270e4a616df9327
-  Family: ed8a04c6213f92ff1c88282bbc719b9121b194d8
+  Family: f87147b68a36587c3c606bf77a165e4aaa00b6d0
 
 PODFILE CHECKSUM: ebedcde7b481251b46b737f8c9c8f281e62c2e22
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.3

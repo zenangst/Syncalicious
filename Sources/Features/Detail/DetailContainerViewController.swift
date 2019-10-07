@@ -39,12 +39,12 @@ class DetailContainerViewController: FamilyViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     body {
-      add(applicationDetailViewController, view: { $0.collectionView })
+      add(applicationDetailViewController)
         .margin(.init(top: 0, left: 30, bottom: 15, right: 30))
       add(generalInfoViewController)
         .margin(.init(top: 15, left: 30, bottom: 0, right: 30))
       add(generalActionsViewController)
-      add(computersViewController, view: { $0.collectionView })
+      add(computersViewController)
     }
 
     computersViewController.collectionView.backgroundColors = [

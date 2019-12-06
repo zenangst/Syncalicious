@@ -221,6 +221,8 @@ class SyncController: NSObject {
                                                        options: [.skipsHiddenFiles])
       .filter({ !$0.absoluteString.contains( machineController.machine.name.lowercased() ) })
 
+    var processedApplications = Set<Application>()
+
     for folder in folders {
       let backupPath = folder.appendingPathComponent("Backup")
         .appendingPathComponent(application.preferences.fileName)
@@ -232,13 +234,19 @@ class SyncController: NSObject {
       let pendingPath = folder.appendingPathComponent("Pending")
       try fileManager.createFolderAtUrlIfNeeded(pendingPath)
       let filePath = pendingPath.appendingPathComponent(application.preferences.fileName)
-      try copyApplicationIfNeeded(application, to: filePath, machineFolder: folder.lastPathComponent)
+      if let application = try copyApplicationIfNeeded(application, to: filePath, machineFolder: folder.lastPathComponent) {
+        processedApplications.insert(application)
+      }
+    }
+
+    for application in processedApplications {
+      applicationHasBeenActive.remove(application)
     }
   }
 
   // swiftlint:disable identifier_name
-  private func copyApplicationIfNeeded(_ application: Application, to: URL, machineFolder: String) throws {
-    guard applicationHasBeenActive.contains(application) && machineController.machine.state == .active else { return }
+  private func copyApplicationIfNeeded(_ application: Application, to: URL, machineFolder: String) throws -> Application? {
+    guard applicationHasBeenActive.contains(application) && machineController.machine.state == .active else { return nil }
 
     let initialDictionary = plistHashDictionary[application]
     var applicationPath = application.preferences.url
@@ -264,7 +272,7 @@ class SyncController: NSObject {
       debugPrint("🍫 Nothing changed \(application.propertyList.bundleName)")
     }
 
-    applicationHasBeenActive.remove(application)
+    return application
   }
 
   private func pendingFiles() throws -> [URL] {

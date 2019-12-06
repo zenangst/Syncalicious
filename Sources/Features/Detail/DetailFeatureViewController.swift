@@ -1,3 +1,4 @@
+import Blueprints
 import Cocoa
 
 class DetailFeatureViewController: NSViewController,
@@ -153,6 +154,12 @@ class DetailFeatureViewController: NSViewController,
       var models = [ComputerDetailItemModel]()
       models.append(closure(machineController.machine))
       models.append(contentsOf: machines.compactMap(closure))
+
+      if models.count > 2 {
+        let layout = containerViewController.computersViewController.collectionView.collectionViewLayout
+        (layout as? HorizontalBlueprintLayout)?.itemsPerRow = 2.25
+      }
+
       containerViewController.computersViewController.reload(with: models)
     }
     containerViewController.generalActionsViewController.render(application: application,
